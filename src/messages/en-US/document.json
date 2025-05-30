@@ -1,0 +1,59 @@
+{
+  "list": {
+    "title": "Documents",
+    "new": "New Document"
+  },
+  "create": {
+    "title": "New Document"
+  },
+  "edit": {
+    "title": "Edit Document"
+  },
+  "delete": {
+    "title": "Delete Document",
+    "message": "Are you sure you want to delete this document?"
+  },
+  "fields": {
+    "name": "Name",
+    "type": "Type",
+    "url": "URL",
+    "uploadDate": "Upload Date",
+    "expirationDate": "Expiration Date",
+    "isPublic": "Public"
+  },
+  "types": {
+    "DOC_ADMISSAO_CTPS": "Work Card",
+    "DOC_ADMISSAO_PIS": "PIS",
+    "DOC_ADMISSAO_RG": "ID Card",
+    "DOC_ADMISSAO_CPF": "CPF",
+    "DOC_ADMISSAO_TITULO_ELEITOR": "Voter ID",
+    "DOC_ADMISSAO_RESERVISTA": "Military Service",
+    "DOC_ADMISSAO_CERTIDAO_CASAMENTO": "Marriage Certificate",
+    "DOC_ADMISSAO_CERTIDAO_NASCIMENTO": "Birth Certificate",
+    "DOC_MEDICO_ASO_ADMISSIONAL": "Pre-employment Medical Exam",
+    "DOC_MEDICO_ASO_DEMISSIONAL": "Termination Medical Exam",
+    "DOC_MEDICO_ASO_PERIODICO": "Periodic Medical Exam",
+    "DOC_MEDICO_ATESTADO": "Medical Certificate",
+    "DOC_MEDICO_LAUDO": "Medical Report",
+    "DOC_AFASTAMENTO_ACIDENTE_TRABALHO": "Work Accident Leave",
+    "DOC_AFASTAMENTO_AUXILIO_DOENCA": "Sick Leave",
+    "DOC_AFASTAMENTO_LICENCA_MATERNIDADE": "Maternity Leave",
+    "DOC_AFASTAMENTO_LICENCA_PATERNIDADE": "Paternity Leave",
+    "DOC_AFASTAMENTO_SERVICO_MILITAR": "Military Service Leave",
+    "DOC_FERIAS_AVISO": "Vacation Notice",
+    "DOC_FERIAS_GOZO": "Vacation Period",
+    "DOC_FERIAS_ABONO": "Vacation Bonus",
+    "DOC_RESCISAO_AVISO_PREVIO": "Notice Period",
+    "DOC_RESCISAO_TERMO": "Termination Agreement",
+    "DOC_RESCISAO_QUITACAO": "Termination Receipt",
+    "DOC_OUTROS": "Others"
+  },
+  "messages": {
+    "createSuccess": "Document created successfully",
+    "updateSuccess": "Document updated successfully",
+    "deleteSuccess": "Document deleted successfully",
+    "error": "Error processing document",
+    "loadError": "Error loading documents",
+    "deleteError": "Error deleting document"
+  }
+} 

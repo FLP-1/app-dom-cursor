@@ -1,0 +1,402 @@
+Documento de Requisitos de Sistema (SRS) - Sistema DOM
+1. Introdu��o
+O Sistema DOM foi concebido para oferecer uma solu��o completa de gest�o dom�stica, integrando diversas funcionalidades que promovem a administra��o eficiente do lar, o controle rigoroso das obriga��es trabalhistas e a melhoria da comunica��o interna. O sistema abrange desde o gerenciamento de tarefas e empregados dom�sticos at� a integra��o com sistemas externos, garantindo conformidade legal e seguran�a operacional.
+2. Objetivos do Sistema
+� Prover uma solu��o completa para a gest�o dom�stica, facilitando a administra��o das tarefas e a conex�o entre empregadores e empregados.
+� Assegurar a conformidade com as normas trabalhistas atrav�s da integra��o com sistemas como eSocial e atualiza��es constantes.
+� Inovar com o uso de tecnologias de ponta (geolocaliza��o, identifica��o de Wi-Fi) para prevenir fraudes e garantir a seguran�a dos registros.
+� Otimizar a comunica��o e a organiza��o interna com m�dulos de alertas, mensagens e gest�o de documentos e compras.
+� Automatizar a gest�o financeira e de folha de pagamento, incluindo o c�lculo de sal�rios, gest�o de empr�stimos e a emiss�o de recibos e contratos.
+3. Escopo do Sistema
+O Sistema DOM abrange as seguintes �reas funcionais: gerenciamento de tarefas dom�sticas, controle de empregados, m�dulo de controle de ponto, gest�o de alertas, comunica��o interna, integra��es com sistemas externos (eSocial, SPTrans, agendas, webhooks para pagamentos), gest�o de documentos, lista de compras e m�dulo financeiro/folha de pagamento.
+4. Requisitos Funcionais
+4.1 Gest�o de Tarefas Dom�sticas
+* � Estruturar, monitorar e atualizar as tarefas di�rias do lar para facilitar a organiza��o.
+4.2 Gest�o de Empregados Dom�sticos
+* � Cadastro e acompanhamento detalhado dos empregados, incluindo avalia��es de desempenho e controle das obriga��es legais.
+4.3 M�dulo de Controle de Ponto
+* � Registro de ponto com geolocaliza��o para confirmar a localiza��o do registro.
+* � Identifica��o de Wi-Fi para validar que o ponto seja realizado no ambiente de trabalho.
+* � Gera��o de relat�rios detalhados para auditoria e comprova��o da conformidade legal.
+4.4 Gest�o de Alertas
+* � Notifica��es para registros de ponto atrasados e pendentes.
+* � Alertas autom�ticos para vencimento de documentos e obriga��es contratuais.
+* � Integra��o dos alertas com outros m�dulos como tarefas, documentos e lista de compras.
+4.5 Comunica��o Interna
+* � Funcionalidade de mensagens individuais e em grupo (similar ao WhatsApp) para facilitar a comunica��o.
+* � Suporte ao compartilhamento de documentos e imagens dentro da plataforma.
+4.6 Integra��o com Sistemas Externos
+* � Integra��o com o eSocial para envio e atualiza��o dos dados trabalhistas.
+* � Sincroniza��o com sistemas de SPTrans e agendas para gest�o de deslocamentos e compromissos.
+* � Implementa��o de webhooks para facilitar pagamentos e recebimentos atrav�s de sistemas financeiros.
+4.7 Gest�o de Documentos
+* � Upload e armazenamento seguro de documentos importantes.
+* � Controle de datas de vencimento com alertas autom�ticos.
+* � Ferramentas de filtro e busca para facilitar a organiza��o dos documentos.
+* � Integra��o com o m�dulo de alertas para notifica��es sobre status e vencimentos.
+4.8 Gest�o de Compras / Lista de Compras (Simples)
+* � Cria��o, edi��o e remo��o de itens em listas de compras.
+* � Checklists para marca��o de itens adquiridos e alertas para reabastecimento.
+4.9 Gest�o Financeira e de Folha de Pagamento
+* � C�lculo automatizado de sal�rios, incluindo horas trabalhadas, horas extras e descontos, conforme a legisla��o.
+* � Registro e acompanhamento de empr�stimos e adiantamentos dos empregados.
+* � Gera��o de recibos, contratos e relat�rios detalhando a composi��o salarial.
+5. Requisitos N�o Funcionais
+� Interface intuitiva, responsiva e mobile friendly.
+� Estrutura robusta de backend com APIs seguras e escal�veis.
+� Criptografia de dados sens�veis e conformidade com LGPD e outras regulamenta��es.
+� Alto desempenho e disponibilidade para suportar grande volume de usu�rios.
+� Procedimentos de backup, redund�ncia e recupera��o de falhas para garantir continuidade operacional.
+6. Casos de Uso e Fluxos Principais
+Exemplos de Casos de Uso: 
+- Registro de ponto: O empregado realiza a marca��o do ponto, o sistema captura a geolocaliza��o e valida o acesso � rede Wi-Fi.
+- Comunica��o interna: Envio de mensagens individuais e em grupo entre os usu�rios para resolu��o de problemas e alinhamento das tarefas.
+- Processamento financeiro: C�lculo de sal�rios com base nas horas trabalhadas e extras, gera��o de recibos e contratos, e gest�o de empr�stimos/adiantamentos.
+- Notifica��o de alertas: O sistema gera alertas para registros atrasados, documentos prestes a vencer e itens cr�ticos na lista de compras.
+7. Considera��es de Seguran�a e Conformidade
+� Implementa��o de mecanismos robustos de seguran�a, incluindo criptografia, backups regulares e medidas para preven��o de fraudes.
+� Conformidade rigorosa com LGPD e normativas trabalhistas, com atualiza��es constantes e integra��o com o eSocial.
+� Monitoramento cont�nuo da integridade dos dados e dos registros de ponto, assegurando a confiabilidade do sistema.
+8. Conclus�o
+Este Documento de Requisitos de Sistema (SRS) � um guia essencial para o desenvolvimento do Sistema DOM. Ele consolida os requisitos funcionais e n�o funcionais, estabelece o escopo e define os principais fluxos e casos de uso que orientar�o as fases de desenvolvimento. O documento ser� atualizado periodicamente para refletir novas necessidades, feedbacks e avan�os tecnol�gicos, garantindo que o sistema se mantenha robusto, seguro e alinhado aos objetivos do projeto.
+
+
+
+SRS Consolidado - Sistema DOM
+Vers�o 16/05/2025 - Revisada
+
+�ndice
+1. Introdu��o
+2. Objetivos
+3. P�blico-Alvo
+4. Escopo do Projeto
+5. Defini��es, Acr�nimos e Abrevia��es
+6. Descri��o Geral do Sistema
+7. Requisitos Funcionais
+ 7.1. Controle de Acesso, Autentica��o e Valida��o de Dados
+ 7.2. Dashboard Personalizado
+ 7.3. Tela de Controle de Ponto Inteligente
+ 7.4. Gest�o de Tarefas Colaborativa
+ 7.5. Comunica��o Unificada
+ 7.6. Gest�o Financeira Simplificada
+ 7.7. Assistente Virtual
+ 7.8. Gamifica��o
+ 7.9. Integra��o com Wearables
+ 7.10. Relat�rios Personalizados
+ 7.11. Gest�o de Perfis
+ 7.12. Gest�o de Alertas
+ 7.13. Gest�o de Documentos
+ 7.14. Gest�o de Compras
+ 7.15. Integra��es com Meios de Pagamento
+8. Requisitos N�o Funcionais
+9. Interfaces Externas
+10. Restri��es
+11. Crit�rios de Aceita��o
+12. Diagramas e Mockups
+13. Gloss�rio
+14. Rastreabilidade
+15. Pr�ximos Passos
+
+1. Introdu��o
+Este documento detalha os requisitos do software para o Sistema DOM - uma solu��o completa para a gest�o dom�stica, integrando fun��es como organiza��o de tarefas, controle de ponto via toque com geolocaliza��o, gest�o de documentos, comunica��o interna, gest�o financeira/folha de pagamento e integra��o com diversas APIs externas (incluindo valida��o de dados, assistentes virtuais, meios de pagamento e wearables).
+Esta vers�o revisada incorpora feedbacks das equipes de Design, Front-End, Mobile, QA, Compliance, Marketing, Finan�as e RH, melhorando detalhes sobre usabilidade, seguran�a, acessibilidade e integra��o das funcionalidades.
+
+2. Objetivos
+* Vis�o Detalhada: 
+Fornecer um conjunto completo e claro de requisitos (funcionais e n�o funcionais) para guiar o desenvolvimento, teste e valida��o do sistema.
+* Seguran�a e Valida��o: 
+Implementar mecanismos robustos de autentica��o (tokens JWT, refresh tokens), valida��o de CPF (d�gito verificador), e-mail, n�mero de telefone via SMS, al�m de rate limiting, auditoria e conformidade com LGPD e PCI DSS.
+* Experi�ncia do Usu�rio: 
+Oferecer uma interface intuitiva, responsiva e personaliz�vel, adaptando-se a cada perfil (empregador, empregado, familiar, administrador e parceiro).
+* Integra��o e Inova��o: 
+Assegurar a integra��o com APIs externas (valida��o de dados, eSocial, assistentes de voz, gateways de pagamento, etc.), al�m de monitorar o desempenho e a disponibilidade dessas integra��es.
+
+3. P�blico-Alvo
+* Interno: 
+Equipe de desenvolvimento, testes, design, compliance, marketing, RH, finan�as e gest�o de projetos.
+* Externo: 
+Empregadores, empregados dom�sticos, familiares, e administradores/parceiros Private Label.
+
+4. Escopo do Projeto
+O Sistema DOM abrange as seguintes funcionalidades e �reas:
+* Gest�o de tarefas (individual e colaborativa) e alertas.
+* Controle de ponto com registro via toque, com registro de geolocaliza��o e valida��o da rede Wi-Fi.
+* Dashboard personalizado para cada perfil (empregador, empregado e familiar) com indicadores de tarefas, pagamentos, documentos e m�tricas diversas.
+* Comunica��o interna (mensagens, chamadas de voz/v�deo, grupos de discuss�o).
+* Gest�o de documentos, com upload, categoriza��o, e alertas de vencimento.
+* Gest�o de compras, com listagem, categoriza��o, checklists e hist�rico.
+* Gest�o financeira e de folha de pagamento, incluindo gr�ficos, metas de economia, relat�rios customizados e simula��o de cen�rios financeiros.
+* Integra��o com assistentes virtuais (Alexa, Google Assistant) e wearables (smartwatches, pulseiras fitness).
+* Gest�o de perfis com diferencia��o de pap�is e consentimento expl�cito (LGPD).
+* Integra��o com meios de pagamento (Stripe, PayPal) com suporte a webhooks e conformidade com PCI DSS.
+* Funcionalidades complementares como gamifica��o e tutorial interativo para melhoria da ades�o e cultura organizacional.
+
+5. Defini��es, Acr�nimos e Abrevia��es
+* API: Application Programming Interface
+* DOM: Gest�o Dom�stica
+* LGPD: Lei Geral de Prote��o de Dados
+* RF: Requisito Funcional
+* RNF: Requisito N�o Funcional
+* SRS: Software Requirements Specification
+* WCAG: Web Content Accessibility Guidelines
+* CPF: Cadastro de Pessoas F�sicas
+* JWT: JSON Web Token
+* PCI DSS: Payment Card Industry Data Security Standard
+
+6. Descri��o Geral do Sistema
+O Sistema DOM re�ne todas as funcionalidades que um ambiente dom�stico moderno precisa: desde a organiza��o de tarefas e registro de ponto at� a gest�o financeira, comunica��o interna e controle documental. A plataforma foca na seguran�a dos dados, conformidade legal (LGPD, PCI DSS) e oferece interfaces intuitivas e responsivas, adaptando-se aos diferentes perfis de usu�rios. A integra��o com APIs externas potencializa as funcionalidades, tais como valida��o de dados, integra��o com assistentes virtuais e sincroniza��o com dispositivos wearables.
+
+7. Requisitos Funcionais
+7.1. Controle de Acesso, Autentica��o e Valida��o de Dados
+* RF-001: 
+O sistema deve permitir o cadastro de usu�rios utilizando CPF, realizando o c�lculo e valida��o do d�gito verificador.
+* RF-002: 
+Para o perfil de empregador, o e-mail � obrigat�rio e deve ser validado por API externa especializada.
+* RF-003: 
+Todos os usu�rios devem validar seus n�meros de celular via SMS utilizando uma API de valida��o.
+* RF-004: 
+O sistema dever� gerar tokens JWT para sess�es dos usu�rios, com tempo de expira��o definido e mecanismos de refresh token para manter a sess�o ativa.
+* RF-005: 
+Os processos de login e logout devem validar tokens, gerenciar sess�es e oferecer recupera��o de senha.
+* RF-006: 
+Rotas sens�veis devem ser protegidas por guards de autentica��o e autoriza��o (utilizando tokens JWT).
+* RF-007: 
+O sistema integrar� APIs externas para valida��o de CPF, e-mail e telefone.
+* RF-008: 
+Implementar valida��es cont�nuas de dados cr�ticos, com registro de auditorias para altera��es e acessos.
+* RF-009: 
+Assegurar a conformidade com a LGPD, com criptografia de dados, mecanismos de consentimento expl�cito e auditoria de acessos.
+
+7.2. Dashboard Personalizado
+* RF-010.1: 
+Cada usu�rio deve poder personalizar os widgets do seu dashboard (adicionar, remover, reorganizar).
+o Crit�rio: Interface intuitiva com op��es de customiza��o visual - inclusive escolha de temas e paletas (sugest�o do Designer).
+* RF-010.2: (Dashboard Empregador) 
+Exibir:
+o Tarefas pendentes (status "pendente").
+o Pr�ximos pagamentos (agendados para os pr�ximos 7 dias).
+o Alertas de documentos (vencimento proximamente, at� 30 dias).
+o Resumo do controle de ponto (horas trabalhadas, horas extras e faltas).
+o Avalia��es de empregados (pendentes e recentes).
+* RF-010.3: (Dashboard Empregado) 
+Exibir:
+o Tarefas do dia.
+o Hor�rios de trabalho (entrada, sa�da e total trabalhado).
+o Folha de pagamento do m�s corrente.
+o N�mero de mensagens n�o lidas.
+* RF-010.4: (Dashboard Familiar) 
+Exibir:
+o Calend�rio de eventos (integra��o com Google Calendar ou similar).
+o Lista de compras (itens pendentes, categorizados por prioridade).
+o Tarefas pendentes relacionadas a atividades dom�sticas.
+o Resumo do or�amento familiar.
+* RF-010.5: 
+As prefer�ncias de customiza��o do dashboard devem persistir entre sess�es.
+
+7.3. Tela de Controle de Ponto Inteligente
+* RF-011.1: 
+Permitir o registro de ponto com um �nico toque (bot�o claro e de f�cil acesso).
+* RF-011.2: 
+Registrar a geolocaliza��o do dispositivo no momento do ponto, com precis�o de at� 10 metros.
+* RF-011.3: 
+Identificar e exibir a rede Wi-Fi conectada no instante do registro.
+* RF-011.4: 
+Exibir um mapa com um marcador indicando a localiza��o do registro.
+* RF-011.5: 
+Manter um hist�rico dos registros de ponto, com data, hora e localiza��o.
+
+7.4. Gest�o de Tarefas Colaborativa
+* RF-012.1: 
+Permitir a cria��o de tarefas com descri��o, data de vencimento e defini��o de prioridade (alta, m�dia, baixa).
+* RF-012.2: 
+Possibilitar a atribui��o de tarefas a membros da fam�lia ou empregados.
+* RF-012.3: 
+Permitir a adi��o de coment�rios/discuss�es sobre cada tarefa (exibidos em ordem cronol�gica).
+* RF-012.4: 
+Incluir checklists nas tarefas para monitorar o progresso, permitindo marcar itens como conclu�dos.
+* RF-012.5: 
+Notificar os usu�rios (via push e e-mail) sobre novas tarefas ou atualiza��es.
+
+7.5. Comunica��o Unificada
+* RF-013.1: 
+Permitir o envio e recebimento de mensagens de texto com notifica��es push.
+* RF-013.2: 
+Suportar chamadas de voz e v�deo com qualidade adequada.
+* RF-013.3: 
+Habilitar o compartilhamento de documentos, fotos e v�deos com suporte a m�ltiplos formatos.
+* RF-013.4: 
+Permitir a cria��o e gest�o de grupos de discuss�o tem�ticos.
+
+7.6. Gest�o Financeira Simplificada
+* RF-014.1: 
+Permitir o registro de receitas e despesas por categoria, com op��es de categorias pr�-definidas e personaliz�veis.
+* RF-014.2: 
+Exibir gr�ficos (barras, pizza etc.) e relat�rios financeiros (mensais, anuais).
+* RF-014.3: 
+Permitir a defini��o de metas de economia (valor-alvo e prazo).
+* RF-014.4: 
+Gerar alertas (push e e-mail) quando os gastos excederem o or�amento definido.
+* Observa��o: 
+Incluir, se aplic�vel, fun��o de simula��o de cen�rios e an�lises de risco para suporte � decis�o.
+
+7.7. Assistente Virtual
+* RF-015.1: 
+Integrar o sistema com assistentes de voz (Alexa, Google Assistant) via APIs.
+* RF-015.2: 
+Permitir o controle de tarefas (criar, marcar como conclu�das, consultar status) por comando de voz.
+
+7.8. Gamifica��o
+* RF-016.1: 
+Implementar um sistema de recompensas e conquistas para incentivar a conclus�o de tarefas e alcance de metas.
+* RF-016.2: 
+Exibir um ranking de usu�rios com base em pontua��es e conquistas.
+
+7.9. Integra��o com Wearables
+* RF-017.1: 
+Sincronizar dados de smartwatches e pulseiras fitness atrav�s de API para coleta de informa��es relevantes.
+* RF-017.2: 
+Registrar automaticamente hor�rios de trabalho e indicadores de atividade f�sica, conforme os dados recebidos.
+
+7.10. Relat�rios Personalizados
+* RF-018.1: 
+Permitir que o usu�rio crie relat�rios customizados, escolhendo os dados (financeiros, de ponto, tarefas, etc.) a incluir.
+* RF-018.2: 
+Exibir uma listagem de campos dispon�veis para personaliza��o dos relat�rios.
+
+7.11. Gest�o de Perfis
+* RF-PERF-001: 
+Permitir o cadastro, edi��o e exclus�o de perfis (Empregador, Empregado, Familiar, Administrador).
+* RF-PERF-002: 
+Cada perfil ter� campos obrigat�rios e opcionais, de acordo com suas necessidades (por exemplo, empregadores exigir�o e-mail validado).
+* RF-PERF-003: 
+Permitir atribui��o de permiss�es e roles a cada perfil para controle de acesso.
+* RF-PERF-004: 
+Perfis inativos (ex.: empregados demitidos) dever�o ser desativados para remo��o de acesso.
+* RF-PERF-005: 
+Durante o cadastro, obter consentimento expl�cito dos usu�rios para o uso de dados, conforme LGPD.
+
+7.12. Gest�o de Alertas
+* RF-ALERT-001: 
+Permitir a configura��o de alertas para eventos cr�ticos (ex.: vencimento de documentos, atrasos em tarefas, discrep�ncias financeiras).
+* RF-ALERT-002: 
+Enviar alertas via notifica��es push, e-mail e mensagens internas (central de notifica��es).
+* RF-ALERT-003: 
+Manter um log de todos os alertas enviados para auditoria e acompanhamento.
+
+7.13. Gest�o de Documentos
+* RF-DOC-001: 
+Permitir upload, visualiza��o, edi��o e exclus�o de documentos, suportando m�ltiplos formatos.
+* RF-DOC-002: 
+Documentos dever�o ser categorizados e acompanhados de metadados (data de vencimento, categoria, etc.) para facilitar buscas.
+* RF-DOC-003: 
+Enviar alertas para documentos pr�ximos do vencimento (integrado com RF-ALERT-001).
+* RF-DOC-004: 
+O acesso aos documentos dever� ser controlado pelas permiss�es do perfil do usu�rio.
+
+7.14. Gest�o de Compras
+* RF-COMP-001: 
+Permitir a cria��o, edi��o e remo��o de itens numa lista de compras.
+* RF-COMP-002: 
+Permitir categoriza��o e prioriza��o dos itens (utilizando c�digos de cores e categoriza��es visuais).
+* RF-COMP-003: 
+Incorporar checklists para validar os itens adquiridos, possibilitando marcar os itens conclu�dos.
+* RF-COMP-004: 
+Permitir a gera��o de relat�rios e consulta do hist�rico de compras.
+
+7.15. Integra��es com Meios de Pagamento
+* RF-PAY-001: 
+Integrar o sistema com plataformas de pagamento (ex.: Stripe, PayPal) para processar transa��es com seguran�a.
+* RF-PAY-002: 
+Suportar webhooks para receber notifica��es de eventos de transa��es e atualizar os status automaticamente.
+* RF-PAY-003: 
+A integra��o dever� assegurar o uso de criptografia e valida��o de tokens durante as transa��es.
+* RF-PAY-004: 
+Permitir a configura��o de m�ltiplos gateways de pagamento e definir procedimentos para reconcilia��o e auditoria.
+* RF-PAY-005: 
+Dados de cart�es de cr�dito (quando aplic�vel) dever�o ser tratados de acordo com as normas PCI DSS.
+
+8. Requisitos N�o Funcionais
+* RNF-010: 
+A interface deve ser intuitiva, com design responsivo, alcan�ando uma taxa de conclus�o de tarefas superior a 90% em testes de usabilidade.
+* RNF-011: 
+Garantia de seguran�a dos dados com criptografia robusta, conformidade com LGPD e aus�ncia de vulnerabilidades cr�ticas em auditorias.
+* RNF-012: 
+Escalabilidade que suporte at� 10.000 usu�rios ativos simultaneamente sem degrada��o percept�vel de desempenho.
+* RNF-013: 
+Tempo m�dio de resposta inferior a 2 segundos para 95% das requisi��es.
+* RNF-014: 
+Conformidade cont�nua com as leis de prote��o de dados, com auditorias peri�dicas e monitoramento.
+* RNF-015: 
+Acessibilidade de acordo com as diretrizes WCAG 2.1 n�vel AA, incluindo suporte a leitores de tela, navega��o por teclado e contraste adequado.
+* RNF-016: 
+Compatibilidade com os principais navegadores (Chrome, Firefox, Safari, Edge) e sistemas operacionais (iOS, Android).
+* RNF-017: 
+Layout responsivo que se adapte a desktops, tablets e dispositivos m�veis, com testes em m�ltiplas resolu��es.
+* RNF-018: 
+Implementa��o de rate limiting nas APIs de valida��o e integra��es externas para prevenir abusos e ataques de DoS.
+* RNF-019: 
+Monitoramento cont�nuo da disponibilidade e desempenho das integra��es externas, com alertas em caso de falhas.
+
+9. Interfaces Externas
+* eSocial: API para envio e atualiza��o de dados trabalhistas.
+* Google Calendar/Similar: API para sincroniza��o de calend�rios e eventos familiares.
+* Alexa/Google Assistant: APIs para integra��o com assistentes de voz.
+* Smartwatches/Pulseiras Fitness: APIs para sincroniza��o e extra��o de dados.
+* Sistemas de Pagamento: Integra��o com plataformas como Stripe e PayPal, incluindo suporte a webhooks e reconcilia��o de transa��es.
+* APIs de Valida��o: 
+o Valida��o de CPF (c�lculo do d�gito verificador).
+o Valida��o de e-mail.
+o Valida��o de telefone via SMS.
+
+10. Restri��es
+* O desenvolvimento deve seguir as diretrizes internas de seguran�a da informa��o.
+* O sistema dever� estar em total conformidade com a LGPD e demais regulamenta��es aplic�veis.
+* Somente ser�o utilizadas tecnologias e frameworks aprovados pela equipe t�cnica.
+* O cronograma e os prazos estabelecidos dever�o ser rigorosamente cumpridos.
+* Em casos de falha nas integra��es externas, dever� existir um plano de conting�ncia para minimizar impactos no sistema.
+
+11. Crit�rios de Aceita��o
+* Implementa��o Completa: 
+Todos os requisitos funcionais foram implementados e validados com sucesso, com testes integrados entre os m�dulos.
+* Conformidade dos Requisitos N�o Funcionais: 
+O sistema deve atender �s m�tricas de desempenho, escalabilidade, seguran�a e acessibilidade definidas.
+* Testes de Usabilidade: 
+Sess�es de testes com usu�rios reais para validar a intuitividade e efici�ncia da interface (desktop, mobile e dispositivos assistenciais).
+* Valida��o Legal e Regulat�ria: 
+O software dever� comprovar conformidade com a LGPD, PCI DSS (quando aplic�vel) e passar por auditorias de seguran�a peri�dicas.
+
+12. Diagramas e Mockups
+* Inclus�o de diagramas de caso de uso, fluxogramas, wireframes e mockups detalhando as principais telas (login, cadastro, dashboard, controle de ponto, gest�o de documentos, lista de compras, alertas, etc.).
+* Diagramas de integra��es (fluxo de dados entre o sistema e as APIs externas) dever�o ser disponibilizados em reposit�rio complementar.
+
+13. Gloss�rio
+* O gloss�rio ser� mantido e atualizado com novos termos e conceitos � medida que as funcionalidades evolu�rem, garantindo clareza na comunica��o entre as �reas.
+
+14. Rastreabilidade
+* Ser� utilizada uma matriz de rastreabilidade relacionando cada requisito funcional e n�o funcional com seus casos de teste, componentes do sistema e respons�veis pela implementa��o, facilitando auditorias e a manuten��o do documento.
+
+15. Pr�ximos Passos
+1. Revis�o Final: 
+Compartilhar esta vers�o revisada com todos os stakeholders para aprova��o final e identifica��o de eventuais ajustes remanescentes.
+2. Valida��o com Usu�rios: 
+Realizar sess�es de testes de usabilidade, desempenho, seguran�a e acessibilidade com usu�rios reais e por meio de testes automatizados.
+3. Aprova��o Formal: 
+Obter aprova��o formal do SRS consolidado pelos decisores do projeto.
+4. Implementa��o e Monitoramento: 
+Iniciar o desenvolvimento conforme o documento, com monitoramento cont�nuo dos KPIs, e atualizar o SRS conforme novas necessidades e feedbacks ocorram.
+
+Este documento unificado e revisado serve como a base de refer�ncia para todas as equipes, garantindo que o Sistema DOM seja desenvolvido de forma robusta, segura, acess�vel e alinhada �s expectativas dos usu�rios e �s melhores pr�ticas do mercado.
+
+Caso haja necessidade de ajustes adicionais durante a implementa��o, a equipe de produto, desenvolvimento, QA, e demais �reas permanecer�o alinhadas para atualizar esta documenta��o conforme necess�rio.
+
+## Adendo: Multi-grupo, Multi-perfil e Multi-parceiro
+
+O sistema foi projetado para permitir que:
+- Um usuário pertença a múltiplos grupos (famílias, empregadores, parceiros), com diferentes papéis em cada grupo.
+- Um empregado possa trabalhar para mais de um grupo.
+- Um parceiro (ex: escritório de contabilidade) possa gerenciar múltiplos empregadores.
+- Após o login, o usuário escolhe em qual grupo deseja atuar, caso tenha múltiplos vínculos.
+- As permissões e funcionalidades são carregadas conforme o grupo e o papel do usuário.
+
+Essa abordagem garante flexibilidade e atende aos requisitos de cenários reais de famílias e parceiros do eSocial Doméstico.
+

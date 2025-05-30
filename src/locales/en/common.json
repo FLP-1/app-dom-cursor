@@ -1,0 +1,90 @@
+{
+  "imageUpload": {
+    "dragAndDrop": "Drag and drop an image or click to select",
+    "errors": {
+      "maxSize": "File exceeds maximum size of {{size}}",
+      "invalidType": "File must be an image"
+    },
+    "messages": {
+      "uploadSuccess": "Image uploaded successfully",
+      "uploadError": "Error uploading image"
+    }
+  },
+  "richText": {
+    "loading": "Loading editor..."
+  },
+  "phoneInput": {
+    "placeholder": "(00) 00000-0000"
+  },
+  "cepInput": {
+    "searchButton": "Search ZIP code",
+    "errors": {
+      "searchError": "Error searching ZIP code"
+    }
+  },
+  "operacoesFinanceiras": {
+    "titulo": "Financial Operations",
+    "novo": "New Operation",
+    "tipo": {
+      "label": "Type",
+      "adiantamento": "Advance",
+      "emprestimo": "Loan"
+    },
+    "valor": {
+      "label": "Amount",
+      "placeholder": "$ 0.00"
+    },
+    "dataOperacao": {
+      "label": "Operation Date"
+    },
+    "dataVencimento": {
+      "label": "Due Date"
+    },
+    "numeroParcelas": {
+      "label": "Number of Installments",
+      "placeholder": "1"
+    },
+    "valorParcela": {
+      "label": "Installment Amount",
+      "placeholder": "$ 0.00"
+    },
+    "formaPagamento": {
+      "label": "Payment Method",
+      "dinheiro": "Cash",
+      "pix": "PIX",
+      "transferencia": "Transfer",
+      "outro": "Other"
+    },
+    "observacao": {
+      "label": "Note",
+      "placeholder": "Enter a note..."
+    },
+    "comprovanteUrl": {
+      "label": "Receipt URL",
+      "placeholder": "https://..."
+    },
+    "empregadoDomestico": {
+      "label": "Domestic Employee"
+    },
+    "status": {
+      "pendente": "Pending",
+      "aprovado": "Approved",
+      "rejeitado": "Rejected",
+      "concluido": "Completed"
+    },
+    "acoes": {
+      "aprovar": "Approve",
+      "rejeitar": "Reject",
+      "pagar": "Register Payment",
+      "motivoRejeicao": "Rejection Reason"
+    },
+    "mensagens": {
+      "sucesso": "Financial operation created successfully",
+      "erro": "Error creating financial operation",
+      "aprovado": "Financial operation approved successfully",
+      "erroAprovacao": "Error approving financial operation",
+      "rejeitado": "Financial operation rejected successfully",
+      "erroRejeicao": "Error rejecting financial operation",
+      "pagamentoRegistrado": "Payment registered successfully",
+  }
+} 

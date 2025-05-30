@@ -1,0 +1,92 @@
+{
+  "imageUpload": {
+    "dragAndDrop": "Arraste e solte uma imagem ou clique para selecionar",
+    "errors": {
+      "maxSize": "O arquivo excede o tamanho máximo de {{size}}",
+      "invalidType": "O arquivo deve ser uma imagem"
+    },
+    "messages": {
+      "uploadSuccess": "Imagem enviada com sucesso",
+      "uploadError": "Erro ao enviar imagem"
+    }
+  },
+  "richText": {
+    "loading": "Carregando editor..."
+  },
+  "phoneInput": {
+    "placeholder": "(00) 00000-0000"
+  },
+  "cepInput": {
+    "searchButton": "Buscar CEP",
+    "errors": {
+      "searchError": "Erro ao buscar CEP"
+    }
+  },
+  "operacoesFinanceiras": {
+    "titulo": "Operações Financeiras",
+    "novo": "Nova Operação",
+    "tipo": {
+      "label": "Tipo",
+      "adiantamento": "Adiantamento",
+      "emprestimo": "Empréstimo"
+    },
+    "valor": {
+      "label": "Valor",
+      "placeholder": "R$ 0,00"
+    },
+    "dataOperacao": {
+      "label": "Data da Operação"
+    },
+    "dataVencimento": {
+      "label": "Data de Vencimento"
+    },
+    "numeroParcelas": {
+      "label": "Número de Parcelas",
+      "placeholder": "1"
+    },
+    "valorParcela": {
+      "label": "Valor da Parcela",
+      "placeholder": "R$ 0,00"
+    },
+    "formaPagamento": {
+      "label": "Forma de Pagamento",
+      "dinheiro": "Dinheiro",
+      "pix": "PIX",
+      "transferencia": "Transferência",
+      "outro": "Outro"
+    },
+    "observacao": {
+      "label": "Observação",
+      "placeholder": "Digite uma observação..."
+    },
+    "comprovanteUrl": {
+      "label": "URL do Comprovante",
+      "placeholder": "https://..."
+    },
+    "empregadoDomestico": {
+      "label": "Empregado Doméstico"
+    },
+    "status": {
+      "pendente": "Pendente",
+      "aprovado": "Aprovado",
+      "rejeitado": "Rejeitado",
+      "concluido": "Concluído"
+    },
+    "acoes": {
+      "aprovar": "Aprovar",
+      "rejeitar": "Rejeitar",
+      "pagar": "Registrar Pagamento",
+      "motivoRejeicao": "Motivo da Rejeição"
+    },
+    "mensagens": {
+      "sucesso": "Operação financeira criada com sucesso",
+      "erro": "Erro ao criar operação financeira",
+      "aprovado": "Operação financeira aprovada com sucesso",
+      "erroAprovacao": "Erro ao aprovar operação financeira",
+      "rejeitado": "Operação financeira rejeitada com sucesso",
+      "erroRejeicao": "Erro ao rejeitar operação financeira",
+      "pagamentoRegistrado": "Pagamento registrado com sucesso",
+      "erroPagamento": "Erro ao registrar pagamento"
+    }
+  }
+} 

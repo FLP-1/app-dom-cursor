@@ -1,0 +1,40 @@
+# Árvore de Navegação
+
+- / (Dashboard)
+- /login (Login)
+- /parceiros
+  - /parceiros (Listagem de Parceiros)
+  - /parceiros/novo (Cadastro de Parceiro)
+  - /parceiros/[id] (Detalhes do Parceiro)
+  - /parceiros/[id]/editar (Edição de Parceiro)
+- /empregados-domesticos
+  - /empregados-domesticos (Listagem de Empregadores Domésticos)
+  - /empregados-domesticos/novo (Cadastro de Empregador Doméstico)
+  - /empregados-domesticos/[id] (Detalhes do Empregador Doméstico)
+  - /empregados-domesticos/[id]/editar (Edição de Empregador Doméstico)
+- /compras
+  - /compras (Listagem de Compras)
+  - /compras/novo (Cadastro de Compra)
+  - /compras/[id] (Detalhes da Compra)
+  - /compras/[id]/editar (Edição de Compra)
+- /tarefas
+  - /tarefas (Listagem de Tarefas)
+  - /tarefas/novo (Cadastro de Tarefa)
+  - /tarefas/[id] (Detalhes da Tarefa)
+  - /tarefas/[id]/editar (Edição de Tarefa)
+- /ponto
+  - /ponto (Listagem de Registros de Ponto)
+  - /ponto/novo (Registrar Ponto)
+- /esocial
+  - /esocial/configuracao (Configuração do eSocial)
+  - /esocial/eventos (Listagem de Eventos)
+  - /esocial/eventos/novo (Cadastro de Evento)
+  - /esocial/eventos/[id] (Detalhes do Evento)
+  - /esocial/eventos/[id]/editar (Edição de Evento)
+- /chat (Comunicação Interna)
+- /documents (Gestão de Documentos)
+- /alerts (Alertas)
+- /dashboard (Painel Geral)
+- /selecionar-grupo (Seleção de Grupo)
+- /privacy-policy (Política de Privacidade)
+- /terms-of-use (Termos de Uso) 

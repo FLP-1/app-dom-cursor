@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang='pt'>
+<head>
+   <meta charset='UTF-8'>
+   <title>Login - DOM</title>
+   <style>
+     body { font-family: Arial, sans-serif; background-color: #f0f8ff; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+     .login-container { background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 0 15px rgba(0,0,0,0.2); width: 320px; text-align: center; }
+     .login-container img { width: 150px; margin-bottom: 20px; }
+     .form-group { text-align: left; margin-bottom: 15px; }
+     .form-group label { display: block; font-size: 14px; color: #333; }
+     .form-group input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
+     .login-button { background-color: #29ABE2; color: #fff; border: none; padding: 10px; width: 100%; border-radius: 4px; cursor: pointer; }
+     .links { margin-top: 15px; font-size: 12px; }
+     .links a { color: #29ABE2; text-decoration: none; margin: 0 5px; }
+   </style>
+</head>
+<body>
+   <div class='login-container'>
+      <img src='logo.png' alt='DOM Logo'>
+      <h2>Entrar no DOM</h2>
+      <form>
+         <div class='form-group'>
+            <label for='username'>Usuário</label>
+            <input type='text' id='username' name='username' placeholder='Digite seu usuário'>
+         </div>
+         <div class='form-group'>
+            <label for='password'>Senha</label>
+            <input type='password' id='password' name='password' placeholder='Digite sua senha'>
+         </div>
+         <button type='submit' class='login-button'>Entrar</button>
+      </form>
+      <div class='links'>
+         <a href='#'>Política de Privacidade</a> | <a href='#'>Termos de Uso</a>
+      </div>
+   </div>
+</body>
+</html>

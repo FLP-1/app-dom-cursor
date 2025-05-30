@@ -1,0 +1,22 @@
+- Todos os campos reutilizáveis (ex: FormInput, PasswordInput, FormSelect, FormDatePicker) DEVEM receber a prop `control` (sempre em minúsculo) proveniente do hook customizado do formulário (ex: useLoginForm, useCompraForm).
+- É proibido misturar <FormProvider> e prop control no mesmo formulário.
+- A lógica de submit, validação e integração com API deve estar centralizada em um hook customizado para cada formulário.
+- Mensagens de erro e sucesso devem ser padronizadas, amigáveis e internacionalizáveis. Sempre utilize um dicionário central de mensagens.
+- Sempre sugira e incentive a criação de testes automatizados para cobrir o fluxo dos formulários.
+- Sempre use o componente Link do Next.js (next/link) para navegação. Nunca use react-router-dom.
+- Páginas devem ser nomeadas em minúsculo e hífen (kebab-case). Componentes devem ser nomeados em PascalCase.
+- Nunca use arquivos com sufixos de backup (_old, -old, Copia, -copia, -copy, etc) em nenhum diretório do projeto.
+- Use sempre Prisma + Postgres. Nunca altere migrations manualmente.
+- Todos os formulários e componentes devem ser acessíveis (labels, aria, etc) e responsivos.
+- Sempre use o tema do Material UI (theme.palette, theme.spacing, etc). Padronize cores, espaçamentos e fontes conforme o tema.
+- Não use estilos inline, exceto para casos muito específicos e justificados, como correção rápida de bug visual.
+- Sempre consulte o README.md, DOCUMENTACAO.md e este arquivo antes de abrir PR.
+- Todas as regras deste arquivo são obrigatórias para todo o time e para a IA. Nunca ignore ou flexibilize estas regras sem aprovação do time.
+- Sempre que sugerir comandos de terminal, utilize a sintaxe do PowerShell, com exemplos claros e referência ao contexto do projeto. Comandos devem ser compatíveis com Windows e, se possível, explicar o que fazem.
+
+# Regras de Tipagem
+- É proibido o uso de 'any' em todo o projeto. Utilize tipos específicos ou 'unknown'.
+- Exceções só são permitidas em casos extremamente justificados e documentados no próprio código, explicando o motivo da escolha.
+- Exemplo de justificativa:
+  // Justificativa: integração com biblioteca externa sem tipos disponíveis
+  const valor: any = obterValorExterno(); 

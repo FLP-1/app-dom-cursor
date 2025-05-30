@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema DOM - Dashboard Empregador</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Estilos CSS */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background-color: #29ABE2;
+        }
+        .navbar-brand {
+            color: #fff;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+        .btn-primary {
+            background-color: #29ABE2;
+            border-color: #29ABE2;
+        }
+        .btn-primary:hover {
+            background-color: #208dc9;
+            border-color: #208dc9;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="#">Sistema DOM</a>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <div class="container">
+        <h1>Dashboard Empregador</h1>
+        <div class="row">
+            <!-- Tarefas Pendentes -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Tarefas Pendentes</h5>
+                        <p class="card-text">Lista de tarefas pendentes.</p>
+                        <a href="#" class="btn btn-primary">Ver Tarefas</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Próximos Pagamentos -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Próximos Pagamentos</h5>
+                        <p class="card-text">Lista de próximos pagamentos.</p>
+                        <a href="#" class="btn btn-primary">Ver Pagamentos</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alertas de Documentos -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Alertas de Documentos</h5>
+                        <p class="card-text">Lista de alertas de documentos.</p>
+                        <a href="#" class="btn btn-primary">Ver Alertas</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

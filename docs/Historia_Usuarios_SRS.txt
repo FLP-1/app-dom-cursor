@@ -1,0 +1,333 @@
+Hist�rias de Usu�rio Revisadas:
+I. Requisitos Funcionais
+1. Controle de Acesso, Autentica��o e Valida��o de Dados
+1. Cadastro Inicial pelo Empregador 
+Como um Empregador, eu quero realizar o cadastro inicial no Sistema DOM utilizando meu CPF, e-mail (obrigat�rio) e n�mero de celular, para que eu possa cadastrar os usu�rios do meu grupo/n�cleo (empregados e familiares). Todas as valida��es (CPF, e-mail via API, celular com SMS) devem ser aplicadas
+Crit�rios de Aceita��o:
+o O cadastro inicial s� pode ser iniciado pelo Empregador.
+o Ap�s o cadastro, o Empregador pode adicionar empregados e familiares, mantendo as valida��es.
+o O CPF ser� �nico por grupo/n�cleo. Podendo o usu�rio fazer parte de mais de um grupo
+o O grupo/n�cleo deve estar associado a um Parceiro
+o Exibi��o de mensagens de erro amig�veis para dados inv�lidos.
+2. Cadastro Inicial do Empregador pelo Parceiro
+Crit�rios de Aceita��o:
+o O cadastro inicial do Empregador ser� feito pelo Parceiro
+o Ap�s o cadastro, o Empregador pode adicionar empregados e familiares, mantendo as valida��es.
+o O CPF ser� �nico por grupo/n�cleo. Podendo o usu�rio fazer parte de mais de um grupo
+o O grupo/n�cleo deve estar associado ao Parceiro
+o Exibi��o de mensagens de erro amig�veis para dados inv�lidos.
+
+3. Cadastro de Parceiros 
+Como um Administrador do Sistema, eu quero cadastrar os Parceiros (criados por mim), garantindo que todas as valida��es sejam aplicadas (CPF, e-mail, celular), para manter a integridade dos dados dos parceiros no sistema. 
+Crit�rios de Aceita��o:
+o O cadastro dos Parceiros � realizado pelo Administrador.
+o Todas as valida��es aplic�veis s�o executadas.
+4. Login Exclusivo com CPF e Gerenciamento de Sess�es 
+Como um Usu�rio Autenticado, eu quero realizar o login utilizando apenas meu CPF, com autentica��o baseada em tokens JWT (acompanhados de refresh tokens), para que minha sess�o seja segura e rotas sens�veis sejam devidamente protegidas. 
+Crit�rios de Aceita��o:
+o O CPF e senha ou reconhecimento facial ou digital s�o os �nicos dados utilizados para login.
+o Tokens JWT s�o gerados e validados com tempo de expira��o configurado.
+o Rotas sens�veis requerem token v�lido.
+5. Prote��o e Auditoria de Dados 
+Como um Administrador/Respons�vel pela Conformidade, eu quero que todas as modifica��es em dados cr�ticos sejam registradas em logs de auditoria, possibilitando assim a verifica��o de acessos e altera��es, conforme os requisitos da LGPD. 
+Crit�rios de Aceita��o:
+o Altera��es cr�ticas geram registros de auditoria.
+o Os usu�rios podem consultar seu hist�rico de consentimentos e acessos.
+
+2. Dashboard Personalizado
+5. Dashboard para Empregadores 
+Como um Empregador, eu quero um dashboard que mostre um calend�rio de eventos (integrado ao Google Calendar ou similar), lista de compras com indicadores de prioridade, tarefas dom�sticas pendentes e um resumo do or�amento familiar, para colaborar na gest�o financeira e organizacional do lar, tarefas pendentes, pr�ximos pagamentos, alertas de documentos, resumo do controle de ponto e avalia��es dos empregados, para obter uma vis�o abrangente da gest�o do meu grupo/n�cleo.
+Como um Empregador, eu quero um dashboard que exiba:
+o Um calend�rio de eventos (integrado ao Google Calendar ou similar),
+o Lista de compras com categoriza��o visual (por prioridade),
+o Tarefas pendentes,
+o Pr�ximos pagamentos (pr�ximos 7 dias),
+o Alertas de documentos (vencimento at� 30 dias),
+o Resumo do controle de ponto (horas trabalhadas, extras e faltas totalizadas por semana e m�s) e 
+o Avalia��es de empregados, para ter uma vis�o r�pida e completa da gest�o dom�stica.
+ 
+Crit�rios de Aceita��o:
+o Se��es separadas para cada tipo de informa��o. Dados organizados em se��es claramente definidas.
+o Atualiza��o dos dados em tempo real ou em intervalos configurados.
+o Possibilidade de personalizar widgets.
+6. Dashboard para Empregados 
+Como um Empregado, eu quero um dashboard que exiba minhas tarefas di�rias, hor�rios (entrada, sa�da, total) e minha folha de pagamento, al�m de notifica��es de mensagens, para acompanhar minhas obriga��es e desempenho, exibindo:
+o Minhas tarefas do dia,
+o Hor�rios de trabalho (entrada, sa�da, intervalos, horas extras e totais semanais e mensais),'
+o Folha de pagamento do m�s corrente e
+o Notifica��es de mensagens n�o lidas, para que eu possa acompanhar minhas obriga��es e desempenho.*
+ 
+Crit�rios de Aceita��o:
+o Blocos de informa��o organizados e intuitivos.
+o Notifica��es de mensagens n�o lidas destacadas.
+o Interface responsiva para mobile (IOS e Android).
+7. Dashboard para Familiares 
+Como um Familiar, eu desejo um dashboard que mostre um calend�rio de eventos (integrado ao Google Calendar ou similar), lista de compras com indicadores de prioridade, tarefas dom�sticas pendentes e um resumo do or�amento familiar, para colaborar na gest�o financeira e organizacional do lar. 
+Crit�rios de Aceita��o:
+o Um calend�rio de eventos (integrado ao Google Calendar ou similar),
+o Lista de compras com categoriza��o visual (por prioridade),
+o Tarefas dom�sticas pendentes 
+o Integra��o adequada com o calend�rio.
+o Exibi��o organizada da lista de compras com c�digos de cores.
+8. Dashboard para Administradores 
+Como um Administrador, eu quero um dashboard que apresente KPIs do sistema (n�mero de acessos, status de integra��es, alertas e logs de auditoria), para monitorar a performance e seguran�a da plataforma. 
+Crit�rios de Aceita��o:
+o Apresenta��o clara de indicadores de performance e seguran�a.
+o Possibilidade de filtrar informa��es por per�odo.
+o Valores recebidos, valores em atraso
+o Quantidade de clientes , quantidade de clientes em atraso, 
+o Interface para detalhar informa��es por per�odo e categoria.
+9. Dashboard para Parceiros 
+Como um Parceiro, eu desejo um dashboard que exiba indicadores estrat�gicos (volume de transa��es, status de assinaturas e desempenho contratual), para que eu tenha visibilidade sobre meu desempenho e possa ajustar minhas estrat�gias. 
+Crit�rios de Aceita��o:
+o Gr�ficos e m�tricas relevantes s�o exibidos.
+o Possibilidade de filtrar informa��es por per�odo.
+o Valores recebidos, valores em atraso
+o Quantidade de clientes , quantidade de clientes em atraso, 
+
+3. Tela de Controle de Ponto Inteligente
+10. Registro de Ponto Completo 
+Como um Empregado, eu quero registrar meu ponto com um �nico toque, para que a marca��o de entrada e sa�da seja r�pida e sem complica��es.  
+Eu quero registrar meu ponto informando:
+o Entrada
+o In�cio do intervalo de descanso
+o Fim do intervalo
+o Sa�da
+o In�cio da hora extra
+o Fim da hora extra
+o Observa��es
+o Ocorr�ncia (ex.: falta, atraso, folga, atestado, etc.)
+o Total de horas trabalhadas no dia
+o Totalizadores de horas trabalhadas por semana e m�s
+o Upload de arquivos (atestados, documentos, etc.),
+para que o registro da minha jornada seja completo e reflita toda a movimenta��o do meu dia de trabalho.
+o Aprovado pelo empregador (sim/n�o - data e hora)
+
+Crit�rios de Aceita��o:
+o Interface com todos os campos e �cone para upload de arquivos
+o Bot�o de registro de ponto vis�vel e de f�cil acesso. 
+o Ao registrar, o sistema captura a data e hora, geolocaliza��o (com precis�o de at� 10 metros) e rede Wi-Fi conectada.
+o O sistema deve garantir a data e hora efetiva evitando fraude
+o Registro com feedback visual e sonoro, e hist�rico detalhado
+o Relat�rios completos e filtr�veis por per�odo.
+11. Visualiza��o de Registros de Ponto 
+Como um Empregador, eu desejo visualizar um relat�rio detalhado dos registros de ponto dos empregados (com todas as informa��es: datas, hor�rios, localiza��es, ocorr�ncias e uploads), para monitorar a jornada e identificar poss�veis irregularidades. 
+Crit�rios de Aceita��o:
+o Relat�rio inclui data, hora, localiza��o e status dos registros (normal, atraso, falta).
+o Possibilidade de filtrar ou ordenar os registros por status, localiza��o, funcion�rio ou per�odo e aprova��o.
+
+4. Gest�o de Tarefas Colaborativa
+12. Cria��o e Atribui��o de Tarefas 
+Como um Empregador ou Familiar, eu quero criar tarefas com descri��o, data de vencimento e prioridade, e atribu�-las aos usu�rios do meu grupo, para organizar e monitorar as atividades do dia a dia. 
+Crit�rios de Aceita��o:
+o Formul�rio de cria��o com campos obrigat�rios e sele��o de usu�rios.
+o Lista de usu�rios dispon�vel para atribui��o.
+o Confirma��o de cria��o de tarefa com feedback visual.
+o Feedback imediato ap�s a cria��o.
+13. Gest�o de Tarefas pelo Empregado 
+Como um Empregado, eu quero visualizar e gerenciar as tarefas atribu�das a mim (atualizar status, adicionar coment�rios ou checklists), para acompanhar e concluir minhas atividades de forma eficaz. 
+Crit�rios de Aceita��o:
+o Lista de tarefas espec�fica com op��es para atualizar o status e inserir coment�rios/checklists.
+o Notifica��es sobre atualiza��es relevantes.
+14. Colabora��o e Monitoramento de Tarefas 
+Como um Usu�rio (Empregador, Empregado ou Familiar), eu quero adicionar coment�rios e checklists a cada tarefa, para discutir detalhes e acompanhar o progresso at� a conclus�o. 
+Crit�rios de Aceita��o:
+o Possibilidade de inserir, editar e visualizar coment�rios em ordem cronol�gica.
+o Checklist que permite marcar itens individualmente.
+o Notifica��es (push e/ou e-mail) enviadas quando houver atualiza��es.
+o 
+
+5. Comunica��o Unificada
+14. Mensagens Instant�neas com Anexos 
+Como um Usu�rio (seja Empregador, Empregado, Familiar, Administrador ou Parceiro), eu quero enviar e receber mensagens de texto com a op��o de anexar arquivos, para facilitar a comunica��o interna de forma r�pida e eficiente. 
+Crit�rios de Aceita��o:
+o Interface de chat com envio de texto e anexos.
+o Notifica��es via push para mensagens novas.
+o Hist�rico de conversas acess�vel.
+15. Chamadas de Voz/V�deo e Cria��o de Grupos 
+Como um Usu�rio (principalmente Empregador e Empregado), eu quero realizar chamadas de voz e v�deo e criar grupos de discuss�o tem�ticos, para facilitar reuni�es e tomada de decis�o em tempo real. 
+Crit�rios de Aceita��o:
+o Qualidade adequada de �udio e v�deo nas chamadas.
+o Possibilidade de criar e gerenciar grupos com m�ltiplos participantes.
+o Integra��o de notifica��es para novas mensagens nos grupos.
+
+6. Gest�o Financeira Simplificada
+16. Registro e Organiza��o Financeira 
+Como um Empregador, eu quero registrar receitas e despesas, categoriz�-las e visualizar gr�ficos financeiros, para ter controle total do fluxo de caixa do meu n�cleo. 
+Crit�rios de Aceita��o:
+o Formul�rio de registro financeiro com categorias pr�-definidas e customiz�veis.
+o Exibi��o imediata de gr�ficos (barras, pizza, etc.) e relat�rios peri�dicos.
+o Gera��o de alertas caso o or�amento seja ultrapassado.
+17. C�lculos Salariais e Emiss�o de Recibos/Holerites 
+Como um Empregado, eu quero acessar minha folha de pagamento detalhada - que inclua sal�rio base, horas extras, descontos - e emitir recibos/holerites, para acompanhar e validar meu rendimento mensal. 
+Crit�rios de Aceita��o:
+o Dashboard pessoal que exiba o resumo da folha de pagamento.
+o Funcionalidade para exportar ou imprimir holerites.
+18. Gest�o de Empr�stimos e Adiantamentos 
+Como um Empregador ou Administrador, eu quero gerenciar solicita��es e aprova��es de empr�stimos e adiantamentos, integrando esses dados ao c�lculo salarial (incluindo f�rias e 13�), para controlar o saldo devedor e oferecer suporte financeiro aos usu�rios do meu n�cleo. 
+Crit�rios de Aceita��o:
+o Interface para solicita��o, aprova��o e acompanhamento de empr�stimos/adiantamentos.
+o Atualiza��o autom�tica do saldo devedor no c�lculo salarial.
+
+7. Assistente Virtual
+19. Intera��o via Comando de Voz 
+Como um Usu�rio (Empregador, Empregado ou Familiar), eu quero utilizar comandos de voz (atrav�s de Alexa ou Google Assistant) para criar e consultar informa��es, permitindo uma intera��o pr�tica sem a necessidade de digitar. 
+Crit�rios de Aceita��o: 
+o Integra��o via API com assistentes de voz.
+o Reconhecimento e execu��o de comandos espec�ficos (ex.: criar tarefa, consultar status).
+o Feedback auditivo confirmando as a��es.
+
+8. Gamifica��o
+20. Sistema de Recompensas e Ranking 
+Como um Usu�rio Ativo (qualquer perfil), eu quero participar de um sistema de recompensas que atribua pontos e conquistas por concluir tarefas e alcan�ar metas, exibindo um ranking para aumentar minha motiva��o e engajamento. 
+Crit�rios de Aceita��o: 
+o Registro e atualiza��o em tempo real dos pontos e conquistas.
+o Visualiza��o clara do ranking dos usu�rios.
+o Notifica��es quando novas conquistas s�o alcan�adas.
+
+9. Integra��o com Wearables
+21. Sincroniza��o Autom�tica com Wearables 
+Como um Usu�rio (Empregador, Empregado ou Familiar) que utiliza dispositivos wearables, eu quero que meu smartwatch ou pulseira fitness sincronize automaticamente os dados de atividade e hor�rios, para que os registros de ponto e indicadores de sa�de sejam precisos. 
+Crit�rios de Aceita��o: 
+o Integra��o via API com dispositivos compat�veis (iOS/Android).
+o Registro autom�tico dos dados e confirma��o visual no aplicativo.
+
+10. Relat�rios Personalizados
+22. Cria��o de Relat�rios Customizados 
+Como um Empregador ou Administrador, eu desejo criar relat�rios customizados selecionando e filtrando dados (financeiros, de ponto, tarefas, etc.), para obter an�lises espec�ficas conforme minhas necessidades. 
+Crit�rios de Aceita��o: 
+o Interface para sele��o de campos e aplica��o de filtros.
+o Gera��o dos relat�rios em diversos formatos (PDF, Excel).
+o Visualiza��o pr�via dos dados selecionados antes da exporta��o.
+
+11. Gest�o de Perfis
+23. Gest�o de Perfis do Grupo/N�cleo e dos Parceiros 
+Como um Empregador, eu quero gerenciar os perfis dos usu�rios do meu grupo/n�cleo (empregados e familiares), garantindo que as informa��es estejam centralizadas e atualizadas, enquanto um Administrador gerencia os perfis dos Parceiros, para manter a integridade e seguran�a dos dados do sistema. 
+Crit�rios de Aceita��o:
+o O Empregador tem acesso a uma interface de gerenciamento para editar os perfis do seu grupo.
+o O Administrador pode gerenciar os perfis dos Parceiros.
+o Registro de consentimento expl�cito durante o cadastro, conforme LGPD.
+o A remo��o ou altera��o de perfis � restrita aos respons�veis (Empregador para o grupo e Administrador para os Parceiros).
+24. Inclus�o de Registros de F�rias no Perfil 
+Como um Empregado, eu quero visualizar meus registros de f�rias (adquiridas, gozadas e vencidas) no meu perfil, para acompanhar e planejar meus per�odos de descanso. 
+Crit�rios de Aceita��o:
+o Interface exibe claramente os registros de f�rias.
+o Atualiza��o autom�tica conforme os c�lculos e aprova��es.
+
+12. Gest�o de Alertas
+25. Alertas Pr�-Cadastrados e Configur�veis 
+Como um Usu�rio (Empregador, Empregado ou Familiar), eu quero que o sistema j� venha com alertas pr�-cadastrados (ex.: vencimento de pagamentos, hor�rios, atrasos) e que eu possa criar alertas adicionais, para sempre ser informado sobre eventos cr�ticos. 
+Crit�rios de Aceita��o: 
+o Sistema inicia com alertas padr�o configurados.
+o Interface permite a cria��o e personaliza��o de alertas.
+o Notifica��es s�o enviadas via push, e-mail ou internamente.
+o Log de alertas dispon�vel para auditoria.
+
+13. Gest�o de Documentos
+26. Upload e Gerenciamento de Documentos 
+Como um Empregador, eu quero gerenciar os documentos dos usu�rios do meu grupo/n�cleo (upload, visualiza��o, edi��o) e, como Administrador, gerenciar os documentos dos Parceiros, para manter a organiza��o e seguran�a. Apenas esses respons�veis podem remover documentos. 
+Crit�rios de Aceita��o: 
+o Suporte a m�ltiplos formatos de arquivos.
+o Gera��o autom�tica de alertas para vencimentos.
+o Interface para upload, visualiza��o, edi��o e categoriza��o dos documentos (com metadados como data de vencimento e categoria).
+o Remo��o de documentos restrita aos respons�veis (Empregador e Administrador).
+
+14. Gest�o de Compras
+27. Cadastro e Gerenciamento da Lista de Compras 
+Como um Usu�rio (Empregador, Empregado ou Familiar), eu quero criar e gerenciar uma lista de compras que contenha os seguintes campos: usu�rio solicitante, data da solicita��o, data da compra, produto, marca/modelo, foto, pre�o da �ltima compra, unidade (ex.: un, kg, m, kit, p�) e quantidade, com a op��o de adicionar observa��es; al�m disso, quero agrupar as compras (ex.: supermercado, material de manuten��o, etc.) com filtros e totaliza��o por grupo, para organizar e monitorar as compras. 
+Crit�rios de Aceita��o: 
+o Interface intuitiva para inser��o de itens com informa��es de prioridade.
+o Fun��o de marcar itens como conclu�dos.
+o Formul�rio completo com os campos especificados.
+o Funcionalidade para cria��o de grupos de compras, filtros e totaliza��o dos grupos.
+o Hist�rico e edi��o das listas de compras dispon�veis para consulta.
+
+15. Integra��es com Meios de Pagamento
+28. Transa��es Seguras e Gerenciamento de Pagamentos 
+Como um Empregador ou Administrador, eu quero processar transa��es financeiras de forma segura via integra��o com plataformas de pagamento (como Stripe e PayPal), com suporte a webhooks e conformidade PCI DSS, para garantir a integridade e seguran�a dos pagamentos. 
+Crit�rios de Aceita��o: 
+o Integra��o robusta com m�ltiplos gateways de pagamento.
+o Uso de criptografia e tokens para valida��o.
+o Feedback em tempo real do status das transa��es com registro para auditoria.
+
+16. Planos de Assinatura
+29. Gest�o de Planos de Assinatura 
+Como um Usu�rio (seja Empregador, Empregado, Familiar, Parceiro ou Administrador), eu quero acessar e gerenciar planos de assinatura para obter funcionalidades premium, personalizar minha experi�ncia e ter acesso a recursos avan�ados do Sistema DOM. 
+Crit�rios de Aceita��o: 
+o Exibi��o dos planos de assinatura dispon�veis com detalhes de pre�os e benef�cios.
+o Funcionalidade para contrata��o, renova��o e cancelamento de assinaturas.
+o Associa��o dos planos ao dashboard com controle de acesso a recursos premium.
+
+17. Integra��o com eSocial Dom�stico
+30. Inclus�o de Informa��es e Eventos do eSocial 
+Como um Empregador/Administrador, eu quero que os perfis (tanto do empregador quanto do empregado) sejam enriquecidos com as informa��es necess�rias conforme a documenta��o do eSocial e eSocial Dom�stico, e que o sistema comunique e registre os eventos obrigat�rios para conformidade legal. 
+Crit�rios de Aceita��o: 
+o Inclus�o dos dados obrigat�rios a partir da pesquisa na documenta��o oficial do eSocial Dom�stico.
+o Mapeamento e registro dos eventos de comunica��o exigidos legalmente.
+
+18. C�lculos Salariais, Recibos e Holerites
+31. Processamento e Emiss�o de Documentos Salariais 
+Como um Empregado, eu quero que o sistema realize os c�lculos salariais (incluindo sal�rio base, horas extras, descontos) e emita meus recibos/holerites, para que eu possa acompanhar e validar meu rendimento mensal. 
+Crit�rios de Aceita��o: 
+o Dashboard exibe os c�lculos de forma detalhada e precisa.
+o Funcionalidade para exporta��o ou impress�o dos holerites.
+
+19. Gest�o de Empr�stimos e Adiantamentos
+32. Gerenciamento Integrado de Empr�stimos e Adiantamentos 
+Como um Empregador ou Administrador, eu quero gerenciar empr�stimos e adiantamentos, integrando-os ao c�lculo salarial (inclusive considerando f�rias, 13�, etc.) e atualizando o saldo devedor automaticamente, para oferecer suporte financeiro e manter a transpar�ncia dos controles. 
+Crit�rios de Aceita��o: 
+o Interface para solicita��o, aprova��o e acompanhamento de empr�stimos/adiantamentos.
+o Integra��o dos dados financeiros com os c�lculos salariais e atualiza��o do saldo.
+
+20. Gest�o do Termo de Uso e das Pol�ticas de Privacidade
+33. Administra��o dos Termos de Uso e Pol�ticas de Privacidade 
+Como um Empregador/Administrador, eu quero gerenciar o Termo de Uso e as Pol�ticas de Privacidade do Sistema DOM, garantindo que os usu�rios sejam informados e que as vers�es mais atuais estejam dispon�veis, para assegurar transpar�ncia e conformidade legal (incluindo LGPD). 
+Crit�rios de Aceita��o: 
+o Interface que possibilite a atualiza��o e publica��o dos Termos de Uso e Pol�ticas de Privacidade.
+o Controle de vers�es para que os usu�rios possam consultar as datas de vig�ncia.
+o Exibi��o obrigat�ria dos documentos na primeira utiliza��o e durante o cadastro, com registro do consentimento dos usu�rios.
+-----------------------------
+II. Requisitos N�o Funcionais 
+(Hist�rias j� estipuladas anteriormente, reindexadas a partir de 34)
+34. Desempenho e Tempo de Resposta 
+Como um Usu�rio Final, eu quero que o sistema responda em menos de 2 segundos para 95% das requisi��es, garantindo uma experi�ncia �gil. 
+Crit�rios de Aceita��o:
+o Testes de performance comprovam tempo de resposta inferior a 2 segundos para 95% das opera��es.
+35. Escalabilidade e Confiabilidade 
+Como um Administrador, eu desejo que o sistema suporte at� 10.000 usu�rios ativos simultaneamente, garantindo estabilidade mesmo sob alta demanda. 
+Crit�rios de Aceita��o:
+o Testes de carga confirmam escalabilidade sem degrada��o percept�vel.
+36. Usabilidade e Acessibilidade 
+Como um Usu�rio com Necessidades Especiais, eu quero que o sistema esteja em conformidade com as diretrizes WCAG 2.1 n�vel AA, com suporte a leitores de tela e navega��o por teclado, garantindo acessibilidade em qualquer dispositivo. 
+Crit�rios de Aceita��o:
+o Auditorias de acessibilidade confirmem o cumprimento das diretrizes WCAG 2.1 n�vel AA, com suporte a leitores de tela e navega��o por teclado.
+37. Compatibilidade e Responsividade (Incluindo Mobile iOS/Android) 
+Como um Usu�rio Final, eu desejo acessar o sistema de forma consistente em diferentes navegadores (Chrome, Firefox, Safari, Edge) e dispositivos (desktop, tablet, mobile - iOS e Android), para uma experi�ncia unificada. 
+Crit�rios de Aceita��o:
+o Testes de compatibilidade mostrem funcionamento correto em todos os principais navegadores e dispositivos.
+38. Seguran�a e Rate Limiting 
+Como um Administrador/Equipe de Opera��es, eu desejo que as APIs e integra��es implementem rate limiting, prevenindo abusos e ataques de DoS, para manter a seguran�a e disponibilidade do sistema. 
+Crit�rios de Aceita��o:
+o Configura��o e testes de rate limiting est�o implementados, com alertas configurados para detectar abusos.
+39. Monitoramento e Auditoria Cont�nua 
+Como parte da Equipe de Opera��es, eu quero monitorar continuamente a disponibilidade e desempenho do sistema e das integra��es, recebendo alertas imediatos em caso de falhas, para garantir a confiabilidade da plataforma. 
+Crit�rios de Aceita��o:
+o Ferramentas de monitoramento est�o implementadas e configuradas para gerar alertas e relat�rios regulares.
+-----------------------------
+Essas hist�rias de usu�rio, agora revisadas com a identifica��o expl�cita dos tipos de usu�rio (personas) relevantes e com as novas inclus�es solicitadas, formam a base para a cria��o do backlog �gil e para o alinhamento das equipes de desenvolvimento, design, QA, opera��es e suporte. Elas ser�o revisadas e refinadas continuamente com o feedback das sess�es de testes e da utiliza��o real do sistema.
+Caso haja mais ajustes ou complementos, a equipe de Produto permanecer� em contato para iterarmos essas hist�rias conforme necess�rio.
+
+
+
+           flp-business.strategy@outlook.com                                                                                                                                +55 (11) 97648-7066
+
+## Observação sobre Multi-grupo e Multi-perfil
+
+O sistema implementa um modelo onde:
+- Usuários podem ter múltiplos vínculos (grupos) e diferentes papéis em cada um.
+- Empregados e familiares podem participar de mais de um grupo.
+- Parceiros podem gerenciar vários empregadores.
+- Após o login, se houver múltiplos grupos, o usuário escolhe em qual deseja atuar, garantindo que as permissões estejam corretas para cada contexto.
+
+Esse fluxo foi pensado para atender as necessidades reais de uso identificadas nas histórias de usuário.
+

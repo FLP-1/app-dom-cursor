@@ -1,0 +1,54 @@
+
+# Política de Privacidade do DOM
+
+**Última atualização:** [Inserir data]
+
+## 1. Introdução  
+Esta Política de Privacidade tem como objetivo informar como o DOM coleta, utiliza, armazena e protege os dados pessoais dos Usuários, em conformidade com a Lei Geral de Proteção de Dados (LGPD) e demais legislações aplicáveis. Ao utilizar a plataforma DOM, o Usuário concorda com as práticas descritas nesta política.
+
+## 2. Dados Coletados  
+O DOM pode coletar os seguintes tipos de dados:  
+- **Dados de Identificação:** Nome, CPF, e-mail, número de celular, endereço e outras informações cadastrais necessárias para a criação e administração da conta.  
+- **Dados de Uso:** Informações sobre a utilização dos serviços, preferências e interações na plataforma.  
+- **Dados Técnicos:** Endereço de IP, tipo de dispositivo, cookies e informações de navegador, coletados para melhorar a experiência do Usuário e garantir a segurança do sistema.
+
+## 3. Finalidades do Tratamento  
+Os dados coletados serão utilizados para as seguintes finalidades:  
+- Gerenciar e prestar os serviços contratados pelo Usuário, inclusive os planos de assinatura.
+- Realizar análises e melhorias na plataforma, personalizando a experiência de uso.
+- Cumprir obrigações legais e contratuais, bem como para a defesa de interesses legítimos do DOM.
+- Enviar comunicações institucionais, incluindo atualizações, novidades e ofertas, sempre com opção de cancelamento.
+
+## 4. Base Legal para o Tratamento  
+O tratamento dos dados pessoais pode se fundamentar nas seguintes bases legais:  
+- Consentimento do Usuário, quando requerido.  
+- Execução de contrato ou procedimentos preliminares relacionados a um contrato do qual o Usuário é parte.  
+- Cumprimento de obrigação legal ou regulatória.  
+- Legítimo interesse do DOM, desde que não prevaleçam os direitos e liberdades fundamentais do Usuário.
+
+## 5. Compartilhamento e Transferência de Dados  
+Os dados pessoais poderão ser compartilhados com parceiros e prestadores de serviço estritamente para a viabilização dos serviços oferecidos pelo DOM, ou quando exigido por lei. Todas as transferências de dados serão realizadas de acordo com as disposições legais aplicáveis, assegurando a confidencialidade e a segurança das informações.
+
+## 6. Armazenamento e Segurança  
+- O DOM adota medidas técnicas e administrativas adequadas para proteger os dados pessoais, tais como o uso de criptografia (AES-256), controles de acesso e políticas internas de segurança.
+- Os dados serão armazenados pelo período necessário para cumprir as finalidades para os quais foram coletados, ou para atender exigências legais vigentes.
+
+## 7. Direitos dos Titulares dos Dados  
+Em conformidade com a LGPD, o Usuário poderá:  
+- Solicitar o acesso aos seus dados pessoais.  
+- Solicitar a correção de dados incompletos, inexatos ou desatualizados.  
+- Solicitar a anonimização, bloqueio ou eliminação de dados desnecessários, excessivos ou tratados em desconformidade com a LGPD.
+- Peticionar à eliminação dos dados, ressalvadas as hipóteses legais.
+- Obter informações sobre as entidades públicas ou privadas com as quais o DOM compartilhou seus dados.
+- Revogar o consentimento, quando o tratamento for baseado nesta hipótese.
+
+## 8. Cookies e Tecnologias Similares  
+O DOM utiliza cookies e outras tecnologias semelhantes para aprimorar a experiência do Usuário, personalizar conteúdo e analisar o tráfego da plataforma. O Usuário poderá configurar seu navegador para recusar cookies, mas isso poderá limitar o acesso a alguns recursos da plataforma.
+
+## 9. Alterações na Política de Privacidade  
+Esta Política de Privacidade poderá ser revisada periodicamente. As alterações serão comunicadas por meio da plataforma ou via e-mail, e a versão atualizada estará sempre disponível para consulta.
+
+## 10. Contato  
+Para exercer seus direitos ou esclarecer dúvidas relativas a esta Política de Privacidade, o Usuário poderá entrar em contato através dos seguintes canais:  
+- E-mail: [inserir e-mail de contato]  
+- Endereço: [inserir endereço físico, se aplicável]

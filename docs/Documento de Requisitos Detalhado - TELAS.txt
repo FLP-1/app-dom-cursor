@@ -1,0 +1,354 @@
+Documento de Requisitos Detalhado - Telas do Sistema DOM
+1. Introdução
+Este documento reúne e sintetiza todos os requisitos para a criação das telas do Sistema DOM - uma solução completa para a gestão doméstica. O sistema abrange funcionalidades como cadastro e login, dashboards customizados por perfil, controle de ponto com geolocalização, gestão de tarefas colaborativas, comunicação unificada, gestão financeira, integração com wearables, relatórios customizados, gerenciamento de perfis, alertas, documentos, compras, pagamentos, planos de assinatura, eSocial, cálculos salariais e gerenciamento de empréstimos. Adicionalmente, foram incluídos elementos fundamentais de navegação (menu lateral), uma splash screen, ícones para campos (como o de "mostrar/ocultar senha") e links para Termos de Uso e Políticas de Privacidade com aceitação explícita.
+2. Objetivos e Escopo
+* Objetivos:
+o Oferecer uma experiência de usuário excepcional com interfaces intuitivas, motivacionais e consistentes com a identidade da marca DOM.
+o Garantir a segurança dos dados e a conformidade com as normas (LGPD, PCI DSS, WCAG).
+o Fornecer uma plataforma responsiva e de fácil manutenção, utilizando componentes reutilizáveis.
+* Escopo:
+o Desenvolvimento de telas para cadastro e login.
+o Criação de uma Splash Screen e banner motivacional.
+o Dashboards customizados para Empregadores, Empregados, Familiares, Administradores e Parceiros.
+o Implementação de um menu lateral fixo (sidebar) com ícones e rótulos.
+o Telas para controle de ponto, gestão de tarefas colaborativas, comunicação, finanças, assistente virtual, gamificação, integração com wearables, relatórios, gestão de perfis, alertas, documentos, compras, meios de pagamento, planos de assinatura, integração com eSocial, cálculos salariais, empréstimos/adiantamentos e termos de uso.
+3. Diretrizes Visuais Comuns
+* Paleta de Cores:
+o Azul: #29ABE2 - usado em botões primários, ícones e cabeçalhos.
+o Verde: #90EE90 - indica sucesso (ex.: confirmações ou indicadores positivos).
+o Amarelo: #FFDA63 - utilizado em alertas informativos e destaques.
+o Cinza: Tons como #ECECEC para bordas e separadores; fundo de páginas em branco ou cinza muito claro (#F5F5F5).
+* Tipografia:
+o Cabeçalhos: "Montserrat", escalonados (H1: 32px; H2: 28px; H3: 24px).
+o Corpo de Texto: "Roboto", 16px, cor #333333.
+o Rótulos, Placeholders e Legendas: 12-14px, cores variando conforme o contexto (ex.: rótulos em #30475E).
+* Componentes Reutilizáveis:
+o Botões padrão: Fundo #29ABE2, texto branco, border-radius de 5px ; efeitos hover.
+o Inputs com borda em #ECECEC e padding consistente.
+o Alertas: 
+* Erro: Texto em #FF4C4C, fundo levemente vermelho (ex.: #ffe6e6).
+* Avisos/Informativos: Fundo Amarelo claro (#FFF4CD) e texto em #856404.
+* Sucesso: Fundo Verde claro (#e0f8e0).
+o Modais, tabelas e cards com espaçamentos e sombreamentos suaves.
+* Responsividade:
+o Utilização de frameworks responsivos (ex.: Bootstrap ou CSS Grid/Flexbox).
+o Componentes que se reorganizam em dispositivos móveis (ex.: grid com 3 colunas em desktop, 1-2 em mobile).
+* Navegação:
+o Barra de navegação superior com logo, links principais e menu de usuário.
+o Menu lateral (sidebar) fixo em telas internas, com breadcrumbs e transições suaves entre telas.
+4. Recursos e URLs de Ícones/Imagens
+A seguir, indicamos URLs exemplares para os ícones e imagens utilizados (esses links deverão ser substituídos por URLs reais no ambiente de produção ou pela biblioteca de ativos da empresa):
+* Logo DOM: 
+https://example.com/assets/logo-dom.png
+* Splash Screen Background: 
+https://example.com/images/splash-background.png
+* Ícone "Olho" para exibição de senha:
+o Mostrar senha: https://example.com/icons/eye.png
+o Ocultar senha: https://example.com/icons/eye-slash.png
+* Ícones para o Menu Lateral (Sidebar):
+o Dashboard: https://example.com/icons/dashboard.png
+o Tarefas: https://example.com/icons/tasks.png
+o Controle de Ponto: https://example.com/icons/clock.png
+o Finanças: https://example.com/icons/finances.png
+o Documentos: https://example.com/icons/documents.png
+o Compras: https://example.com/icons/shopping-cart.png
+o Configurações: https://example.com/icons/settings.png
+o Perfil: https://example.com/icons/user.png
+* Outros Ícones:
+o Erro/Alerta: https://example.com/icons/error.png
+o Sucesso: https://example.com/icons/success.png
+o Informação: https://example.com/icons/info.png
+o Upload: https://example.com/icons/upload.png
+o Telefone: https://example.com/icons/phone.png
+o Calendário: https://example.com/icons/calendar.png
+o Chat/Comunicação: https://example.com/icons/chat.png
+* Links para Documentos Legais:
+o Termos de Uso: https://example.com/termos-de-uso
+o Políticas de Privacidade: https://example.com/politicas-de-privacidade
+5. Detalhamento de Telas
+5.1 Splash Screen
+* Objetivo: Exibir a marca enquanto o aplicativo carrega.
+* Elementos: 
+o Logo DOM centralizado (Logo URL).
+o Fundo com imagem (ex.: https://example.com/images/splash-background.png).
+o Mote: "DOM: O dom da gestão doméstica" em destaque.
+o Mensagem motivacional: "Transforme sua casa em um lar organizado e inspirador!"
+o Animação: Fade-in/fade-out, duração de 3 a 5 segundos.
+* Cores: Predominância de branco e os destaques em azul #29ABE2 e verde #90EE90.
+* Tipografia: 
+o Mote: 32px, "Montserrat" bold, cor #30475E.
+o Mensagem: 20px, "Roboto", cor #333333.
+5.2 Tela de Cadastro e Login
+* Objetivo: Permitir a criação de contas e acesso seguro.
+* Elementos: 
+o Formulário de Cadastro/Login: Campos para CPF, Nome, "Como quer ser chamado?", e-mail, celular e senha. 
+* Cada campo terá placeholder com instruções (ex.: "Digite seu CPF").
+* Validação do CPF pelo dígito verificador, e-mail com envio de email com link, celular com envio de SMS.
+* Inclusão de check box para email e celular. (false quando criado ou modificado e true quando validado)
+o Campo de Senha: Incluir ícone "olho" para mostrar/ocultar - utilizar Eye Icon e Eye Slash Icon.
+o Links e Consentimento: 
+* Link "Esqueci minha senha" (fluxo integrado, sem tela separada).
+* Check box "Li e aceito os Termos de Uso e Políticas de Privacidade" com validação obrigatória.
+o Banner Motivacional: Um pequeno banner abaixo do título, com mensagem como conteúdo do campo "Como quer ser chamado?" mais o texto: "Bem-vindo ao DOM - O dom da gestão doméstica. Organize sua vida com facilidade!"
+* Cores: 
+o Botões primários: Fundo #29ABE2;
+o Campos: Borda em #ECECEC com fundo branco.
+* Tipografia: 
+o Título: 32px "Montserrat", cor #30475E;
+o Campos: 16px "Roboto".
+* Layout: 
+o Container centralizado com fundo branco, bordas arredondadas (5px) e sombra leve.
+o Responsivo para todos os dispositivos.
+5.3 Dashboard Personalizado
+* Objetivo: Fornecer uma visão geral customizada por perfil.
+* Elementos: 
+o Header Superior: Logo (à esquerda), links de navegação e menu de perfil.
+o Menu Lateral (Sidebar): 
+* Item por item com ícones e rótulos: 
+* Dashboard: Dashboard Icon
+* Tarefas: Tarefas Icon
+* Controle de Ponto: Clock Icon
+* Finanças: Finanças Icon
+* Documentos: Documents Icon
+* Compras: Shopping Cart Icon
+* Configurações e Perfil: Settings Icon e User Icon
+* Layout colapsável e responsivo para mobile.
+o Widgets/Cartões: 
+* Para Empregadores: Calendário (ícone Calendar), lista de compras, tarefas pendentes, próximos pagamentos, alertas de documentos, resumo de ponto, avaliações.
+* Para Empregados: Tarefas diárias, horários de trabalho, folha de pagamento, notificações de mensagens.
+* Para Familiares: Calendário de eventos, lista de compras com prioridades, tarefas pendentes, orçamento familiar.
+* Para Administradores/Parceiros: KPIs, gráficos e filtros.
+o Banner Motivacional: Exibir um banner "Organize sua casa, inspire seus dias!".
+* Cores e Tipografia: Seguem as diretrizes comuns.
+* Layout: Grid responsivo; widgets criados como componentes reutilizáveis.
+5.4 Menu Lateral (Sidebar)
+* Objetivo: Navegação rápida entre seções.
+* Elementos: 
+o Lista de itens com ícones e labels (conforme lista acima).
+o Possibilidade de colapsar/expandir.
+* URLs de Ícones: Conforme seção 5.3.
+* Layout: Fixo na tela interna com adaptação para mobile (transforma-se em menu dropdown se necessário).
+5.5 Tela de Controle de Ponto Inteligente
+* Objetivo: Registrar ponto com um único toque e capturar dados de localização e rede.
+* Elementos: 
+o Botão "Registrar Ponto": Grande, centralizado, formato circular ou retangular. 
+* Fundo: #29ABE2; Texto branco.
+o Seção de Informações: 
+* Exibição de data/hora atual, geolocalização (ícone [Location, ex.: https://example.com/icons/location.png]) e Wi-Fi conectado.
+o Campos Adicionais: Para informar intervalos, horas extras, observações, ocorrências e upload de documentos (botão com Upload Icon).
+o Feedback: Visual e sonoro (exibição de "Ponto Registrado com Sucesso!" com ícone Success Icon).
+o Mapa dos Registros: Exibir um mapa com marcador (pode usar uma API de mapas, como Google Maps).
+* Layout e Responsividade: Centralizado e adaptável a smartphones.
+5.6 Tela de Gestão de Tarefas Colaborativa
+* Objetivo: Criar, atribuir e acompanhar tarefas.
+* Elementos: 
+o Formulário de Criação de Tarefa: 
+* Campos: Descrição, data de vencimento, prioridade (alta/média/baixa - indicadas por cores: alta em #29ABE2, média em #FFDA63, baixa em cinza).
+* Dropdown para atribuição de usuários (lista com User Icon).
+* Mensagem de instrução: "Preencha os campos e clique em 'Criar Tarefa'".
+o Lista de Tarefas: 
+* Dispostas em cards com botões "Editar" (Settings Icon) e "Atualizar Status".
+* Possibilidade de adicionar comentários e checklists.
+* Exibir notificações (ex.: "Tarefa criada com sucesso!").
+* Layout: Grid responsivo (3 colunas em desktop, 1-2 no mobile).
+5.7 Tela de Comunicação Unificada
+* Objetivo: Facilitar o chat e a troca de mensagens entre usuários.
+* Elementos: 
+o Janela de Chat: 
+* Histórico de mensagens em "bolhas".
+* Campos de entrada com placeholder "Digite sua mensagem".
+* Botão de enviar: Fundo #29ABE2 com Chat Icon.
+* Ícone para anexos: Upload Icon.
+o Lista de Contatos/Grupos: Apresentada em menu lateral ou abas.
+o Mensagens de Erro: "Erro ao enviar a mensagem. Tente novamente." com Error Icon.
+* Layout: Flexível com rolagem; ajustável para mobile (contatos podem ficar em dropdown).
+5.8 Tela de Gestão Financeira Simplificada
+* Objetivo: Controlar receitas, despesas e metas financeiras.
+* Elementos: 
+o Formulário de Registro: Campos para inserir receitas e despesas, com dropdown para categorias.
+o Área de Gráficos: 
+* Exibição de gráficos (por exemplo, usando Chart.js) - barras para receitas (#29ABE2) e pizza para despesas.
+* Relatórios periódicos (mensais/anuais).
+o Alertas: Exibir mensagens como "Orçamento ultrapassado - reveja seus gastos" com fundo Amarelo (#FFF4CD).
+* Layout: Divisão clara entre formulário e gráficos; responsividade garantindo que os gráficos se reorganizem em dispositivos móveis.
+5.9 Tela de Assistente Virtual
+* Objetivo: Permitir o uso de comandos de voz.
+* Elementos: 
+o Botão de Voz: Ícone de microfone grande (botão circular com fundo #29ABE2 e Microphone Icon).
+o Lista de Comandos: Exibição de comandos disponíveis (ex.: "Criar Tarefa", "Consultar Status") com pequenos ícones ilustrativos.
+o Mensagens: Instrução "Diga o comando desejado" e feedback "Comando não reconhecido" se necessário.
+* Layout: Centralizado, com a lista de comandos abaixo do botão; responsivo.
+5.10 Tela de Gamificação
+* Objetivo: Incentivar o engajamento por meio de pontuação e ranking.
+* Elementos: 
+o Painel de Pontuação: Exibição dos pontos acumulados, medalhas e conquistas.
+o Ranking: Lista ou tabela ordenada (utilizar Trophy Icon para destacar conquistas).
+o Notificações: Popup "Nova conquista desbloqueada!".
+* Layout: Cards ou tabelas, com disposição em colunas e responsividade para mobile.
+5.11 Tela de Integração com Wearables
+* Objetivo: Sincronizar dados de dispositivos vestíveis.
+* Elementos: 
+o Botão "Sincronizar": Fundo #29ABE2 com texto "Sincronizar" e Smartwatch Icon.
+o Exibição de Dados: Cards ou tabela listando dados como número de passos, horas ativas, etc.
+o Mensagens: "Clique em Sincronizar para atualizar os dados do seu wearable" e erro "Erro na sincronização - tente novamente."
+* Layout: Grid responsivo.
+5.12 Tela de Relatórios Personalizados
+* Objetivo: Criar e exportar relatórios customizados.
+* Elementos: 
+o Formulário de Filtros: Seletor, date pickers e checkboxes para selecionar dados (financeiros, ponto, tarefas).
+o Área de Visualização: Exibição prévia dos dados em formato de tabela ou gráfico.
+o Botões de Exportação: "Exportar PDF" e "Exportar Excel" (botões em #29ABE2).
+o Mensagens: "Selecione os critérios para gerar seu relatório" e alerta "Nenhum dado encontrado para os filtros selecionados."
+* Layout: Responsivo, com o formulário disposto em coluna única em mobile.
+5.13 Tela de Gestão de Perfis
+* Objetivo: Gerenciar os cadastros e permissões dos usuários.
+* Elementos: 
+o Listagem de Perfis: Tabela com colunas - Nome, Papel, Data de Cadastro, Ações (Editar com Settings Icon, Excluir com Trash Icon).
+o Formulário de Cadastro/Editar: Modal com campos obrigatórios e checkbox para consentimento (seguindo LGPD).
+o Links e Mensagens: "Gerencie os perfis dos usuários do seu grupo."
+* Layout: Tabela responsiva ou conversão em cards para mobile.
+5.14 Tela de Gestão de Alertas
+* Objetivo: Configurar e visualizar alertas para eventos críticos.
+* Elementos: 
+o Formulário de Configuração: Campos para definir tipo de alerta, critério (ex.: data, tarefa, documento) e preferências (push, e-mail).
+o Lista/Log de Alertas: Tabela ou grid com filtros por data e tipo.
+o Mensagens: Instrução "Configure novos alertas ou visualize o histórico" e erro "Falha ao enviar alerta. Verifique os dados."
+* Layout: Responsivo e reutilização do componente de formulário.
+5.15 Tela de Gestão de Documentos
+* Objetivo: Permitir upload, categorização e gerenciamento de documentos.
+* Elementos: 
+o Área de Upload: Botão "Enviar Documento" (com Upload Icon) que abre modal de upload com campos: Nome, Categoria, Data de Vencimento.
+o Lista de Documentos: Exibição em cards ou tabela com opções (Editar, Visualizar, Excluir).
+o Alertas: Para documentos próximos do vencimento.
+* Layout: Responsivo com cards empilhados verticalmente em dispositivos móveis.
+5.16 Tela de Gestão de Compras
+* Objetivo: Gerenciar a lista de compras com agrupamentos e filtros.
+* Elementos: 
+o Formulário de Cadastro: Campos: Usuário solicitante, data da solicitação, data da compra, Produto, Marca/Modelo, Foto (usar Camera Icon para upload), Preço, Unidade, Quantidade e Observações.
+o Agrupamento: Opção para categorizar (ex.: supermercado, material de manutenção) com header em #29ABE2.
+o Lista de Compras: Exibição em tabela ou cards, com botão para marcar como concluído (indicador em verde Check Icon).
+* Layout: Grid responsivo.
+5.17 Tela de Integração com Meios de Pagamento
+* Objetivo: Gerenciar transações financeiras com segurança.
+* Elementos: 
+o Visualização de Transações: Tabela ou listagem com colunas - Data, Valor, Gateway (ex.: Stripe, PayPal), Status.
+o Ação: Botão "Processar Pagamento".
+o Mensagens: Instrução "Confira o status das transações abaixo" e erro "Transação não efetuada - contate o suporte."
+* Layout: Tabela responsiva ou cards.
+5.18 Tela de Planos de Assinatura
+* Objetivo: Exibir e gerir os planos de assinatura para acesso a recursos premium.
+* Elementos: 
+o Listagem de Planos: Cards para cada plano com informações (preços, benefícios, recursos).
+o Ação: Botão "Assinar" ou "Renovar" em cada card.
+o Mensagens: "Escolha o plano que melhor se adequa às suas necessidades."
+* Layout: Cards alinhados em múltiplas colunas (transforma-se em coluna única no mobile).
+5.19 Tela de Integração com eSocial Doméstico
+* Objetivo: Assegurar conformidade com o eSocial.
+* Elementos: 
+o Formulário de Dados: Campos para informações exigidas pelo eSocial Doméstico.
+o Exibição de Eventos: Tabela ou cards mostrando status dos registros.
+o Mensagens: "Preencha os dados conforme os requisitos do eSocial" e erro "Dados do eSocial incompletos - favor revisar."
+* Layout: Responsivo, com formulários organizados em colunas.
+5.20 Tela de Cálculos Salariais e Emissão de Holerites
+* Objetivo: Exibir o resumo salarial e permitir emissão de holerites.
+* Elementos: 
+o Dashboard Salarial: Seção com informações do salário base, horas extras, descontos.
+o Ação: Botão "Emitir Holerite" para exportação (PDF/Impressão).
+o Mensagens: "Confira o seu resumo salarial" e erro "Falha na atualização dos dados salariais."
+* Layout: Divisão clara dos dados em tabelas/cards; responsivo.
+5.21 Tela de Gestão de Empréstimos e Adiantamentos
+* Objetivo: Gerenciar solicitações integradas ao cálculo salarial.
+* Elementos: 
+o Formulário de Solicitação: Campos para valor, justificativa, data e anexos.
+o Lista de Solicitações: Tabela ou cards com status (aprovado, pendente, rejeitado) e saldo devedor.
+o Mensagens: "Solicite empréstimos ou adiantamentos conforme necessário" e erro "Dados inválidos - verifique os campos obrigatórios."
+* Layout: Responsivo, reutilizando componentes de formulários/tabelas.
+5.22 Tela de Gestão dos Termos de Uso e Políticas de Privacidade
+* Objetivo: Exibir e atualizar os Termos de Uso e Políticas de Privacidade com registro do consentimento.
+* Elementos: 
+o Exibição dos Documentos: Página ou modal com scroll para leitura.
+o Ação de Aceitação: Checkbox "Eu li e aceito os Termos de Uso e Políticas de Privacidade" e botão "Confirmar".
+o Links: Os textos "Termos de Uso" e "Políticas de Privacidade" devem ser clicáveis - direcionando para: 
+* Termos de Uso
+* Políticas de Privacidade
+o Mensagens: "Leia atentamente os Termos de Uso" e erro "Você deve aceitar os Termos para prosseguir."
+* Layout: Modal ou página dedicada; responsivo para leitura em dispositivos móveis.
+6. Fluxo de Navegação e Mensagens
+* Barra de Navegação (Header):
+o Logo (à esquerda) - Logo URL.
+o Links para principais seções.
+o Menu de usuário com ícone User Icon.
+* Menu Lateral (Sidebar):
+o Exibe itens com ícones e labels conforme seção 5.3.
+o Breadcrumbs e transições suaves entre telas.
+* Mensagens de Erro/Instrução:
+o Todos os formulários exibem feedback em tempo real com cores e ícones padronizados.
+o Exemplos: 
+* Erro de CPF: "CPF inválido - verifique os dígitos" com Error Icon.
+* Sucesso: "Cadastro realizado com sucesso" com Success Icon.
+* Alertas e Notificações:
+o Utilizar popups e banners para alertas críticos, sempre respeitando o padrão de cores e tipografia.
+7. Recursos e Componentes Reaproveitáveis
+* Biblioteca de Componentes:
+o Inputs, botões, modais, tabelas, cards, alertas (todos com classes e variáveis CSS).
+o Componentes de menu lateral e barra de navegação.
+o Componentes específicos: campo de senha com ícone "olho", calendário, gráfico, upload.
+* Frameworks e Técnicas:
+o Uso de Bootstrap, CSS Grid/Flexbox.
+o API de mapas (Google Maps) para exibição de localizações no controle de ponto.
+o Bibliotecas de gráficos (ex.: Chart.js).
+8. Conclusão
+Este documento reúne todas as especificações necessárias para a implementação das telas do Sistema DOM, garantindo total alinhamento com a identidade visual da marca, melhores práticas de desenvolvimento e usabilidade, responsividade e conformidade com as normas vigentes (LGPD, PCI DSS, WCAG). Todas as orientações, desde a splash screen e menu lateral até os detalhes minuciosos de cada tela - com URLs exemplares para ícones e imagens - foram incluídas para que um programador júnior possa executar as tarefas com segurança e clareza.
+Caso surjam dúvidas ou a necessidade de ajustes durante o desenvolvimento, a equipe multidisciplinar (Design, Front-End, QA, Marketing, RH e PNL) estará disponível para fornecer suporte e feedback contínuo.
+
+Este é o guia completo e detalhado para a criação das telas do Sistema DOM. Vamos colocar a mão na massa e desenvolver uma experiência excepcional para nossos usuários!
+
+
+Biblioteca de ícones gratuitos recomendados para o Sistema DOM
+1. FontAwesome (via CDN ou download local)
+* Descrição: Uma das maiores bibliotecas de ícones gratuitos, com estilos sólidos, regular, leve e de marca.
+* URL: https://fontawesome.com/icons
+* Exemplo de ícones usados no sistema: 
+o Olho (mostrar/ocultar senha): fa-eye, fa-eye-slash
+o Microfone (assistente): fa-microphone
+o Chat / mensagens: fa-comments
+o Calendário: fa-calendar-alt
+o Painel de controle: fa-tachometer-alt
+o Upload: fa-upload
+o Documento: fa-file-alt
+o Lixeira (excluir): fa-trash
+2. Material Icons (Google Material Icons)
+* Descrição: Interface limpa e moderna, amplamente adotada em plataformas Google.
+* URL: https://fonts.google.com/icons
+* Como usar: Dropdown de categorias ou pesquisa por nome, baixando ou via CDN.
+* Exemplo de ícones: 
+o Mostrar/ocultar senha:visibility, visibility_off
+o Notificação: notifications
+o Comunicação: message, call, videocam
+o Gráficos: insights, assessment
+o Localização: location_on
+o Segurança: security
+3. Heroicons (by Tailwind Labs)
+* Descrição: Ícones minimalistas e lineares, leve e elegante.
+* URL: https://heroicons.com/
+* Exemplos: 
+o Eye (mostrar/ocultar): eye, eye-off
+o Calendar: calendar, calendar-today
+o Chat: chat-bubble
+o Document: document-text
+o Upload: upload
+o Trash: trash
+4. Simple Icons (para marcas e logos)
+* Descrição: Ícones de marcas renomadas, em SVG, para uso livre.
+* URL: https://simpleicons.org/
+* Exemplo: Logo do PayPal, Stripe, etc., caso precise integrar ícones de gateways de pagamento.
+
+Resumo com nomes e URLs específicos
+ÍconeNome na BibliotecaPlataformaURL exata (direta ou via CDN)ObservaçãoOlho (mostrar/ocultar senha)fa-eye, fa-eye-slashFontAwesomehttps://fontawesome.com/icons/eyeRecomendado usar via CDN ou baixar SVGsMicrofone (assistente de voz)fa-microphoneFontAwesomehttps://fontawesome.com/icons/microphoneChat / Mensagensfa-commentsFontAwesomehttps://fontawesome.com/icons/commentsCalendáriofa-calendar-altFontAwesomehttps://fontawesome.com/icons/calendar-altUploadfa-uploadFontAwesomehttps://fontawesome.com/icons/uploadDocumentofa-file-altFontAwesomehttps://fontawesome.com/icons/file-altLixeira (exclusão)fa-trashFontAwesomehttps://fontawesome.com/icons/trashOr
+ÍconeNomePlataformaURL de ExemploNotasMostrar/Ocultar senhavisibility / visibility_offGoogle Material Iconshttps://fonts.gstatic.com/s/materialiconsoutlined/visibility/v20/24px.svgUsar SVG via CDNMicrofonemicrophoneHeroiconshttps://heroicons.com/SVG linha com opção de estilizaçãoCalendáriocalendar, calendar-todayHeroiconshttps://heroicons.com/Linha ou preenchidoChatchat-bubbleHeroiconshttps://heroicons.com/LinhaUploaduploadFontAwesome ou Heroiconshttps://fontawesome.com/icons/uploadSVG
+Vou buscar também imagens de alta qualidade e livres de direitos autorais (ex.: banco de imagens de uso livre como Unsplash ou Pexels), mas para ícones, essas bibliotecas são as mais recomendadas, pois oferecem versões escaláveis SVG, PNG e ícones vetoriais com ampla compatibilidade.
+
+
+
+           flp-business.strategy@outlook.com                                                                                                                                +55 (11) 97648-7066
+

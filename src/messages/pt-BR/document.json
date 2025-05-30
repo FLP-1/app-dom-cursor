@@ -1,0 +1,59 @@
+{
+  "list": {
+    "title": "Documentos",
+    "new": "Novo Documento"
+  },
+  "create": {
+    "title": "Novo Documento"
+  },
+  "edit": {
+    "title": "Editar Documento"
+  },
+  "delete": {
+    "title": "Excluir Documento",
+    "message": "Tem certeza que deseja excluir este documento?"
+  },
+  "fields": {
+    "name": "Nome",
+    "type": "Tipo",
+    "url": "URL",
+    "uploadDate": "Data de Upload",
+    "expirationDate": "Data de Validade",
+    "isPublic": "Público"
+  },
+  "types": {
+    "DOC_ADMISSAO_CTPS": "CTPS",
+    "DOC_ADMISSAO_PIS": "PIS",
+    "DOC_ADMISSAO_RG": "RG",
+    "DOC_ADMISSAO_CPF": "CPF",
+    "DOC_ADMISSAO_TITULO_ELEITOR": "Título de Eleitor",
+    "DOC_ADMISSAO_RESERVISTA": "Reservista",
+    "DOC_ADMISSAO_CERTIDAO_CASAMENTO": "Certidão de Casamento",
+    "DOC_ADMISSAO_CERTIDAO_NASCIMENTO": "Certidão de Nascimento",
+    "DOC_MEDICO_ASO_ADMISSIONAL": "ASO Admissional",
+    "DOC_MEDICO_ASO_DEMISSIONAL": "ASO Demissional",
+    "DOC_MEDICO_ASO_PERIODICO": "ASO Periódico",
+    "DOC_MEDICO_ATESTADO": "Atestado Médico",
+    "DOC_MEDICO_LAUDO": "Laudo Médico",
+    "DOC_AFASTAMENTO_ACIDENTE_TRABALHO": "Afastamento por Acidente de Trabalho",
+    "DOC_AFASTAMENTO_AUXILIO_DOENCA": "Auxílio Doença",
+    "DOC_AFASTAMENTO_LICENCA_MATERNIDADE": "Licença Maternidade",
+    "DOC_AFASTAMENTO_LICENCA_PATERNIDADE": "Licença Paternidade",
+    "DOC_AFASTAMENTO_SERVICO_MILITAR": "Serviço Militar",
+    "DOC_FERIAS_AVISO": "Aviso de Férias",
+    "DOC_FERIAS_GOZO": "Gozo de Férias",
+    "DOC_FERIAS_ABONO": "Abono de Férias",
+    "DOC_RESCISAO_AVISO_PREVIO": "Aviso Prévio",
+    "DOC_RESCISAO_TERMO": "Termo de Rescisão",
+    "DOC_RESCISAO_QUITACAO": "Quitação",
+    "DOC_OUTROS": "Outros"
+  },
+  "messages": {
+    "createSuccess": "Documento criado com sucesso",
+    "updateSuccess": "Documento atualizado com sucesso",
+    "deleteSuccess": "Documento excluído com sucesso",
+    "error": "Erro ao processar documento",
+    "loadError": "Erro ao carregar documentos",
+    "deleteError": "Erro ao excluir documento"
+  }
+} 
