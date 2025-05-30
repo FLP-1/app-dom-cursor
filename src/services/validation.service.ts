@@ -1,5 +1,13 @@
 import axios from 'axios';
 import { LogService, TipoLog, CategoriaLog } from './log.service';
+import { cpf, cnpj } from 'cpf-cnpj-validator';
+import { isValidPhoneNumber } from 'react-phone-number-input';
+import { isValidEmail } from '@/utils/validations/email';
+import { isValidCEP } from '@/utils/validations/cep';
+import { isValidPassword } from '@/utils/validations/password';
+import { isValidURL } from '@/utils/validations/url';
+import { isValidFile } from '@/utils/validations/file';
+import { isValidDate, isValidTime } from '@/utils/validations/date';
 
 export interface ValidacaoPonto {
   valido: boolean;
@@ -42,7 +50,100 @@ export class ValidationError extends Error {
   }
 }
 
-export const ValidationService = {
+export class ValidationService {
+  static validateCPF(value: string): boolean {
+    return cpf.isValid(value);
+  }
+
+  static validateCNPJ(value: string): boolean {
+    return cnpj.isValid(value);
+  }
+
+  static validateEmail(value: string): boolean {
+    return isValidEmail(value);
+  }
+
+  static validatePhone(value: string): boolean {
+    return isValidPhoneNumber(value);
+  }
+
+  static validateCEP(value: string): boolean {
+    return isValidCEP(value);
+  }
+
+  static validateDate(value: string): boolean {
+    return isValidDate(value);
+  }
+
+  static validateTime(value: string): boolean {
+    return isValidTime(value);
+  }
+
+  static validatePassword(value: string): boolean {
+    return isValidPassword(value);
+  }
+
+  static validateURL(value: string): boolean {
+    return isValidURL(value);
+  }
+
+  static validateFile(file: File): boolean {
+    return isValidFile(file);
+  }
+
+  static validateDocument(value: string): boolean {
+    // Remove caracteres não numéricos
+    const cleanValue = value.replace(/\D/g, '');
+    
+    // Verifica se é CPF ou CNPJ baseado no tamanho
+    if (cleanValue.length === 11) {
+      return this.validateCPF(cleanValue);
+    } else if (cleanValue.length === 14) {
+      return this.validateCNPJ(cleanValue);
+    }
+    
+    return false;
+  }
+
+  static validateRequired(value: any): boolean {
+    if (value === null || value === undefined) return false;
+    if (typeof value === 'string') return value.trim().length > 0;
+    if (Array.isArray(value)) return value.length > 0;
+    return true;
+  }
+
+  static validateMinLength(value: string, min: number): boolean {
+    return value.length >= min;
+  }
+
+  static validateMaxLength(value: string, max: number): boolean {
+    return value.length <= max;
+  }
+
+  static validateMinValue(value: number, min: number): boolean {
+    return value >= min;
+  }
+
+  static validateMaxValue(value: number, max: number): boolean {
+    return value <= max;
+  }
+
+  static validateRange(value: number, min: number, max: number): boolean {
+    return value >= min && value <= max;
+  }
+
+  static validatePattern(value: string, pattern: RegExp): boolean {
+    return pattern.test(value);
+  }
+
+  static validateMatch(value: string, matchValue: string): boolean {
+    return value === matchValue;
+  }
+
+  static validateCustom(value: any, validator: (value: any) => boolean): boolean {
+    return validator(value);
+  }
+
   async validarPonto(
     empregadoDomesticoId: string,
     data: Date,
@@ -60,7 +161,7 @@ export const ValidationService = {
       wifiSSID,
     });
     return validacao;
-  },
+  }
 
   async validarOcorrencia(
     empregadoDomesticoId: string,
@@ -86,7 +187,7 @@ export const ValidationService = {
       },
     });
     return validacao;
-  },
+  }
 
   async validarDocumento(
     tipo: string,
@@ -102,7 +203,7 @@ export const ValidationService = {
       },
     });
     return validacao;
-  },
+  }
 
   async validarEsocial(
     tipo: string,
@@ -113,7 +214,7 @@ export const ValidationService = {
       payload,
     });
     return validacao;
-  },
+  }
 
   /**
    * Valida um CPF
@@ -164,7 +265,7 @@ export const ValidationService = {
       });
       return false;
     }
-  },
+  }
 
   /**
    * Valida um CNPJ
@@ -219,7 +320,7 @@ export const ValidationService = {
       });
       return false;
     }
-  },
+  }
 
   /**
    * Valida um e-mail
@@ -239,7 +340,7 @@ export const ValidationService = {
       });
       return false;
     }
-  },
+  }
 
   /**
    * Valida um número de telefone
@@ -259,7 +360,7 @@ export const ValidationService = {
       });
       return false;
     }
-  },
+  }
 
   /**
    * Valida uma data
@@ -279,7 +380,7 @@ export const ValidationService = {
       });
       return false;
     }
-  },
+  }
 
   /**
    * Valida uma senha
@@ -304,7 +405,7 @@ export const ValidationService = {
       });
       return false;
     }
-  },
+  }
 
   /**
    * Valida um CEP
@@ -324,7 +425,7 @@ export const ValidationService = {
       });
       return false;
     }
-  },
+  }
 
   /**
    * Valida um PIS/PASEP
@@ -360,7 +461,7 @@ export const ValidationService = {
       });
       return false;
     }
-  },
+  }
 
   /**
    * Valida um número de cartão de crédito
@@ -406,7 +507,7 @@ export const ValidationService = {
       });
       return false;
     }
-  },
+  }
 
   /**
    * Valida um arquivo
@@ -449,27 +550,7 @@ export const ValidationService = {
       });
       return false;
     }
-  },
-
-  /**
-   * Valida uma URL
-   * @param url URL a ser validada
-   * @returns true se a URL for válida
-   */
-  async validarURL(url: string): Promise<boolean> {
-    try {
-      const regex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
-      return regex.test(url);
-    } catch (error) {
-      await LogService.create({
-        tipo: TipoLog.ERROR,
-        categoria: CategoriaLog.SISTEMA,
-        mensagem: 'Erro ao validar URL',
-        detalhes: { url, error }
-      });
-      return false;
-    }
-  },
+  }
 
   /**
    * Valida um número de IP
@@ -497,7 +578,7 @@ export const ValidationService = {
       });
       return false;
     }
-  },
+  }
 
   /**
    * Valida um número de MAC
@@ -517,7 +598,7 @@ export const ValidationService = {
       });
       return false;
     }
-  },
+  }
 
   /**
    * Valida um número de CNH
@@ -567,7 +648,7 @@ export const ValidationService = {
       });
       return false;
     }
-  },
+  }
 
   /**
    * Valida um número de título de eleitor
@@ -615,4 +696,4 @@ export const ValidationService = {
       return false;
     }
   }
-}; 
+} 

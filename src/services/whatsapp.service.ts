@@ -76,9 +76,180 @@ export interface WhatsAppConfig {
   updatedAt: Date;
 }
 
-export const WhatsAppService = {
-  private readonly CACHE_KEY = 'whatsapp:';
-  private readonly CACHE_EXPIRACAO = 3600; // 1 hora
+interface WhatsAppMessage {
+  to: string;
+  type: 'text' | 'template' | 'document' | 'image';
+  text?: string;
+  template?: {
+    name: string;
+    language: {
+      code: string;
+    };
+    components?: Array<{
+      type: string;
+      parameters: Array<{
+        type: string;
+        text: string;
+      }>;
+    }>;
+  };
+  document?: {
+    link: string;
+    caption?: string;
+  };
+  image?: {
+    link: string;
+    caption?: string;
+  };
+}
+
+export class WhatsAppService {
+  private static instance: WhatsAppService;
+  private apiUrl: string;
+  private apiKey: string;
+  private phoneNumberId: string;
+
+  private constructor() {
+    this.apiUrl = process.env.WHATSAPP_API_URL || '';
+    this.apiKey = process.env.WHATSAPP_API_KEY || '';
+    this.phoneNumberId = process.env.WHATSAPP_PHONE_NUMBER_ID || '';
+  }
+
+  static getInstance(): WhatsAppService {
+    if (!WhatsAppService.instance) {
+      WhatsAppService.instance = new WhatsAppService();
+    }
+    return WhatsAppService.instance;
+  }
+
+  async sendMessage(message: WhatsAppMessage): Promise<boolean> {
+    try {
+      const response = await axios.post(
+        `${this.apiUrl}/${this.phoneNumberId}/messages`,
+        {
+          messaging_product: 'whatsapp',
+          to: message.to,
+          type: message.type,
+          ...(message.text && { text: { body: message.text } }),
+          ...(message.template && { template: message.template }),
+          ...(message.document && { document: message.document }),
+          ...(message.image && { image: message.image })
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${this.apiKey}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      await LogService.create({
+        tipo: TipoLog.INFO,
+        categoria: CategoriaLog.WHATSAPP,
+        mensagem: 'Mensagem WhatsApp enviada com sucesso',
+        detalhes: { to: message.to, type: message.type }
+      });
+
+      return true;
+    } catch (error) {
+      await LogService.create({
+        tipo: TipoLog.ERROR,
+        categoria: CategoriaLog.WHATSAPP,
+        mensagem: 'Erro ao enviar mensagem WhatsApp',
+        detalhes: { error, message }
+      });
+
+      return false;
+    }
+  }
+
+  async sendTextMessage(to: string, text: string): Promise<boolean> {
+    return this.sendMessage({
+      to,
+      type: 'text',
+      text
+    });
+  }
+
+  async sendTemplateMessage(
+    to: string,
+    templateName: string,
+    languageCode: string,
+    parameters?: Array<{ type: string; text: string }>
+  ): Promise<boolean> {
+    return this.sendMessage({
+      to,
+      type: 'template',
+      template: {
+        name: templateName,
+        language: {
+          code: languageCode
+        },
+        ...(parameters && {
+          components: [{
+            type: 'body',
+            parameters
+          }]
+        })
+      }
+    });
+  }
+
+  async sendDocumentMessage(to: string, documentUrl: string, caption?: string): Promise<boolean> {
+    return this.sendMessage({
+      to,
+      type: 'document',
+      document: {
+        link: documentUrl,
+        caption
+      }
+    });
+  }
+
+  async sendImageMessage(to: string, imageUrl: string, caption?: string): Promise<boolean> {
+    return this.sendMessage({
+      to,
+      type: 'image',
+      image: {
+        link: imageUrl,
+        caption
+      }
+    });
+  }
+
+  async sendWelcomeMessage(to: string, name: string): Promise<boolean> {
+    return this.sendTemplateMessage(
+      to,
+      'welcome_message',
+      'pt_BR',
+      [
+        { type: 'text', text: name }
+      ]
+    );
+  }
+
+  async sendPasswordResetMessage(to: string, resetToken: string): Promise<boolean> {
+    return this.sendTemplateMessage(
+      to,
+      'password_reset',
+      'pt_BR',
+      [
+        { type: 'text', text: resetToken }
+      ]
+    );
+  }
+
+  async sendNotificationMessage(to: string, notification: any): Promise<boolean> {
+    return this.sendTemplateMessage(
+      to,
+      'notification',
+      'pt_BR',
+      [
+        { type: 'text', text: notification.title },
+        { type: 'text', text: notification.message }
+      ]
+    );
+  }
 
   /**
    * Lista todas as mensagens
@@ -410,4 +581,4 @@ export const WhatsAppService = {
       throw error;
     }
   }
-}; 
+} 

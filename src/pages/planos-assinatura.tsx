@@ -1,119 +1,133 @@
-import React, { useState } from 'react';
-import { Box, Grid, Typography, Button, Modal, Checkbox, FormControlLabel, useTheme } from '@mui/material';
-import Link from 'next/link';
-import { useAuth } from '@/contexts/AuthContext';
-import { usePlanosVigentes } from '@/hooks/usePlanosVigentes';
-import { UserRole } from '@/lib/permissions/types';
-import axios from 'axios';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useSnackbar } from 'notistack';
+import { Box, Button, Card, CardContent, CardActions, Typography, Grid, CircularProgress } from '@mui/material';
+import { useAuth } from '@/hooks/useAuth';
+import { usePlanos } from '@/hooks/usePlanos';
+import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';
 
-// Mensagens centralizadas (exemplo simplificado)
-const messages = {
-  confirmTitle: 'Confirmação de Assinatura',
-  confirmText: 'Para prosseguir, é necessário aceitar a Política de Cancelamento e Reembolso.',
-  acceptLabel: 'Li e aceito a ',
-  policyLink: 'Política de Cancelamento e Reembolso',
-  confirmButton: 'Confirmar e Prosseguir para Pagamento',
-  cancelButton: 'Cancelar',
-  loading: 'Carregando planos...'
-};
+export default function PlanosAssinatura() {
+  const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
+  const { user } = useAuth();
+  const { planos, loading, error } = usePlanos();
+  const [loadingAssinatura, setLoadingAssinatura] = useState<string | null>(null);
 
-const PlanoCard = ({ plano, onSelect }: any) => {
-  const theme = useTheme();
-  return (
-    <Box sx={{ border: `1px solid ${theme.palette.divider}`, borderRadius: 2, p: 3, mb: 2, bgcolor: 'background.paper' }}>
-      <Typography variant="h6" color="primary">{plano.nome}</Typography>
-      <Typography variant="body2" sx={{ mb: 1 }}>{plano.mensagem}</Typography>
-      <ul>
-        {plano.beneficios.map((b: string, i: number) => <li key={i}><Typography variant="body2">{b}</Typography></li>)}
-      </ul>
-      <Typography variant="subtitle2">R$ {Number(plano.valorMensal).toFixed(2)} / R$ {Number(plano.valorAnual).toFixed(2)}</Typography>
-      <Button variant="contained" color="primary" sx={{ mt: 2 }} onClick={() => onSelect(plano)}>
-        Assinar
-      </Button>
-    </Box>
-  );
-};
+  const handleAssinar = async (planoId: string) => {
+    if (!user) {
+      enqueueSnackbar('Você precisa estar logado para assinar um plano', { variant: 'warning' });
+      return;
+    }
 
-const ModalConfirmacaoPlano = ({ open, plano, onClose, onConfirm }: any) => {
-  const [aceite, setAceite] = useState(false);
-  return (
-    <Modal open={open} onClose={onClose} aria-labelledby="modal-title" aria-describedby="modal-desc">
-      <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'background.paper', p: 4, borderRadius: 2, boxShadow: 24, minWidth: 320 }}>
-        <Typography id="modal-title" variant="h6" sx={{ mb: 2 }}>{messages.confirmTitle}</Typography>
-        {plano && (
-          <>
-            <Typography variant="subtitle1" sx={{ mb: 1 }}>{plano.nome}</Typography>
-            <Typography variant="body2" sx={{ mb: 2 }}>{plano.mensagem}</Typography>
-            <ul>
-              {plano.beneficios.map((b: string, i: number) => <li key={i}><Typography variant="body2">{b}</Typography></li>)}
-            </ul>
-            <Typography variant="subtitle2" sx={{ mb: 2 }}>R$ {Number(plano.valorMensal).toFixed(2)} / R$ {Number(plano.valorAnual).toFixed(2)}</Typography>
-          </>
-        )}
-        <FormControlLabel
-          control={<Checkbox checked={aceite} onChange={e => setAceite(e.target.checked)} />}
-          label={<span>{messages.acceptLabel}<Link href="/cancelamento-reembolso" target="_blank" style={{ color: '#1976d2', textDecoration: 'underline' }}>{messages.policyLink}</Link></span>}
-        />
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: 3 }}>
-          <Button onClick={onClose}>{messages.cancelButton}</Button>
-          <Button variant="contained" color="primary" disabled={!aceite} onClick={onConfirm}>{messages.confirmButton}</Button>
-        </Box>
-      </Box>
-    </Modal>
-  );
-};
-
-export default function PlanosAssinaturaPage() {
-  const { user, loading } = useAuth();
-  let perfil: 'EMPREGADOR' | 'PARCEIRO' | 'AMBOS' = 'AMBOS';
-  if (user?.role === UserRole.EMPLOYER) perfil = 'EMPREGADOR';
-  else if (user?.role === UserRole.PARTNER) perfil = 'PARCEIRO';
-
-  const { planos, isLoading } = usePlanosVigentes(perfil);
-  const [planoSelecionado, setPlanoSelecionado] = useState<any>(null);
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const handleSelectPlano = (plano: any) => {
-    setPlanoSelecionado(plano);
-    setModalOpen(true);
-  };
-
-  const handleConfirm = async () => {
-    setModalOpen(false);
+    setLoadingAssinatura(planoId);
     try {
-      const res = await axios.post('/api/assinatura', {
-        planoId: planoSelecionado.id,
-        usuarioId: user.id,
+      const response = await fetch('/api/assinatura', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          planoId,
+          usuarioId: user.id,
+        }),
       });
-      // Futuro: redirecionar para Stripe com res.data.checkoutUrl
-      alert('Plano registrado! ID: ' + res.data.planoUsuarioId);
-    } catch (err) {
-      alert('Erro ao registrar plano. Tente novamente.');
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Erro ao criar assinatura');
+      }
+
+      // Registra log
+      await LogService.create({
+        tipo: TipoLog.INFO,
+        categoria: CategoriaLog.PAGAMENTO,
+        mensagem: 'Redirecionando para checkout',
+        detalhes: { 
+          planoId,
+          planoUsuarioId: data.planoUsuarioId
+        }
+      });
+
+      // Redireciona para o checkout do Stripe
+      window.location.href = data.checkoutUrl;
+    } catch (error) {
+      await LogService.create({
+        tipo: TipoLog.ERROR,
+        categoria: CategoriaLog.PAGAMENTO,
+        mensagem: 'Erro ao iniciar assinatura',
+        detalhes: { error, planoId }
+      });
+      enqueueSnackbar('Erro ao iniciar assinatura. Tente novamente.', { variant: 'error' });
+    } finally {
+      setLoadingAssinatura(null);
     }
   };
 
-  if (loading) return <Typography>{messages.loading}</Typography>;
+  if (loading) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="400px">
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="400px">
+        <Typography color="error">Erro ao carregar planos. Tente novamente.</Typography>
+      </Box>
+    );
+  }
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto', mt: 4, p: 2 }}>
-      <Typography variant="h4" color="primary" sx={{ mb: 4 }}>Escolha seu plano de assinatura</Typography>
-      {isLoading ? (
-        <Typography>{messages.loading}</Typography>
-      ) : (
-        <Grid container spacing={2}>
-          {planos.map((plano) => (
-            <Grid item xs={12} md={6} key={plano.id}>
-              <PlanoCard plano={plano} onSelect={handleSelectPlano} />
-            </Grid>
-          ))}
-        </Grid>
-      )}
-      <ModalConfirmacaoPlano
-        open={modalOpen}
-        plano={planoSelecionado}
-        onClose={() => setModalOpen(false)}
-        onConfirm={handleConfirm}
-      />
+    <Box p={3}>
+      <Typography variant="h4" gutterBottom>
+        Planos de Assinatura
+      </Typography>
+      <Grid container spacing={3}>
+        {planos.map((plano) => (
+          <Grid item xs={12} sm={6} md={4} key={plano.id}>
+            <Card>
+              <CardContent>
+                <Typography variant="h5" component="h2" gutterBottom>
+                  {plano.nome}
+                </Typography>
+                <Typography variant="h4" color="primary" gutterBottom>
+                  R$ {plano.valor.toFixed(2)}
+                  <Typography component="span" variant="subtitle1">
+                    /mês
+                  </Typography>
+                </Typography>
+                <Typography variant="body1" color="textSecondary" paragraph>
+                  {plano.descricao}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  • {plano.quantidadeEventos} eventos por mês
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  • Suporte {plano.nivelSuporte}
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleAssinar(plano.id)}
+                  disabled={loadingAssinatura === plano.id}
+                >
+                  {loadingAssinatura === plano.id ? (
+                    <CircularProgress size={24} color="inherit" />
+                  ) : (
+                    'Assinar Agora'
+                  )}
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
     </Box>
   );
 } 

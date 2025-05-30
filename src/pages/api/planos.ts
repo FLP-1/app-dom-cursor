@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
+import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';
 
 const prisma = new PrismaClient();
 
@@ -9,20 +10,31 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const hoje = new Date();
     const planos = await prisma.plano.findMany({
       where: {
         ativo: true,
-        vigenteDe: { lte: hoje },
-        OR: [
-          { vigenteAte: null },
-          { vigenteAte: { gte: hoje } },
-        ],
       },
-      orderBy: { valorMensal: 'asc' },
+      orderBy: {
+        valor: 'asc',
+      },
     });
-    res.status(200).json(planos);
+
+    // Registra log
+    await LogService.create({
+      tipo: TipoLog.INFO,
+      categoria: CategoriaLog.PAGAMENTO,
+      mensagem: 'Planos listados com sucesso',
+      detalhes: { quantidade: planos.length }
+    });
+
+    return res.status(200).json(planos);
   } catch (error) {
-    res.status(500).json({ error: 'Erro ao buscar planos' });
+    await LogService.create({
+      tipo: TipoLog.ERROR,
+      categoria: CategoriaLog.PAGAMENTO,
+      mensagem: 'Erro ao listar planos',
+      detalhes: { error }
+    });
+    return res.status(500).json({ error: 'Erro ao listar planos' });
   }
 } 

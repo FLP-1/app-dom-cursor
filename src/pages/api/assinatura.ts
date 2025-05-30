@@ -1,5 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
+import { PaymentService } from '@/services/payment.service';
+import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';
 
 const prisma = new PrismaClient();
 
@@ -14,6 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
+    // Cria registro inicial do plano
     const planoUsuario = await prisma.planoUsuario.create({
       data: {
         usuarioId,
@@ -23,9 +26,32 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         criadoEm: new Date(),
       },
     });
-    // Futuro: criar sessão Stripe e retornar checkoutUrl
-    return res.status(201).json({ planoUsuarioId: planoUsuario.id });
+
+    // Cria sessão de checkout no Stripe
+    const checkoutSession = await PaymentService.criarSessaoCheckout(planoId, usuarioId);
+
+    // Registra log
+    await LogService.create({
+      tipo: TipoLog.INFO,
+      categoria: CategoriaLog.PAGAMENTO,
+      mensagem: 'Assinatura iniciada',
+      detalhes: { 
+        planoUsuarioId: planoUsuario.id,
+        sessionId: checkoutSession.id
+      }
+    });
+
+    return res.status(201).json({ 
+      planoUsuarioId: planoUsuario.id,
+      checkoutUrl: checkoutSession.url
+    });
   } catch (error) {
-    return res.status(500).json({ error: 'Erro ao criar contratação' });
+    await LogService.create({
+      tipo: TipoLog.ERROR,
+      categoria: CategoriaLog.PAGAMENTO,
+      mensagem: 'Erro ao criar assinatura',
+      detalhes: { error, planoId, usuarioId }
+    });
+    return res.status(500).json({ error: 'Erro ao criar assinatura' });
   }
 } 
