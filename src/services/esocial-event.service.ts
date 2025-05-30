@@ -1,46 +1,82 @@
-import { EsocialEvent, EsocialEventFilter, EsocialEventType } from '../types/esocial-event';
-import axios from 'axios';
+import { prisma } from '@/lib/prisma';
+import { EsocialEvent, EsocialEventFilter, EsocialEventFormData } from '@/types/esocial';
 
-const API_URL = '/api/esocial-event';
+export class EsocialEventService {
+  async getEvents(filter?: EsocialEventFilter): Promise<EsocialEvent[]> {
+    const where = {
+      ...(filter?.tipo && { tipo: filter.tipo.codigo }),
+      ...(filter?.status && { status: filter.status.codigo }),
+      ...(filter?.dataInicio && { dataEvento: { gte: filter.dataInicio } }),
+      ...(filter?.dataFim && { dataEvento: { lte: filter.dataFim } }),
+      ...(filter?.empregadoDomesticoId && { empregadoDomesticoId: filter.empregadoDomesticoId })
+    };
 
-export const EsocialEventService = {
-  async list(filters?: EsocialEventFilter): Promise<EsocialEvent[]> {
-    const { data } = await axios.get<EsocialEvent[]>(API_URL, { params: filters });
-    return data;
-  },
+    const events = await prisma.esocialEvent.findMany({
+      where,
+      include: {
+        usuario: true,
+        empregadoDomestico: true
+      },
+      orderBy: {
+        dataEvento: 'desc'
+      }
+    });
 
-  async getById(id: string): Promise<EsocialEvent> {
-    const { data } = await axios.get<EsocialEvent>(`${API_URL}/${id}`);
-    return data;
-  },
+    return events;
+  }
 
-  async create(event: Partial<EsocialEvent>): Promise<EsocialEvent> {
-    const { data } = await axios.post<EsocialEvent>(API_URL, event);
-    return data;
-  },
+  async getEvent(id: string): Promise<EsocialEvent | null> {
+    const event = await prisma.esocialEvent.findUnique({
+      where: { id },
+      include: {
+        usuario: true,
+        empregadoDomestico: true
+      }
+    });
 
-  async update(id: string, event: Partial<EsocialEvent>): Promise<EsocialEvent> {
-    const { data } = await axios.put<EsocialEvent>(`${API_URL}/${id}`, event);
-    return data;
-  },
+    return event;
+  }
 
-  async remove(id: string): Promise<void> {
-    await axios.delete(`${API_URL}/${id}`);
-  },
+  async createEvent(data: EsocialEventFormData): Promise<EsocialEvent> {
+    const event = await prisma.esocialEvent.create({
+      data: {
+        tipo: data.tipo.codigo,
+        status: 'PENDENTE',
+        dataEvento: data.dataEvento,
+        payload: data.payload,
+        usuarioId: data.usuarioId,
+        empregadoDomesticoId: data.empregadoDomesticoId
+      },
+      include: {
+        usuario: true,
+        empregadoDomestico: true
+      }
+    });
 
-  async listTypes(): Promise<EsocialEventType[]> {
-    const { data } = await axios.get<EsocialEventType[]>(`${API_URL}/types`);
-    return data;
-  },
+    return event;
+  }
 
-  // Métodos de integração (exemplo: gerar alerta, vincular ponto, anexar documento)
-  async gerarAlerta(eventId: string): Promise<void> {
-    await axios.post(`${API_URL}/${eventId}/alerta`);
-  },
-  async vincularPonto(eventId: string, timeRecordId: string): Promise<void> {
-    await axios.post(`${API_URL}/${eventId}/ponto`, { timeRecordId });
-  },
-  async anexarDocumento(eventId: string, documentId: string): Promise<void> {
-    await axios.post(`${API_URL}/${eventId}/documento`, { documentId });
-  },
-}; 
+  async updateEventStatus(id: string, status: string, mensagemErro?: string): Promise<EsocialEvent> {
+    const event = await prisma.esocialEvent.update({
+      where: { id },
+      data: {
+        status,
+        ...(status === 'ENVIADO' && { dataEnvio: new Date() }),
+        ...(status === 'PROCESSADO' && { dataProcessamento: new Date() }),
+        ...(mensagemErro && { mensagemErro })
+      },
+      include: {
+        usuario: true,
+        empregadoDomestico: true
+      }
+    });
+
+    return event;
+  }
+
+  async deleteEvent(id: string): Promise<void> {
+    await prisma.esocialEvent.delete({
+      where: { id }
+    });
+  }
+} 

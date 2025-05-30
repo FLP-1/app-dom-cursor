@@ -1,9 +1,13 @@
 import { PrismaClient } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
+import { seedEsocialTabelas } from './seed/esocial-tabelas';
 
 const prisma = new PrismaClient();
 
 async function main() {
+  // Seed das tabelas do eSocial
+  await seedEsocialTabelas();
+
   // Criar usuário administrador
   const admin = await prisma.user.upsert({
     where: { email: 'admin@dom.com' },

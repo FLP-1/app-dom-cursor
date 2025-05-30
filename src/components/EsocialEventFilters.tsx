@@ -7,16 +7,30 @@ import { useTheme } from '@mui/material/styles';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { FormControl } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useEsocialTabela } from '../hooks/useEsocialTabela';
+import { useEffect, useState } from 'react';
 
 interface EsocialEventFiltersProps {
-  control: Control<EsocialEventFilter>;
-  tipos: EsocialEventType[];
-  statusOptions: { value: EsocialEventStatus; label: string }[];
+  control: Control<any>;
+  tipos: any[];
 }
 
-export function EsocialEventFilters({ control, tipos, statusOptions }: EsocialEventFiltersProps) {
+export function EsocialEventFilters({ control, tipos }: EsocialEventFiltersProps) {
   const theme = useTheme();
   const { t } = useTranslation();
+  const { getTabela } = useEsocialTabela();
+  const [statusOptions, setStatusOptions] = useState<any[]>([]);
+
+  useEffect(() => {
+    const carregarStatus = async () => {
+      const statusTabela = await getTabela('9'); // Tabela de Status
+      if (statusTabela) {
+        setStatusOptions(statusTabela.itens);
+      }
+    };
+
+    carregarStatus();
+  }, [getTabela]);
 
   return (
     <Box sx={{ p: theme.spacing(2) }}>
@@ -44,7 +58,10 @@ export function EsocialEventFilters({ control, tipos, statusOptions }: EsocialEv
             name="status"
             label={t('Status')}
             control={control}
-            options={statusOptions}
+            options={statusOptions.map(item => ({
+              value: item.codigo,
+              label: item.descricao
+            }))}
             fullWidth
             inputProps={{ 'aria-label': t('Status') }}
           />

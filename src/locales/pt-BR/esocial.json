@@ -1,0 +1,446 @@
+{
+  "event": {
+    "form": {
+      "title": "Evento do eSocial",
+      "type": "Tipo de Evento",
+      "date": "Data do Evento",
+      "employee": "Empregado Doméstico"
+    },
+    "list": {
+      "title": "Eventos do eSocial",
+      "new": "Novo Evento",
+      "type": "Tipo",
+      "date": "Data",
+      "status": "Status"
+    },
+    "types": {
+      "S2200": "Cadastramento Inicial do Vínculo",
+      "S2205": "Alteração de Dados Cadastrais",
+      "S2206": "Alteração de Contrato de Trabalho",
+      "S2210": "Comunicação de Acidente de Trabalho",
+      "S2230": "Afastamento Temporário",
+      "S2240": "Condições Ambientais do Trabalho - Fatores de Risco",
+      "S2250": "Aviso Prévio",
+      "S2299": "Desligamento",
+      "S2400": "Cadastro de Benefícios Previdenciários",
+      "S3000": "Exclusão de Eventos",
+      "S1200": "Remuneração de Trabalhador",
+      "S1210": "Pagamentos de Rendimentos do Trabalho",
+      "S2300": "Trabalhador Sem Vínculo de Emprego/Estatutário",
+      "S2399": "Desligamento de Trabalhador Sem Vínculo",
+      "S1207": "Benefícios Previdenciários",
+      "S1202": "S-1202 - Remuneração de Servidor Vinculado a Regime Próprio de Previdência Social"
+    },
+    "status": {
+      "PENDENTE": "Pendente",
+      "ENVIADO": "Enviado",
+      "PROCESSADO": "Processado",
+      "REJEITADO": "Rejeitado",
+      "ERRO": "Erro"
+    }
+  },
+  "events": {
+    "S2200": {
+      "cpf": "CPF",
+      "nome": "Nome Completo",
+      "dataNascimento": "Data de Nascimento",
+      "sexo": "Sexo",
+      "pis": "PIS/PASEP",
+      "carteiraTrabalho": "Número da Carteira de Trabalho",
+      "serieCarteiraTrabalho": "Série da Carteira de Trabalho",
+      "ufCarteiraTrabalho": "UF da Carteira de Trabalho",
+      "dataAdmissao": "Data de Admissão",
+      "tipoRegimePrevidenciario": "Tipo de Regime Previdenciário",
+      "regimePrevidenciario": {
+        "1": "Regime Geral de Previdência Social",
+        "2": "Regime Próprio de Previdência Social",
+        "3": "Regime de Previdência Social no Exterior"
+      },
+      "cargo": "Cargo",
+      "salario": "Salário"
+    },
+    "S2205": {
+      "cpf": "CPF",
+      "nome": "Nome Completo",
+      "dataNascimento": "Data de Nascimento",
+      "sexo": "Sexo",
+      "pis": "PIS/PASEP",
+      "carteiraTrabalho": "Número da Carteira de Trabalho",
+      "serieCarteiraTrabalho": "Série da Carteira de Trabalho",
+      "ufCarteiraTrabalho": "UF da Carteira de Trabalho",
+      "dataAlteracao": "Data da Alteração",
+      "tipoAlteracao": "Tipo de Alteração",
+      "tiposAlteracao": {
+        "1": "Alteração de Dados Cadastrais",
+        "2": "Alteração de Endereço",
+        "3": "Alteração de Documentos",
+        "4": "Alteração de Dados Bancários",
+        "5": "Alteração de Dados de Contato"
+      },
+      "motivoAlteracao": "Motivo da Alteração"
+    },
+    "S2206": {
+      "cpf": "CPF",
+      "dataAlteracao": "Data da Alteração",
+      "tipoAlteracao": "Tipo de Alteração",
+      "tiposAlteracao": {
+        "1": "Alteração de Cargo",
+        "2": "Alteração de Salário",
+        "3": "Alteração de Jornada de Trabalho",
+        "4": "Alteração de Regime Previdenciário",
+        "5": "Alteração de Local de Trabalho",
+        "6": "Alteração de Função",
+        "7": "Alteração de Categoria",
+        "8": "Alteração de Horário",
+        "9": "Alteração de Outras Condições"
+      },
+      "motivoAlteracao": "Motivo da Alteração",
+      "cargo": "Cargo",
+      "salario": "Salário",
+      "jornadaTrabalho": "Jornada de Trabalho",
+      "tipoRegimePrevidenciario": "Tipo de Regime Previdenciário",
+      "regimePrevidenciario": {
+        "1": "Regime Geral de Previdência Social",
+        "2": "Regime Próprio de Previdência Social",
+        "3": "Regime de Previdência Social no Exterior"
+      },
+      "dataInicioAlteracao": "Data de Início da Alteração",
+      "dataFimAlteracao": "Data de Fim da Alteração",
+      "naturezaAlteracao": "Natureza da Alteração",
+      "naturezasAlteracao": {
+        "1": "Alteração Normal",
+        "2": "Alteração por Acordo Coletivo",
+        "3": "Alteração por Decisão Judicial",
+        "4": "Alteração por Acordo Individual",
+        "5": "Alteração por Outros Motivos"
+      }
+    },
+    "S2210": {
+      "cpf": "CPF",
+      "dataAcidente": "Data do Acidente",
+      "horaAcidente": "Hora do Acidente",
+      "tipoAcidente": "Tipo do Acidente",
+      "tiposAcidente": {
+        "1": "Típico",
+        "2": "Doença do Trabalho",
+        "3": "Trajeto",
+        "4": "Outras Doenças",
+        "5": "Acidente Fatal",
+        "6": "Acidente com Óbito"
+      },
+      "localAcidente": "Local do Acidente",
+      "locaisAcidente": {
+        "1": "Estabelecimento do Empregador",
+        "2": "Estabelecimento de Terceiros",
+        "3": "Via Pública",
+        "4": "Área Rural"
+      },
+      "codigoCNAE": "Código CNAE",
+      "descricaoAcidente": "Descrição do Acidente",
+      "parteAtingida": "Parte Atingida",
+      "agenteCausador": "Agente Causador",
+      "tipoCat": "Tipo de CAT",
+      "tiposCat": {
+        "1": "Inicial",
+        "2": "Reabertura",
+        "3": "Comunicação de Óbito"
+      },
+      "numeroCat": "Número da CAT",
+      "dataEmissaoCat": "Data de Emissão da CAT",
+      "dataRegistroCat": "Data de Registro da CAT",
+      "dataAfastamento": "Data de Afastamento",
+      "dataRetorno": "Data de Retorno",
+      "diasAfastamento": "Dias de Afastamento",
+      "cid": "CID",
+      "cidDescricao": "Descrição do CID",
+      "observacao": "Observação"
+    },
+    "S2230": {
+      "cpf": "CPF",
+      "dataInicioAfastamento": "Data de Início do Afastamento",
+      "dataFimAfastamento": "Data de Fim do Afastamento",
+      "motivoAfastamento": "Motivo do Afastamento",
+      "motivosAfastamento": {
+        "1": "Acidente de Trabalho",
+        "2": "Doença do Trabalho",
+        "3": "Doença Não Relacionada ao Trabalho",
+        "4": "Licença Maternidade",
+        "5": "Licença Paternidade",
+        "6": "Licença Adoção",
+        "7": "Licença para Acompanhamento de Cônjuge",
+        "8": "Licença para Acompanhamento de Filho",
+        "9": "Outros Motivos"
+      },
+      "tipoAfastamento": "Tipo de Afastamento",
+      "tiposAfastamento": {
+        "1": "Afastamento por Acidente de Trabalho",
+        "2": "Afastamento por Doença do Trabalho",
+        "3": "Afastamento por Outros Motivos"
+      },
+      "codigoCNAE": "Código CNAE",
+      "cid": "CID",
+      "cidDescricao": "Descrição do CID",
+      "numeroCat": "Número da CAT",
+      "dataEmissaoCat": "Data de Emissão da CAT",
+      "dataRegistroCat": "Data de Registro da CAT",
+      "diasAfastamento": "Dias de Afastamento",
+      "observacao": "Observação"
+    },
+    "S2240": {
+      "cpf": "CPF",
+      "dataInicio": "Data de Início",
+      "dataFim": "Data de Fim",
+      "codigoCNAE": "Código CNAE",
+      "codigoFatorRisco": "Código do Fator de Risco",
+      "descricaoFatorRisco": "Descrição do Fator de Risco",
+      "intensidade": "Intensidade",
+      "intensidades": {
+        "1": "Mínima",
+        "2": "Baixa",
+        "3": "Média",
+        "4": "Alta",
+        "5": "Máxima"
+      },
+      "tecnicasUtilizadas": "Técnicas Utilizadas",
+      "tecnologiasUtilizadas": "Tecnologias Utilizadas",
+      "epiUtilizado": "EPI Utilizado",
+      "epcUtilizado": "EPC Utilizado",
+      "caUtilizado": "CA Utilizado",
+      "observacao": "Observação"
+    },
+    "S2250": {
+      "titulo": "Aviso Prévio",
+      "tituloEdicao": "Editar Aviso Prévio",
+      "cpf": "CPF do Trabalhador",
+      "dataAviso": "Data do Aviso",
+      "dataInicioAviso": "Data de Início do Aviso",
+      "dataFimAviso": "Data de Fim do Aviso",
+      "tipoAviso": "Tipo de Aviso",
+      "tipoAviso.trabalhador": "Trabalhador",
+      "tipoAviso.empregador": "Empregador",
+      "codigoMotivoAviso": "Código do Motivo",
+      "motivoAviso": "Motivo do Aviso",
+      "dataDesligamento": "Data do Desligamento",
+      "indenizacao": "Indenização",
+      "indenizacao.valor": "Valor da Indenização",
+      "indenizacao.dataPagamento": "Data do Pagamento",
+      "observacao": "Observação"
+    },
+    "S2299": {
+      "cpf": "CPF",
+      "dataDesligamento": "Data do Desligamento",
+      "motivoDesligamento": "Motivo do Desligamento",
+      "observacao": "Observação"
+    },
+    "S2400": {
+      "cpf": "CPF",
+      "dataInicioBeneficio": "Data de Início do Benefício",
+      "tipoBeneficio": "Tipo de Benefício",
+      "valorBeneficio": "Valor do Benefício",
+      "dataFimBeneficio": "Data de Fim do Benefício",
+      "motivoFimBeneficio": "Motivo do Fim do Benefício",
+      "tiposBeneficio": {
+        "01": "Aposentadoria por Idade",
+        "02": "Aposentadoria por Invalidez",
+        "03": "Aposentadoria por Tempo de Contribuição",
+        "04": "Aposentadoria Especial",
+        "05": "Auxílio-Doença",
+        "06": "Auxílio-Acidente",
+        "07": "Auxílio-Reclusão",
+        "08": "Pensão por Morte",
+        "09": "Salário-Maternidade",
+        "10": "Salário-Família",
+        "11": "Auxílio-Inclusão",
+        "12": "BPC/LOAS"
+      },
+      "observacao": "Observação"
+    },
+    "S3000": "Exclusão de Eventos",
+    "S1200": "Remuneração de Trabalhador",
+    "S1210": "Pagamentos de Rendimentos do Trabalho",
+    "S2300": "Trabalhador Sem Vínculo de Emprego/Estatutário",
+    "S2399": "Desligamento de Trabalhador Sem Vínculo",
+    "S1207": "Benefícios Previdenciários",
+    "S1202": {
+      "title": "S-1202 - Remuneração de Servidor Vinculado a Regime Próprio de Previdência Social",
+      "ideEvento": {
+        "perApur": "Período de Apuração",
+        "indRetif": "Indicador de Retificação",
+        "indRetif.original": "Original",
+        "indRetif.retificacao": "Retificação",
+        "nrRecibo": "Número do Recibo",
+        "indApuracao": "Indicador de Apuração",
+        "indApuracao.mensal": "Mensal",
+        "indApuracao.anual": "Anual (13º salário)",
+        "perApurRPPS": "Período de Apuração RPPS",
+        "indGuia": "Indicador de Guia",
+        "indGuia.dae": "Documento de Arrecadação do eSocial - DAE",
+        "indGuia.gps": "Guia da Previdência Social - GPS",
+        "tpAmb": "Tipo de Ambiente",
+        "tpAmb.producao": "Produção",
+        "tpAmb.homologacao": "Homologação",
+        "procEmi": "Processo de Emissão",
+        "procEmi.empregador": "Aplicativo do empregador",
+        "procEmi.governamental": "Aplicativo governamental",
+        "procEmi.terceiros": "Aplicativo de terceiros",
+        "procEmi.folha": "Sistema de Folha de Pagamento",
+        "procEmi.folhaTerceiros": "Sistema de Folha de Pagamento de Terceiros",
+        "verProc": "Versão do Processo"
+      },
+      "ideEmpregador": {
+        "tpInsc": "Tipo de Inscrição",
+        "tpInsc.cnpj": "CNPJ",
+        "tpInsc.cpf": "CPF",
+        "tpInsc.caepf": "CAEPF",
+        "tpInsc.cno": "CNO",
+        "nrInsc": "Número de Inscrição"
+      },
+      "ideTrabalhador": {
+        "cpfTrab": "CPF do Trabalhador",
+        "nisTrab": "NIS do Trabalhador",
+        "nmTrab": "Nome do Trabalhador",
+        "sexo": "Sexo",
+        "racaCor": "Raça/Cor",
+        "estCiv": "Estado Civil",
+        "grauInstr": "Grau de Instrução",
+        "nmSoc": "Nome Social"
+      },
+      "dmDev": {
+        "ideDmDev": "Identificação do Demonstrativo",
+        "codCateg": "Código da Categoria",
+        "infoPerApur": {
+          "ideEstabLot": {
+            "tpInsc": "Tipo de Inscrição",
+            "nrInsc": "Número de Inscrição",
+            "codLotacao": "Código da Lotação",
+            "detVerbas": {
+              "codRubr": "Código da Rubrica",
+              "ideTabRubr": "Identificação da Tabela de Rubricas",
+              "qtdRubr": "Quantidade",
+              "vrRubr": "Valor",
+              "indApurIR": "Indicador de Apuração IR"
+            }
+          }
+        }
+      },
+      "infoComplCont": {
+        "codCBO": "Código CBO",
+        "natAtividade": "Natureza da Atividade",
+        "natAtividade.urbano": "Trabalho Urbano",
+        "natAtividade.rural": "Trabalho Rural",
+        "qtdDiasTrab": "Quantidade de Dias Trabalhados"
+      },
+      "infoCompl": {
+        "sucessaoVinc": {
+          "observacao": "Observação"
+        }
+      }
+    }
+  },
+  "messages": {
+    "event": {
+      "created": "Evento criado com sucesso!",
+      "updated": "Evento atualizado com sucesso!",
+      "sent": "Evento enviado com sucesso!",
+      "error": "Erro ao processar evento",
+      "sendError": "Erro ao enviar evento"
+    },
+    "eventoProcessado": "Evento processado com sucesso",
+    "erroProcessarEvento": "Erro ao processar evento",
+    "eventoEnviado": "Evento enviado com sucesso",
+    "erroEnviarEvento": "Erro ao enviar evento",
+    "eventoExcluido": "Evento excluído com sucesso",
+    "erroExcluirEvento": "Erro ao excluir evento",
+    "eventoAtualizado": "Evento atualizado com sucesso",
+    "erroAtualizarEvento": "Erro ao atualizar evento",
+    "eventoCriado": "Evento criado com sucesso",
+    "erroCriarEvento": "Erro ao criar evento",
+    "eventoCarregado": "Evento carregado com sucesso",
+    "erroCarregarEvento": "Erro ao carregar evento",
+    "eventosCarregados": "Eventos carregados com sucesso",
+    "erroCarregarEventos": "Erro ao carregar eventos",
+    "eventoEnviadoSucesso": "Evento enviado com sucesso",
+    "erroEnviarEvento": "Erro ao enviar evento",
+    "eventoExcluidoSucesso": "Evento excluído com sucesso",
+    "erroExcluirEvento": "Erro ao excluir evento",
+    "eventoAtualizadoSucesso": "Evento atualizado com sucesso",
+    "erroAtualizarEvento": "Erro ao atualizar evento",
+    "eventoCriadoSucesso": "Evento criado com sucesso",
+    "erroCriarEvento": "Erro ao criar evento",
+    "eventoCarregadoSucesso": "Evento carregado com sucesso",
+    "erroCarregarEvento": "Erro ao carregar evento",
+    "eventosCarregadosSucesso": "Eventos carregados com sucesso",
+    "erroCarregarEventos": "Erro ao carregar eventos"
+  },
+  "campos": {
+    "tipoEventoExcluido": "Tipo do Evento Excluído",
+    "protocoloEventoExcluido": "Protocolo do Evento Excluído",
+    "dataExclusao": "Data de Exclusão",
+    "justificativa": "Justificativa",
+    "competencia": "Competência",
+    "valorTotal": "Valor Total",
+    "valorBaseINSS": "Base INSS",
+    "valorBaseIRRF": "Base IRRF",
+    "valorBaseFGTS": "Base FGTS",
+    "valorFGTS": "Valor FGTS",
+    "valorINSS": "Valor INSS",
+    "valorIRRF": "Valor IRRF",
+    "valorOutrasEntidades": "Outras Entidades",
+    "valorOutrasDeducoes": "Outras Deduções",
+    "valorLiquido": "Valor Líquido",
+    "itensRemuneracao": "Itens de Remuneração",
+    "dataPagamento": "Data de Pagamento",
+    "tipoRendimento": "Tipo de Rendimento",
+    "valorBruto": "Valor Bruto",
+    "itensRendimento": "Itens de Rendimento",
+    "nome": "Nome Completo",
+    "dataNascimento": "Data de Nascimento",
+    "sexo": "Sexo",
+    "pis": "PIS/PASEP",
+    "dataInicio": "Data de Início",
+    "dataFim": "Data de Fim",
+    "tipoTrabalhador": "Tipo de Trabalhador",
+    "cargo": "Cargo",
+    "valorHora": "Valor Hora",
+    "cargaHoraria": "Carga Horária",
+    "dataDesligamento": "Data do Desligamento",
+    "motivoDesligamento": "Motivo do Desligamento",
+    "dataInicioBeneficio": "Data de Início do Benefício",
+    "tipoBeneficio": "Tipo de Benefício",
+    "valorBeneficio": "Valor do Benefício",
+    "dataFimBeneficio": "Data de Fim do Benefício",
+    "motivoFimBeneficio": "Motivo do Fim do Benefício"
+  },
+  "tiposRendimento": {
+    "13_SALARIO": "13º Salário",
+    "FERIAS": "Férias",
+    "FERIAS_PROPORCIONAIS": "Férias Proporcionais",
+    "FERIAS_13_SALARIO": "Férias + 13º Salário",
+    "RESCISAO": "Rescisão",
+    "OUTROS": "Outros"
+  },
+  "tiposTrabalhador": {
+    "AVULSO": "Trabalhador Avulso",
+    "TEMPORARIO": "Trabalhador Temporário",
+    "ESTAGIARIO": "Estagiário",
+    "APRENDIZ": "Aprendiz",
+    "OUTROS": "Outros"
+  },
+  "motivosDesligamento": {
+    "TERMINO_CONTRATO": "Término do Contrato",
+    "RESCISAO_CONTRATO": "Rescisão do Contrato",
+    "MUDANCA_EMPREGADOR": "Mudança de Empregador",
+    "FALECIMENTO": "Falecimento",
+    "OUTROS": "Outros"
+  },
+  "tiposBeneficio": {
+    "AUXILIO_DOENCA": "Auxílio-Doença",
+    "AUXILIO_ACIDENTE": "Auxílio-Acidente",
+    "PENSAO_MORTE": "Pensão por Morte",
+    "AUXILIO_RECLUSAO": "Auxílio-Reclusão",
+    "SALARIO_MATERNIDADE": "Salário-Maternidade",
+    "SALARIO_FAMILIA": "Salário-Família",
+    "BPC_LOAS": "BPC/LOAS",
+    "OUTROS": "Outros"
+  }
+} 

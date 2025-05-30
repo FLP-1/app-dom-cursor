@@ -9,50 +9,62 @@ interface UseEsocialEventFormProps {
   id?: string;
 }
 
-export function useEsocialEventForm({ id }: UseEsocialEventFormProps) {
+export function useEsocialEventForm(props?: UseEsocialEventFormProps) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
-  const [tipos, setTipos] = useState<EsocialEventType[]>([]);
-  const [initialValues, setInitialValues] = useState<Partial<EsocialEvent>>({ status: 'PENDING' });
-  const [error, setError] = useState<string | null>(null);
-  const isEdit = Boolean(id);
+  const [eventTypes, setEventTypes] = useState<EsocialEventType[]>([]);
 
-  const form = useForm<Partial<EsocialEvent>>({
-    defaultValues: initialValues,
+  const methods = useForm<EsocialEvent>({
+    mode: 'onChange',
+    defaultValues: {
+      type: '',
+      status: 'DRAFT',
+      data: {}
+    }
   });
 
   useEffect(() => {
-    async function fetchTipos() {
-      const tiposData = await EsocialEventService.listTypes();
-      setTipos(tiposData);
+    loadEventTypes();
+    if (props?.id) {
+      loadEvent();
     }
-    fetchTipos();
-  }, []);
+  }, [props?.id]);
 
-  useEffect(() => {
-    if (id) {
-      setLoading(true);
-      EsocialEventService.getById(id)
-        .then((data) => {
-          setInitialValues(data);
-          form.reset(data);
-        })
-        .catch(() => setError(t('Erro ao carregar evento.')))
-        .finally(() => setLoading(false));
-    }
-  }, [id, form, t]);
-
-  const onSubmit = async (values: Partial<EsocialEvent>) => {
-    setLoading(true);
-    setError(null);
+  const loadEventTypes = async () => {
     try {
-      if (isEdit && id) {
-        await EsocialEventService.update(id, values);
+      const types = await EsocialEventService.getEventTypes();
+      setEventTypes(types);
+    } catch (error) {
+      console.error('Erro ao carregar tipos de evento:', error);
+    }
+  };
+
+  const loadEvent = async () => {
+    if (!props?.id) return;
+
+    setLoading(true);
+    try {
+      const event = await EsocialEventService.getById(props.id);
+      methods.reset(event);
+    } catch (error) {
+      console.error('Erro ao carregar evento:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const onSubmit = async (data: EsocialEvent) => {
+    setLoading(true);
+    try {
+      if (props?.id) {
+        await EsocialEventService.update(props.id, data);
       } else {
-        await EsocialEventService.create(values);
+        await EsocialEventService.create(data);
       }
-    } catch {
-      setError(t('Erro ao salvar evento.'));
+      return true;
+    } catch (error) {
+      console.error('Erro ao salvar evento:', error);
+      return false;
     } finally {
       setLoading(false);
     }
@@ -71,17 +83,15 @@ export function useEsocialEventForm({ id }: UseEsocialEventFormProps) {
   // Adiciona a validação ao register do RHF
   const registerWithValidation = (name: keyof Partial<EsocialEvent>) =>
     name === 'dataEnvio' || name === 'dataRetorno'
-      ? { ...form.register(name, { validate: validateDateBR }) }
-      : { ...form.register(name) };
+      ? { ...methods.register(name, { validate: validateDateBR }) }
+      : { ...methods.register(name) };
 
   return {
-    ...form,
-    tipos,
+    ...methods,
+    control: methods.control,
+    onSubmit: methods.handleSubmit(onSubmit),
     loading,
-    error,
-    isEdit,
-    onSubmit: form.handleSubmit(onSubmit),
-    initialValues,
+    eventTypes,
     registerWithValidation,
   };
 } 

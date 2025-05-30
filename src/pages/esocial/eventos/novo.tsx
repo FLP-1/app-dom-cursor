@@ -1,35 +1,42 @@
-import { useEsocialEventForm } from '../../../hooks/forms/useEsocialEventForm';
-import { EsocialEventForm } from '../../../components/EsocialEventForm';
-import { Box, Alert, Typography } from '@mui/material';
-import { useRouter } from 'next/router';
-import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
-import { EsocialEvent } from '../../../types/esocial-event';
+import { useEsocialEventForm } from '@/hooks/useEsocialEventForm';
+import { EsocialEventForm } from '@/components/esocial/EsocialEventForm';
+import { Button } from '@mui/material';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { GetStaticProps } from 'next';
 
-export default function NovoEventoEsocialPage() {
+export default function EsocialEventFormPage() {
   const { t } = useTranslation();
-  const router = useRouter();
-  const [success, setSuccess] = useState(false);
-  const form = useEsocialEventForm({});
-
-  const handleSubmit = async (data: Partial<EsocialEvent>) => {
-    await form.onSubmit(data);
-    setSuccess(true);
-    setTimeout(() => router.push('/esocial/eventos'), 1500);
-  };
+  const {
+    control,
+    handleSubmit,
+    errors,
+    isSubmitting,
+    onSubmit
+  } = useEsocialEventForm();
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto', mt: 4 }}>
-      <Typography variant="h4" mb={2}>{t('Novo Evento do eSocial')}</Typography>
-      {success && <Alert severity="success" sx={{ mb: 2 }}>{t('Evento criado com sucesso!')}</Alert>}
-      <EsocialEventForm
-        control={form.control}
-        tipos={form.tipos}
-        loading={form.loading}
-        error={form.error}
-        isEdit={false}
-        onSubmit={form.handleSubmit(handleSubmit)}
-      />
-    </Box>
+    <div>
+      <h1>{t('esocial:event.new')}</h1>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <EsocialEventForm control={control} />
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          disabled={isSubmitting}
+        >
+          {t('common:buttons.save')}
+        </Button>
+      </form>
+    </div>
   );
-} 
+}
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale || 'pt-BR', ['common', 'esocial'])),
+    },
+  };
+}; 

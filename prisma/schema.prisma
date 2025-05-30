@@ -63,77 +63,10 @@ model Alert {
   empregadoDomestico   EmpregadorDomestico? @relation("EmpregadoAlertas", fields: [empregadoDomesticoId], references: [id])
 }
 
-enum DocumentCategory {
-  INSTITUCIONAL_TERMS_OF_USE
-  INSTITUCIONAL_PRIVACY_POLICY
-  INSTITUCIONAL_PLANS
-  INSTITUCIONAL_CANCELLATION_REFUND
-  OUTROS
-}
-
-enum TipoDocumentoEsocial {
-  // Documentos de Admissão
-  DOC_ADMISSAO_CTPS
-  DOC_ADMISSAO_PIS
-  DOC_ADMISSAO_RG
-  DOC_ADMISSAO_CPF
-  DOC_ADMISSAO_TITULO_ELEITOR
-  DOC_ADMISSAO_RESERVISTA
-  DOC_ADMISSAO_CERTIDAO_CASAMENTO
-  DOC_ADMISSAO_CERTIDAO_NASCIMENTO
-  
-  // Documentos Médicos
-  DOC_MEDICO_ASO_ADMISSIONAL
-  DOC_MEDICO_ASO_DEMISSIONAL
-  DOC_MEDICO_ASO_PERIODICO
-  DOC_MEDICO_ATESTADO
-  DOC_MEDICO_LAUDO
-  
-  // Documentos de Afastamento
-  DOC_AFASTAMENTO_ACIDENTE_TRABALHO
-  DOC_AFASTAMENTO_AUXILIO_DOENCA
-  DOC_AFASTAMENTO_LICENCA_MATERNIDADE
-  DOC_AFASTAMENTO_LICENCA_PATERNIDADE
-  DOC_AFASTAMENTO_SERVICO_MILITAR
-  
-  // Documentos de Férias
-  DOC_FERIAS_AVISO
-  DOC_FERIAS_GOZO
-  DOC_FERIAS_ABONO
-  
-  // Documentos de Rescisão
-  DOC_RESCISAO_AVISO_PREVIO
-  DOC_RESCISAO_TERMO
-  DOC_RESCISAO_QUITACAO
-  
-  // Outros
-  DOC_OUTROS
-}
-
-enum TipoOcorrenciaEsocial {
-  // Afastamentos
-  AFASTAMENTO_ACIDENTE_TRABALHO
-  AFASTAMENTO_AUXILIO_DOENCA
-  AFASTAMENTO_LICENCA_MATERNIDADE
-  AFASTAMENTO_LICENCA_PATERNIDADE
-  AFASTAMENTO_SERVICO_MILITAR
-  
-  // Faltas
-  FALTA_ABONADA
-  FALTA_NAO_ABONADA
-  
-  // Férias
-  FERIAS_GOZO
-  FERIAS_ABONO
-  
-  // Outros
-  OUTROS
-}
-
 model Document {
   id          String   @id @default(uuid())
   nome        String?  // Temporariamente nullable
-  tipo        TipoDocumentoEsocial?  // Temporariamente nullable
+  tipo        String?  // Agora é uma string que referencia a tabela 8
   url         String
   dataUpload  DateTime @default(now())
   dataValidade DateTime?
@@ -627,7 +560,7 @@ model Empregador {
 
 model Ocorrencia {
   id            String   @id @default(uuid())
-  tipo          TipoOcorrenciaEsocial
+  tipo          String   // Agora é uma string que referencia a tabela 9
   dataInicio    DateTime
   dataFim       DateTime
   justificativa String?
@@ -700,4 +633,126 @@ model ParcelaOperacaoFinanceira {
   operacaoFinanceiraId String
 
   @@index([operacaoFinanceiraId])
+}
+
+// Tabelas do eSocial
+model EsocialTabela {
+  id          String   @id @default(uuid())
+  codigo      String   @unique // Código da tabela (ex: 1, 2, 3...)
+  nome        String   // Nome da tabela
+  descricao   String?  // Descrição detalhada
+  versao      String   // Versão atual da tabela
+  dataInicio  DateTime // Data de início da vigência
+  dataFim     DateTime? // Data de fim da vigência (se aplicável)
+  itens       EsocialTabelaItem[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("esocial_tabelas")
+}
+
+model EsocialTabelaItem {
+  id          String   @id @default(uuid())
+  tabelaId    String
+  codigo      String   // Código do item na tabela
+  descricao   String   // Descrição do item
+  valor       String?  // Valor do item (se aplicável)
+  ativo       Boolean  @default(true)
+  dataInicio  DateTime // Data de início da vigência
+  dataFim     DateTime? // Data de fim da vigência (se aplicável)
+  tabela      EsocialTabela @relation(fields: [tabelaId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([tabelaId, codigo])
+  @@map("esocial_tabela_itens")
+}
+
+// Eventos do eSocial
+model EsocialEvento {
+  id          String   @id @default(uuid())
+  codigo      String   @unique // Código do evento (ex: S-2200)
+  nome        String   // Nome do evento
+  descricao   String?  // Descrição detalhada
+  versao      String   // Versão atual do evento
+  dataInicio  DateTime // Data de início da vigência
+  dataFim     DateTime? // Data de fim da vigência (se aplicável)
+  campos      EsocialEventoCampo[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("esocial_eventos")
+}
+
+model EsocialEventoCampo {
+  id          String   @id @default(uuid())
+  eventoId    String
+  codigo      String   // Código do campo
+  nome        String   // Nome do campo
+  tipo        String   // Tipo do campo (texto, número, data, etc)
+  obrigatorio Boolean  @default(false)
+  tamanho     Int?     // Tamanho do campo (se aplicável)
+  decimais    Int?     // Número de casas decimais (se aplicável)
+  tabelaId    String?  // Referência à tabela do eSocial (se aplicável)
+  evento      EsocialEvento @relation(fields: [eventoId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([eventoId, codigo])
+  @@map("esocial_evento_campos")
+}
+
+model Company {
+  id        String   @id @default(cuid())
+  name      String
+  document  String   @unique
+  type      String
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  events    Event[]
+}
+
+model Event {
+  id          String      @id @default(cuid())
+  type        EventType
+  status      EventStatus @default(PENDING)
+  data        Json
+  companyId   String
+  company     Company     @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  processedAt DateTime?
+  error       String?
+  logs        EventLog[]
+
+  @@index([companyId])
+  @@index([type])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model EventLog {
+  id        String   @id @default(cuid())
+  eventId   String
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  level     String
+  message   String
+  details   Json?
+  createdAt DateTime @default(now())
+
+  @@index([eventId])
+  @@index([createdAt])
+}
+
+enum EventType {
+  S_1202
+}
+
+enum EventStatus {
+  PENDING
+  PROCESSING
+  PROCESSED
+  ERROR
+  CANCELLED
 } 
