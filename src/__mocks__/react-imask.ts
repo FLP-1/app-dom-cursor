@@ -1,10 +1,6 @@
-import React from 'react';
-
-export const IMaskInput = React.forwardRef(({ inputRef, ...props }: any, ref) => {
-  return <input ref={ref} {...props} />;
+export const IMaskInput = jest.fn().mockImplementation(({ inputRef, ...props }) => {
+  return <input ref={inputRef} {...props} />;
 });
-
-IMaskInput.displayName = 'IMaskInput';
 
 export default {
   IMaskInput,

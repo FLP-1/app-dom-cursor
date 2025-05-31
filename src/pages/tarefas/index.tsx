@@ -1,35 +1,50 @@
 import React, { useState } from 'react';
-import { Box, Button, Typography, Paper } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
+import { Box, Typography, CircularProgress } from '@mui/material';
 import { useTarefas } from '../../hooks/useTarefas';
 import TarefaList from '../../components/TarefaList';
 import TarefaFilter from '../../components/TarefaFilter';
-// import TarefaModal from '../../components/TarefaModal'; // Placeholder
+import { PageHeader } from '../../components/common/PageHeader';
+import { useRouter } from 'next/router';
+import { useTranslation } from 'react-i18next';
 
 const TarefasPage: React.FC = () => {
-  const { tarefas, filtros, setFiltros, loading } = useTarefas();
+  const { t } = useTranslation();
+  const router = useRouter();
+  const { tarefas, filtros, setFiltros, loading, error, atualizar } = useTarefas();
   const [openModal, setOpenModal] = useState(false);
 
+  if (loading && tarefas.length === 0) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box p={3}>
+        <Typography color="error">{error}</Typography>
+      </Box>
+    );
+  }
+
   return (
-    <Box sx={{ p: 2 }}>
-      <Typography variant="h4" gutterBottom>
-        Gestão de Tarefas
-      </Typography>
-      <Paper sx={{ p: 2, mb: 2 }}>
+    <Box sx={{ p: 3 }}>
+      <PageHeader
+        title={t('Gestão de Tarefas')}
+        onAdd={() => setOpenModal(true)}
+        onRefresh={atualizar}
+        addButtonText={t('Nova Tarefa')}
+      />
+
+      <Box sx={{ mt: 3 }}>
         <TarefaFilter filtros={filtros} setFiltros={setFiltros} />
-        <Button
-          variant="contained"
-          color="primary"
-          startIcon={<AddIcon />}
-          sx={{ mt: 2 }}
-          onClick={() => setOpenModal(true)}
-          aria-label="Nova tarefa"
-        >
-          Nova Tarefa
-        </Button>
-      </Paper>
-      <TarefaList tarefas={tarefas} loading={loading} />
-      {/* <TarefaModal open={openModal} onClose={() => setOpenModal(false)} /> */}
+      </Box>
+
+      <Box sx={{ mt: 3 }}>
+        <TarefaList tarefas={tarefas} loading={loading} />
+      </Box>
     </Box>
   );
 };

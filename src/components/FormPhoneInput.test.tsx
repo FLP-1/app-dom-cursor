@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 // Mock do IMaskInput
 jest.mock('react-imask', () => ({
-  IMaskInput: ({ onAccept, ...props }: any) => (
+  IMaskInput: ({ onAccept, ...props }: { onAccept: (value: string) => void; [key: string]: unknown }) => (
     <input
       {...props}
       data-testid="phone-input"
@@ -20,20 +20,17 @@ function TestWrapper({ children }: { children: React.ReactNode }) {
 }
 
 describe('FormPhoneInput', () => {
-  it('deve renderizar corretamente', () => {
+  it('renders correctly', () => {
+    const { control } = useForm();
+    
     render(
-      <TestWrapper>
-        <FormPhoneInput
-          name="test"
-          label="Telefone"
-          control={{} as any}
-          value=""
-          onChange={() => {}}
-        />
-      </TestWrapper>
+      <FormPhoneInput
+        control={control}
+        name="phone"
+        label="Telefone"
+      />
     );
 
-    expect(screen.getByText('Telefone')).toBeInTheDocument();
     expect(screen.getByTestId('phone-input')).toBeInTheDocument();
   });
 

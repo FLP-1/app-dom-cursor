@@ -103,24 +103,12 @@ interface WhatsAppMessage {
   };
 }
 
-export class WhatsAppService {
-  private static instance: WhatsAppService;
-  private apiUrl: string;
-  private apiKey: string;
-  private phoneNumberId: string;
-
-  private constructor() {
-    this.apiUrl = process.env.WHATSAPP_API_URL || '';
-    this.apiKey = process.env.WHATSAPP_API_KEY || '';
-    this.phoneNumberId = process.env.WHATSAPP_PHONE_NUMBER_ID || '';
-  }
-
-  static getInstance(): WhatsAppService {
-    if (!WhatsAppService.instance) {
-      WhatsAppService.instance = new WhatsAppService();
-    }
-    return WhatsAppService.instance;
-  }
+export const WhatsAppService = {
+  CACHE_KEY: 'whatsapp:',
+  CACHE_EXPIRACAO: 3600, // 1 hora
+  apiUrl: process.env.WHATSAPP_API_URL || '',
+  apiKey: process.env.WHATSAPP_API_KEY || '',
+  phoneNumberId: process.env.WHATSAPP_PHONE_NUMBER_ID || '',
 
   async sendMessage(message: WhatsAppMessage): Promise<boolean> {
     try {
@@ -161,7 +149,7 @@ export class WhatsAppService {
 
       return false;
     }
-  }
+  },
 
   async sendTextMessage(to: string, text: string): Promise<boolean> {
     return this.sendMessage({
@@ -169,7 +157,7 @@ export class WhatsAppService {
       type: 'text',
       text
     });
-  }
+  },
 
   async sendTemplateMessage(
     to: string,
@@ -193,7 +181,7 @@ export class WhatsAppService {
         })
       }
     });
-  }
+  },
 
   async sendDocumentMessage(to: string, documentUrl: string, caption?: string): Promise<boolean> {
     return this.sendMessage({
@@ -204,7 +192,7 @@ export class WhatsAppService {
         caption
       }
     });
-  }
+  },
 
   async sendImageMessage(to: string, imageUrl: string, caption?: string): Promise<boolean> {
     return this.sendMessage({
@@ -215,7 +203,7 @@ export class WhatsAppService {
         caption
       }
     });
-  }
+  },
 
   async sendWelcomeMessage(to: string, name: string): Promise<boolean> {
     return this.sendTemplateMessage(
@@ -226,7 +214,7 @@ export class WhatsAppService {
         { type: 'text', text: name }
       ]
     );
-  }
+  },
 
   async sendPasswordResetMessage(to: string, resetToken: string): Promise<boolean> {
     return this.sendTemplateMessage(
@@ -237,7 +225,7 @@ export class WhatsAppService {
         { type: 'text', text: resetToken }
       ]
     );
-  }
+  },
 
   async sendNotificationMessage(to: string, notification: any): Promise<boolean> {
     return this.sendTemplateMessage(
@@ -249,7 +237,7 @@ export class WhatsAppService {
         { type: 'text', text: notification.message }
       ]
     );
-  }
+  },
 
   /**
    * Lista todas as mensagens

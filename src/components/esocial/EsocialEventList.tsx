@@ -1,13 +1,15 @@
 import { useEsocialTabela } from '@/hooks/useEsocialTabela';
 import { useEffect, useState } from 'react';
 import { StatusEvento } from '@/types/esocial';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { EsocialEvent } from '@/types/esocial';
+import { getStatusDescricao } from '@/utils/esocial';
 
 interface EsocialEventListProps {
-  events: any[];
-  onEventClick: (event: any) => void;
+  events: EsocialEvent[];
+  onEventClick: (event: EsocialEvent) => void;
 }
 
 export function EsocialEventList({ events, onEventClick }: EsocialEventListProps) {
@@ -30,12 +32,12 @@ export function EsocialEventList({ events, onEventClick }: EsocialEventListProps
     return status?.descricao || codigo;
   };
 
-  const columns = [
+  const columns: GridColDef[] = [
     { field: 'tipo', headerName: 'Tipo', width: 130 },
-    { field: 'dataEvento', headerName: 'Data', width: 130, valueFormatter: (params: any) => format(new Date(params.value), 'dd/MM/yyyy', { locale: ptBR }) },
-    { field: 'status', headerName: 'Status', width: 130, valueGetter: (params: any) => getStatusDescricao(params.value) },
-    { field: 'dataEnvio', headerName: 'Envio', width: 130, valueFormatter: (params: any) => params.value ? format(new Date(params.value), 'dd/MM/yyyy', { locale: ptBR }) : '-' },
-    { field: 'dataProcessamento', headerName: 'Processamento', width: 130, valueFormatter: (params: any) => params.value ? format(new Date(params.value), 'dd/MM/yyyy', { locale: ptBR }) : '-' },
+    { field: 'dataEvento', headerName: 'Data', width: 130, valueFormatter: (params) => format(new Date(params.value), 'dd/MM/yyyy', { locale: ptBR }) },
+    { field: 'status', headerName: 'Status', width: 130, valueGetter: (params) => getStatusDescricao(params.value) },
+    { field: 'dataEnvio', headerName: 'Envio', width: 130, valueFormatter: (params) => params.value ? format(new Date(params.value), 'dd/MM/yyyy', { locale: ptBR }) : '-' },
+    { field: 'dataProcessamento', headerName: 'Processamento', width: 130, valueFormatter: (params) => params.value ? format(new Date(params.value), 'dd/MM/yyyy', { locale: ptBR }) : '-' },
     { field: 'mensagemErro', headerName: 'Erro', width: 200 }
   ];
 

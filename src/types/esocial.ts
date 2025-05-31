@@ -17,27 +17,34 @@ export type TipoEvento = EsocialTabelaItem & { tabela: EsocialTabela };
 
 export interface EsocialEvent {
   id: string;
-  tipo: TipoEvento;
-  status: StatusEvento;
+  tipo: string;
   dataEvento: Date;
+  status: string;
   dataEnvio?: Date;
   dataProcessamento?: Date;
-  mensagemErro?: string;
-  payload: Record<string, unknown>;
-  usuarioId: string;
-  empregadoDomesticoId: string;
-  usuario: User;
-  empregadoDomestico: EmpregadorDomestico;
-  createdAt: Date;
-  updatedAt: Date;
+  detalhes?: unknown;
 }
 
 export interface EsocialEventFilter {
-  tipo?: TipoEvento;
-  status?: StatusEvento;
+  tipo?: string;
+  status?: string;
   dataInicio?: Date;
   dataFim?: Date;
-  empregadoDomesticoId?: string;
+}
+
+export interface EsocialEventLog {
+  id: string;
+  eventId: string;
+  level: 'info' | 'warn' | 'error';
+  message: string;
+  details?: unknown;
+  timestamp: Date;
+}
+
+export interface EsocialEventProcessor {
+  validateBusinessRules(data: unknown): Promise<void>;
+  processEvent(data: unknown): Promise<void>;
+  log(level: string, message: string, details?: unknown): Promise<EsocialEventLog>;
 }
 
 export interface EsocialEventFormData {

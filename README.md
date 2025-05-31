@@ -1,3 +1,102 @@
+# DOM - Sistema de Gestão
+
+Sistema de Gestão de Documentos e Processos com foco em eventos do eSocial.
+
+## 🚀 Tecnologias
+
+- [Next.js 14](https://nextjs.org/)
+- [React](https://reactjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Material UI](https://mui.com/)
+- [Prisma](https://www.prisma.io/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Jest](https://jestjs.io/)
+- [React Testing Library](https://testing-library.com/)
+
+## 📋 Pré-requisitos
+
+- Node.js 18.x ou superior
+- PostgreSQL 14.x ou superior
+- pnpm 8.x ou superior
+
+## 🔧 Instalação
+
+1. Clone o repositório:
+```bash
+git clone https://github.com/seu-usuario/dom.git
+cd dom
+```
+
+2. Instale as dependências:
+```bash
+pnpm install
+```
+
+3. Configure as variáveis de ambiente:
+```bash
+cp .env.example .env
+```
+Edite o arquivo `.env` com suas configurações.
+
+4. Execute as migrações do banco de dados:
+```bash
+pnpm prisma migrate dev
+```
+
+5. Inicie o servidor de desenvolvimento:
+```bash
+pnpm dev
+```
+
+## 🧪 Testes
+
+```bash
+# Executa todos os testes
+pnpm test
+
+# Executa testes em modo watch
+pnpm test:watch
+
+# Executa testes com cobertura
+pnpm test:coverage
+```
+
+## 📦 Build
+
+```bash
+# Cria build de produção
+pnpm build
+
+# Inicia servidor de produção
+pnpm start
+```
+
+## 📝 Convenções
+
+- Commits seguem o padrão [Conventional Commits](https://www.conventionalcommits.org/)
+- Branches seguem o padrão [Git Flow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
+- Código segue o padrão [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
+
+## 🤝 Contribuição
+
+1. Faça o fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'feat: add some amazing feature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+## 👥 Autores
+
+- Seu Nome - [@seu-usuario](https://github.com/seu-usuario)
+
+## 📞 Suporte
+
+Para suporte, envie um email para seu-email@exemplo.com ou abra uma issue no GitHub.
+
 ## Multi-grupo, Multi-perfil e Multi-parceiro
 
 O sistema permite que um usuário pertença a múltiplos grupos (ex: famílias, empregadores, parceiros) e tenha diferentes papéis em cada grupo (ex: administrador, familiar, empregado). Também é possível que um parceiro (ex: escritório de contabilidade) gerencie vários empregadores.
@@ -105,6 +204,72 @@ Consulte o `PROJECT_RULES.md` para detalhes, exemplos e regras completas.
   // Justificativa: integração com biblioteca externa sem tipos disponíveis
   const valor: any = obterValorExterno(); 
 
+### Mecanismos de Controle de Tipagem
+Para garantir a qualidade e segurança do código, implementamos os seguintes mecanismos:
+
+1. **Configuração do ESLint**
+   ```json
+   {
+     "rules": {
+       "@typescript-eslint/no-explicit-any": "error"
+     }
+   }
+   ```
+
+2. **TypeScript Strict Mode**
+   ```json
+   {
+     "compilerOptions": {
+       "strict": true,
+       "noImplicitAny": true,
+       "strictNullChecks": true
+     }
+   }
+   ```
+
+3. **Validação de Tipos em Runtime**
+   - Use Zod ou Yup para validação de dados
+   - Implemente type guards para validação de tipos
+   - Documente interfaces e tipos em arquivos .d.ts
+
+4. **Processo de Code Review**
+   - PRs com 'any' serão rejeitados sem justificativa documentada
+   - Testes de tipo são obrigatórios
+   - CI/CD verifica cobertura de tipos
+   - Exceções são registradas e revisadas periodicamente
+
+5. **Boas Práticas**
+   - Crie interfaces para todas as estruturas de dados
+   - Use tipos genéricos para funções reutilizáveis
+   - Implemente testes de tipo com `tsc --noEmit`
+   - Mantenha documentação de tipos atualizada
+
+### Exemplos de Tipagem Correta
+
+```typescript
+// ❌ Errado
+const dados: any = obterDados();
+
+// ✅ Correto
+interface Dados {
+  id: number;
+  nome: string;
+  data: Date;
+}
+const dados: Dados = obterDados();
+
+// ✅ Com validação em runtime
+import { z } from 'zod';
+
+const DadosSchema = z.object({
+  id: z.number(),
+  nome: z.string(),
+  data: z.date()
+});
+
+const dados = DadosSchema.parse(obterDados());
+```
+
 ## Manual de Cadastro de Empregador e Empregado Doméstico
 
 > **Atenção:**
@@ -115,3 +280,52 @@ Consulte o `PROJECT_RULES.md` para detalhes, exemplos e regras completas.
 > **É obrigatório que todo o time consulte e siga este manual ao implementar ou revisar cadastros relacionados ao eSocial Doméstico.**
 >
 > Dúvidas ou sugestões devem ser discutidas com o time de produto e arquitetura. 
+
+# DOM - Documentação e Organização de Materiais
+
+## Regras de Desenvolvimento
+
+### Tamanho e Organização de Arquivos
+
+#### Tamanho Ideal
+- Arquivos de código: 200-400 linhas
+- Arquivos de teste: 100-200 linhas
+- Arquivos de configuração: 50-100 linhas
+
+#### Divisão de Arquivos
+Arquivos que excedam o tamanho ideal devem ser divididos seguindo estas regras:
+
+1. **Por Responsabilidade:**
+   - Componente principal
+   - Campos do formulário
+   - Tipos e interfaces
+   - Funções utilitárias
+
+2. **Por Funcionalidade:**
+   - Hook principal
+   - Tipos
+   - Funções utilitárias
+   - Schemas de validação
+
+3. **Por Contexto:**
+   - Testes unitários
+   - Testes de snapshot
+   - Testes de integração
+
+#### Benefícios
+- Melhor manutenibilidade
+- Maior testabilidade
+- Maior reusabilidade
+- Melhor performance
+
+#### Processo de Code Review
+- Verificação de tamanho
+- Verificação de estrutura
+- Verificação de qualidade
+
+#### Exceções
+- Arquivos de configuração
+- Arquivos de migração
+- Arquivos de documentação
+
+Para mais detalhes, consulte o arquivo `.cursorrules`. 

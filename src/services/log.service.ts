@@ -72,9 +72,9 @@ export interface LogEstatisticas {
 }
 
 export const LogService = {
-  private readonly CACHE_KEY = 'log:';
-  private readonly CACHE_EXPIRACAO = 3600; // 1 hora
-  private config: LogConfig | null = null;
+  CACHE_KEY: 'log:',
+  CACHE_EXPIRACAO: 3600, // 1 hora
+  config: null as LogConfig | null,
 
   /**
    * Inicializa o serviço

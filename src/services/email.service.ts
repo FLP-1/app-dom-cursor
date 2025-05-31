@@ -71,8 +71,8 @@ export interface EmailConfig {
 }
 
 export const EmailService = {
-  private readonly CACHE_KEY = 'email:';
-  private readonly CACHE_EXPIRACAO = 3600; // 1 hora
+  CACHE_KEY: 'email:',
+  CACHE_EXPIRACAO: 3600, // 1 hora
 
   /**
    * Lista todos os emails

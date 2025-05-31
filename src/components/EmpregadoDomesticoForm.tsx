@@ -26,6 +26,7 @@ const CPFMask = React.forwardRef<HTMLInputElement>((props, ref) => (
     inputRef={ref}
   />
 ));
+CPFMask.displayName = 'CPFMask';
 
 const CEPMask = React.forwardRef<HTMLInputElement>((props, ref) => (
   <IMaskInput
@@ -34,6 +35,7 @@ const CEPMask = React.forwardRef<HTMLInputElement>((props, ref) => (
     inputRef={ref}
   />
 ));
+CEPMask.displayName = 'CEPMask';
 
 const TelefoneMask = React.forwardRef<HTMLInputElement>((props, ref) => (
   <IMaskInput
@@ -42,6 +44,7 @@ const TelefoneMask = React.forwardRef<HTMLInputElement>((props, ref) => (
     inputRef={ref}
   />
 ));
+TelefoneMask.displayName = 'TelefoneMask';
 
 const PISMask = React.forwardRef<HTMLInputElement>((props, ref) => (
   <IMaskInput
@@ -50,6 +53,7 @@ const PISMask = React.forwardRef<HTMLInputElement>((props, ref) => (
     inputRef={ref}
   />
 ));
+PISMask.displayName = 'PISMask';
 
 export const EmpregadoDomesticoForm: React.FC<EmpregadoDomesticoFormProps> = ({ initialValues, cargos, onSubmitSuccess, empregadores }) => {
   const { t } = useTranslation();

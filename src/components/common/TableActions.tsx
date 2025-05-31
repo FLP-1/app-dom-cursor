@@ -1,7 +1,9 @@
 import React from 'react';
-import { Box } from '@mui/material';
-import { Edit as EditIcon, Delete as DeleteIcon, Visibility as ViewIcon } from '@mui/icons-material';
-import { IconButton } from './IconButton';
+import { Box, IconButton, Tooltip } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { useTranslation } from 'react-i18next';
 
 interface TableActionsProps {
   onEdit?: () => void;
@@ -16,34 +18,45 @@ export const TableActions: React.FC<TableActionsProps> = ({
   onView,
   disabled = false
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Box sx={{ display: 'flex', gap: 1 }}>
       {onView && (
-        <IconButton
-          icon={<ViewIcon />}
-          onClick={onView}
-          tooltip="Visualizar"
-          color="info"
-          disabled={disabled}
-        />
+        <Tooltip title={t('Visualizar')}>
+          <IconButton
+            onClick={onView}
+            disabled={disabled}
+            color="info"
+            size="small"
+          >
+            <VisibilityIcon />
+          </IconButton>
+        </Tooltip>
       )}
       {onEdit && (
-        <IconButton
-          icon={<EditIcon />}
-          onClick={onEdit}
-          tooltip="Editar"
-          color="primary"
-          disabled={disabled}
-        />
+        <Tooltip title={t('Editar')}>
+          <IconButton
+            onClick={onEdit}
+            disabled={disabled}
+            color="primary"
+            size="small"
+          >
+            <EditIcon />
+          </IconButton>
+        </Tooltip>
       )}
       {onDelete && (
-        <IconButton
-          icon={<DeleteIcon />}
-          onClick={onDelete}
-          tooltip="Excluir"
-          color="error"
-          disabled={disabled}
-        />
+        <Tooltip title={t('Excluir')}>
+          <IconButton
+            onClick={onDelete}
+            disabled={disabled}
+            color="error"
+            size="small"
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
       )}
     </Box>
   );

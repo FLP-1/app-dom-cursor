@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { useAuth } from '../useAuth';
+import { api } from '../../services/api';
 
 // Mock do useRouter
 jest.mock('next/router', () => ({
@@ -37,7 +38,6 @@ describe('useAuth', () => {
     const mockUser = { id: '1', name: 'Teste', email: 'teste@exemplo.com', role: 'user' };
     const mockToken = 'token-123';
 
-    const { api } = require('../../services/api');
     api.post.mockResolvedValueOnce({ data: { token: mockToken, user: mockUser } });
 
     const { result } = renderHook(() => useAuth());
@@ -56,7 +56,6 @@ describe('useAuth', () => {
   });
 
   it('deve fazer logout com sucesso', async () => {
-    const { api } = require('../../services/api');
     api.post.mockResolvedValueOnce({});
 
     const { result } = renderHook(() => useAuth());
@@ -77,7 +76,6 @@ describe('useAuth', () => {
   });
 
   it('deve lidar com erro de login', async () => {
-    const { api } = require('../../services/api');
     api.post.mockRejectedValueOnce({ response: { data: { message: 'Credenciais inválidas' } } });
 
     const { result } = renderHook(() => useAuth());
@@ -99,7 +97,6 @@ describe('useAuth', () => {
   });
 
   it('deve verificar token expirado', async () => {
-    const { api } = require('../../services/api');
     api.get.mockRejectedValueOnce({ response: { status: 401 } });
 
     localStorage.setItem('token', 'token-expirado');

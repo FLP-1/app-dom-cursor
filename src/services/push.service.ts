@@ -77,8 +77,8 @@ export interface PushSubscription {
 }
 
 export const PushService = {
-  private readonly CACHE_KEY = 'push:';
-  private readonly CACHE_EXPIRACAO = 3600; // 1 hora
+  CACHE_KEY: 'push:',
+  CACHE_EXPIRACAO: 3600, // 1 hora
 
   /**
    * Lista todas as notificações push

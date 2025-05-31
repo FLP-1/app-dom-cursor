@@ -37,8 +37,8 @@ export interface ConfigFormData {
 }
 
 export const ConfigService = {
-  private readonly CACHE_KEY = 'config:';
-  private readonly CACHE_EXPIRACAO = 3600; // 1 hora
+  CACHE_KEY: 'config:',
+  CACHE_EXPIRACAO: 3600, // 1 hora
 
   /**
    * Obtém uma configuração

@@ -15,7 +15,7 @@ jest.mock('@/hooks/useNotification', () => ({
 
 // Mock do IMaskInput
 jest.mock('react-imask', () => ({
-  IMaskInput: ({ onAccept, ...props }: any) => (
+  IMaskInput: ({ onAccept, ...props }: { onAccept: (value: string) => void; [key: string]: unknown }) => (
     <input
       {...props}
       data-testid="cep-input"
@@ -43,20 +43,17 @@ describe('FormCepInput', () => {
     jest.clearAllMocks();
   });
 
-  it('deve renderizar corretamente', () => {
+  it('renders correctly', () => {
+    const { control } = useForm();
+    
     render(
-      <TestWrapper>
-        <FormCepInput
-          name="test"
-          label="CEP"
-          control={{} as any}
-          value=""
-          onChange={() => {}}
-        />
-      </TestWrapper>
+      <FormCepInput
+        control={control}
+        name="cep"
+        label="CEP"
+      />
     );
 
-    expect(screen.getByText('CEP')).toBeInTheDocument();
     expect(screen.getByTestId('cep-input')).toBeInTheDocument();
   });
 

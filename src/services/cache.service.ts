@@ -39,10 +39,10 @@ export interface CacheEstatisticas {
 }
 
 export const CacheService = {
-  private readonly CACHE_KEY = 'cache:';
-  private readonly CACHE_EXPIRACAO = 3600; // 1 hora
-  private cache: Map<string, CacheItem> = new Map();
-  private config: CacheConfig | null = null;
+  CACHE_KEY: 'cache:',
+  CACHE_EXPIRACAO: 3600, // 1 hora
+  cache: new Map<string, CacheItem>(),
+  config: null as CacheConfig | null,
 
   /**
    * Inicializa o serviço

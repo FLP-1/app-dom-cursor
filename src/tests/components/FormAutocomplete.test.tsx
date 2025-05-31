@@ -783,7 +783,7 @@ describe('FormAutocomplete', () => {
           multiple
           renderTags={(value, getTagProps) =>
             value.map((option, index) => (
-              <span {...getTagProps({ index })} data-testid="test-tag">
+              <span key={`tag-${option.value}`} {...getTagProps({ index })} data-testid="test-tag">
                 {option.label}
               </span>
             ))

@@ -7,6 +7,23 @@ import { useEmpregadorForm } from '../../hooks/useEmpregadorForm';
 import { PreviewESocial } from './PreviewESocial';
 import { useState } from 'react';
 import { CheckCircle, Error, Warning } from '@mui/icons-material';
+import { FormData } from '@/types/forms';
+
+interface EmpregadorData extends FormData {
+  nome: string;
+  cpf: string;
+  email: string;
+  telefone: string;
+  endereco: {
+    cep: string;
+    logradouro: string;
+    numero: string;
+    complemento?: string;
+    bairro: string;
+    cidade: string;
+    estado: string;
+  };
+}
 
 export function FormEmpregador() {
   const { 
@@ -54,11 +71,12 @@ export function FormEmpregador() {
     }
   };
 
-  const handleSubmit = async (data: any) => {
+  const handleSubmit = async (data: EmpregadorData) => {
     try {
       setError(null);
       await onSubmit(data);
     } catch (error) {
+      console.error('Erro ao salvar empregador:', error);
       setError('Erro ao cadastrar empregador. Por favor, tente novamente.');
     }
   };

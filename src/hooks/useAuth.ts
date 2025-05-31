@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { api } from '@/services/api';
 import { useRefreshToken } from './useRefreshToken';
+import { FormError } from '@/types/forms';
 
 export interface User {
   id: string;
@@ -47,39 +48,11 @@ export function useAuth() {
         isLoading: false,
         error: null
       });
-    } catch (error) {
-      // Se o token estiver expirado, tenta renovar
-      if (error.response?.status === 401) {
-        try {
-          await refreshToken();
-          // Tenta validar novamente após renovar o token
-          const response = await api.get('/auth/validate');
-          setState({
-            user: response.data.user,
-            isAuthenticated: true,
-            isLoading: false,
-            error: null
-          });
-        } catch (refreshError) {
-          localStorage.removeItem('token');
-          setState({
-            user: null,
-            isAuthenticated: false,
-            isLoading: false,
-            error: 'Sessão expirada'
-          });
-        }
-      } else {
-        localStorage.removeItem('token');
-        setState({
-          user: null,
-          isAuthenticated: false,
-          isLoading: false,
-          error: 'Erro ao validar sessão'
-        });
-      }
+    } catch (error: unknown) {
+      const formError = error as FormError;
+      throw new Error(formError.message || 'Erro ao autenticar');
     }
-  }, [refreshToken]);
+  }, []);
 
   const login = useCallback(async (credentials: { cpf: string; password: string }) => {
     try {
@@ -101,11 +74,12 @@ export function useAuth() {
       });
 
       router.push('/dashboard');
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const formError = error as FormError;
       setState(prev => ({
         ...prev,
         isLoading: false,
-        error: error.response?.data?.message || 'Erro ao fazer login'
+        error: formError.message || 'Erro ao fazer login'
       }));
     }
   }, [router]);

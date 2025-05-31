@@ -7,32 +7,38 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import { documentMessages } from '../../i18n/messages';
+import { Document, DocumentFilter } from '@/types/documents';
 
 const lang = 'pt';
-
-interface Document {
-  id: number;
-  name: string;
-  type: string;
-  uploadedAt: string;
-  expiresAt: string;
-  group: string;
-  status: string;
-  category: 'INSTITUCIONAL_TERMS_OF_USE' | 'INSTITUCIONAL_PRIVACY_POLICY' | 'INSTITUCIONAL_PLANS' | 'INSTITUCIONAL_CANCELLATION_REFUND' | 'OUTROS';
-}
 
 interface DocumentListProps {
   filters?: Partial<Document> & { search?: string; status?: string };
   isAdmin?: boolean;
+  documents: Document[];
+  onView: (doc: Document) => void;
+  onDownload: (doc: Document) => void;
 }
 
-function buildQueryString(filters: any) {
-  if (!filters) return '';
-  const params = Object.entries(filters)
-    .filter(([, v]) => v && v !== 'Todos')
-    .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v as string)}`)
-    .join('&');
-  return params ? `?${params}` : '';
+function buildQueryString(filters: DocumentFilter): string {
+  const params = new URLSearchParams();
+  
+  if (filters.tipo) {
+    params.append('tipo', filters.tipo);
+  }
+  
+  if (filters.dataInicio) {
+    params.append('dataInicio', filters.dataInicio.toISOString());
+  }
+  
+  if (filters.dataFim) {
+    params.append('dataFim', filters.dataFim.toISOString());
+  }
+  
+  if (filters.nome) {
+    params.append('nome', filters.nome);
+  }
+  
+  return params.toString();
 }
 
 const getIcon = (type: string) => {
@@ -55,8 +61,8 @@ const getCategoryLabel = (category: Document['category']) => {
   }
 };
 
-const DocumentList: React.FC<DocumentListProps> = ({ filters, isAdmin = true }) => {
-  const query = buildQueryString(filters);
+const DocumentList: React.FC<DocumentListProps> = ({ filters, isAdmin = true, documents, onView, onDownload }) => {
+  const query = buildQueryString(filters as DocumentFilter);
   const { data, error, isLoading } = useSWR(`/api/documents${query}`, async (url) => {
     const res = await fetch(url);
     if (!res.ok) throw new Error(await res.text());
@@ -74,37 +80,24 @@ const DocumentList: React.FC<DocumentListProps> = ({ filters, isAdmin = true }) 
   }
 
   // Suporte tanto para array quanto para objeto único (caso API retorne findFirst)
-  const documents = (Array.isArray(data) ? data : [data]).map((doc: any) => ({
-    id: doc.id,
-    name: doc.name,
-    type: doc.type,
-    uploadedAt: doc.uploadedAt || doc.createdAt || '',
-    expiresAt: doc.expiresAt || '',
-    group: doc.group || '',
-    status: doc.status || '',
-    category: doc.category || 'OUTROS',
+  const documentsList = (Array.isArray(data) ? data : [data]).map((doc: any) => ({
+    ...doc,
+    dataUpload: new Date(doc.uploadedAt || doc.createdAt || ''),
   }));
 
   // Permissão: filtrar institucionais para não-admins
   const filteredDocuments = isAdmin
-    ? documents
-    : documents.filter((doc: Document) => doc.category === 'OUTROS');
+    ? documentsList
+    : documentsList.filter((doc: Document) => doc.category === 'OUTROS');
 
-  console.log('Documentos recebidos para exibição:', documents);
+  console.log('Documentos recebidos para exibição:', documentsList);
 
-  function handleView(doc: any) {
-    if (doc.url) {
-      window.open(doc.url, '_blank');
-    } else {
-      alert('Documento sem arquivo vinculado.');
-    }
+  function handleView(doc: Document) {
+    onView(doc);
   }
-  function handleDownload(doc: any) {
-    if (doc.url) {
-      window.open(doc.url, '_blank');
-    } else {
-      alert('Documento sem arquivo vinculado.');
-    }
+
+  function handleDownload(doc: Document) {
+    onDownload(doc);
   }
 
   // Renderização detalhada para debug
@@ -112,7 +105,7 @@ const DocumentList: React.FC<DocumentListProps> = ({ filters, isAdmin = true }) 
     <Box>
       {filteredDocuments.map(doc => (
         <div key={doc.id} style={{ borderBottom: '1px solid #eee', padding: 8 }}>
-          <strong>{doc.name}</strong> | {doc.type} | {doc.uploadedAt} | {doc.expiresAt} | {doc.group} | {doc.status} | {doc.category}
+          <strong>{doc.name}</strong> | {doc.type} | {doc.dataUpload.toLocaleDateString()} | {doc.expiresAt ? doc.expiresAt.toLocaleDateString() : ''} | {doc.group} | {doc.status} | {doc.category}
           <button onClick={() => handleView(doc)} style={{ marginLeft: 8 }}>Visualizar</button>
           <button onClick={() => handleDownload(doc)} style={{ marginLeft: 8 }}>Baixar</button>
         </div>

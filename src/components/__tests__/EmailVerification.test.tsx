@@ -200,7 +200,7 @@ describe('EmailVerification', () => {
             ok: true,
           });
         }, 100);
-      }); // Verificação do código
+      }));
 
     render(<EmailVerification />);
 
@@ -228,5 +228,4 @@ describe('EmailVerification', () => {
       expect(screen.queryByText('Verificando...')).not.toBeInTheDocument();
     });
   });
-}); 
 }); 

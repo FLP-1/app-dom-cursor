@@ -34,8 +34,23 @@ yarn-error.log*
 next-env.d.ts
 
 # IDE
-.vscode/
-.idea/
+.idea
+.vscode
+*.swp
+*.swo
+
+# Logs
+logs
+*.log
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+
+# Cache
+.cache
+.eslintcache
 
 # Prisma
 /prisma/migrations/ 

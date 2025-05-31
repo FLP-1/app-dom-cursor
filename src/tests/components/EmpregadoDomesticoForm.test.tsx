@@ -3,6 +3,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { EmpregadoDomesticoForm } from '../../components/EmpregadoDomesticoForm';
 import { useEmpregadoDomesticoForm } from '../../hooks/forms/useEmpregadoDomesticoForm';
 import { empregadoDomesticoService } from '../../services/empregado-domestico.service';
+import { FormData } from '@/types/forms';
 
 // Mock dos hooks e serviços
 jest.mock('../../hooks/forms/useEmpregadoDomesticoForm');
@@ -221,5 +222,40 @@ describe('EmpregadoDomesticoForm', () => {
     );
 
     expect(screen.getByText('Salvando...')).toBeInTheDocument();
+  });
+
+  it('should submit form data', async () => {
+    const mockSubmit = jest.fn();
+    
+    render(
+      <EmpregadoDomesticoForm
+        onSubmit={mockSubmit}
+        initialData={{}}
+      />
+    );
+
+    const form = screen.getByRole('form');
+    const submitButton = screen.getByRole('button', { name: /salvar/i });
+
+    fireEvent.click(submitButton);
+
+    expect(mockSubmit).toHaveBeenCalled();
+  });
+
+  it('should validate required fields', async () => {
+    const mockSubmit = jest.fn();
+    
+    render(
+      <EmpregadoDomesticoForm
+        onSubmit={mockSubmit}
+        initialData={{}}
+      />
+    );
+
+    const submitButton = screen.getByRole('button', { name: /salvar/i });
+    fireEvent.click(submitButton);
+
+    expect(screen.getByText(/nome é obrigatório/i)).toBeInTheDocument();
+    expect(mockSubmit).not.toHaveBeenCalled();
   });
 }); 

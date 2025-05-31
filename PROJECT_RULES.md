@@ -93,3 +93,84 @@ Remove-Item -Recurse -Force .next
 > **É obrigatório que todo o time consulte e siga este manual ao implementar ou revisar cadastros relacionados ao eSocial Doméstico.**
 >
 > Dúvidas ou sugestões devem ser discutidas com o time de produto e arquitetura.
+
+## Tamanho e Organização de Arquivos
+
+### Limites de Tamanho
+- Arquivos de código: máximo 400 linhas
+- Arquivos de teste: máximo 200 linhas
+- Arquivos de configuração: máximo 100 linhas
+
+### Estrutura de Diretórios
+```
+src/
+  ├── components/
+  │   └── forms/
+  │       └── empregado/
+  │           ├── EmpregadoForm.tsx
+  │           ├── EmpregadoFormFields.tsx
+  │           ├── EmpregadoFormTypes.ts
+  │           └── EmpregadoFormUtils.ts
+  │
+  ├── hooks/
+  │   └── esocial/
+  │       ├── useEsocialEventForm.ts
+  │       ├── useEsocialEventTypes.ts
+  │       ├── useEsocialEventUtils.ts
+  │       └── useEsocialEventSchema.ts
+  │
+  └── tests/
+      └── components/
+          └── form/
+              ├── FormInput.test.tsx
+              ├── FormInput.snapshot.test.tsx
+              └── FormInput.integration.test.tsx
+```
+
+### Regras de Divisão
+1. **Coesão:**
+   - Funções relacionadas devem ficar juntas
+   - Separe por responsabilidade
+   - Evite acoplamento desnecessário
+
+2. **Nomenclatura:**
+   - Use nomes descritivos
+   - Mantenha padrão consistente
+   - Agrupe por funcionalidade
+
+3. **Estrutura:**
+   - Mantenha estrutura clara
+   - Use index.ts para exportações
+   - Documente a estrutura
+
+### Processo de Code Review
+1. **Verificação de Tamanho:**
+   - Rejeite PRs com arquivos grandes
+   - Sugira divisão quando necessário
+   - Verifique coesão
+
+2. **Verificação de Estrutura:**
+   - Confirme divisão correta
+   - Verifique nomes
+   - Confirme documentação
+
+3. **Verificação de Qualidade:**
+   - Confirme testes
+   - Verifique dependências
+   - Confirme sem duplicação
+
+### Exceções
+1. **Arquivos de Configuração:**
+   - Podem exceder limite
+   - Devem ser documentados
+   - Dividir por contexto
+
+2. **Arquivos de Migração:**
+   - Podem exceder limite
+   - Devem ser documentados
+   - Dividir por versão
+
+3. **Arquivos de Documentação:**
+   - Podem exceder limite
+   - Devem ser estruturados
+   - Dividir por tópico

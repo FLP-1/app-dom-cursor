@@ -6,7 +6,24 @@ import { FormDatePicker } from '../form/FormDatePicker';
 import { FormMaskInput } from '../form/FormMaskInput';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useSnackbar } from 'notistack';
+import { useNotification } from '../../hooks/useNotification';
+import { FormData } from '@/types/forms';
+
+interface EmpregadorData extends FormData {
+  nome: string;
+  cpf: string;
+  email: string;
+  telefone: string;
+  endereco: {
+    cep: string;
+    logradouro: string;
+    numero: string;
+    complemento?: string;
+    bairro: string;
+    cidade: string;
+    estado: string;
+  };
+}
 
 const steps = [
   'Dados Básicos',
@@ -17,7 +34,7 @@ export function EmpregadorForm() {
   const { form, onSubmit } = useEmpregadorForm();
   const [activeStep, setActiveStep] = useState(0);
   const router = useRouter();
-  const { enqueueSnackbar } = useSnackbar();
+  const { showNotification } = useNotification();
 
   const handleNext = () => {
     setActiveStep((prevStep) => prevStep + 1);
@@ -27,13 +44,19 @@ export function EmpregadorForm() {
     setActiveStep((prevStep) => prevStep - 1);
   };
 
-  const handleSubmit = async (data: any) => {
+  const handleSubmit = async (data: EmpregadorData) => {
     try {
       await onSubmit(data);
-      enqueueSnackbar('Empregador cadastrado com sucesso!', { variant: 'success' });
+      showNotification({
+        type: 'success',
+        message: 'Empregador cadastrado com sucesso!'
+      });
       router.push('/empregadores');
     } catch (error) {
-      enqueueSnackbar('Erro ao cadastrar empregador', { variant: 'error' });
+      showNotification({
+        type: 'error',
+        message: 'Erro ao cadastrar empregador'
+      });
     }
   };
 

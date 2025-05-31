@@ -1,17 +1,16 @@
-import React from 'react';
+export const DatePicker = jest.fn().mockImplementation(({ value, onChange, ...props }) => {
+  return (
+    <input
+      type="date"
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      {...props}
+    />
+  );
+});
 
-export const LocalizationProvider = ({ children }: { children: React.ReactNode }) => {
+export const LocalizationProvider = jest.fn().mockImplementation(({ children }) => {
   return <>{children}</>;
-};
+});
 
-export const AdapterDateFns = {
-  format: jest.fn(),
-  parse: jest.fn(),
-  addDays: jest.fn(),
-  addMonths: jest.fn(),
-  addYears: jest.fn(),
-  getDay: jest.fn(),
-  getMonth: jest.fn(),
-  getYear: jest.fn(),
-  is12HourCycleInCurrentLocale: jest.fn(() => false),
-}; 
+export const AdapterDateFns = jest.fn().mockImplementation(() => ({})); 

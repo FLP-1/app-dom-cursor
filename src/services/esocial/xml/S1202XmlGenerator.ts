@@ -1,11 +1,34 @@
 import { S1202Schema } from '@/schemas/esocial/S1202Schema';
 import { format } from 'date-fns';
 
-export class S1202XmlGenerator {
-  private data: any;
+interface S1202Data {
+  ideEvento: {
+    perApur: string;
+  };
+  ideEmpregador: {
+    nrInsc: string;
+  };
+  ideTrabalhador: {
+    cpfTrab: string;
+  };
+  dmDev: Array<{
+    codCateg: string;
+    infoPerApur: Array<{
+      ideEstabLot: Array<{
+        detVerbas: Array<{
+          codRubr: string;
+          vrRubr: number;
+        }>;
+      }>;
+    }>;
+  }>;
+}
 
-  constructor(data: any) {
-    this.data = S1202Schema.parse(data);
+export class S1202XmlGenerator {
+  private data: S1202Data;
+
+  constructor(data: S1202Data) {
+    this.data = data;
   }
 
   generate(): string {
@@ -69,44 +92,35 @@ export class S1202XmlGenerator {
   }
 
   private generateDmDev(): string {
-    const { dmDev } = this.data;
-    return `
-    <dmDev>
-      ${dmDev.map((dev: any) => `
-      <ideDmDev>${dev.ideDmDev}</ideDmDev>
-      <codCateg>${dev.codCateg}</codCateg>
-      ${this.generateInfoPerApur(dev.infoPerApur)}
-      `).join('')}
-    </dmDev>`;
+    return this.data.dmDev.map((dev) => `
+      <dmDev>
+        <codCateg>${dev.codCateg}</codCateg>
+        ${this.generateInfoPerApur(dev.infoPerApur)}
+      </dmDev>
+    `).join('');
   }
 
-  private generateInfoPerApur(infoPerApur: any[]): string {
-    return infoPerApur.map((info: any) => `
+  private generateInfoPerApur(infoPerApur: S1202Data['dmDev'][0]['infoPerApur']): string {
+    return infoPerApur.map((info) => `
       <infoPerApur>
         ${this.generateIdeEstabLot(info.ideEstabLot)}
       </infoPerApur>
     `).join('');
   }
 
-  private generateIdeEstabLot(ideEstabLot: any[]): string {
-    return ideEstabLot.map((estab: any) => `
+  private generateIdeEstabLot(ideEstabLot: S1202Data['dmDev'][0]['infoPerApur'][0]['ideEstabLot']): string {
+    return ideEstabLot.map((estab) => `
       <ideEstabLot>
-        <tpInsc>${estab.tpInsc}</tpInsc>
-        <nrInsc>${estab.nrInsc}</nrInsc>
-        <codLotacao>${estab.codLotacao}</codLotacao>
         ${this.generateDetVerbas(estab.detVerbas)}
       </ideEstabLot>
     `).join('');
   }
 
-  private generateDetVerbas(detVerbas: any[]): string {
-    return detVerbas.map((verba: any) => `
+  private generateDetVerbas(detVerbas: S1202Data['dmDev'][0]['infoPerApur'][0]['ideEstabLot'][0]['detVerbas']): string {
+    return detVerbas.map((verba) => `
       <detVerbas>
         <codRubr>${verba.codRubr}</codRubr>
-        <ideTabRubr>${verba.ideTabRubr}</ideTabRubr>
-        <qtdRubr>${verba.qtdRubr}</qtdRubr>
         <vrRubr>${verba.vrRubr.toFixed(2)}</vrRubr>
-        <indApurIR>${verba.indApurIR}</indApurIR>
       </detVerbas>
     `).join('');
   }

@@ -1,15 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  productionBrowserSourceMaps: false,
-  webpack: (config) => {
-    config.resolve.fallback = {
-      ...config.resolve.fallback,
-      abab: false,
-      domexception: false
-    };
-    return config;
-  }
+  swcMinify: true,
+  experimental: {
+    serverActions: true,
+  },
+  images: {
+    domains: ['localhost'],
+  },
 };
 
 module.exports = nextConfig; 

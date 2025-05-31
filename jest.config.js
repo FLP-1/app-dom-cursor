@@ -10,10 +10,10 @@ const customJestConfig = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
-    '^react-imask$': '<rootDir>/src/__mocks__/react-imask.ts',
+    '^react-imask$': '<rootDir>/src/__mocks__/react-imask.tsx',
     '^next/router$': '<rootDir>/src/__mocks__/next/router.ts',
-    '^@mui/x-date-pickers$': '<rootDir>/src/__mocks__/@mui/x-date-pickers.ts',
-    '^@mui/x-date-pickers/AdapterDateFns$': '<rootDir>/src/__mocks__/@mui/x-date-pickers.ts',
+    '^@mui/x-date-pickers$': '<rootDir>/src/__mocks__/@mui/x-date-pickers.tsx',
+    '^@mui/x-date-pickers/AdapterDateFns$': '<rootDir>/src/__mocks__/@mui/x-date-pickers.tsx',
   },
   testPathIgnorePatterns: [
     '<rootDir>/.next/',

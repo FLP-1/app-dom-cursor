@@ -3,6 +3,7 @@ import { S1202Sender } from '../S1202Sender';
 import { prisma } from '@/lib/prisma';
 import { esocialApi } from '@/lib/esocial-api';
 import { logger } from '@/lib/logger';
+import { S1202XmlGenerator } from '../xml/S1202XmlGenerator';
 
 // Mock das dependências
 vi.mock('@/lib/prisma', () => ({
@@ -28,6 +29,10 @@ vi.mock('@/lib/logger', () => ({
     info: vi.fn(),
     error: vi.fn()
   }
+}));
+
+vi.mock('../xml/S1202XmlGenerator', () => ({
+  S1202XmlGenerator: vi.fn()
 }));
 
 describe('S1202Sender', () => {
@@ -128,7 +133,7 @@ describe('S1202Sender', () => {
   it('should handle XML generation error', async () => {
     // Mock do erro de geração de XML
     const mockError = new Error('Invalid XML');
-    vi.spyOn(require('../xml/S1202XmlGenerator'), 'S1202XmlGenerator').mockImplementation(() => ({
+    (S1202XmlGenerator as any).mockImplementation(() => ({
       generate: () => {
         throw mockError;
       }

@@ -3,6 +3,7 @@ import { NovoEsocialEventoPage } from '@/pages/esocial/eventos/novo';
 import { EsocialEventService } from '@/services/EsocialEventService';
 import { TipoEventoEsocial } from '@/types/esocial';
 import { TestWrapper } from '@/tests/utils/TestWrapper';
+import { EsocialEventResponse, TestEvent } from '@/tests/types';
 
 jest.mock('@/services/EsocialEventService');
 jest.mock('next/router', () => ({
@@ -12,13 +13,14 @@ jest.mock('next/router', () => ({
 }));
 
 describe('NovoEsocialEventoPage', () => {
-  const mockEventS2300 = {
+  const mockEventS2300: TestEvent = {
     id: '1',
     tipo: TipoEventoEsocial.S2300,
     data: new Date(),
     status: 'PENDENTE',
     payload: {
       cpf: '12345678900',
+      data: new Date(),
       nome: 'João da Silva',
       dataNascimento: new Date('1990-01-01'),
       sexo: 'M',
@@ -31,26 +33,28 @@ describe('NovoEsocialEventoPage', () => {
     }
   };
 
-  const mockEventS2399 = {
+  const mockEventS2399: TestEvent = {
     id: '2',
     tipo: TipoEventoEsocial.S2399,
     data: new Date(),
     status: 'PENDENTE',
     payload: {
       cpf: '98765432100',
+      data: new Date(),
       dataDesligamento: new Date(),
       motivoDesligamento: 'PEDIDO_DEMISSAO',
       observacao: 'Desligamento solicitado pelo trabalhador'
     }
   };
 
-  const mockEventS1207 = {
+  const mockEventS1207: TestEvent = {
     id: '3',
     tipo: TipoEventoEsocial.S1207,
     data: new Date(),
     status: 'PENDENTE',
     payload: {
       cpf: '45678912300',
+      data: new Date(),
       dataInicioBeneficio: new Date(),
       tipoBeneficio: 'AUXILIO_DOENCA',
       valorBeneficio: 1000,
@@ -71,7 +75,7 @@ describe('NovoEsocialEventoPage', () => {
   });
 
   it('should handle form submission for S2206 event', async () => {
-    const mockCreate = jest.spyOn(EsocialEventService, 'create').mockResolvedValueOnce({} as any);
+    const mockCreate = jest.spyOn(EsocialEventService, 'create').mockResolvedValueOnce({} as EsocialEventResponse);
 
     render(<NovoEsocialEventoPage />);
 

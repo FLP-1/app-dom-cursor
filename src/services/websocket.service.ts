@@ -45,12 +45,12 @@ export interface WebSocketConfig {
 }
 
 export const WebSocketService = {
-  private readonly CACHE_KEY = 'websocket:';
-  private readonly CACHE_EXPIRACAO = 3600; // 1 hora
-  private socket: WebSocket | null = null;
-  private tentativas = 0;
-  private reconectando = false;
-  private handlers: Map<string, Set<(evento: Evento) => void>> = new Map();
+  CACHE_KEY: 'websocket:',
+  CACHE_EXPIRACAO: 3600, // 1 hora
+  socket: null as WebSocket | null,
+  tentativas: 0,
+  reconectando: false,
+  handlers: new Map<string, Set<(evento: Evento) => void>>(),
 
   /**
    * Inicializa o serviço

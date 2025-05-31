@@ -29,9 +29,9 @@ export interface TraducaoFilter {
 }
 
 export const I18nService = {
-  private readonly CACHE_KEY = 'i18n:';
-  private readonly CACHE_EXPIRACAO = 3600; // 1 hora
-  private idiomaAtual: Idioma = 'pt-BR';
+  CACHE_KEY: 'i18n:',
+  CACHE_EXPIRACAO: 3600, // 1 hora
+  idiomaAtual: 'pt-BR' as Idioma,
 
   /**
    * Define o idioma atual

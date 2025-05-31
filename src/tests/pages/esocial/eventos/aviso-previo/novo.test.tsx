@@ -1,97 +1,100 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import EsocialS2250FormPage from '@/pages/esocial/eventos/aviso-previo/novo';
-import { useEsocialS2250Form } from '@/hooks/useEsocialS2250Form';
-import { useRouter } from 'next/router';
+import { NovoAvisoPrevioPage } from '@/pages/esocial/eventos/aviso-previo/novo';
+import { EsocialEventService } from '@/services/EsocialEventService';
+import { TestWrapper } from '@/tests/utils/TestWrapper';
+import { EsocialEventResponse } from '@/tests/types';
 
-// Mock dos hooks
-jest.mock('@/hooks/useEsocialS2250Form');
-jest.mock('next/router', () => ({
-  useRouter: jest.fn()
-}));
-jest.mock('next-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string) => key
-  })
-}));
+jest.mock('@/services/EsocialEventService');
 
-describe('EsocialS2250FormPage', () => {
-  const mockRouter = {
-    push: jest.fn()
-  };
-
-  const mockControl = {};
-  const mockOnSubmit = jest.fn();
-  const mockLoading = false;
-
+describe('NovoAvisoPrevioPage', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-
-    (useRouter as jest.Mock).mockReturnValue(mockRouter);
-    (useEsocialS2250Form as jest.Mock).mockReturnValue({
-      control: mockControl,
-      onSubmit: mockOnSubmit,
-      loading: mockLoading
-    });
   });
 
-  it('deve renderizar o título da página', () => {
-    render(<EsocialS2250FormPage />);
+  it('should render the page title', () => {
+    render(
+      <TestWrapper>
+        <NovoAvisoPrevioPage />
+      </TestWrapper>
+    );
 
-    expect(screen.getByText('esocial:events.S2250.titulo')).toBeInTheDocument();
+    expect(screen.getByText('Novo Aviso Prévio')).toBeInTheDocument();
   });
 
-  it('deve renderizar o botão de voltar', () => {
-    render(<EsocialS2250FormPage />);
+  it('should render the back button', () => {
+    render(
+      <TestWrapper>
+        <NovoAvisoPrevioPage />
+      </TestWrapper>
+    );
 
-    const voltarButton = screen.getByText('common:voltar');
-    expect(voltarButton).toBeInTheDocument();
-    expect(voltarButton.closest('a')).toHaveAttribute('href', '/esocial/eventos');
+    const backButton = screen.getByText('Voltar');
+    expect(backButton).toBeInTheDocument();
+    expect(backButton.closest('a')).toHaveAttribute('href', '/esocial/eventos');
   });
 
-  it('deve renderizar o formulário com os campos necessários', () => {
-    render(<EsocialS2250FormPage />);
+  it('should handle form submission', async () => {
+    const mockCreate = jest.spyOn(EsocialEventService, 'create').mockResolvedValueOnce({} as EsocialEventResponse);
 
-    expect(screen.getByLabelText('esocial:events.S2250.cpf')).toBeInTheDocument();
-    expect(screen.getByLabelText('esocial:events.S2250.dataAviso')).toBeInTheDocument();
-    expect(screen.getByLabelText('esocial:events.S2250.dataInicioAviso')).toBeInTheDocument();
-    expect(screen.getByLabelText('esocial:events.S2250.dataFimAviso')).toBeInTheDocument();
-    expect(screen.getByLabelText('esocial:events.S2250.tipoAviso')).toBeInTheDocument();
-    expect(screen.getByLabelText('esocial:events.S2250.codigoMotivoAviso')).toBeInTheDocument();
-    expect(screen.getByLabelText('esocial:events.S2250.motivoAviso')).toBeInTheDocument();
-    expect(screen.getByLabelText('esocial:events.S2250.dataDesligamento')).toBeInTheDocument();
-    expect(screen.getByLabelText('esocial:events.S2250.indenizacao.valor')).toBeInTheDocument();
-    expect(screen.getByLabelText('esocial:events.S2250.indenizacao.dataPagamento')).toBeInTheDocument();
-    expect(screen.getByLabelText('esocial:events.S2250.observacao')).toBeInTheDocument();
-  });
+    render(
+      <TestWrapper>
+        <NovoAvisoPrevioPage />
+      </TestWrapper>
+    );
 
-  it('deve renderizar os botões de ação', () => {
-    render(<EsocialS2250FormPage />);
+    // Preencher formulário
+    fireEvent.change(screen.getByLabelText('CPF'), { target: { value: '12345678900' } });
+    fireEvent.change(screen.getByLabelText('Data do Aviso'), { target: { value: '2024-03-20' } });
+    fireEvent.change(screen.getByLabelText('Data de Início'), { target: { value: '2024-03-21' } });
+    fireEvent.change(screen.getByLabelText('Data de Fim'), { target: { value: '2024-04-20' } });
+    fireEvent.change(screen.getByLabelText('Motivo do Aviso'), { target: { value: 'DISPENSA_SEM_JUSTA_CAUSA' } });
+    fireEvent.change(screen.getByLabelText('Observação'), { target: { value: 'Aviso prévio iniciado' } });
 
-    expect(screen.getByText('common:cancelar')).toBeInTheDocument();
-    expect(screen.getByText('common:salvar')).toBeInTheDocument();
-  });
-
-  it('deve chamar onSubmit quando o formulário for submetido', async () => {
-    render(<EsocialS2250FormPage />);
-
-    const form = screen.getByRole('form');
-    fireEvent.submit(form);
+    // Submeter formulário
+    fireEvent.click(screen.getByText('Salvar'));
 
     await waitFor(() => {
-      expect(mockOnSubmit).toHaveBeenCalled();
+      expect(mockCreate).toHaveBeenCalledWith({
+        tipo: 'S2206',
+        payload: {
+          cpf: '12345678900',
+          data: '2024-03-20',
+          dataInicioAviso: '2024-03-21',
+          dataFimAviso: '2024-04-20',
+          motivoAviso: 'DISPENSA_SEM_JUSTA_CAUSA',
+          observacao: 'Aviso prévio iniciado'
+        }
+      });
     });
   });
 
-  it('deve mostrar o botão de salvar com loading quando estiver carregando', () => {
-    (useEsocialS2250Form as jest.Mock).mockReturnValue({
-      control: mockControl,
-      onSubmit: mockOnSubmit,
-      loading: true
+  it('should show loading state during submission', async () => {
+    const mockCreate = jest.spyOn(EsocialEventService, 'create').mockImplementation(() => new Promise(() => {}));
+
+    render(
+      <TestWrapper>
+        <NovoAvisoPrevioPage />
+      </TestWrapper>
+    );
+
+    fireEvent.click(screen.getByText('Salvar'));
+
+    expect(screen.getByText('Salvar')).toHaveAttribute('aria-busy', 'true');
+  });
+
+  it('should show error message on submission failure', async () => {
+    const mockCreate = jest.spyOn(EsocialEventService, 'create').mockRejectedValueOnce(new Error('Erro ao criar evento'));
+
+    render(
+      <TestWrapper>
+        <NovoAvisoPrevioPage />
+      </TestWrapper>
+    );
+
+    fireEvent.click(screen.getByText('Salvar'));
+
+    await waitFor(() => {
+      expect(screen.getByText('Erro ao criar evento')).toBeInTheDocument();
     });
-
-    render(<EsocialS2250FormPage />);
-
-    const salvarButton = screen.getByText('common:salvar');
-    expect(salvarButton).toHaveAttribute('aria-busy', 'true');
   });
 }); 

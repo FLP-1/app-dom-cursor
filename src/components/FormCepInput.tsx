@@ -5,8 +5,9 @@ import { forwardRef } from 'react';
 import { Search as SearchIcon } from '@mui/icons-material';
 import { useTranslation } from 'next-i18next';
 import { useNotification } from '@/hooks/useNotification';
+import { FormControl } from '@/types/forms';
 
-interface FormCepInputProps {
+interface FormCepInputProps extends FormControl {
   name: string;
   label: string;
   control: Control;

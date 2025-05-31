@@ -9,13 +9,15 @@ import { FormControl } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useEsocialTabela } from '../hooks/useEsocialTabela';
 import { useEffect, useState } from 'react';
+import { EsocialEventFilter as EsocialEventFilterType } from '@/types/esocial';
 
 interface EsocialEventFiltersProps {
   control: Control<any>;
-  tipos: any[];
+  tipos: string[];
+  onFilter: (values: EsocialEventFilterType) => void;
 }
 
-export function EsocialEventFilters({ control, tipos }: EsocialEventFiltersProps) {
+export function EsocialEventFilters({ control, tipos, onFilter }: EsocialEventFiltersProps) {
   const theme = useTheme();
   const { t } = useTranslation();
   const { getTabela } = useEsocialTabela();
@@ -71,7 +73,7 @@ export function EsocialEventFilters({ control, tipos }: EsocialEventFiltersProps
             name="tipoId"
             label={t('Tipo de Evento')}
             control={control}
-            options={tipos.map(tipo => ({ value: tipo.id, label: `${tipo.codigo} - ${tipo.descricao}` }))}
+            options={tipos.map(tipo => ({ value: tipo, label: tipo }))}
             fullWidth
             inputProps={{ 'aria-label': t('Tipo de Evento') }}
           />

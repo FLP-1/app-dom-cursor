@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useEsocialEvent } from '@/hooks/useEsocialEvent';
 import { EsocialEventService } from '@/services/EsocialEventService';
-import { TipoEventoEsocial } from '@/types/esocial';
+import { EsocialEventResponse } from '@/tests/types';
 import { TestWrapper } from '@/tests/utils/TestWrapper';
 
 jest.mock('@/services/EsocialEventService');
@@ -12,18 +12,18 @@ jest.mock('next/router', () => ({
 }));
 
 describe('useEsocialEvent', () => {
-  const mockEvent = {
+  const mockEvent: EsocialEventResponse = {
     id: '1',
-    tipo: TipoEventoEsocial.S2400,
-    data: new Date(),
+    tipo: 'S2206',
+    status: 'PENDENTE',
+    data: '2024-03-20',
     payload: {
-      cpf: '12345678901',
-      dataInicioBeneficio: new Date(),
-      tipoBeneficio: '01',
-      valorBeneficio: 1500.00,
-      dataFimBeneficio: null,
-      motivoFimBeneficio: '',
-      observacao: 'Teste de benefício'
+      cpf: '12345678900',
+      data: '2024-03-20',
+      dataInicioAviso: '2024-03-21',
+      dataFimAviso: '2024-04-20',
+      motivoAviso: 'DISPENSA_SEM_JUSTA_CAUSA',
+      observacao: 'Aviso prévio iniciado'
     }
   };
 
@@ -36,94 +36,118 @@ describe('useEsocialEvent', () => {
       wrapper: TestWrapper,
     });
 
-    expect(result.current.tipo).toBe(TipoEventoEsocial.S2200);
+    expect(result.current.tipo).toBe('S2200');
     expect(result.current.isSubmitting).toBe(false);
     expect(result.current.errors).toEqual({});
     expect(result.current.control).toBeDefined();
   });
 
-  it('should handle form submission for new event', async () => {
-    const mockCreate = jest.spyOn(EsocialEventService, 'create').mockResolvedValueOnce({} as any);
+  it('should create event successfully', async () => {
+    const mockCreate = jest.spyOn(EsocialEventService, 'create').mockResolvedValueOnce(mockEvent);
 
-    const { result } = renderHook(() => useEsocialEvent(), {
-      wrapper: TestWrapper,
-    });
-
-    const formData = {
-      tipo: TipoEventoEsocial.S2206,
-      data: new Date(),
-      payload: {
-        cpf: '12345678900',
-        dataAlteracao: new Date(),
-        tipoAlteracao: '1',
-        motivoAlteracao: 'Alteração de cargo',
-        cargo: 'Desenvolvedor',
-        salario: 5000,
-        jornadaTrabalho: '40 horas',
-        tipoRegimePrevidenciario: '1',
-        dataInicioAlteracao: new Date(),
-        dataFimAlteracao: new Date(),
-        naturezaAlteracao: '1'
-      }
-    };
+    const { result } = renderHook(() => useEsocialEvent());
 
     await act(async () => {
-      await result.current.onSubmit(formData);
+      await result.current.createEvent({
+        tipo: 'S2206',
+        payload: mockEvent.payload
+      });
     });
 
-    expect(mockCreate).toHaveBeenCalledWith(formData);
+    expect(mockCreate).toHaveBeenCalledWith({
+      tipo: 'S2206',
+      payload: mockEvent.payload
+    });
+    expect(result.current.event).toEqual(mockEvent);
   });
 
-  it('should handle form submission for existing event', async () => {
-    const mockUpdate = jest.spyOn(EsocialEventService, 'update').mockResolvedValueOnce({} as any);
+  it('should update event successfully', async () => {
+    const mockUpdate = jest.spyOn(EsocialEventService, 'update').mockResolvedValueOnce(mockEvent);
 
-    const { result } = renderHook(() => useEsocialEvent('123'), {
-      wrapper: TestWrapper,
-    });
-
-    const formData = {
-      tipo: TipoEventoEsocial.S2206,
-      data: new Date(),
-      payload: {
-        cpf: '12345678900',
-        dataAlteracao: new Date(),
-        tipoAlteracao: '1',
-        motivoAlteracao: 'Alteração de cargo',
-        cargo: 'Desenvolvedor',
-        salario: 5000,
-        jornadaTrabalho: '40 horas',
-        tipoRegimePrevidenciario: '1',
-        dataInicioAlteracao: new Date(),
-        dataFimAlteracao: new Date(),
-        naturezaAlteracao: '1'
-      }
-    };
+    const { result } = renderHook(() => useEsocialEvent());
 
     await act(async () => {
-      await result.current.onSubmit(formData);
+      await result.current.updateEvent('1', {
+        tipo: 'S2206',
+        payload: mockEvent.payload
+      });
     });
 
-    expect(mockUpdate).toHaveBeenCalledWith('123', formData);
+    expect(mockUpdate).toHaveBeenCalledWith('1', {
+      tipo: 'S2206',
+      payload: mockEvent.payload
+    });
+    expect(result.current.event).toEqual(mockEvent);
   });
 
-  it('should handle event sending', async () => {
-    const mockEnviar = jest.spyOn(EsocialEventService, 'enviar').mockResolvedValueOnce({} as any);
+  it('should send event successfully', async () => {
+    const mockEnviar = jest.spyOn(EsocialEventService, 'enviar').mockResolvedValueOnce(mockEvent);
 
-    const { result } = renderHook(() => useEsocialEvent('123'), {
-      wrapper: TestWrapper,
-    });
+    const { result } = renderHook(() => useEsocialEvent());
 
     await act(async () => {
-      await result.current.handleEnviar();
+      await result.current.enviarEvento('1');
     });
 
-    expect(mockEnviar).toHaveBeenCalledWith('123');
+    expect(mockEnviar).toHaveBeenCalledWith('1');
+    expect(result.current.event).toEqual(mockEvent);
+  });
+
+  it('should handle error when creating event', async () => {
+    const mockCreate = jest.spyOn(EsocialEventService, 'create').mockRejectedValueOnce(new Error('Erro ao criar evento'));
+
+    const { result } = renderHook(() => useEsocialEvent());
+
+    await act(async () => {
+      await expect(result.current.createEvent({
+        tipo: 'S2206',
+        payload: mockEvent.payload
+      })).rejects.toThrow('Erro ao criar evento');
+    });
+
+    expect(mockCreate).toHaveBeenCalledWith({
+      tipo: 'S2206',
+      payload: mockEvent.payload
+    });
+    expect(result.current.event).toBeNull();
+  });
+
+  it('should handle error when updating event', async () => {
+    const mockUpdate = jest.spyOn(EsocialEventService, 'update').mockRejectedValueOnce(new Error('Erro ao atualizar evento'));
+
+    const { result } = renderHook(() => useEsocialEvent());
+
+    await act(async () => {
+      await expect(result.current.updateEvent('1', {
+        tipo: 'S2206',
+        payload: mockEvent.payload
+      })).rejects.toThrow('Erro ao atualizar evento');
+    });
+
+    expect(mockUpdate).toHaveBeenCalledWith('1', {
+      tipo: 'S2206',
+      payload: mockEvent.payload
+    });
+    expect(result.current.event).toBeNull();
+  });
+
+  it('should handle error when sending event', async () => {
+    const mockEnviar = jest.spyOn(EsocialEventService, 'enviar').mockRejectedValueOnce(new Error('Erro ao enviar evento'));
+
+    const { result } = renderHook(() => useEsocialEvent());
+
+    await act(async () => {
+      await expect(result.current.enviarEvento('1')).rejects.toThrow('Erro ao enviar evento');
+    });
+
+    expect(mockEnviar).toHaveBeenCalledWith('1');
+    expect(result.current.event).toBeNull();
   });
 
   it('deve carregar evento existente', async () => {
     const mockEvent = {
       id: '1',
-      tipo: TipoEventoEsocial.S2210,
+      tipo: 'S2210',
       data: '2024-03-20T10:00:00Z',
       status: 'PENDENTE',
       payload: {
@@ -166,7 +190,7 @@ describe('useEsocialEvent', () => {
     });
 
     const formData = {
-      tipo: TipoEventoEsocial.S2210,
+      tipo: 'S2210',
       data: new Date(),
       payload: {
         cpf: '12345678900',
@@ -204,7 +228,7 @@ describe('useEsocialEvent', () => {
     });
 
     const formData = {
-      tipo: TipoEventoEsocial.S2210,
+      tipo: 'S2210',
       data: new Date(),
       payload: {
         cpf: '12345678900',
@@ -257,7 +281,7 @@ describe('useEsocialEvent', () => {
     (EsocialEventService.create as jest.Mock).mockRejectedValueOnce(error);
 
     const formData = {
-      tipo: TipoEventoEsocial.S2210,
+      tipo: 'S2210',
       data: new Date(),
       payload: {
         cpf: '12345678900',
@@ -295,7 +319,7 @@ describe('useEsocialEvent', () => {
     });
 
     const formData = {
-      tipo: TipoEventoEsocial.S2230,
+      tipo: 'S2230',
       data: new Date(),
       payload: {
         cpf: '12345678900',
@@ -327,7 +351,7 @@ describe('useEsocialEvent', () => {
     });
 
     const formData = {
-      tipo: TipoEventoEsocial.S2230,
+      tipo: 'S2230',
       data: new Date(),
       payload: {
         cpf: '12345678900',
@@ -374,7 +398,7 @@ describe('useEsocialEvent', () => {
     (EsocialEventService.create as jest.Mock).mockRejectedValueOnce(error);
 
     const formData = {
-      tipo: TipoEventoEsocial.S2230,
+      tipo: 'S2230',
       data: new Date(),
       payload: {
         cpf: '12345678900',
@@ -402,7 +426,7 @@ describe('useEsocialEvent', () => {
 
   it('deve criar um novo evento S2240', async () => {
     const mockEvent = {
-      tipo: TipoEventoEsocial.S2240,
+      tipo: 'S2240',
       data: new Date(),
       payload: {
         cpf: '12345678900',
@@ -434,7 +458,7 @@ describe('useEsocialEvent', () => {
 
   it('deve atualizar um evento S2240 existente', async () => {
     const mockEvent = {
-      tipo: TipoEventoEsocial.S2240,
+      tipo: 'S2240',
       data: new Date(),
       payload: {
         cpf: '12345678900',
@@ -478,7 +502,7 @@ describe('useEsocialEvent', () => {
 
   it('deve lidar com erro ao criar evento S2240', async () => {
     const mockEvent = {
-      tipo: TipoEventoEsocial.S2240,
+      tipo: 'S2240',
       data: new Date(),
       payload: {
         cpf: '12345678900',
@@ -512,7 +536,7 @@ describe('useEsocialEvent', () => {
 
   it('deve criar um novo evento S2250', async () => {
     const mockEvent = {
-      tipo: TipoEventoEsocial.S2250,
+      tipo: 'S2250',
       data: new Date(),
       payload: {
         cpf: '12345678900',
@@ -537,7 +561,7 @@ describe('useEsocialEvent', () => {
 
   it('deve atualizar um evento S2250 existente', async () => {
     const mockEvent = {
-      tipo: TipoEventoEsocial.S2250,
+      tipo: 'S2250',
       data: new Date(),
       payload: {
         cpf: '12345678900',
@@ -574,7 +598,7 @@ describe('useEsocialEvent', () => {
 
   it('deve lidar com erro ao criar evento S2250', async () => {
     const mockEvent = {
-      tipo: TipoEventoEsocial.S2250,
+      tipo: 'S2250',
       data: new Date(),
       payload: {
         cpf: '12345678900',
@@ -601,7 +625,7 @@ describe('useEsocialEvent', () => {
 
   it('deve criar um novo evento S2299', async () => {
     const mockEvent = {
-      tipo: TipoEventoEsocial.S2299,
+      tipo: 'S2299',
       data: new Date(),
       payload: {
         cpf: '12345678900',
@@ -624,7 +648,7 @@ describe('useEsocialEvent', () => {
 
   it('deve atualizar um evento S2299 existente', async () => {
     const mockEvent = {
-      tipo: TipoEventoEsocial.S2299,
+      tipo: 'S2299',
       data: new Date(),
       payload: {
         cpf: '12345678900',
@@ -659,7 +683,7 @@ describe('useEsocialEvent', () => {
 
   it('deve lidar com erro ao criar evento S2299', async () => {
     const mockEvent = {
-      tipo: TipoEventoEsocial.S2299,
+      tipo: 'S2299',
       data: new Date(),
       payload: {
         cpf: '12345678900',
@@ -683,7 +707,7 @@ describe('useEsocialEvent', () => {
   });
 
   it('deve criar um novo evento S2400', async () => {
-    const { result } = renderHook(() => useEsocialEvent(TipoEventoEsocial.S2400), {
+    const { result } = renderHook(() => useEsocialEvent('S2400'), {
       wrapper: TestWrapper
     });
 
@@ -695,7 +719,7 @@ describe('useEsocialEvent', () => {
   });
 
   it('deve atualizar um evento S2400 existente', async () => {
-    const { result } = renderHook(() => useEsocialEvent(TipoEventoEsocial.S2400), {
+    const { result } = renderHook(() => useEsocialEvent('S2400'), {
       wrapper: TestWrapper
     });
 
@@ -707,7 +731,7 @@ describe('useEsocialEvent', () => {
   });
 
   it('deve enviar um evento S2400', async () => {
-    const { result } = renderHook(() => useEsocialEvent(TipoEventoEsocial.S2400), {
+    const { result } = renderHook(() => useEsocialEvent('S2400'), {
       wrapper: TestWrapper
     });
 
@@ -721,7 +745,7 @@ describe('useEsocialEvent', () => {
   it('deve lidar com erro ao criar evento S2400', async () => {
     jest.spyOn(EsocialEventService, 'create').mockRejectedValueOnce(new Error('Erro ao criar evento'));
 
-    const { result } = renderHook(() => useEsocialEvent(TipoEventoEsocial.S2400), {
+    const { result } = renderHook(() => useEsocialEvent('S2400'), {
       wrapper: TestWrapper
     });
 

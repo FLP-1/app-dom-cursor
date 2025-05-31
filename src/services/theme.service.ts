@@ -95,9 +95,9 @@ export interface TemaEstatisticas {
 }
 
 export const ThemeService = {
-  private readonly CACHE_KEY = 'theme:';
-  private readonly CACHE_EXPIRACAO = 3600; // 1 hora
-  private config: TemaConfig | null = null;
+  CACHE_KEY: 'theme:',
+  CACHE_EXPIRACAO: 3600, // 1 hora
+  config: null as TemaConfig | null,
 
   /**
    * Inicializa o serviço

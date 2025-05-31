@@ -1,8 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useCallback } from 'react';
-import { useSnackbar } from 'notistack';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useEsocialEvent } from './useEsocialEvent';
@@ -22,6 +21,9 @@ import { S1210Schema } from '@/schemas/esocial/S1210Schema';
 import { S2300Schema } from '@/schemas/esocial/S2300Schema';
 import { S2399Schema } from '@/schemas/esocial/S2399Schema';
 import { S1207Schema } from '@/schemas/esocial/S1207Schema';
+import { useNotification } from './useNotification';
+import { esocialEventService } from '../services/esocial/event.service';
+import { EsocialEvent } from '../types/esocial';
 
 const esocialEventSchema = z.object({
   tipo: z.object({
@@ -84,9 +86,11 @@ type EsocialEventFormValues = z.infer<typeof esocialEventSchema>;
 
 export function useEsocialEventForm(eventId?: string) {
   const { t } = useTranslation();
-  const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   const { createEvent, updateEventStatus } = useEsocialEvent();
+  const { showNotification } = useNotification();
+  const [loading, setLoading] = useState(false);
+  const [event, setEvent] = useState<EsocialEvent | null>(null);
 
   const {
     control,
@@ -108,34 +112,75 @@ export function useEsocialEventForm(eventId?: string) {
 
   const tipo = watch('tipo');
 
+  const loadEvent = useCallback(async () => {
+    const { id } = router.query;
+    if (!id) return;
+
+    try {
+      setLoading(true);
+      const data = await esocialEventService.getEvent(id as string);
+      setEvent(data);
+      reset(data);
+    } catch {
+      showNotification({
+        type: 'error',
+        message: t('esocial.messages.erroCarregarEvento')
+      });
+    } finally {
+      setLoading(false);
+    }
+  }, [router.query, reset, t]);
+
+  useEffect(() => {
+    loadEvent();
+  }, [loadEvent]);
+
   const onSubmit = useCallback(
     async (data: EsocialEventFormValues) => {
       try {
+        setLoading(true);
         if (eventId) {
           await updateEventStatus(eventId, 'PENDENTE');
-          enqueueSnackbar(t('messages:esocial.event.updated'), { variant: 'success' });
+          showNotification({
+            type: 'success',
+            message: t('messages:esocial.event.updated')
+          });
         } else {
           await createEvent(data);
-          enqueueSnackbar(t('messages:esocial.event.created'), { variant: 'success' });
+          showNotification({
+            type: 'success',
+            message: t('messages:esocial.event.created')
+          });
         }
         router.push('/esocial/eventos');
-      } catch (error) {
-        enqueueSnackbar(t('messages:esocial.event.error'), { variant: 'error' });
+      } catch {
+        showNotification({
+          type: 'error',
+          message: t('messages:esocial.event.error')
+        });
+      } finally {
+        setLoading(false);
       }
     },
-    [eventId, enqueueSnackbar, t, router, createEvent, updateEventStatus]
+    [eventId, showNotification, t, router, createEvent, updateEventStatus]
   );
 
   const enviarEvento = useCallback(
     async (eventId: string) => {
       try {
         await updateEventStatus(eventId, 'ENVIADO');
-        enqueueSnackbar(t('messages:esocial.event.sent'), { variant: 'success' });
-      } catch (error) {
-        enqueueSnackbar(t('messages:esocial.event.sendError'), { variant: 'error' });
+        showNotification({
+          type: 'success',
+          message: t('messages:esocial.event.sent')
+        });
+      } catch {
+        showNotification({
+          type: 'error',
+          message: t('messages:esocial.event.sendError')
+        });
       }
     },
-    [enqueueSnackbar, t, updateEventStatus]
+    [showNotification, t, updateEventStatus]
   );
 
   return {
@@ -147,5 +192,6 @@ export function useEsocialEventForm(eventId?: string) {
     onSubmit,
     enviarEvento,
     tipo,
+    loading,
   };
 } 

@@ -7,6 +7,7 @@ import { styled } from '@mui/material/styles';
 import Button from '../common/Button';
 import { documentMessages } from '../../i18n/messages';
 import { formatDateBR, parseDateBRtoISO } from '../../utils/date';
+import { DocumentFilter } from '@/types/documents';
 
 const tipos = [
   { value: 'Todos', label: 'Todos' },
@@ -43,7 +44,7 @@ const FiltersBox = styled(Box)(({ theme }) => ({
 }));
 
 interface DocumentFiltersProps {
-  onFilter: (values: any) => void;
+  onFilter: (values: DocumentFilter) => void;
 }
 
 function removeAcentos(str: string) {

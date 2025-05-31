@@ -105,4 +105,58 @@ describe('useConfirmDialog', () => {
 
     expect(onConfirm2).toHaveBeenCalled();
   });
+
+  it('should maintain state between re-renders', () => {
+    const { result, rerender } = renderHook(() => useConfirmDialog());
+
+    act(() => {
+      result.current.showConfirmDialog();
+    });
+
+    rerender();
+
+    expect(result.current.isOpen).toBe(true);
+  });
+
+  it('should clear callbacks when closing dialog', () => {
+    const { result } = renderHook(() => useConfirmDialog());
+    const onConfirm = jest.fn();
+    const onCancel = jest.fn();
+
+    act(() => {
+      result.current.showConfirmDialog(onConfirm, onCancel);
+    });
+
+    act(() => {
+      result.current.handleCancel();
+    });
+
+    expect(result.current.isOpen).toBe(false);
+  });
+
+  it('should handle multiple opens and closes', () => {
+    const { result } = renderHook(() => useConfirmDialog());
+    const onConfirm1 = jest.fn();
+    const onConfirm2 = jest.fn();
+
+    act(() => {
+      result.current.showConfirmDialog(onConfirm1);
+    });
+
+    act(() => {
+      result.current.handleConfirm();
+    });
+
+    expect(onConfirm1).toHaveBeenCalled();
+
+    act(() => {
+      result.current.showConfirmDialog(onConfirm2);
+    });
+
+    act(() => {
+      result.current.handleConfirm();
+    });
+
+    expect(onConfirm2).toHaveBeenCalled();
+  });
 }); 

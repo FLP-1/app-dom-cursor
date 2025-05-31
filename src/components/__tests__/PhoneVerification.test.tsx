@@ -200,7 +200,7 @@ describe('PhoneVerification', () => {
             ok: true,
           });
         }, 100);
-      }); // Verificação do código
+      }));
 
     render(<PhoneVerification />);
 
@@ -227,7 +227,5 @@ describe('PhoneVerification', () => {
     await waitFor(() => {
       expect(screen.queryByText('Verificando...')).not.toBeInTheDocument();
     });
-  });
-}); 
   });
 }); 

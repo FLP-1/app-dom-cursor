@@ -1,28 +1,38 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, Typography, CircularProgress } from '@mui/material';
-import { DataTable } from '../../components/common/DataTable';
-import { EmpregadoDomestico } from '../../types/empregado-domestico';
+import { Box, Typography, CircularProgress } from '@mui/material';
 import { empregadoDomesticoService } from '../../services/empregado-domestico.service';
+import { EmpregadoDomestico } from '../../types/empregado-domestico';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
-import { empregadoDomesticoMessages } from '../../i18n/messages';
+import { DataTable } from '../../components/common/DataTable';
+import { PageHeader } from '../../components/common/PageHeader';
+import { TableActions } from '../../components/common/TableActions';
+import { useRouter } from 'next/router';
 import { formatDateBR } from '../../utils/date';
 
 export default function EmpregadosDomesticosListPage() {
-  const { t, i18n } = useTranslation();
-  const lang = i18n.language as 'pt' | 'en';
+  const { t } = useTranslation();
+  const router = useRouter();
   const [empregados, setEmpregados] = useState<EmpregadoDomestico[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const loadEmpregados = async () => {
+    try {
+      setLoading(true);
+      const data = await empregadoDomesticoService.list();
+      setEmpregados(data);
+      setError(null);
+    } catch (err) {
+      setError(t('Erro ao carregar empregados domésticos.'));
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    // TODO: Substituir por empregadoDomesticoService.list() quando implementado
-    fetch('/api/empregado-domestico')
-      .then((res) => res.json())
-      .then(setEmpregados)
-      .catch(() => setError(t(empregadoDomesticoMessages[lang].genericError)))
-      .finally(() => setLoading(false));
-  }, [t, lang]);
+    loadEmpregados();
+  }, [t]);
 
   const columns = [
     { id: 'nomeCompleto', label: t('Nome Completo'), sortable: true },
@@ -33,39 +43,43 @@ export default function EmpregadosDomesticosListPage() {
     { id: 'matricula', label: t('Matrícula'), sortable: true },
     { id: 'categoria', label: t('Categoria'), sortable: true },
     { id: 'actions', label: t('Ações'), render: (_: unknown, row: EmpregadoDomestico) => (
-      <Box display="flex" gap={1}>
-        <Link href={`/empregados-domesticos/[id]`.replace('[id]', row.id)} passHref legacyBehavior>
-          <Button size="small" variant="outlined" color="primary">{t('Detalhes')}</Button>
-        </Link>
-        <Link href={`/empregados-domesticos/[id]/editar`.replace('[id]', row.id)} passHref legacyBehavior>
-          <Button size="small" variant="outlined" color="secondary">{t('Editar')}</Button>
-        </Link>
-      </Box>
+      <TableActions
+        onView={() => router.push(`/empregados-domesticos/${row.id}`)}
+        onEdit={() => router.push(`/empregados-domesticos/${row.id}/editar`)}
+      />
     ) },
   ];
 
-  return (
-    <Box sx={{ maxWidth: 1200, mx: 'auto', mt: 4 }}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-        <Typography variant="h4">{t('Empregados Domésticos')}</Typography>
-        <Link href="/empregados-domesticos/novo" passHref legacyBehavior>
-          <Button variant="contained" color="primary">{t('Novo Empregado')}</Button>
-        </Link>
+  if (loading && empregados.length === 0) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+        <CircularProgress />
       </Box>
-      {loading ? (
-        <Box display="flex" justifyContent="center" alignItems="center" minHeight={300}>
-          <CircularProgress />
-        </Box>
-      ) : error ? (
+    );
+  }
+
+  if (error) {
+    return (
+      <Box p={3}>
         <Typography color="error">{error}</Typography>
-      ) : (
-        <DataTable
-          columns={columns as any}
-          data={empregados}
-          defaultSort="nomeCompleto"
-          onRowClick={(row: EmpregadoDomestico) => window.location.href = `/empregados-domesticos/${row.id}`}
-        />
-      )}
+      </Box>
+    );
+  }
+
+  return (
+    <Box sx={{ p: 3 }}>
+      <PageHeader
+        title={t('Empregados Domésticos')}
+        onAdd={() => router.push('/empregados-domesticos/novo')}
+        onRefresh={loadEmpregados}
+        addButtonText={t('Novo Empregado')}
+      />
+      <DataTable
+        columns={columns}
+        data={empregados}
+        loading={loading}
+        error={error}
+      />
     </Box>
   );
 }
