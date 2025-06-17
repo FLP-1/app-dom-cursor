@@ -1,3 +1,11 @@
+/**
+ * Arquivo: log.service.ts
+ * Caminho: src/services/log.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de logs
+ */
+
 import axios from 'axios';
 import { CacheService } from './cache.service';
 import { I18nService } from './i18n.service';
@@ -7,29 +15,36 @@ import { I18nService } from './i18n.service';
  * @description Gerencia os logs do sistema
  * @author DOM
  * @version 1.0.0
- * @since 2024-01-01
+ * @since 2025-01-01
  */
 
-export type TipoLog = 'info' | 'warn' | 'error' | 'debug' | 'trace';
+export enum TipoLog {
+  INFO = 'info',
+  WARN = 'warn',
+  ERROR = 'error',
+  DEBUG = 'debug',
+  TRACE = 'trace'
+}
 
-export type CategoriaLog =
-  | 'sistema'
-  | 'usuario'
-  | 'empresa'
-  | 'ponto'
-  | 'ocorrencia'
-  | 'documento'
-  | 'esocial'
-  | 'backup'
-  | 'seguranca'
-  | 'email'
-  | 'sms'
-  | 'whatsapp'
-  | 'push'
-  | 'websocket'
-  | 'cache'
-  | 'i18n'
-  | 'theme';
+export enum CategoriaLog {
+  SISTEMA = 'sistema',
+  USUARIO = 'usuario',
+  EMPRESA = 'empresa',
+  PONTO = 'ponto',
+  OCORRENCIA = 'ocorrencia',
+  DOCUMENTO = 'documento',
+  ESOCIAL = 'esocial',
+  BACKUP = 'backup',
+  SEGURANCA = 'seguranca',
+  EMAIL = 'email',
+  SMS = 'sms',
+  WHATSAPP = 'whatsapp',
+  PUSH = 'push',
+  WEBSOCKET = 'websocket',
+  CACHE = 'cache',
+  I18N = 'i18n',
+  THEME = 'theme'
+}
 
 export interface Log {
   id: string;
@@ -71,15 +86,21 @@ export interface LogEstatisticas {
   tamanhoTotal: number;
 }
 
-export const LogService = {
-  CACHE_KEY: 'log:',
-  CACHE_EXPIRACAO: 3600, // 1 hora
-  config: null as LogConfig | null,
+class LogManager {
+  private static instance: LogManager;
+  private readonly CACHE_KEY = 'log:';
+  private readonly CACHE_EXPIRACAO = 3600; // 1 hora
+  private config: LogConfig | null = null;
 
-  /**
-   * Inicializa o serviço
-   * @returns Promise<void>
-   */
+  private constructor() {}
+
+  static getInstance(): LogManager {
+    if (!LogManager.instance) {
+      LogManager.instance = new LogManager();
+    }
+    return LogManager.instance;
+  }
+
   async inicializar(): Promise<void> {
     try {
       this.config = await this.obterConfiguracao();
@@ -88,13 +109,8 @@ export const LogService = {
       console.error('Erro ao inicializar log:', error);
       throw error;
     }
-  },
+  }
 
-  /**
-   * Cria um novo log
-   * @param log Dados do log
-   * @returns Log criado
-   */
   async create(log: Omit<Log, 'id' | 'createdAt'>): Promise<Log> {
     try {
       if (!this.config) {
@@ -130,13 +146,8 @@ export const LogService = {
       console.error('Erro ao criar log:', error);
       throw error;
     }
-  },
+  }
 
-  /**
-   * Lista os logs
-   * @param filtros Filtros para a listagem
-   * @returns Lista de logs
-   */
   async listar(filtros?: LogFilter): Promise<Log[]> {
     try {
       const { data } = await axios.get<Log[]>('/api/log', {
@@ -151,13 +162,8 @@ export const LogService = {
       console.error('Erro ao listar logs:', error);
       throw error;
     }
-  },
+  }
 
-  /**
-   * Obtém um log específico
-   * @param id ID do log
-   * @returns Log
-   */
   async obter(id: string): Promise<Log> {
     try {
       const cacheKey = `${this.CACHE_KEY}${id}`;
@@ -175,13 +181,8 @@ export const LogService = {
       console.error('Erro ao obter log:', error);
       throw error;
     }
-  },
+  }
 
-  /**
-   * Remove um log
-   * @param id ID do log
-   * @returns true se o log foi removido, false caso contrário
-   */
   async remover(id: string): Promise<boolean> {
     try {
       await axios.delete(`/api/log/${id}`);
@@ -189,14 +190,10 @@ export const LogService = {
       return true;
     } catch (error) {
       console.error('Erro ao remover log:', error);
-      throw error;
+      return false;
     }
-  },
+  }
 
-  /**
-   * Limpa logs antigos
-   * @returns Promise<void>
-   */
   async limparAntigos(): Promise<void> {
     try {
       if (!this.config) {
@@ -206,7 +203,7 @@ export const LogService = {
       const dataLimite = new Date();
       dataLimite.setDate(dataLimite.getDate() - this.config.retencao);
 
-      await axios.delete('/api/log', {
+      await axios.delete('/api/log/limpar', {
         params: {
           dataLimite: dataLimite.toISOString()
         }
@@ -215,14 +212,8 @@ export const LogService = {
       console.error('Erro ao limpar logs antigos:', error);
       throw error;
     }
-  },
+  }
 
-  /**
-   * Exporta logs
-   * @param filtros Filtros para a exportação
-   * @param formato Formato de exportação (csv, xlsx, json)
-   * @returns Arquivo exportado
-   */
   async exportar(
     filtros?: LogFilter,
     formato: 'csv' | 'xlsx' | 'json' = 'json'
@@ -237,80 +228,114 @@ export const LogService = {
         },
         responseType: 'blob'
       });
-
       return data;
     } catch (error) {
       console.error('Erro ao exportar logs:', error);
       throw error;
     }
-  },
+  }
 
-  /**
-   * Obtém a configuração do serviço
-   * @returns Configuração
-   */
   async obterConfiguracao(): Promise<LogConfig> {
     try {
-      const { data } = await axios.get<LogConfig>('/api/log/config');
+      const { data } = await axios.get<LogConfig>('/api/log/configuracao');
       return data;
     } catch (error) {
-      console.error('Erro ao obter configuração do log:', error);
+      console.error('Erro ao obter configuração de log:', error);
       throw error;
     }
-  },
+  }
 
-  /**
-   * Atualiza a configuração do serviço
-   * @param config Novos dados da configuração
-   * @returns Configuração atualizada
-   */
   async atualizarConfiguracao(
     config: Partial<Omit<LogConfig, 'id' | 'createdAt' | 'updatedAt'>>
   ): Promise<LogConfig> {
     try {
-      const { data } = await axios.patch<LogConfig>('/api/log/config', config);
-
+      const { data } = await axios.put<LogConfig>('/api/log/configuracao', config);
       this.config = data;
       return data;
     } catch (error) {
-      console.error('Erro ao atualizar configuração do log:', error);
+      console.error('Erro ao atualizar configuração de log:', error);
       throw error;
     }
-  },
+  }
 
-  /**
-   * Obtém estatísticas dos logs
-   * @returns Estatísticas
-   */
   async obterEstatisticas(): Promise<LogEstatisticas> {
     try {
       const { data } = await axios.get<LogEstatisticas>('/api/log/estatisticas');
       return data;
     } catch (error) {
-      console.error('Erro ao obter estatísticas do log:', error);
+      console.error('Erro ao obter estatísticas de log:', error);
       throw error;
     }
-  },
+  }
 
-  /**
-   * Obtém o IP do usuário
-   * @returns IP do usuário
-   */
   private async obterIP(): Promise<string> {
     try {
-      const { data } = await axios.get<{ ip: string }>('/api/ip');
-      return data.ip;
+      const { data } = await axios.get<string>('/api/ip');
+      return data;
     } catch (error) {
       console.error('Erro ao obter IP:', error);
       return '0.0.0.0';
     }
+  }
+
+  private async obterUserAgent(): Promise<string> {
+    try {
+      const { data } = await axios.get<string>('/api/user-agent');
+      return data;
+    } catch (error) {
+      console.error('Erro ao obter User Agent:', error);
+      return 'unknown';
+    }
+  }
+}
+
+export const logManager = LogManager.getInstance();
+
+export const LogService = {
+  async inicializar(): Promise<void> {
+    return logManager.inicializar();
   },
 
-  /**
-   * Obtém o User Agent do usuário
-   * @returns User Agent do usuário
-   */
-  private async obterUserAgent(): Promise<string> {
-    return navigator.userAgent;
+  async create(log: Omit<Log, 'id' | 'createdAt'>): Promise<Log> {
+    return logManager.create(log);
+  },
+
+  async listar(filtros?: LogFilter): Promise<Log[]> {
+    return logManager.listar(filtros);
+  },
+
+  async obter(id: string): Promise<Log> {
+    return logManager.obter(id);
+  },
+
+  async remover(id: string): Promise<boolean> {
+    return logManager.remover(id);
+  },
+
+  async limparAntigos(): Promise<void> {
+    return logManager.limparAntigos();
+  },
+
+  async exportar(
+    filtros?: LogFilter,
+    formato: 'csv' | 'xlsx' | 'json' = 'json'
+  ): Promise<Blob> {
+    return logManager.exportar(filtros, formato);
+  },
+
+  async obterConfiguracao(): Promise<LogConfig> {
+    return logManager.obterConfiguracao();
+  },
+
+  async atualizarConfiguracao(
+    config: Partial<Omit<LogConfig, 'id' | 'createdAt' | 'updatedAt'>>
+  ): Promise<LogConfig> {
+    return logManager.atualizarConfiguracao(config);
+  },
+
+  async obterEstatisticas(): Promise<LogEstatisticas> {
+    return logManager.obterEstatisticas();
   }
-}; 
+};
+
+export type { TipoLog, CategoriaLog }; 

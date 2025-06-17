@@ -1,7 +1,26 @@
+/**
+ * Arquivo: esocial-event.service.ts
+ * Caminho: src/services/esocial-event.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de eventos do eSocial
+ */
+
 import { prisma } from '@/lib/prisma';
 import { EsocialEvent, EsocialEventFilter, EsocialEventFormData } from '@/types/esocial';
 
-export class EsocialEventService {
+class EsocialEventManager {
+  private static instance: EsocialEventManager;
+
+  private constructor() {}
+
+  static getInstance(): EsocialEventManager {
+    if (!EsocialEventManager.instance) {
+      EsocialEventManager.instance = new EsocialEventManager();
+    }
+    return EsocialEventManager.instance;
+  }
+
   async getEvents(filter?: EsocialEventFilter): Promise<EsocialEvent[]> {
     const where = {
       ...(filter?.tipo && { tipo: filter.tipo.codigo }),
@@ -79,4 +98,28 @@ export class EsocialEventService {
       where: { id }
     });
   }
-} 
+}
+
+export const esocialEventManager = EsocialEventManager.getInstance();
+
+export const EsocialEventService = {
+  async getEvents(filter?: EsocialEventFilter): Promise<EsocialEvent[]> {
+    return esocialEventManager.getEvents(filter);
+  },
+
+  async getEvent(id: string): Promise<EsocialEvent | null> {
+    return esocialEventManager.getEvent(id);
+  },
+
+  async createEvent(data: EsocialEventFormData): Promise<EsocialEvent> {
+    return esocialEventManager.createEvent(data);
+  },
+
+  async updateEventStatus(id: string, status: string, mensagemErro?: string): Promise<EsocialEvent> {
+    return esocialEventManager.updateEventStatus(id, status, mensagemErro);
+  },
+
+  async deleteEvent(id: string): Promise<void> {
+    return esocialEventManager.deleteEvent(id);
+  }
+}; 

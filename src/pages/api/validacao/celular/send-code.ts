@@ -1,6 +1,14 @@
+/**
+ * Arquivo: send-code.ts
+ * Caminho: src/pages/api/validacao/celular/send-code.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para enviar código de verificação para celular
+ */
+
 import { NextApiRequest, NextApiResponse } from 'next';
-import { sendVerificationCode } from '../../../../lib/phoneVerification';
-import { validateBrazilianCellPhone } from '../../../../utils/validation';
+import { sendVerificationCode } from '@/lib/phoneVerification';
+import { validateBrazilianCellPhone } from '@/utils/validations';
 
 export default async function handler(
   req: NextApiRequest,

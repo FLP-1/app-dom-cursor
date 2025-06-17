@@ -1,4 +1,12 @@
-import { User, UserFilter, UserFormData, LoginFormData, LoginResponse } from '../types/user';
+/**
+ * Arquivo: user.service.ts
+ * Caminho: src/services/user.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de usuários
+ */
+
+import { User, UserFilter, UserFormData, LoginFormData, LoginResponse } from '@/types/user';
 import axios from 'axios';
 
 const API_URL = '/api/user';

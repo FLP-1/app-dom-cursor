@@ -1,6 +1,14 @@
-import { User } from './user';
-import { EmpregadorDomestico } from './empregador-domestico';
-import { EsocialEvent } from './esocial-event';
+/**
+ * Arquivo: ponto.ts
+ * Caminho: src/types/ponto.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Tipos de registros de ponto
+ */
+
+import { User } from '@/types/user';
+import { Empregado } from '@/types/empregado';
+import { EsocialEvent } from '@/types/esocial-event';
 
 export type TipoRegistroPonto = 'ENTRADA' | 'SAIDA' | 'INICIO_INTERVALO' | 'FIM_INTERVALO';
 
@@ -10,8 +18,8 @@ export interface RegistroPonto {
   tipo: TipoRegistroPonto;
   usuarioId: string;
   usuario: User;
-  empregadoDomesticoId: string;
-  empregadoDomestico: EmpregadorDomestico;
+  empregadoId: string;
+  empregado: Empregado;
   latitude?: number;
   longitude?: number;
   wifiSSID?: string;
@@ -34,7 +42,7 @@ export interface RegistroPontoFilter {
   dataInicio?: Date;
   dataFim?: Date;
   tipo?: TipoRegistroPonto;
-  empregadoDomesticoId?: string;
+  empregadoId?: string;
   esocialEventId?: string;
   validado?: boolean;
 }
@@ -42,6 +50,6 @@ export interface RegistroPontoFilter {
 export interface RegistroPontoFormData {
   tipo: TipoRegistroPonto;
   observacao?: string;
-  empregadoDomesticoId: string;
+  empregadoId: string;
   esocialEventId?: string;
 } 

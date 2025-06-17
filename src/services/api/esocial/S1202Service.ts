@@ -1,3 +1,11 @@
+/**
+ * Arquivo: S1202Service.ts
+ * Caminho: src/services/api/esocial/S1202Service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço para o evento S-1202
+ */
+
 import { api } from '@/services/api';
 import { S1202Schema } from '@/schemas/esocial/S1202Schema';
 

@@ -1,3 +1,11 @@
+/**
+ * Arquivo: types.ts
+ * Caminho: src/lib/permissions/types.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 export enum UserRole {
   ADMIN = 'ADMIN',
   PARTNER = 'PARTNER',

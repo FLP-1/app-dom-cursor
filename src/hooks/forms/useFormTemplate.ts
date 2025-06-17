@@ -1,3 +1,11 @@
+/**
+ * Arquivo: useFormTemplate.ts
+ * Caminho: src/hooks/forms/useFormTemplate.ts
+ * Criado em: 2025-06-13
+ * Última atualização: 2025-06-13
+ * Descrição: Template de hook customizado para lógica, validação e submit de formulários, pronto para ser adaptado a diferentes schemas.
+ */
+
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 // Importe ou defina seu schema de validação

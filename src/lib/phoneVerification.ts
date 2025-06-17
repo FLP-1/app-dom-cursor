@@ -1,3 +1,11 @@
+/**
+ * Arquivo: phoneVerification.ts
+ * Caminho: src/lib/phoneVerification.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { sendSMS } from './sms';
 import crypto from 'crypto';
 

@@ -1,5 +1,13 @@
+/**
+ * Arquivo: useDocumentFiltersForm.ts
+ * Caminho: src/hooks/forms/useDocumentFiltersForm.ts
+ * Criado em: 2025-06-13
+ * Última atualização: 2025-06-13
+ * Descrição: Hook customizado para lógica, validação e submit do formulário de filtros de documentos, com validação de datas.
+ */
+
 import { useForm } from 'react-hook-form';
-import { MESSAGES } from '../../i18n/messages';
+import { MESSAGES } from '@/i18n/messages';
 
 export interface DocumentFiltersFormValues {
   search?: string;

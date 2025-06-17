@@ -1,3 +1,11 @@
+/**
+ * Arquivo: planos.ts
+ * Caminho: src/pages/api/planos.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para buscar planos
+ */
+
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';

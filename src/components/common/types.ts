@@ -1,4 +1,13 @@
+/**
+ * Arquivo: types.ts
+ * Caminho: src/components/common/types.ts
+ * Criado em: 2025-06-07
+ * Última atualização: 2025-06-07
+ * Descrição: Tipos e interfaces comuns para componentes reutilizáveis
+ */
+
 import { ReactNode } from 'react';
+import { SxProps, Theme } from '@mui/material';
 
 // Layout
 export interface BoxProps {
@@ -18,23 +27,23 @@ export interface ContainerProps {
   children: ReactNode;
   maxWidth?: string | number;
   fluid?: boolean;
-  style?: React.CSSProperties;
+  sx?: SxProps<Theme>;
 }
 
 export interface RowProps {
   children: ReactNode;
   gap?: number;
-  alignItems?: string;
-  justifyContent?: string;
+  alignItems?: 'flex-start' | 'center' | 'flex-end' | 'stretch' | 'baseline';
+  justifyContent?: 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-around' | 'space-evenly';
   wrap?: boolean;
-  style?: React.CSSProperties;
+  sx?: SxProps<Theme>;
 }
 
 export interface ColProps {
   children: ReactNode;
   flex?: number;
   maxWidth?: string | number;
-  style?: React.CSSProperties;
+  sx?: SxProps<Theme>;
 }
 
 // Form
@@ -73,7 +82,7 @@ export interface ButtonProps {
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   onClick?: () => void;
-  style?: React.CSSProperties;
+  sx?: SxProps<Theme>;
 }
 
 export interface LinkProps {
@@ -152,5 +161,5 @@ export interface NotificationCardProps {
 export interface NotificationContainerProps {
   children: ReactNode;
   position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
-  style?: React.CSSProperties;
+  sx?: SxProps<Theme>;
 } 

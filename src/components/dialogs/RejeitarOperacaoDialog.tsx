@@ -1,3 +1,11 @@
+/**
+ * Arquivo: RejeitarOperacaoDialog.tsx
+ * Caminho: src/components/dialogs/RejeitarOperacaoDialog.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import {

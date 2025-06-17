@@ -1,3 +1,11 @@
+/**
+ * Arquivo: esocial.ts
+ * Caminho: src/utils/validations/esocial.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Funções para validar dados do eSocial
+ */
+
 import { z } from 'zod';
 
 export const validations = {

@@ -1,3 +1,11 @@
+/**
+ * Arquivo: test-connection.ts
+ * Caminho: src/database/test-connection.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { testConnection } from './db';
 
 async function main() {

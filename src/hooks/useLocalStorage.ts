@@ -1,3 +1,11 @@
+/**
+ * Arquivo: useLocalStorage.ts
+ * Caminho: src/hooks/useLocalStorage.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useState, useEffect } from 'react';
 
 export function useLocalStorage<T>(

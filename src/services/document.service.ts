@@ -1,4 +1,12 @@
-import { Document, DocumentFilter, DocumentFormData } from '../types/document';
+/**
+ * Arquivo: document.service.ts
+ * Caminho: src/services/document.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de documentos
+ */
+
+import { Document, DocumentFilter, DocumentFormData } from '@/types/document';
 import axios from 'axios';
 
 const API_URL = '/api/document';

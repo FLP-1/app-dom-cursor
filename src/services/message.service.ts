@@ -1,12 +1,20 @@
+/**
+ * Arquivo: message.service.ts
+ * Caminho: src/services/message.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de mensagens
+ */
+
 import axios from 'axios';
-import { LogService, TipoLog, CategoriaLog } from './log.service';
+import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';
 
 /**
  * Serviço de Mensagens
  * @description Gerencia mensagens do sistema para internacionalização e padronização
  * @author DOM
  * @version 1.0.0
- * @since 2024-01-01
+ * @since 2025-01-01
  */
 
 export enum TipoMensagem {

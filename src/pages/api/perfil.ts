@@ -1,3 +1,11 @@
+/**
+ * Arquivo: perfil.ts
+ * Caminho: src/pages/api/perfil.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para gerenciar perfil do usuário
+ */
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import { prisma } from '../../lib/prisma';

@@ -1,4 +1,12 @@
-import { Parceiro } from '../types/parceiro';
+/**
+ * Arquivo: parceiro.service.ts
+ * Caminho: src/services/parceiro.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de parceiros
+ */
+
+import { Parceiro } from '@/types/parceiro';
 
 const API_URL = '/api/parceiros';
 

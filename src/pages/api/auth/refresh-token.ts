@@ -1,3 +1,11 @@
+/**
+ * Arquivo: refresh-token.ts
+ * Caminho: src/pages/api/auth/refresh-token.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para renovar tokens de acesso
+ */
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import { verify, sign } from 'jsonwebtoken';
 import { prisma } from '@/lib/prisma';

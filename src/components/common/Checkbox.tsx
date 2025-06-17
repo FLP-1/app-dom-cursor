@@ -1,3 +1,11 @@
+/**
+ * Arquivo: Checkbox.tsx
+ * Caminho: src/components/common/Checkbox.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import React, { ReactNode } from 'react';
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
@@ -54,23 +62,25 @@ const StyledCheckbox = styled.span<{ checked: boolean }>(({ theme, checked }) =>
     : {},
 }));
 
-const Checkbox: React.FC<CheckboxProps> = ({ label, renderLabel, checked, onChange, onBlur, name, inputRef, ...props }) => {
-  const theme = useTheme();
-  return (
-    <CheckboxContainer theme={theme}>
-      <HiddenCheckbox
-        type="checkbox"
-        checked={!!checked}
-        onChange={onChange}
-        onBlur={onBlur}
-        name={name}
-        ref={inputRef}
-        {...props}
-      />
-      <StyledCheckbox checked={!!checked} theme={theme} />
-      {label && (renderLabel ? renderLabel(label) : <span>{label}</span>)}
-    </CheckboxContainer>
-  );
-};
-
+const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
+  ({ label, renderLabel, checked, onChange, onBlur, name, inputRef, ...props }, ref) => {
+    const theme = useTheme();
+    return (
+      <CheckboxContainer theme={theme}>
+        <HiddenCheckbox
+          type="checkbox"
+          checked={!!checked}
+          onChange={onChange}
+          onBlur={onBlur}
+          name={name}
+          ref={ref || inputRef}
+          {...props}
+        />
+        <StyledCheckbox checked={!!checked} theme={theme} />
+        {label && (renderLabel ? renderLabel(label) : <span>{label}</span>)}
+      </CheckboxContainer>
+    );
+  }
+);
+Checkbox.displayName = 'Checkbox';
 export default Checkbox; 

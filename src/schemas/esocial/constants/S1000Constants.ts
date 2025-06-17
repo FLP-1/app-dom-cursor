@@ -1,3 +1,11 @@
+/**
+ * Arquivo: S1000Constants.ts
+ * Caminho: src/schemas/esocial/constants/S1000Constants.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Constantes para o evento S-1000
+ */
+
 export const TIPO_INSCRICAO = {
   CNPJ: '1',
   CPF: '2',
@@ -96,4 +104,6 @@ export const INDICADOR_RPPS = {
 export const INDICADOR_SUBTETO = {
   NAO: 'N',
   SIM: 'S',
-} as const; 
+} as const;
+
+export { TIPO_INSCRICAO }; 

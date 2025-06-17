@@ -1,3 +1,11 @@
+/**
+ * Arquivo: assinatura.ts
+ * Caminho: src/pages/api/assinatura.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para criar assinatura
+ */
+
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 import { PaymentService } from '@/services/payment.service';

@@ -1,0 +1,165 @@
+# Regras de Organização de Arquivos e Diretórios
+
+## Estrutura do Projeto
+
+### Diretórios Principais
+- `src/`: Todo código-fonte do projeto
+- `docs/`: Documentação (técnica e de usuário)
+- `public/`: Arquivos estáticos (imagens, fontes, etc)
+- `prisma/`: Schema e migrations do banco de dados
+
+### Arquivos na Raiz
+Alguns arquivos DEVEM permanecer na raiz do projeto:
+
+1. **Configuração de Ferramentas**
+   - `.cursorrules` (configuração do Cursor IDE)
+   - `project_rules` (regras do projeto)
+   - `.eslintrc.json` (configuração do ESLint)
+   - `.gitignore` (configuração do Git)
+   - `.npmrc` (configuração do npm)
+   - `tsconfig.json` (configuração do TypeScript)
+   - `next.config.mjs` (configuração do Next.js)
+
+2. **Documentação Principal**
+   - `README.md` (documentação principal do projeto)
+   - `LICENSE` (licença do projeto)
+
+3. **Arquivos de Build e Cache**
+   - `tsconfig.tsbuildinfo` (cache do TypeScript)
+   - `.next/` (build do Next.js)
+   - `node_modules/` (dependências)
+
+### Subdiretórios em src/
+- `app/`: Páginas e rotas
+- `components/`: Componentes React
+- `config/`: Configurações específicas do projeto
+- `hooks/`: Hooks customizados
+- `i18n/`: Internacionalização
+- `scripts/`: Scripts e utilitários
+- `services/`: Serviços e APIs
+- `store/`: Gerenciamento de estado
+- `styles/`: Estilos globais
+- `tests/`: Testes
+- `types/`: Definições de tipos
+- `utils/`: Funções utilitárias
+
+## Regras de Organização
+
+### 1. Código-fonte
+- Todo código deve estar em `src/`
+- Usar imports com alias '@/'
+- Proibido usar caminhos relativos (../, ./)
+- Manter arquivos com tamanho adequado
+- Seguir padrões de nomenclatura
+
+### 2. Documentação
+- Documentação técnica em `docs/technical/`
+- Documentação de usuário em `docs/user/`
+- README.md e LICENSE na raiz
+- Documentar mudanças no CHANGELOG.md
+- Incluir exemplos e casos de uso
+
+### 3. Arquivos Estáticos
+- Imagens, fontes e outros assets em `public/`
+- Seguir padrão de nomenclatura
+- Otimizar tamanho dos arquivos
+- Organizar por tipo (imagens/, fonts/, etc)
+
+### 4. Configuração
+- Arquivos de configuração de ferramentas na raiz
+- Configurações específicas do projeto em `src/config/`
+- Manter apenas um arquivo por ferramenta
+- Documentar alterações em configurações
+
+### 5. Gerenciamento de Pacotes
+- Usar apenas npm
+- Manter package-lock.json
+- Remover arquivos de outros gerenciadores
+- Documentar dependências no README.md
+
+## Padrões de Nomenclatura
+
+### Arquivos
+- Páginas: kebab-case (ex: `minha-pagina.tsx`)
+- Componentes: PascalCase (ex: `MeuComponente.tsx`)
+- Hooks: camelCase com prefixo 'use' (ex: `useMeuHook.ts`)
+- Utilitários: camelCase (ex: `meuUtil.ts`)
+- Testes: `.test.tsx` ou `.spec.tsx`
+
+### Diretórios
+- Componentes: PascalCase
+- Páginas: kebab-case
+- Utilitários: camelCase
+- Configurações: camelCase
+
+## Tamanho de Arquivos
+
+### Limites
+- Arquivos de código: 200-400 linhas
+- Arquivos de teste: 100-200 linhas
+- Arquivos de configuração: 50-100 linhas
+
+### Divisão de Arquivos
+Arquivos que excedam esses limites devem ser divididos seguindo estas regras:
+
+1. **Por Responsabilidade:**
+```
+src/components/forms/empregado/
+  ├── EmpregadoForm.tsx        // Componente principal
+  ├── EmpregadoFormFields.tsx  // Campos do formulário
+  ├── EmpregadoFormTypes.ts    // Tipos e interfaces
+  └── EmpregadoFormUtils.ts    // Funções utilitárias
+```
+
+2. **Por Funcionalidade:**
+```
+src/hooks/esocial/
+  ├── useEsocialEventForm.ts     // Hook principal
+  ├── useEsocialEventTypes.ts    // Tipos
+  ├── useEsocialEventUtils.ts    // Funções utilitárias
+  └── useEsocialEventSchema.ts   // Schemas de validação
+```
+
+## Cabeçalho de Arquivos
+
+Todo arquivo de código-fonte deve ter o seguinte cabeçalho:
+
+```typescript
+/**
+ * Arquivo: NomeDoArquivo.tsx
+ * Caminho: src/components/NomeDoArquivo.tsx
+ * Criado em: YYYY-MM-DD
+ * Última atualização: YYYY-MM-DD
+ * Descrição: Breve descrição do propósito do arquivo
+ */
+```
+
+## Checklist de PR
+
+Antes de submeter um PR, verifique:
+
+- [ ] Arquivos seguem estrutura correta
+- [ ] Arquivos de configuração estão na raiz quando necessário
+- [ ] Sem duplicidade de código
+- [ ] Cabeçalhos atualizados
+- [ ] Imports usando alias '@/'
+- [ ] Tamanho de arquivos adequado
+- [ ] Nomenclatura correta
+- [ ] Documentação atualizada
+- [ ] Sem arquivos temporários
+- [ ] Apenas npm como gerenciador de pacotes 
+
+## Acessibilidade em Formulários (Obrigatório)
+- Todo campo de formulário (input, select, datepicker, number, etc) deve possuir um `id` único e um `label` visível associado.
+- Se não for possível exibir um label visível, é obrigatório o uso de `aria-label` ou `aria-labelledby` com texto descritivo.
+- Wrappers e componentes customizados (ex: FormInput, FormDatePicker, FormNumberInput) DEVEM repassar corretamente as props `id`, `label` e `aria-label` para o componente MUI interno.
+- O `label` deve ser passado para o componente MUI (`TextField`, `Select`, etc) e vinculado ao campo via `id`.
+- Nunca use `<option>` dentro de `<TextField select>`, apenas `<MenuItem>`.
+- PRs que não seguirem essas regras de acessibilidade devem ser rejeitados.
+- Consulte sempre a documentação oficial do Material UI e as recomendações do axe/wcag para dúvidas de acessibilidade.
+
+### Exemplo de uso correto:
+```tsx
+<TextField id="nome-usuario" label="Nome" />
+<TextField id="email-usuario" aria-label="E-mail do usuário" /> // se não houver label visível
+``` 

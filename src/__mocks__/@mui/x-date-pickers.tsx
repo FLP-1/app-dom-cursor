@@ -1,3 +1,11 @@
+/**
+ * Arquivo: x-date-pickers.tsx
+ * Caminho: src/__mocks__/@mui/x-date-pickers.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import React from 'react';
 
 interface LocalizationProviderProps {

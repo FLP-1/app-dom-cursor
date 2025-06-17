@@ -1,3 +1,11 @@
+/**
+ * Arquivo: setup.ts
+ * Caminho: src/tests/integration/setup.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { PrismaClient } from '@prisma/client';
 import { execSync } from 'child_process';
 import { v4 as uuidv4 } from 'uuid';

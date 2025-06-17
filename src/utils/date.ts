@@ -1,3 +1,11 @@
+/**
+ * Arquivo: date.ts
+ * Caminho: src/utils/date.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Funções para manipulação de datas
+ */
+
 // Função para formatar data ISO ou Date para dd/mm/aaaa
 export function formatDateBR(date: string | Date): string {
   const d = typeof date === 'string' ? new Date(date) : date;

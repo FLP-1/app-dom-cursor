@@ -1,3 +1,11 @@
+/**
+ * Arquivo: S1202Scheduler.ts
+ * Caminho: src/services/esocial/schedulers/S1202Scheduler.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Agendador do evento S-1202
+ */
+
 import { S1202BatchProcessor } from '../batch/S1202BatchProcessor';
 import { logger } from '@/lib/logger';
 

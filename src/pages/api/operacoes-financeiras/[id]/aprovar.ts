@@ -1,3 +1,11 @@
+/**
+ * Arquivo: aprovar.ts
+ * Caminho: src/pages/api/operacoes-financeiras/[id]/aprovar.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para aprovar operações financeiras
+ */
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import { prisma } from '@/lib/prisma';

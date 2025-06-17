@@ -1,3 +1,11 @@
+/**
+ * Arquivo: types.ts
+ * Caminho: src/hooks/esocial/types.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { z } from 'zod';
 import { TipoEvento } from '@/types/esocial';
 

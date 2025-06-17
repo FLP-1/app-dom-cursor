@@ -1,5 +1,13 @@
+/**
+ * Arquivo: usePhoneVerification.ts
+ * Caminho: src/hooks/usePhoneVerification.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useState } from 'react';
-import { validateBrazilianCellPhone } from '../utils/validation';
+import { validateBrazilianCellPhone } from '@/utils/validations';
 
 interface UsePhoneVerificationProps {
   onSuccess?: () => void;

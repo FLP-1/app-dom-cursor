@@ -1,3 +1,11 @@
+/**
+ * Arquivo: theme.ts
+ * Caminho: src/styles/theme.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Tema do Material-UI
+ */
+
 // src/styles/theme.ts
 
 import { createTheme } from '@mui/material/styles';

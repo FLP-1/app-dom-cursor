@@ -1,6 +1,14 @@
+/**
+ * Arquivo: AuthContext.tsx
+ * Caminho: src/contexts/AuthContext.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { UserRole } from '../lib/permissions/types';
+import { UserRole } from '@/lib/permissions/types';
 
 interface User {
   id: string;
@@ -14,7 +22,7 @@ interface User {
 interface AuthContextData {
   user: User | null;
   loading: boolean;
-  signIn: (cpf: string, password: string) => Promise<void>;
+  signIn: (cpf: string, password: string, rememberMe?: boolean) => Promise<void>;
   signOut: () => void;
   updateUser: (user: User) => void;
 }
@@ -31,7 +39,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const loadStoredData = async () => {
       const storedToken = localStorage.getItem('token');
       const storedUser = localStorage.getItem('user');
-
       if (storedToken && storedUser) {
         try {
           // Verifica se o token ainda é válido
@@ -40,7 +47,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               Authorization: `Bearer ${storedToken}`,
             },
           });
-
           const text = await response.text();
           if (!response.ok) {
             console.error('Erro na requisição:', response.status, text);
@@ -68,11 +74,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       setLoading(false);
     };
-
     loadStoredData();
   }, []);
 
-  const signIn = async (cpf: string, password: string) => {
+  const signIn = async (cpf: string, password: string, rememberMe: boolean = false) => {
+    console.log('[Auth] signIn chamado com:', { cpf, password, rememberMe });
     try {
       const response = await fetch('/api/auth/login/employer', {
         method: 'POST',
@@ -81,24 +87,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         },
         body: JSON.stringify({ cpf, password }),
       });
-
       const data = await response.json();
-
       if (!response.ok) {
+        console.error('[Auth] Erro na resposta do login:', data);
         throw new Error(data.message || 'Erro ao fazer login');
       }
-
       const { token, user } = data;
-
-      // Armazena o token e os dados do usuário
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
-
       setUser(user);
-
-      // Redireciona para o dashboard
+      console.log('[Auth] Login bem-sucedido, redirecionando para dashboard');
       router.push('/dashboard');
     } catch (error) {
+      console.error('[Auth] Erro no signIn:', error);
       throw error;
     }
   };

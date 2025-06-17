@@ -1,7 +1,15 @@
+/**
+ * Arquivo: payment.service.ts
+ * Caminho: src/services/payment.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de pagamento
+ */
+
 import Stripe from 'stripe';
 import { prisma } from '@/lib/prisma';
-import { LogService, TipoLog, CategoriaLog } from './log.service';
-import { NotificationService } from './NotificationService';
+import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';
+import { NotificationService } from '@/services/NotificationService';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2023-10-16',
@@ -184,7 +192,7 @@ export const PaymentService = {
    * Processa checkout completo
    * @param session Sessão do Stripe
    */
-  private async processarCheckoutCompleto(session: Stripe.Checkout.Session) {
+  async processarCheckoutCompleto(session: Stripe.Checkout.Session) {
     const { planoId, usuarioId } = session.metadata!;
 
     await prisma.planoUsuario.update({
@@ -211,7 +219,7 @@ export const PaymentService = {
    * Processa fatura paga
    * @param invoice Fatura do Stripe
    */
-  private async processarFaturaPaga(invoice: Stripe.Invoice) {
+  async processarFaturaPaga(invoice: Stripe.Invoice) {
     const customer = await stripe.customers.retrieve(invoice.customer as string);
     const usuarioId = customer.metadata.usuarioId;
 
@@ -231,7 +239,7 @@ export const PaymentService = {
    * Processa falha no pagamento
    * @param invoice Fatura do Stripe
    */
-  private async processarFalhaPagamento(invoice: Stripe.Invoice) {
+  async processarFalhaPagamento(invoice: Stripe.Invoice) {
     const customer = await stripe.customers.retrieve(invoice.customer as string);
     const usuarioId = customer.metadata.usuarioId;
 
@@ -255,7 +263,7 @@ export const PaymentService = {
    * Processa cancelamento de assinatura
    * @param subscription Assinatura do Stripe
    */
-  private async processarCancelamentoAssinatura(subscription: Stripe.Subscription) {
+  async processarCancelamentoAssinatura(subscription: Stripe.Subscription) {
     const customer = await stripe.customers.retrieve(subscription.customer as string);
     const usuarioId = customer.metadata.usuarioId;
 

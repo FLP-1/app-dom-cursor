@@ -1,3 +1,11 @@
+/**
+ * Arquivo: index.ts
+ * Caminho: src/pages/api/empregados-domesticos/index.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para listar empregados domésticos
+ */
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import { prisma } from '@/lib/prisma';

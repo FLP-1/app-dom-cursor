@@ -1,5 +1,13 @@
-import { ProjectRules } from './projectRules';
-import { projectRulesConfig } from './projectRulesConfig';
+/**
+ * Arquivo: projectRulesValidator.ts
+ * Caminho: src/rules/projectRulesValidator.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Validador das regras do projeto DOM
+ */
+
+import { ProjectRules } from '@/rules/projectRules';
+import { projectRulesConfig } from '@/rules/projectRulesConfig';
 
 /**
  * Validador das regras do projeto DOM

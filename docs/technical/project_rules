@@ -1,0 +1,23 @@
+## Regra obrigatória de cabeçalho de documentação em arquivos
+
+Todo arquivo de código-fonte (.ts, .tsx, .js, .jsx, .mjs, .css, .scss, .html, .md) deve conter, no topo, um cabeçalho de documentação com as seguintes informações:
+
+- Nome do arquivo com extensão
+- Caminho relativo ao projeto
+- Data de criação
+- Data da última atualização
+- Breve descrição do propósito/função do arquivo
+
+**Exemplo de cabeçalho:**
+
+```typescript
+/**
+ * Arquivo: EmpregadorForm.tsx
+ * Caminho: src/components/forms/empregador/EmpregadorForm.tsx
+ * Criado em: 2024-06-07
+ * Última atualização: 2024-06-07
+ * Descrição: Componente React de formulário adaptativo para cadastro de empregador, com modo simplificado e complementar.
+ */
+```
+
+Essa regra é obrigatória para todo o time e para a IA. Pull Requests sem o cabeçalho padronizado serão rejeitados. 

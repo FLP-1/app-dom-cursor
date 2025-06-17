@@ -1,10 +1,18 @@
+/**
+ * Arquivo: editar.tsx
+ * Caminho: src/pages/esocial/eventos/[id]/editar.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de edição de evento eSocial
+ */
+
 import { useRouter } from 'next/router';
-import { useEsocialEventForm } from '../../../hooks/forms/useEsocialEventForm';
-import { EsocialEventForm } from '../../../components/EsocialEventForm';
+import { useEsocialEventForm } from '@/hooks/forms/useEsocialEventForm';
+import EsocialEventForm from '@/components/EsocialEventForm';
 import { Box, Alert, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
-import { EsocialEvent } from '../../../types/esocial-event';
+import { EsocialEvent } from '@/types/esocial-event';
 
 export default function EditarEventoEsocialPage() {
   const { t } = useTranslation();

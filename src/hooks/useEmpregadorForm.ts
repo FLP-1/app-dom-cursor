@@ -1,9 +1,17 @@
+/**
+ * Arquivo: useEmpregadorForm.ts
+ * Caminho: src/hooks/useEmpregadorForm.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { api } from '../services/api';
-import { consultarCPF, DadosCPF } from '../services/receitaFederal';
-import { validarEmail, validarTelefone, ValidacaoResponse } from '../services/validacao';
+import { api } from '@/services/api';
+import { consultarCPF, DadosCPF } from '@/services/receitaFederal';
+import { validarEmail, validarTelefone, ValidacaoResponse } from '@/services/validacao';
 import { useState } from 'react';
 
 interface EmpregadorFormData {
@@ -60,7 +68,7 @@ const schema = yup.object().shape({
 
 export function useEmpregadorForm() {
   const [dadosCPF, setDadosCPF] = useState<DadosCPF | null>(null);
-  const [previewESocial, setPreviewESocial] = useState<any>(null);
+  const [previewESocial, setPreviewESocial] = useState<Record<string, unknown> | null>(null);
   const [validacaoCampos, setValidacaoCampos] = useState<ValidacaoCampos>({});
 
   const form = useForm<EmpregadorFormData>({

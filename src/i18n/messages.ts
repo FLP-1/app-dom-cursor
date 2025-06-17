@@ -1,3 +1,11 @@
+/**
+ * Arquivo: messages.ts
+ * Caminho: src/i18n/messages.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 export const MESSAGES = {
   required: 'Campo obrigatório',
   invalidEmail: 'E-mail inválido',
@@ -12,6 +20,13 @@ export const MESSAGES = {
   dateInPast: 'A data não pode ser no passado',
   invalidDateFormat: 'Formato de data inválido (use dd/mm/aaaa)',
   // Adicione outras mensagens padronizadas conforme necessidade
+  success: {
+    create: 'Registro criado com sucesso!',
+    update: 'Registro atualizado com sucesso!',
+  },
+  error: {
+    generic: 'Ocorreu um erro ao processar sua solicitação.',
+  },
 };
 
 export const empregadoDomesticoMessages = {

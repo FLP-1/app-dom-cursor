@@ -1,6 +1,14 @@
+/**
+ * Arquivo: s3.service.ts
+ * Caminho: src/services/s3.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de armazenamento em S3
+ */
+
 import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { LogService, TipoLog, CategoriaLog } from './log.service';
+import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';
 
 export class S3Service {
   private static instance: S3Service;

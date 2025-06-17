@@ -1,5 +1,13 @@
+/**
+ * Arquivo: useCEP.ts
+ * Caminho: src/hooks/useCEP.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useState } from 'react';
-import { buscarCEP } from '../lib/cep';
+import { buscarCEP } from '@/lib/cep';
 
 interface Endereco {
   cep: string;

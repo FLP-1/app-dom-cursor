@@ -1,3 +1,11 @@
+/**
+ * Arquivo: partner.messages.ts
+ * Caminho: src/messages/partner.messages.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 export const partnerMessages = {
   pt: {
     successCreate: 'Parceiro cadastrado com sucesso!',

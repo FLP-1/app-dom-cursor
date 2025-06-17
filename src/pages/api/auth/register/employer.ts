@@ -1,7 +1,15 @@
+/**
+ * Arquivo: employer.ts
+ * Caminho: src/pages/api/auth/register/employer.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para cadastro de empregadores
+ */
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Pool } from 'pg';
 import bcrypt from 'bcrypt';
-import { validateCPF, validatePhoneNumber } from '../../../../utils/validators';
+import { validateCPF, validatePhoneNumber } from '@/utils/validations';
 
 // TODO: Configure your PostgreSQL connection pool
 const pool = new Pool({

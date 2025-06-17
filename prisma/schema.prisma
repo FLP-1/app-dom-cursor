@@ -11,35 +11,36 @@ datasource db {
 }
 
 model User {
-  id                String         @id @default(uuid())
-  name              String
-  email             String         @unique
-  cpf               String         @unique
-  phone             String         @unique
-  password          String
-  createdAt         DateTime       @default(now())
-  updatedAt         DateTime       @updatedAt
-  passwordReset     PasswordReset[]
-  createdAlerts     Alert[]        @relation("CreatedBy")
-  uploadedDocuments Document[]     @relation("UploadedBy")
-  receivedEvaluations Evaluation[] @relation("Evaluated")
-  givenEvaluations   Evaluation[]  @relation("Evaluator")
-  sentPayments      Payment[]      @relation("Payer")
-  receivedPayments  Payment[]      @relation("Receiver")
-  requestedItems    ShoppingItem[] @relation("RequestedBy")
-  assignedTasks     Task[]         @relation("AssignedTo")
-  createdTasks      Task[]         @relation("CreatedBy")
-  timeRecords       TimeRecord[]
-  auditLogs         AuditLog[]
-  userGroups        UserGroup[]
-  userPartners      UserPartner[]
-  compras           Compra[]
-  sentMessages      Message[]      @relation("UserSentMessages")
+  id                   String                @id @default(uuid())
+  name                 String
+  email                String                @unique
+  cpf                  String                @unique
+  phone                String                @unique
+  password             String
+  userType             UserType              @default(EMPREGADOR)
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  passwordReset        PasswordReset[]
+  createdAlerts        Alert[]               @relation("CreatedBy")
+  uploadedDocuments    Document[]            @relation("UploadedBy")
+  receivedEvaluations  Evaluation[]          @relation("Evaluated")
+  givenEvaluations     Evaluation[]          @relation("Evaluator")
+  sentPayments         Payment[]             @relation("Payer")
+  receivedPayments     Payment[]             @relation("Receiver")
+  requestedItems       ShoppingItem[]        @relation("RequestedBy")
+  assignedTasks        Task[]                @relation("AssignedTo")
+  createdTasks         Task[]                @relation("CreatedBy")
+  timeRecords          TimeRecord[]
+  auditLogs            AuditLog[]
+  userGroups           UserGroup[]
+  userPartners         UserPartner[]
+  compras              Compra[]
+  sentMessages         Message[]             @relation("UserSentMessages")
   empregadosDomesticos EmpregadorDomestico[] @relation("UserEmpregadosDomesticos")
-  planosAssinatura  PlanoUsuario[]
-  configuracoesPonto ConfiguracaoPonto[]
-  registrosPonto    RegistroPonto[]
-  ocorrencias       Ocorrencia[]
+  planosAssinatura     PlanoUsuario[]
+  configuracoesPonto   ConfiguracaoPonto[]
+  registrosPonto       RegistroPonto[]
+  ocorrencias          Ocorrencia[]
   operacoesFinanceiras OperacaoFinanceira[]
 }
 
@@ -53,34 +54,34 @@ model PasswordReset {
 }
 
 model Alert {
-  id        String   @id @default(uuid())
-  message   String
-  type      String
-  createdBy String
-  user      User     @relation("CreatedBy", fields: [createdBy], references: [id])
-  createdAt DateTime @default(now())
+  id                   String               @id @default(uuid())
+  message              String
+  type                 String
+  createdBy            String
+  user                 User                 @relation("CreatedBy", fields: [createdBy], references: [id])
+  createdAt            DateTime             @default(now())
   empregadoDomesticoId String?
   empregadoDomestico   EmpregadorDomestico? @relation("EmpregadoAlertas", fields: [empregadoDomesticoId], references: [id])
 }
 
 model Document {
-  id          String   @id @default(uuid())
-  nome        String?  // Temporariamente nullable
-  tipo        String?  // Agora é uma string que referencia a tabela 8
-  url         String
-  dataUpload  DateTime @default(now())
-  dataValidade DateTime?
-  uploadedBy  String
-  user        User     @relation("UploadedBy", fields: [uploadedBy], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  messages    Message[]
+  id                   String               @id @default(uuid())
+  nome                 String? // Temporariamente nullable
+  tipo                 String? // Agora é uma string que referencia a tabela 8
+  url                  String
+  dataUpload           DateTime             @default(now())
+  dataValidade         DateTime?
+  uploadedBy           String
+  user                 User                 @relation("UploadedBy", fields: [uploadedBy], references: [id])
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+  messages             Message[]
   empregadoDomesticoId String?
   empregadoDomestico   EmpregadorDomestico? @relation("EmpregadoDocumentos", fields: [empregadoDomesticoId], references: [id])
-  esocialEventId String?
-  esocialEvent   EsocialEvent? @relation(fields: [esocialEventId], references: [id])
-  isPublic    Boolean  @default(false)
-  ocorrencias Ocorrencia[]
+  esocialEventId       String?
+  esocialEvent         EsocialEvent?        @relation(fields: [esocialEventId], references: [id])
+  isPublic             Boolean              @default(false)
+  ocorrencias          Ocorrencia[]
 }
 
 model Evaluation {
@@ -106,39 +107,39 @@ model Payment {
 }
 
 model ShoppingItem {
-  id           String   @id @default(uuid())
-  name         String
-  quantity     Int
-  status       String
-  requestedBy  String
-  user         User     @relation("RequestedBy", fields: [requestedBy], references: [id])
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id          String   @id @default(uuid())
+  name        String
+  quantity    Int
+  status      String
+  requestedBy String
+  user        User     @relation("RequestedBy", fields: [requestedBy], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Task {
-  id             String         @id @default(uuid())
+  id             String       @id @default(uuid())
   title          String
   description    String?
-  status         TaskStatus     @default(PENDING)
-  prioridade     TaskPriority   @default(MEDIA)
+  status         TaskStatus   @default(PENDING)
+  prioridade     TaskPriority @default(MEDIA)
   foto           String?
   dataVencimento DateTime?
   dataConclusao  DateTime?
   observacoes    String?
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
 
-  groupId        String
-  group          Group          @relation(fields: [groupId], references: [id])
+  groupId String
+  group   Group  @relation(fields: [groupId], references: [id])
 
-  assignedTo     String?
-  assigned       User?          @relation("AssignedTo", fields: [assignedTo], references: [id])
+  assignedTo String?
+  assigned   User?   @relation("AssignedTo", fields: [assignedTo], references: [id])
 
-  createdBy      String
-  creator        User           @relation("CreatedBy", fields: [createdBy], references: [id])
+  createdBy String
+  creator   User   @relation("CreatedBy", fields: [createdBy], references: [id])
 
-  messages       Message[]
+  messages Message[]
 }
 
 enum TaskStatus {
@@ -155,43 +156,43 @@ enum TaskPriority {
 }
 
 model TimeRecord {
-  id                String      @id @default(uuid())
-  userId            String
-  user              User        @relation(fields: [userId], references: [id])
-  data              DateTime    // Data do registro (apenas data, para agrupamento)
-  entrada           DateTime?   // Início da jornada
-  inicioIntervalo   DateTime?   // Início do intervalo de descanso
-  fimIntervalo      DateTime?   // Fim do intervalo de descanso
-  saida             DateTime?   // Fim do expediente
-  geoEntrada        String?     // Geolocalização na entrada
-  geoSaida          String?     // Geolocalização na saída
-  geoInicioIntervalo String?    // Geolocalização no início do intervalo
-  geoFimIntervalo   String?     // Geolocalização no fim do intervalo
-  wifiEntrada       String?     // Rede/WiFi na entrada
-  wifiSaida         String?     // Rede/WiFi na saída
-  wifiInicioIntervalo String?   // Rede/WiFi no início do intervalo
-  wifiFimIntervalo  String?     // Rede/WiFi no fim do intervalo
-  deviceEntrada     String?     // Device na entrada
-  deviceSaida       String?     // Device na saída
+  id                    String        @id @default(uuid())
+  userId                String
+  user                  User          @relation(fields: [userId], references: [id])
+  data                  DateTime // Data do registro (apenas data, para agrupamento)
+  entrada               DateTime? // Início da jornada
+  inicioIntervalo       DateTime? // Início do intervalo de descanso
+  fimIntervalo          DateTime? // Fim do intervalo de descanso
+  saida                 DateTime? // Fim do expediente
+  geoEntrada            String? // Geolocalização na entrada
+  geoSaida              String? // Geolocalização na saída
+  geoInicioIntervalo    String? // Geolocalização no início do intervalo
+  geoFimIntervalo       String? // Geolocalização no fim do intervalo
+  wifiEntrada           String? // Rede/WiFi na entrada
+  wifiSaida             String? // Rede/WiFi na saída
+  wifiInicioIntervalo   String? // Rede/WiFi no início do intervalo
+  wifiFimIntervalo      String? // Rede/WiFi no fim do intervalo
+  deviceEntrada         String? // Device na entrada
+  deviceSaida           String? // Device na saída
   deviceInicioIntervalo String? // Device no início do intervalo
-  deviceFimIntervalo String?    // Device no fim do intervalo
-  validado          Boolean     @default(false) // Validação do empregador
-  observacao        String?     // Observação opcional
-  horasTrabalhadas  Float?      // Total de horas trabalhadas no dia
-  horasExtras       Float?      // Total de horas extras no dia
-  createdAt         DateTime    @default(now())
-  updatedAt         DateTime    @updatedAt
-  alertas           PontoAlerta[]
+  deviceFimIntervalo    String? // Device no fim do intervalo
+  validado              Boolean       @default(false) // Validação do empregador
+  observacao            String? // Observação opcional
+  horasTrabalhadas      Float? // Total de horas trabalhadas no dia
+  horasExtras           Float? // Total de horas extras no dia
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+  alertas               PontoAlerta[]
 }
 
 model PontoAlerta {
-  id            String      @id @default(uuid())
-  timeRecordId  String
-  timeRecord    TimeRecord  @relation(fields: [timeRecordId], references: [id])
-  tipo          AlertaTipo
-  mensagem      String
-  ativo         Boolean     @default(true)
-  createdAt     DateTime    @default(now())
+  id           String     @id @default(uuid())
+  timeRecordId String
+  timeRecord   TimeRecord @relation(fields: [timeRecordId], references: [id])
+  tipo         AlertaTipo
+  mensagem     String
+  ativo        Boolean    @default(true)
+  createdAt    DateTime   @default(now())
 }
 
 enum AlertaTipo {
@@ -219,27 +220,27 @@ model AuditLog {
 }
 
 model Partner {
-  id           String        @id @default(uuid())
+  id           String                @id @default(uuid())
   name         String
-  cnpj         String?       @unique
+  cnpj         String?               @unique
   email        String?
-  createdAt    DateTime      @default(now())
+  createdAt    DateTime              @default(now())
   groups       Group[]
   userPartners UserPartner[]
   empregadores EmpregadorDomestico[] @relation("PartnerEmpregadores")
 }
 
 model Group {
-  id           String        @id @default(uuid())
-  name         String
-  address      String?
-  partnerId    String?
-  createdAt    DateTime      @default(now())
-  partner      Partner?      @relation(fields: [partnerId], references: [id])
-  userGroups   UserGroup[]
-  compras      Compra[]
-  tasks        Task[]
-  messages     Message[]
+  id         String      @id @default(uuid())
+  name       String
+  address    String?
+  partnerId  String?
+  createdAt  DateTime    @default(now())
+  partner    Partner?    @relation(fields: [partnerId], references: [id])
+  userGroups UserGroup[]
+  compras    Compra[]
+  tasks      Task[]
+  messages   Message[]
 }
 
 model UserGroup {
@@ -254,134 +255,134 @@ model UserGroup {
 }
 
 model UserPartner {
-  id         String   @id @default(uuid())
-  userId     String
-  partnerId  String
-  role       String
-  createdAt  DateTime @default(now())
-  user       User     @relation(fields: [userId], references: [id])
-  partner    Partner  @relation(fields: [partnerId], references: [id])
+  id        String   @id @default(uuid())
+  userId    String
+  partnerId String
+  role      String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  partner   Partner  @relation(fields: [partnerId], references: [id])
 }
 
 model Compra {
-  id         String   @id @default(uuid())
-  produto    String
-  foto       String?
-  unidade    String
-  quantidade Int
-  valor      Float
-  dataCompra DateTime
-  status     String
-  grupoId    String
-  usuarioId  String
-  grupo      Group    @relation(fields: [grupoId], references: [id])
-  usuario    User     @relation(fields: [usuarioId], references: [id])
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id                   String               @id @default(uuid())
+  produto              String
+  foto                 String?
+  unidade              String
+  quantidade           Int
+  valor                Float
+  dataCompra           DateTime
+  status               String
+  grupoId              String
+  usuarioId            String
+  grupo                Group                @relation(fields: [grupoId], references: [id])
+  usuario              User                 @relation(fields: [usuarioId], references: [id])
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
   empregadoDomesticoId String?
   empregadoDomestico   EmpregadorDomestico? @relation("EmpregadoCompras", fields: [empregadoDomesticoId], references: [id])
 }
 
 model Message {
-  id          String     @id @default(uuid())
-  text        String?
-  createdAt   DateTime   @default(now())
-  senderId    String
-  sender      User       @relation("UserSentMessages", fields: [senderId], references: [id])
-  groupId     String
-  group       Group      @relation(fields: [groupId], references: [id])
-  documentId  String?
-  document    Document?  @relation(fields: [documentId], references: [id])
-  taskId      String?
-  task        Task?      @relation(fields: [taskId], references: [id])
+  id         String    @id @default(uuid())
+  text       String?
+  createdAt  DateTime  @default(now())
+  senderId   String
+  sender     User      @relation("UserSentMessages", fields: [senderId], references: [id])
+  groupId    String
+  group      Group     @relation(fields: [groupId], references: [id])
+  documentId String?
+  document   Document? @relation(fields: [documentId], references: [id])
+  taskId     String?
+  task       Task?     @relation(fields: [taskId], references: [id])
 }
 
 model EsocialEventType {
-  id        String   @id @default(uuid())
-  codigo    String   @unique // Ex: S-2200
+  id        String         @id @default(uuid())
+  codigo    String         @unique // Ex: S-2200
   descricao String
-  createdAt DateTime @default(now())
+  createdAt DateTime       @default(now())
   eventos   EsocialEvent[]
 }
 
 model EsocialEvent {
-  id              String   @id @default(uuid())
-  codigo          String   // Ex: S-2200
+  id              String           @id @default(uuid())
+  codigo          String // Ex: S-2200
   descricao       String
   tipoId          String
   tipo            EsocialEventType @relation(fields: [tipoId], references: [id])
   xmlPayload      String?
-  status          String   // PENDING, SENT, PROCESSED, REJECTED
+  status          String // PENDING, SENT, PROCESSED, REJECTED
   dataEnvio       DateTime?
   dataRetorno     DateTime?
   mensagemRetorno String?
   empregadorId    String
   usuarioId       String
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
   documents       Document[]
   registrosPonto  RegistroPonto[]
   ocorrencias     Ocorrencia[]
 }
 
 model EmpregadorDomestico {
-  id                  String   @id @default(uuid())
-  cpf                 String   @unique
-  nomeCompleto        String
-  dataNascimento      DateTime
-  sexo                String
-  nacionalidade       String
-  grauInstrucao       String
-  nomeMae             String
-  endereco            String
-  numero              String
-  complemento         String?
-  bairro              String
-  cep                 String
-  municipio           String
-  uf                  String
-  telefone            String
-  telefoneAlternativo String?
-  email               String
-  emailAlternativo    String?
-  nomeSocial          String?
-  estadoCivil         String?
-  racaCor             String?
-  dependentes         Json?
-  deficiencia         String?
-  dataAdmissao        DateTime
-  matricula           String
-  categoria           String
-  remuneracao         Float
-  cargoId             String
-  cargo               CboCargo @relation("CargoEmpregados", fields: [cargoId], references: [codigo])
-  jornadaTrabalho     String
-  ctpsNumero          String
-  ctpsSerie           String
-  ctpsUf              String
-  pisPasep            String
-  empregadorId        String?
-  empregador          EmpregadorDomestico? @relation("EmpregadorEmpregados", fields: [empregadorId], references: [id])
-  empregados          EmpregadorDomestico[] @relation("EmpregadorEmpregados")
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
-  userId String?
-  user   User?   @relation("UserEmpregadosDomesticos", fields: [userId], references: [id])
-  alertas   Alert[] @relation("EmpregadoAlertas")
-  compras   Compra[] @relation("EmpregadoCompras")
-  documentos Document[] @relation("EmpregadoDocumentos")
-  partnerId String?
-  partner   Partner? @relation("PartnerEmpregadores", fields: [partnerId], references: [id])
-  registrosPonto RegistroPonto[]
-  ocorrencias Ocorrencia[]
+  id                   String                @id @default(uuid())
+  cpf                  String                @unique
+  nomeCompleto         String
+  dataNascimento       DateTime
+  sexo                 String
+  nacionalidade        String
+  grauInstrucao        String
+  nomeMae              String
+  endereco             String
+  numero               String
+  complemento          String?
+  bairro               String
+  cep                  String
+  municipio            String
+  uf                   String
+  telefone             String
+  telefoneAlternativo  String?
+  email                String
+  emailAlternativo     String?
+  nomeSocial           String?
+  estadoCivil          String?
+  racaCor              String?
+  dependentes          Json?
+  deficiencia          String?
+  dataAdmissao         DateTime
+  matricula            String
+  categoria            String
+  remuneracao          Float
+  cargoId              String
+  cargo                CboCargo              @relation("CargoEmpregados", fields: [cargoId], references: [codigo])
+  jornadaTrabalho      String
+  ctpsNumero           String
+  ctpsSerie            String
+  ctpsUf               String
+  pisPasep             String
+  empregadorId         String?
+  empregador           EmpregadorDomestico?  @relation("EmpregadorEmpregados", fields: [empregadorId], references: [id])
+  empregados           EmpregadorDomestico[] @relation("EmpregadorEmpregados")
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  userId               String?
+  user                 User?                 @relation("UserEmpregadosDomesticos", fields: [userId], references: [id])
+  alertas              Alert[]               @relation("EmpregadoAlertas")
+  compras              Compra[]              @relation("EmpregadoCompras")
+  documentos           Document[]            @relation("EmpregadoDocumentos")
+  partnerId            String?
+  partner              Partner?              @relation("PartnerEmpregadores", fields: [partnerId], references: [id])
+  registrosPonto       RegistroPonto[]
+  ocorrencias          Ocorrencia[]
   operacoesFinanceiras OperacaoFinanceira[]
 }
 
 model CboCargo {
-  codigo      String   @id
-  descricao   String
-  observacao  String?
-  empregados  EmpregadorDomestico[] @relation("CargoEmpregados")
+  codigo     String                @id
+  descricao  String
+  observacao String?
+  empregados EmpregadorDomestico[] @relation("CargoEmpregados")
 }
 
 // Modelos de planos de assinatura e pagamentos
@@ -431,79 +432,79 @@ model Plano {
 }
 
 model PlanoUsuario {
-  id            String   @id @default(uuid())
-  usuarioId     String
-  planoId       String
-  dataInicio    DateTime
-  dataFim       DateTime?
-  status        String   // PENDENTE_PAGAMENTO, ATIVO, CANCELADO, SUSPENSO
-  criadoEm      DateTime @default(now())
-  atualizadoEm  DateTime @updatedAt
-  usuario       User     @relation(fields: [usuarioId], references: [id])
-  plano         Plano    @relation(fields: [planoId], references: [id])
-  pagamentos    Pagamento[]
+  id           String      @id @default(uuid())
+  usuarioId    String
+  planoId      String
+  dataInicio   DateTime
+  dataFim      DateTime?
+  status       String // PENDENTE_PAGAMENTO, ATIVO, CANCELADO, SUSPENSO
+  criadoEm     DateTime    @default(now())
+  atualizadoEm DateTime    @updatedAt
+  usuario      User        @relation(fields: [usuarioId], references: [id])
+  plano        Plano       @relation(fields: [planoId], references: [id])
+  pagamentos   Pagamento[]
 
   @@index([usuarioId])
   @@index([planoId])
 }
 
 model Pagamento {
-  id            String   @id @default(uuid())
-  valor         Float
-  status        String   // PENDENTE, APROVADO, RECUSADO, ESTORNADO
-  dataPagamento DateTime?
+  id             String       @id @default(uuid())
+  valor          Float
+  status         String // PENDENTE, APROVADO, RECUSADO, ESTORNADO
+  dataPagamento  DateTime?
   dataVencimento DateTime
   planoUsuarioId String
-  planoUsuario  PlanoUsuario @relation(fields: [planoUsuarioId], references: [id])
-  criadoEm      DateTime @default(now())
-  atualizadoEm  DateTime @updatedAt
+  planoUsuario   PlanoUsuario @relation(fields: [planoUsuarioId], references: [id])
+  criadoEm       DateTime     @default(now())
+  atualizadoEm   DateTime     @updatedAt
 
   @@index([planoUsuarioId])
 }
 
 model ConfiguracaoPonto {
-  id          String   @id @default(uuid())
-  usuarioId   String
-  horaInicio  DateTime
-  horaFim     DateTime
-  latitude    Float?
-  longitude   Float?
-  raioMetros  Int?
-  ativo       Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  usuario     User     @relation(fields: [usuarioId], references: [id])
-  registros   RegistroPonto[]
+  id         String          @id @default(uuid())
+  usuarioId  String
+  horaInicio DateTime
+  horaFim    DateTime
+  latitude   Float?
+  longitude  Float?
+  raioMetros Int?
+  ativo      Boolean         @default(true)
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+  usuario    User            @relation(fields: [usuarioId], references: [id])
+  registros  RegistroPonto[]
 
   @@index([usuarioId])
 }
 
 model RegistroPonto {
-  id            String   @id @default(uuid())
-  dataHora      DateTime
-  tipo          String   // ENTRADA, SAIDA, INICIO_INTERVALO, FIM_INTERVALO
-  usuarioId     String
-  usuario       User     @relation(fields: [usuarioId], references: [id])
+  id                   String              @id @default(uuid())
+  dataHora             DateTime
+  tipo                 String // ENTRADA, SAIDA, INICIO_INTERVALO, FIM_INTERVALO
+  usuarioId            String
+  usuario              User                @relation(fields: [usuarioId], references: [id])
   empregadoDomesticoId String
   empregadoDomestico   EmpregadorDomestico @relation(fields: [empregadoDomesticoId], references: [id])
-  latitude      Float?
-  longitude     Float?
-  wifiSSID      String?
-  wifiBSSID     String?
-  wifiSignal    Int?     // Intensidade do sinal em dBm
-  timezone      String
-  dispositivo   String
-  ip            String
-  validado      Boolean  @default(false)
-  validadoPor   String?
-  validadoEm    DateTime?
-  observacao    String?
-  esocialEventId String?
-  esocialEvent   EsocialEvent? @relation(fields: [esocialEventId], references: [id])
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  configuracaoPontoId String?
-  configuracaoPonto   ConfiguracaoPonto? @relation(fields: [configuracaoPontoId], references: [id])
+  latitude             Float?
+  longitude            Float?
+  wifiSSID             String?
+  wifiBSSID            String?
+  wifiSignal           Int? // Intensidade do sinal em dBm
+  timezone             String
+  dispositivo          String
+  ip                   String
+  validado             Boolean             @default(false)
+  validadoPor          String?
+  validadoEm           DateTime?
+  observacao           String?
+  esocialEventId       String?
+  esocialEvent         EsocialEvent?       @relation(fields: [esocialEventId], references: [id])
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
+  configuracaoPontoId  String?
+  configuracaoPonto    ConfiguracaoPonto?  @relation(fields: [configuracaoPontoId], references: [id])
 }
 
 model ValidacaoEmail {
@@ -531,21 +532,21 @@ model ValidacaoTelefone {
 }
 
 model Empregador {
-  id                String   @id @default(cuid())
-  cpf               String   @unique
-  nomeCompleto      String
-  dataNascimento    DateTime
-  sexo              String
-  tipoEmpregador    String
-  caepf             String?
-  telefone          String?
-  email             String?
-  aceitaComunicacoes Boolean @default(false)
-  aceitaTermos      Boolean @default(false)
-  emailValidado     Boolean @default(false)
-  telefoneValidado  Boolean @default(false)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  id                 String   @id @default(cuid())
+  cpf                String   @unique
+  nomeCompleto       String
+  dataNascimento     DateTime
+  sexo               String
+  tipoEmpregador     String
+  caepf              String?
+  telefone           String?
+  email              String?
+  aceitaComunicacoes Boolean  @default(false)
+  aceitaTermos       Boolean  @default(false)
+  emailValidado      Boolean  @default(false)
+  telefoneValidado   Boolean  @default(false)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 
   @@index([cpf])
   @@index([email])
@@ -553,23 +554,23 @@ model Empregador {
 }
 
 model Ocorrencia {
-  id            String   @id @default(uuid())
-  tipo          String   // Agora é uma string que referencia a tabela 9
-  dataInicio    DateTime
-  dataFim       DateTime
-  justificativa String?
-  documentos    Document[]
-  usuarioId     String
-  usuario       User     @relation(fields: [usuarioId], references: [id])
+  id                   String              @id @default(uuid())
+  tipo                 String // Agora é uma string que referencia a tabela 9
+  dataInicio           DateTime
+  dataFim              DateTime
+  justificativa        String?
+  documentos           Document[]
+  usuarioId            String
+  usuario              User                @relation(fields: [usuarioId], references: [id])
   empregadoDomesticoId String
   empregadoDomestico   EmpregadorDomestico @relation(fields: [empregadoDomesticoId], references: [id])
-  esocialEventId String?
-  esocialEvent   EsocialEvent? @relation(fields: [esocialEventId], references: [id])
-  validado      Boolean  @default(false)
-  validadoPor   String?
-  validadoEm    DateTime?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  esocialEventId       String?
+  esocialEvent         EsocialEvent?       @relation(fields: [esocialEventId], references: [id])
+  validado             Boolean             @default(false)
+  validadoPor          String?
+  validadoEm           DateTime?
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
 }
 
 enum TipoOperacaoFinanceira {
@@ -590,40 +591,40 @@ enum StatusParcela {
 }
 
 model OperacaoFinanceira {
-  id                  String                  @id @default(uuid())
-  tipo                TipoOperacaoFinanceira
-  valor               Float
-  dataOperacao        DateTime
-  dataVencimento      DateTime
-  formaPagamento      FormaPagamento
-  status              StatusOperacaoFinanceira @default(PENDENTE)
-  observacao          String?
-  comprovanteUrl      String?
-  dataPagamento       DateTime?
-  createdAt           DateTime                @default(now())
-  updatedAt           DateTime                @updatedAt
-  usuario             User                    @relation(fields: [usuarioId], references: [id])
-  usuarioId           String
-  empregadoDomestico  EmpregadorDomestico      @relation(fields: [empregadoDomesticoId], references: [id])
+  id                   String                      @id @default(uuid())
+  tipo                 TipoOperacaoFinanceira
+  valor                Float
+  dataOperacao         DateTime
+  dataVencimento       DateTime
+  formaPagamento       FormaPagamento
+  status               StatusOperacaoFinanceira    @default(PENDENTE)
+  observacao           String?
+  comprovanteUrl       String?
+  dataPagamento        DateTime?
+  createdAt            DateTime                    @default(now())
+  updatedAt            DateTime                    @updatedAt
+  usuario              User                        @relation(fields: [usuarioId], references: [id])
+  usuarioId            String
+  empregadoDomestico   EmpregadorDomestico         @relation(fields: [empregadoDomesticoId], references: [id])
   empregadoDomesticoId String
-  parcelas            ParcelaOperacaoFinanceira[]
+  parcelas             ParcelaOperacaoFinanceira[]
 
   @@index([usuarioId])
   @@index([empregadoDomesticoId])
 }
 
 model ParcelaOperacaoFinanceira {
-  id                  String              @id @default(uuid())
-  numero              Int
-  valor               Float
-  dataVencimento      DateTime
-  dataPagamento       DateTime?
-  status              StatusParcela       @default(PENDENTE)
-  observacao          String?
-  comprovanteUrl      String?
-  createdAt           DateTime            @default(now())
-  updatedAt           DateTime            @updatedAt
-  operacaoFinanceira  OperacaoFinanceira  @relation(fields: [operacaoFinanceiraId], references: [id])
+  id                   String             @id @default(uuid())
+  numero               Int
+  valor                Float
+  dataVencimento       DateTime
+  dataPagamento        DateTime?
+  status               StatusParcela      @default(PENDENTE)
+  observacao           String?
+  comprovanteUrl       String?
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+  operacaoFinanceira   OperacaoFinanceira @relation(fields: [operacaoFinanceiraId], references: [id])
   operacaoFinanceiraId String
 
   @@index([operacaoFinanceiraId])
@@ -631,32 +632,32 @@ model ParcelaOperacaoFinanceira {
 
 // Tabelas do eSocial
 model EsocialTabela {
-  id          String   @id @default(uuid())
-  codigo      String   @unique // Código da tabela (ex: 1, 2, 3...)
-  nome        String   // Nome da tabela
-  descricao   String?  // Descrição detalhada
-  versao      String   // Versão atual da tabela
-  dataInicio  DateTime // Data de início da vigência
-  dataFim     DateTime? // Data de fim da vigência (se aplicável)
-  itens       EsocialTabelaItem[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id         String              @id @default(uuid())
+  codigo     String              @unique // Código da tabela (ex: 1, 2, 3...)
+  nome       String // Nome da tabela
+  descricao  String? // Descrição detalhada
+  versao     String // Versão atual da tabela
+  dataInicio DateTime // Data de início da vigência
+  dataFim    DateTime? // Data de fim da vigência (se aplicável)
+  itens      EsocialTabelaItem[]
+  createdAt  DateTime            @default(now())
+  updatedAt  DateTime            @updatedAt
 
   @@map("esocial_tabelas")
 }
 
 model EsocialTabelaItem {
-  id          String   @id @default(uuid())
-  tabelaId    String
-  codigo      String   // Código do item na tabela
-  descricao   String   // Descrição do item
-  valor       String?  // Valor do item (se aplicável)
-  ativo       Boolean  @default(true)
-  dataInicio  DateTime // Data de início da vigência
-  dataFim     DateTime? // Data de fim da vigência (se aplicável)
-  tabela      EsocialTabela @relation(fields: [tabelaId], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id         String        @id @default(uuid())
+  tabelaId   String
+  codigo     String // Código do item na tabela
+  descricao  String // Descrição do item
+  valor      String? // Valor do item (se aplicável)
+  ativo      Boolean       @default(true)
+  dataInicio DateTime // Data de início da vigência
+  dataFim    DateTime? // Data de fim da vigência (se aplicável)
+  tabela     EsocialTabela @relation(fields: [tabelaId], references: [id])
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
 
   @@unique([tabelaId, codigo])
   @@map("esocial_tabela_itens")
@@ -664,33 +665,33 @@ model EsocialTabelaItem {
 
 // Eventos do eSocial
 model EsocialEvento {
-  id          String   @id @default(uuid())
-  codigo      String   @unique // Código do evento (ex: S-2200)
-  nome        String   // Nome do evento
-  descricao   String?  // Descrição detalhada
-  versao      String   // Versão atual do evento
-  dataInicio  DateTime // Data de início da vigência
-  dataFim     DateTime? // Data de fim da vigência (se aplicável)
-  campos      EsocialEventoCampo[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id         String               @id @default(uuid())
+  codigo     String               @unique // Código do evento (ex: S-2200)
+  nome       String // Nome do evento
+  descricao  String? // Descrição detalhada
+  versao     String // Versão atual do evento
+  dataInicio DateTime // Data de início da vigência
+  dataFim    DateTime? // Data de fim da vigência (se aplicável)
+  campos     EsocialEventoCampo[]
+  createdAt  DateTime             @default(now())
+  updatedAt  DateTime             @updatedAt
 
   @@map("esocial_eventos")
 }
 
 model EsocialEventoCampo {
-  id          String   @id @default(uuid())
+  id          String        @id @default(uuid())
   eventoId    String
-  codigo      String   // Código do campo
-  nome        String   // Nome do campo
-  tipo        String   // Tipo do campo (texto, número, data, etc)
-  obrigatorio Boolean  @default(false)
-  tamanho     Int?     // Tamanho do campo (se aplicável)
-  decimais    Int?     // Número de casas decimais (se aplicável)
-  tabelaId    String?  // Referência à tabela do eSocial (se aplicável)
+  codigo      String // Código do campo
+  nome        String // Nome do campo
+  tipo        String // Tipo do campo (texto, número, data, etc)
+  obrigatorio Boolean       @default(false)
+  tamanho     Int? // Tamanho do campo (se aplicável)
+  decimais    Int? // Número de casas decimais (se aplicável)
+  tabelaId    String? // Referência à tabela do eSocial (se aplicável)
   evento      EsocialEvento @relation(fields: [eventoId], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 
   @@unique([eventoId, codigo])
   @@map("esocial_evento_campos")
@@ -749,4 +750,21 @@ enum EventStatus {
   PROCESSED
   ERROR
   CANCELLED
-} 
+}
+
+enum UserType {
+  ADMIN
+  EMPREGADOR
+  EMPREGADO
+  PARCEIRO
+  FAMILIAR
+}
+
+model ConfiguracaoGlobal {
+  id        String   @id @default(uuid())
+  chave     String   @unique
+  valor     String
+  descricao String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

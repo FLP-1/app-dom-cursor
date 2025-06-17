@@ -1,5 +1,13 @@
+/**
+ * Arquivo: useEmailVerification.ts
+ * Caminho: src/hooks/useEmailVerification.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useState } from 'react';
-import { validateEmail } from '../utils/validation';
+import { validateEmail } from '@/utils/validations';
 
 interface UseEmailVerificationProps {
   onSuccess?: () => void;

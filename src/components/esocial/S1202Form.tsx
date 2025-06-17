@@ -1,12 +1,21 @@
+/**
+ * Arquivo: S1202Form.tsx
+ * Caminho: src/components/esocial/S1202Form.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useTranslation } from 'react-i18next';
 import { Grid, Button, Box, Paper, Typography, Tooltip } from '@mui/material';
 import { FormInput, FormSelect } from '@/components/form';
-import { S1202DmDevForm } from './events/S1202DmDevForm';
+import { S1202DmDevForm } from '@/components/esocial/events/S1202DmDevForm';
 import { useS1202Form } from '@/hooks/useS1202Form';
 import { S1202Schema } from '@/schemas/esocial/S1202Schema';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { tooltips } from '@/i18n/tooltips';
 
 interface S1202FormProps {
   initialData?: S1202Schema;
@@ -31,15 +40,14 @@ export const S1202Form = ({ initialData, id }: S1202FormProps) => {
           {t('esocial.S1202.title')}
         </Typography>
 
-        <Grid container spacing={3}>
+        <Grid container spacing={3} columns={12}>
           {/* Empregador */}
-          <Grid item xs={12}>
+          <Grid gridColumn={{ xs: 'span 12' }}>
             <Typography variant="subtitle1" gutterBottom>
               {t('esocial.S1202.ideEmpregador.title')}
             </Typography>
           </Grid>
-
-          <Grid item xs={12} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 4' }}>
             <FormSelect
               name="ideEmpregador.tpInsc"
               label={t('esocial.S1202.ideEmpregador.tpInsc')}
@@ -52,8 +60,7 @@ export const S1202Form = ({ initialData, id }: S1202FormProps) => {
               ]}
             />
           </Grid>
-
-          <Grid item xs={12} md={8}>
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 8' }}>
             <FormInput
               name="ideEmpregador.nrInsc"
               label={t('esocial.S1202.ideEmpregador.nrInsc')}
@@ -61,15 +68,13 @@ export const S1202Form = ({ initialData, id }: S1202FormProps) => {
               mask="cnpj"
             />
           </Grid>
-
           {/* Trabalhador */}
-          <Grid item xs={12}>
+          <Grid gridColumn={{ xs: 'span 12' }}>
             <Typography variant="subtitle1" gutterBottom>
               {t('esocial.S1202.ideTrabalhador.title')}
             </Typography>
           </Grid>
-
-          <Grid item xs={12} md={6}>
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
             <FormInput
               name="ideTrabalhador.cpfTrab"
               label={t('esocial.S1202.ideTrabalhador.cpfTrab')}
@@ -77,8 +82,7 @@ export const S1202Form = ({ initialData, id }: S1202FormProps) => {
               mask="cpf"
             />
           </Grid>
-
-          <Grid item xs={12} md={6}>
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
             <FormInput
               name="ideTrabalhador.nisTrab"
               label={t('esocial.S1202.ideTrabalhador.nisTrab')}
@@ -86,22 +90,20 @@ export const S1202Form = ({ initialData, id }: S1202FormProps) => {
               mask="pis"
             />
           </Grid>
-
           {/* Demais Devidos */}
-          <Grid item xs={12}>
+          <Grid gridColumn={{ xs: 'span 12' }}>
             <Box display="flex" alignItems="center" gap={1} mb={2}>
               <Typography variant="subtitle1">
                 {t('esocial.S1202.dmDev.title')}
               </Typography>
-              <Tooltip title={t('esocial.S1202.dmDev.help')}>
+              <Tooltip title={tooltips.esocialS1202DmDevHelp.pt}>
                 <HelpOutlineIcon fontSize="small" color="action" />
               </Tooltip>
             </Box>
             <S1202DmDevForm control={control} />
           </Grid>
-
           {/* Ações */}
-          <Grid item xs={12}>
+          <Grid gridColumn={{ xs: 'span 12' }}>
             <Box display="flex" gap={2} justifyContent="flex-end">
               {id && (
                 <>

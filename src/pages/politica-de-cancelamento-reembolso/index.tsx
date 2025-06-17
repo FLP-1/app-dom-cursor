@@ -1,78 +1,38 @@
-import React from 'react';
-import { Box, Typography, Card, CardContent } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import { PageHeader } from '../../components/common/PageHeader';
+/**
+ * Arquivo: index.tsx
+ * Caminho: src/pages/politica-de-cancelamento-reembolso/index.tsx
+ * Criado em: 2024-03-19
+ * Última atualização: 2024-03-19
+ * Descrição: Página oficial de política de cancelamento e reembolso
+ */
 
-export default function PoliticaDeCancelamentoReembolsoPage() {
+import { GetStaticProps } from 'next';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import fs from 'fs/promises';
+import path from 'path';
+import { DocumentViewer } from '@/components/institutional/DocumentViewer';
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  const filePath = path.join(process.cwd(), 'docs', 'institutional', 'cancellation', `${locale}.md`);
+  const content = await fs.readFile(filePath, 'utf-8');
+  
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? 'pt-BR', ['common'])),
+      content,
+    },
+  };
+};
+
+export default function CancellationPolicy({ content }: { content: string }) {
   const { t } = useTranslation();
-
+  
   return (
-    <Box sx={{ p: 3 }}>
-      <PageHeader
-        title={t('Política de Cancelamento e Reembolso')}
-      />
-
-      <Box sx={{ mt: 3 }}>
-        <Card>
-          <CardContent>
-            <Typography variant="h5" color="text.secondary" gutterBottom>
-              {t('politicaDeCancelamentoReembolso.titulo')}
-            </Typography>
-
-            <Typography variant="body1" color="text.secondary" paragraph>
-              {t('politicaDeCancelamentoReembolso.descricao')}
-            </Typography>
-
-            <Typography variant="h6" color="text.secondary" gutterBottom>
-              {t('politicaDeCancelamentoReembolso.cancelamento.titulo')}
-            </Typography>
-
-            <Typography variant="body1" color="text.secondary" paragraph>
-              {t('politicaDeCancelamentoReembolso.cancelamento.descricao')}
-            </Typography>
-
-            <Typography variant="h6" color="text.secondary" gutterBottom>
-              {t('politicaDeCancelamentoReembolso.reembolso.titulo')}
-            </Typography>
-
-            <Typography variant="body1" color="text.secondary" paragraph>
-              {t('politicaDeCancelamentoReembolso.reembolso.descricao')}
-            </Typography>
-
-            <Typography variant="h6" color="text.secondary" gutterBottom>
-              {t('politicaDeCancelamentoReembolso.prazos.titulo')}
-            </Typography>
-
-            <Typography variant="body1" color="text.secondary" paragraph>
-              {t('politicaDeCancelamentoReembolso.prazos.descricao')}
-            </Typography>
-
-            <Typography variant="h6" color="text.secondary" gutterBottom>
-              {t('politicaDeCancelamentoReembolso.procedimentos.titulo')}
-            </Typography>
-
-            <Typography variant="body1" color="text.secondary" paragraph>
-              {t('politicaDeCancelamentoReembolso.procedimentos.descricao')}
-            </Typography>
-
-            <Typography variant="h6" color="text.secondary" gutterBottom>
-              {t('politicaDeCancelamentoReembolso.excecoes.titulo')}
-            </Typography>
-
-            <Typography variant="body1" color="text.secondary" paragraph>
-              {t('politicaDeCancelamentoReembolso.excecoes.descricao')}
-            </Typography>
-
-            <Typography variant="h6" color="text.secondary" gutterBottom>
-              {t('politicaDeCancelamentoReembolso.contato.titulo')}
-            </Typography>
-
-            <Typography variant="body1" color="text.secondary" paragraph>
-              {t('politicaDeCancelamentoReembolso.contato.descricao')}
-            </Typography>
-          </CardContent>
-        </Card>
-      </Box>
-    </Box>
+    <DocumentViewer
+      title={t('cancellation.title', 'Política de Cancelamento e Reembolso')}
+      content={content}
+      lastUpdate={t('cancellation.lastUpdate', '19/03/2024')}
+    />
   );
 } 

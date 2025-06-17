@@ -1,3 +1,11 @@
+/**
+ * Arquivo: S2240Schema.ts
+ * Caminho: src/schemas/esocial/S2240Schema.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Schema para o evento S-2240
+ */
+
 import { z } from 'zod';
 
 export const S2240Schema = z.object({

@@ -1,3 +1,11 @@
+/**
+ * Arquivo: Input.tsx
+ * Caminho: src/components/common/Input.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import React from 'react';
 import styled from '@emotion/styled';
 // import { useTheme } from '@emotion/react'; // Removido pois não está em uso

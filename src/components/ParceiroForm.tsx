@@ -1,9 +1,18 @@
+/**
+ * Arquivo: ParceiroForm.tsx
+ * Caminho: src/components/ParceiroForm.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import React from 'react';
 import { Grid, Button, Box, Typography, Tooltip } from '@mui/material';
-import { FormInput } from './common/forms/FormInput';
+import { FormInput } from '@/components/forms/inputs/FormInput';
 import { useTranslation } from 'react-i18next';
 import { Control } from 'react-hook-form';
-import { ParceiroFormValues } from '../hooks/forms/useParceiroForm';
+import { ParceiroFormValues } from '@/hooks/forms/useParceiroForm';
+import { tooltips } from '@/i18n/tooltips';
 
 interface ParceiroFormProps {
   control: Control<ParceiroFormValues>;
@@ -18,15 +27,27 @@ export const ParceiroForm: React.FC<ParceiroFormProps> = ({ control, loading, er
   return (
     <Box component="form" onSubmit={onSubmit} noValidate sx={{ p: 2 }}>
       <Typography variant="h6" gutterBottom>{t('Cadastro de Parceiro')}</Typography>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
-          <Tooltip title={t('Nome do parceiro ou empresa.')}> <div><FormInput name="name" label={t('Nome')} control={control} required inputProps={{ 'aria-label': t('Nome do parceiro') }} /></div> </Tooltip>
+      <Grid container spacing={2} columns={12}>
+        <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
+          <Tooltip title={tooltips.parceiroNome.pt}>
+            <span>
+              <div><FormInput name="name" label={t('Nome')} control={control} required inputProps={{ 'aria-label': t('Nome do parceiro') }} /></div>
+            </span>
+          </Tooltip>
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <Tooltip title={t('CNPJ do parceiro.')}> <div><FormInput name="cnpj" label={t('CNPJ')} control={control} required inputProps={{ 'aria-label': t('CNPJ do parceiro') }} /></div> </Tooltip>
+        <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
+          <Tooltip title={tooltips.parceiroCnpj.pt}>
+            <span>
+              <div><FormInput name="cnpj" label={t('CNPJ')} control={control} required inputProps={{ 'aria-label': t('CNPJ do parceiro') }} /></div>
+            </span>
+          </Tooltip>
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <Tooltip title={t('E-mail de contato do parceiro.')}> <div><FormInput name="email" label={t('E-mail')} control={control} required inputProps={{ 'aria-label': t('E-mail do parceiro') }} /></div> </Tooltip>
+        <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
+          <Tooltip title={tooltips.parceiroEmail.pt}>
+            <span>
+              <div><FormInput name="email" label={t('E-mail')} control={control} required inputProps={{ 'aria-label': t('E-mail do parceiro') }} /></div>
+            </span>
+          </Tooltip>
         </Grid>
       </Grid>
       <Box mt={3} display="flex" gap={2}>

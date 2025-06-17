@@ -1,3 +1,11 @@
+/**
+ * Arquivo: S1202Processor.ts
+ * Caminho: src/services/esocial/processors/S1202Processor.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Processador do evento S-1202
+ */
+
 import { prisma } from '@/lib/prisma';
 import { Event, EventLog, EventStatus } from '@prisma/client';
 import { S1202Schema } from '@/schemas/esocial/S1202Schema';

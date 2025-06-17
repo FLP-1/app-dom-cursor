@@ -1,3 +1,11 @@
+/**
+ * Arquivo: esocial-event.ts
+ * Caminho: src/types/esocial-event.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Tipos de eventos do eSocial
+ */
+
 // Tipos fortes para eventos do eSocial
 
 export type EsocialEventStatus = 'PENDING' | 'SENT' | 'PROCESSED' | 'REJECTED';

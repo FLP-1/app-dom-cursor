@@ -1,3 +1,11 @@
+/**
+ * Arquivo: [id].tsx
+ * Caminho: src/pages/esocial/eventos/aviso-previo/[id].tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: 
+ */
+
 import { Box, Button, Container, Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { useEsocialS2250Form } from '@/hooks/useEsocialS2250Form';

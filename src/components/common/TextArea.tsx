@@ -1,3 +1,11 @@
+/**
+ * Arquivo: TextArea.tsx
+ * Caminho: src/components/common/TextArea.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import React, { useId } from 'react';
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
@@ -46,7 +54,7 @@ const TextArea: React.FC<TextAreaProps> = ({ label, ...props }) => {
   return (
     <TextAreaContainer>
       {label && <StyledLabel htmlFor={id}>{label}</StyledLabel>}
-      <StyledTextArea id={id} aria-label={label} title={label} {...props} />
+      <StyledTextArea id={id} aria-label={label} {...props} />
     </TextAreaContainer>
   );
 };

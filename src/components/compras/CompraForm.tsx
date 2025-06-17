@@ -1,8 +1,16 @@
+/**
+ * Arquivo: CompraForm.tsx
+ * Caminho: src/components/compras/CompraForm.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import React, { useRef } from 'react';
-import { useCompraForm } from '../../hooks/forms/useCompraForm';
-import { FormInput } from '../common/forms/FormInput';
-import { FormSelect } from '../common/forms/FormSelect';
-import Button from '../common/Button';
+import { useCompraForm } from '@/hooks/forms/useCompraForm';
+import { FormInput } from '@/components/forms/inputs/FormInput';
+import { FormSelect } from '@/components/forms/inputs/FormSelect';
+import Button from '@/components/common/Button';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 

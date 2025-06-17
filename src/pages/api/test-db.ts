@@ -1,3 +1,11 @@
+/**
+ * Arquivo: test-db.ts
+ * Caminho: src/pages/api/test-db.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para testar conexão com o banco de dados
+ */
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Pool } from 'pg';
 

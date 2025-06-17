@@ -1,0 +1,24 @@
+{
+  "institutional": {
+    "subtitle": "Transforming document management",
+    "lastUpdate": "Last update"
+  },
+  "terms": {
+    "title": "Terms of Use",
+    "lastUpdate": "03/19/2024"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdate": "03/19/2024"
+  },
+  "cancellation": {
+    "title": "Cancellation and Refund Policy",
+    "lastUpdate": "03/19/2024"
+  },
+  "home": {
+    "planos": "Subscription Plans",
+    "termos": "Terms of Use",
+    "privacidade": "Privacy Policy",
+    "cancelamento": "Cancellation and Refund"
+  }
+} 

@@ -1,4 +1,12 @@
-import { ProjectRules } from './projectRules';
+/**
+ * Arquivo: projectRulesConfig.ts
+ * Caminho: src/rules/projectRulesConfig.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Configuração das regras do projeto DOM
+ */
+
+import { ProjectRules } from '@/rules/projectRules';
 
 /**
  * Configuração das regras do projeto DOM

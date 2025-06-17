@@ -1,3 +1,11 @@
+<!--
+  Arquivo: integracao_esocial_dom_instrucoes.md
+  Caminho: docs/integracao_esocial_dom_instrucoes.md
+  Criado em: 2025-06-01
+  Última atualização: 2025-05-26
+  Descrição: Arquivo do projeto.
+-->
+
 # Integração eSocial - Sistema DOM
 
 ## 1. Visão Geral

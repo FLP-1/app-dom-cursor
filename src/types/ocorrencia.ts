@@ -1,20 +1,29 @@
-import { TipoOcorrenciaEsocial } from '@prisma/client';
-import { User } from './user';
-import { EmpregadorDomestico } from './empregador-domestico';
-import { EsocialEvent } from './esocial-event';
-import { Document } from './document';
+/**
+ * Arquivo: ocorrencia.ts
+ * Caminho: src/types/ocorrencia.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Tipos de ocorrências do sistema, incluindo filtros e dados de formulário.
+ */
+
+import { User } from '@/types/user';
+import { Empregado } from '@/types/empregado';
+import { EsocialEvent } from '@/types/esocial-event';
+import { GeneralDocument } from '@/types/general-document';
+
+export type TipoOcorrencia = 'AFASTAMENTO' | 'FERIAS' | 'LICENCA' | 'OUTROS';
 
 export interface Ocorrencia {
   id: string;
-  tipo: TipoOcorrenciaEsocial;
+  tipo: TipoOcorrencia;
   dataInicio: Date;
   dataFim: Date;
   justificativa?: string;
-  documentos: Document[];
+  documentos: GeneralDocument[];
   usuarioId: string;
   usuario: User;
-  empregadoDomesticoId: string;
-  empregadoDomestico: EmpregadorDomestico;
+  empregadoId: string;
+  empregado: Empregado;
   esocialEventId?: string;
   esocialEvent?: EsocialEvent;
   validado: boolean;
@@ -25,20 +34,20 @@ export interface Ocorrencia {
 }
 
 export interface OcorrenciaFilter {
-  tipo?: TipoOcorrenciaEsocial;
+  tipo?: TipoOcorrencia;
   dataInicio?: Date;
   dataFim?: Date;
-  empregadoDomesticoId?: string;
+  empregadoId?: string;
   esocialEventId?: string;
   validado?: boolean;
 }
 
 export interface OcorrenciaFormData {
-  tipo: TipoOcorrenciaEsocial;
+  tipo: TipoOcorrencia;
   dataInicio: Date;
   dataFim: Date;
   justificativa?: string;
   documentos?: File[];
-  empregadoDomesticoId: string;
+  empregadoId: string;
   esocialEventId?: string;
 } 

@@ -1,6 +1,14 @@
+/**
+ * Arquivo: novo.tsx
+ * Caminho: src/pages/parceiros/novo.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de novo parceiro
+ */
+
 import React from 'react';
-import { useParceiroForm } from '../../hooks/forms/useParceiroForm';
-import { ParceiroForm } from '../../components/ParceiroForm';
+import { useParceiroForm } from '@/hooks/forms/useParceiroForm';
+import { ParceiroForm } from '@/components/ParceiroForm';
 import { Box, Typography, Paper, Button } from '@mui/material';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';

@@ -1,9 +1,17 @@
+/**
+ * Arquivo: checkout.tsx
+ * Caminho: src/pages/planos/[id]/checkout.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de checkout de plano
+ */
+
 import React, { useState } from 'react';
 import { Box, Typography, Card, CardContent, Button, Grid, TextField, Alert, Snackbar } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
-import { PageHeader } from '../../../components/common/PageHeader';
-import { useCheckoutForm } from '../../../hooks/useCheckoutForm';
+import { PageHeader } from '@/components/common/PageHeader';
+import { useCheckoutForm } from '@/hooks/useCheckoutForm';
 
 export default function CheckoutPage() {
   const { t } = useTranslation();
@@ -19,7 +27,7 @@ export default function CheckoutPage() {
     preco: t(`planos.${id}.preco`),
   };
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: unknown) => {
     try {
       setIsLoading(true);
       const response = await fetch('/api/checkout', {
@@ -50,8 +58,8 @@ export default function CheckoutPage() {
       />
 
       <Box sx={{ mt: 3 }}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={8}>
+        <Grid container spacing={3} columns={12}>
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 8' }}>
             <Card>
               <CardContent>
                 <Typography variant="h6" color="text.secondary" gutterBottom>
@@ -77,8 +85,8 @@ export default function CheckoutPage() {
                     {...control('numeroCartao')}
                   />
 
-                  <Grid container spacing={2}>
-                    <Grid item xs={6}>
+                  <Grid container spacing={2} columns={12}>
+                    <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
                       <TextField
                         fullWidth
                         label={t('checkout.validade.label')}
@@ -88,7 +96,7 @@ export default function CheckoutPage() {
                         {...control('validade')}
                       />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
                       <TextField
                         fullWidth
                         label={t('checkout.cvv.label')}
@@ -115,7 +123,7 @@ export default function CheckoutPage() {
             </Card>
           </Grid>
 
-          <Grid item xs={12} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 4' }}>
             <Card>
               <CardContent>
                 <Typography variant="h6" color="text.secondary" gutterBottom>

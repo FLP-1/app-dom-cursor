@@ -1,6 +1,14 @@
+/**
+ * Arquivo: create.ts
+ * Caminho: src/pages/api/alerts/create.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para criar alertas
+ */
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Pool } from 'pg';
-import { verifyToken } from '../../utils/auth'; // Import the auth utility
+import { verifyToken } from '@/utils/auth'; // Import the auth utility
 
 // Configure your PostgreSQL connection pool using environment variables
 const pool = new Pool({

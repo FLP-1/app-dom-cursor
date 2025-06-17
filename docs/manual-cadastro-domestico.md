@@ -1,3 +1,11 @@
+<!--
+  Arquivo: manual-cadastro-domestico.md
+  Caminho: docs/manual-cadastro-domestico.md
+  Criado em: 2025-06-01
+  Última atualização: 2025-05-26
+  Descrição: Arquivo do projeto.
+-->
+
 # Manual de Cadastro de Empregador e Empregado Doméstico (eSocial Doméstico)
 
 ## Sumário

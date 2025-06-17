@@ -1,3 +1,11 @@
+/**
+ * Arquivo: stripe.ts
+ * Caminho: src/pages/api/webhooks/stripe.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para processar webhooks do Stripe
+ */
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PaymentService } from '@/services/payment.service';
 import { buffer } from 'micro';

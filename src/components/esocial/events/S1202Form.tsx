@@ -1,82 +1,91 @@
+/**
+ * Arquivo: S1202Form.tsx
+ * Caminho: src/components/esocial/events/S1202Form.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useTranslation } from 'react-i18next';
 import { Control } from 'react-hook-form';
 import { Grid } from '@mui/material';
 import { FormInput, FormDatePicker, FormSelect, FormTextArea } from '@/components/form';
 import { S1202Schema } from '@/schemas/esocial/S1202Schema';
-import { S1202DmDevForm } from './S1202DmDevForm';
+import { S1202DmDevForm } from '@/components/esocial/events/S1202DmDevForm';
+import { tooltips } from '@/utils/tooltips';
 
 interface S1202FormProps {
   control: Control<S1202Schema>;
 }
 
 export const S1202Form = ({ control }: S1202FormProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language;
 
   return (
-    <Grid container spacing={2}>
-      {/* Identificação do Evento */}
-      <Grid item xs={12}>
+    <Grid container spacing={3} columns={12}>
+      <Grid gridColumn={{ xs: 'span 12' }}>
         <FormDatePicker
           name="ideEvento.perApur"
           label={t('esocial.S1202.ideEvento.perApur')}
           control={control}
           views={['month', 'year']}
           format="yyyy-MM"
+          tooltip={tooltips.s1202_perApur[locale]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormSelect
           name="ideEvento.indRetif"
           label={t('esocial.S1202.ideEvento.indRetif')}
           control={control}
+          tooltip={tooltips.s1202_indRetif[locale]}
           options={[
             { value: '1', label: t('esocial.S1202.ideEvento.indRetif.original') },
             { value: '2', label: t('esocial.S1202.ideEvento.indRetif.retificacao') },
           ]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormSelect
           name="ideEvento.indApuracao"
           label={t('esocial.S1202.ideEvento.indApuracao')}
           control={control}
+          tooltip={tooltips.s1202_indApuracao[locale]}
           options={[
             { value: '1', label: t('esocial.S1202.ideEvento.indApuracao.mensal') },
             { value: '2', label: t('esocial.S1202.ideEvento.indApuracao.anual') },
           ]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormDatePicker
           name="ideEvento.perApurRPPS"
           label={t('esocial.S1202.ideEvento.perApurRPPS')}
           control={control}
           views={['month', 'year']}
           format="yyyy-MM"
+          tooltip={tooltips.s1202_perApurRPPS[locale]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormSelect
           name="ideEvento.indGuia"
           label={t('esocial.S1202.ideEvento.indGuia')}
           control={control}
+          tooltip={tooltips.s1202_indGuia[locale]}
           options={[
             { value: '1', label: t('esocial.S1202.ideEvento.indGuia.dae') },
             { value: '2', label: t('esocial.S1202.ideEvento.indGuia.gps') },
           ]}
         />
       </Grid>
-
-      {/* Identificação do Empregador */}
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormSelect
           name="ideEmpregador.tpInsc"
           label={t('esocial.S1202.ideEmpregador.tpInsc')}
           control={control}
+          tooltip={tooltips.s1202_tpInsc[locale]}
           options={[
             { value: '1', label: t('esocial.S1202.ideEmpregador.tpInsc.cnpj') },
             { value: '2', label: t('esocial.S1202.ideEmpregador.tpInsc.cpf') },
@@ -85,57 +94,56 @@ export const S1202Form = ({ control }: S1202FormProps) => {
           ]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormInput
           name="ideEmpregador.nrInsc"
           label={t('esocial.S1202.ideEmpregador.nrInsc')}
           control={control}
+          tooltip={tooltips.s1202_nrInsc[locale]}
         />
       </Grid>
-
-      {/* Identificação do Trabalhador */}
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormInput
           name="ideTrabalhador.cpfTrab"
           label={t('esocial.S1202.ideTrabalhador.cpfTrab')}
           control={control}
+          tooltip={tooltips.s1202_cpfTrab[locale]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormInput
           name="ideTrabalhador.nisTrab"
           label={t('esocial.S1202.ideTrabalhador.nisTrab')}
           control={control}
+          tooltip={tooltips.s1202_nisTrab[locale]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormInput
           name="ideTrabalhador.nmTrab"
           label={t('esocial.S1202.ideTrabalhador.nmTrab')}
           control={control}
+          tooltip={tooltips.s1202_nmTrab[locale]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormSelect
           name="ideTrabalhador.sexo"
           label={t('esocial.S1202.ideTrabalhador.sexo')}
           control={control}
+          tooltip={tooltips.s1202_sexo[locale]}
           options={[
             { value: 'M', label: t('common.sexo.masculino') },
             { value: 'F', label: t('common.sexo.feminino') },
           ]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormSelect
           name="ideTrabalhador.racaCor"
           label={t('esocial.S1202.ideTrabalhador.racaCor')}
           control={control}
+          tooltip={tooltips.s1202_racaCor[locale]}
           options={[
             { value: '1', label: t('common.racaCor.branca') },
             { value: '2', label: t('common.racaCor.preta') },
@@ -146,12 +154,12 @@ export const S1202Form = ({ control }: S1202FormProps) => {
           ]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormSelect
           name="ideTrabalhador.estCiv"
           label={t('esocial.S1202.ideTrabalhador.estCiv')}
           control={control}
+          tooltip={tooltips.s1202_estCiv[locale]}
           options={[
             { value: '1', label: t('common.estCiv.solteiro') },
             { value: '2', label: t('common.estCiv.casado') },
@@ -161,12 +169,12 @@ export const S1202Form = ({ control }: S1202FormProps) => {
           ]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormSelect
           name="ideTrabalhador.grauInstr"
           label={t('esocial.S1202.ideTrabalhador.grauInstr')}
           control={control}
+          tooltip={tooltips.s1202_grauInstr[locale]}
           options={[
             { value: '01', label: t('common.grauInstr.analfabeto') },
             { value: '02', label: t('common.grauInstr.ate5aIncompleto') },
@@ -183,25 +191,22 @@ export const S1202Form = ({ control }: S1202FormProps) => {
           ]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormInput
           name="ideTrabalhador.nmSoc"
           label={t('esocial.S1202.ideTrabalhador.nmSoc')}
           control={control}
+          tooltip={tooltips.s1202_nmSoc[locale]}
         />
       </Grid>
-
-      {/* Informações Complementares */}
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormInput
           name="infoComplCont.codCBO"
           label={t('esocial.S1202.infoComplCont.codCBO')}
           control={control}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormSelect
           name="infoComplCont.natAtividade"
           label={t('esocial.S1202.infoComplCont.natAtividade')}
@@ -212,8 +217,7 @@ export const S1202Form = ({ control }: S1202FormProps) => {
           ]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormInput
           name="infoComplCont.qtdDiasTrab"
           label={t('esocial.S1202.infoComplCont.qtdDiasTrab')}
@@ -221,18 +225,14 @@ export const S1202Form = ({ control }: S1202FormProps) => {
           type="number"
         />
       </Grid>
-
-      {/* Demais Informações */}
-      <Grid item xs={12}>
+      <Grid gridColumn={{ xs: 'span 12' }}>
         <FormTextArea
           name="infoCompl.sucessaoVinc.observacao"
           label={t('esocial.S1202.infoCompl.sucessaoVinc.observacao')}
           control={control}
         />
       </Grid>
-
-      {/* Demonstrativos de Valores */}
-      <Grid item xs={12}>
+      <Grid gridColumn={{ xs: 'span 12' }}>
         <S1202DmDevForm control={control} />
       </Grid>
     </Grid>

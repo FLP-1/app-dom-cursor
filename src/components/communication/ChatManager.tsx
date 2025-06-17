@@ -1,3 +1,11 @@
+/**
+ * Arquivo: ChatManager.tsx
+ * Caminho: src/components/communication/ChatManager.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import React, { useState } from 'react';
 import {
   Box,
@@ -17,11 +25,11 @@ import {
   Chip,
   Autocomplete,
 } from '@mui/material';
-import { Chat } from './Chat';
-import { ChatList } from './ChatList';
-import { CommunicationService } from '../../lib/communication/service';
-import { PermissionChecker } from '../../lib/permissions/checker';
-import { UserRole } from '../../lib/permissions/types';
+import { Chat } from '@/components/communication/Chat';
+import { ChatList } from '@/components/communication/ChatList';
+import { CommunicationService } from '@/lib/communication/service';
+import { PermissionChecker } from '@/lib/permissions/checker';
+import { UserRole } from '@/lib/permissions/types';
 
 interface ChatManagerProps {
   communicationService: CommunicationService;
@@ -64,9 +72,9 @@ export const ChatManager: React.FC<ChatManagerProps> = ({
 
   return (
     <Box sx={{ height: '100%', p: 2 }}>
-      <Grid container spacing={2} sx={{ height: '100%' }}>
+      <Grid container spacing={2} columns={12} sx={{ height: '100%' }}>
         {/* Lista de Chats */}
-        <Grid item xs={12} md={4}>
+        <Grid gridColumn={{ xs: 'span 12', md: 'span 4' }}>
           <Paper sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
             <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
               <Typography variant="h6">Conversas</Typography>
@@ -91,7 +99,7 @@ export const ChatManager: React.FC<ChatManagerProps> = ({
         </Grid>
 
         {/* Área do Chat */}
-        <Grid item xs={12} md={8}>
+        <Grid gridColumn={{ xs: 'span 12', md: 'span 8' }}>
           <Paper sx={{ height: '100%' }}>
             {selectedChatId ? (
               <Chat
@@ -147,13 +155,7 @@ export const ChatManager: React.FC<ChatManagerProps> = ({
               getOptionLabel={(option) => option.name}
               value={selectedUsers}
               onChange={(_, newValue) => setSelectedUsers(newValue)}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Participantes"
-                  placeholder="Selecione os participantes"
-                />
-              )}
+              slotProps={{ textField: { label: "Participantes", placeholder: "Selecione os participantes" } }}
               renderTags={(value, getTagProps) =>
                 value.map((option, index) => (
                   <Chip

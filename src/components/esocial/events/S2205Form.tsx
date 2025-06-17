@@ -1,3 +1,11 @@
+/**
+ * Arquivo: S2205Form.tsx
+ * Caminho: src/components/esocial/events/S2205Form.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { Grid } from '@mui/material';
 import { Control } from 'react-hook-form';
 import { FormInput } from '@/components/form/FormInput';
@@ -6,17 +14,23 @@ import { FormSelect } from '@/components/form/FormSelect';
 import { useTranslation } from 'next-i18next';
 import { useEsocialTabela } from '@/hooks/useEsocialTabela';
 import { useEffect, useState } from 'react';
+import type { CategoriaTrabalhadorItem, TipoInscricaoItem, PaisItem } from '@/types/esocial';
+import { tooltips } from '@/i18n/tooltips';
 
+// Justificativa: integração com react-hook-form, tipagem dinâmica dos campos
 interface S2205FormProps {
-  control: Control<any>;
+  control: Control<unknown>;
 }
 
 export const S2205Form = ({ control }: S2205FormProps) => {
   const { t } = useTranslation();
   const { getTabela } = useEsocialTabela();
-  const [categoriasTrabalhador, setCategoriasTrabalhador] = useState<any[]>([]);
-  const [tiposInscricao, setTiposInscricao] = useState<any[]>([]);
-  const [paises, setPaises] = useState<any[]>([]);
+  // Justificativa: tipo depende de dados dinâmicos da API
+  const [categoriasTrabalhador, setCategoriasTrabalhador] = useState<CategoriaTrabalhadorItem[]>([]);
+  // Justificativa: tipo depende de dados dinâmicos da API
+  const [tiposInscricao, setTiposInscricao] = useState<TipoInscricaoItem[]>([]);
+  // Justificativa: tipo depende de dados dinâmicos da API
+  const [paises, setPaises] = useState<PaisItem[]>([]);
 
   useEffect(() => {
     const carregarTabelas = async () => {
@@ -35,33 +49,33 @@ export const S2205Form = ({ control }: S2205FormProps) => {
   }, [getTabela]);
 
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={12} md={6}>
+    <Grid container spacing={3} columns={12}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormInput
           control={control}
           name="payload.cpf"
           label={t('esocial:events.S2205.cpf')}
           mask="999.999.999-99"
+          tooltip={tooltips.s2205_cpf[locale]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormInput
           control={control}
           name="payload.nome"
           label={t('esocial:events.S2205.nome')}
+          tooltip={tooltips.s2205_nome[locale]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormDatePicker
           control={control}
           name="payload.dataNascimento"
           label={t('esocial:events.S2205.dataNascimento')}
+          tooltip={tooltips.s2205_dataNascimento[locale]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormSelect
           control={control}
           name="payload.categoriaTrabalhador"
@@ -70,35 +84,35 @@ export const S2205Form = ({ control }: S2205FormProps) => {
             value: item.codigo,
             label: item.descricao
           }))}
+          tooltip={tooltips.s2205_categoriaTrabalhador[locale]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormInput
           control={control}
           name="payload.pis"
           label={t('esocial:events.S2205.pis')}
           mask="999.99999.99-9"
+          tooltip={tooltips.s2205_pis[locale]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormInput
           control={control}
           name="payload.carteiraTrabalho"
           label={t('esocial:events.S2205.carteiraTrabalho')}
+          tooltip={tooltips.s2205_carteiraTrabalho[locale]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormInput
           control={control}
           name="payload.serieCarteiraTrabalho"
           label={t('esocial:events.S2205.serieCarteiraTrabalho')}
+          tooltip={tooltips.s2205_serieCarteiraTrabalho[locale]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormSelect
           control={control}
           name="payload.ufCarteiraTrabalho"
@@ -107,10 +121,10 @@ export const S2205Form = ({ control }: S2205FormProps) => {
             value: item.codigo,
             label: item.descricao
           }))}
+          tooltip={tooltips.s2205_ufCarteiraTrabalho[locale]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormSelect
           control={control}
           name="payload.tipoInscricao"
@@ -119,18 +133,18 @@ export const S2205Form = ({ control }: S2205FormProps) => {
             value: item.codigo,
             label: item.descricao
           }))}
+          tooltip={tooltips.s2205_tipoInscricao[locale]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormInput
           control={control}
           name="payload.cargo"
           label={t('esocial:events.S2205.cargo')}
+          tooltip={tooltips.s2205_cargo[locale]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormInput
           control={control}
           name="payload.salario"
@@ -139,24 +153,25 @@ export const S2205Form = ({ control }: S2205FormProps) => {
           InputProps={{
             startAdornment: 'R$',
           }}
+          tooltip={tooltips.s2205_salario[locale]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormDatePicker
           control={control}
           name="payload.dataAlteracao"
           label={t('esocial:events.S2205.dataAlteracao')}
+          tooltip={tooltips.s2205_dataAlteracao[locale]}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormInput
           control={control}
           name="payload.motivoAlteracao"
           label={t('esocial:events.S2205.motivoAlteracao')}
           multiline
           rows={4}
+          tooltip={tooltips.s2205_motivoAlteracao[locale]}
         />
       </Grid>
     </Grid>

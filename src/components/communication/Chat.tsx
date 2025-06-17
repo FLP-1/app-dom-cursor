@@ -1,3 +1,11 @@
+/**
+ * Arquivo: Chat.tsx
+ * Caminho: src/components/communication/Chat.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   Box,
@@ -20,9 +28,9 @@ import {
   MoreVert as MoreVertIcon,
   AttachFile as AttachFileIcon,
 } from '@mui/icons-material';
-import { Message, MessageType, MessagePriority } from '../../lib/communication/types';
-import { CommunicationService } from '../../lib/communication/service';
-import { PermissionChecker } from '../../lib/permissions/checker';
+import { Message, MessageType, MessagePriority } from '@/lib/communication/types';
+import { CommunicationService } from '@/lib/communication/service';
+import { PermissionChecker } from '@/lib/permissions/checker';
 
 interface ChatProps {
   chatRoomId: string;

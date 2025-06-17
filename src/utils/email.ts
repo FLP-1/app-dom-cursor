@@ -1,3 +1,11 @@
+/**
+ * Arquivo: email.ts
+ * Caminho: src/utils/email.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Função para enviar email de recuperação de senha
+ */
+
 import nodemailer from 'nodemailer';
 
 // Configuração do transporter do Nodemailer

@@ -1,3 +1,11 @@
+/**
+ * Arquivo: config.service.ts
+ * Caminho: src/services/config.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de configuração
+ */
+
 import axios from 'axios';
 import { LogService, TipoLog, CategoriaLog } from './log.service';
 import { CacheService } from './cache.service';
@@ -7,7 +15,7 @@ import { CacheService } from './cache.service';
  * @description Gerencia as configurações do sistema
  * @author DOM
  * @version 1.0.0
- * @since 2024-01-01
+ * @since 2025-01-01
  */
 
 export interface Config {

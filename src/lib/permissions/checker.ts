@@ -1,3 +1,11 @@
+/**
+ * Arquivo: checker.ts
+ * Caminho: src/lib/permissions/checker.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { UserPermissions, Permission, rolePermissions } from './types';
 
 export class PermissionChecker {

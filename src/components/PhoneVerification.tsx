@@ -1,5 +1,13 @@
+/**
+ * Arquivo: PhoneVerification.tsx
+ * Caminho: src/components/PhoneVerification.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useState } from 'react';
-import { usePhoneVerification } from '../hooks/usePhoneVerification';
+import { usePhoneVerification } from '@/hooks/usePhoneVerification';
 import {
   TextField,
   Button,

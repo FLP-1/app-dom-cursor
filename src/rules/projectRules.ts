@@ -1,4 +1,12 @@
 /**
+ * Arquivo: projectRules.ts
+ * Caminho: src/rules/projectRules.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Arquivo de regras de projeto
+ */
+
+/**
  * Project Rules - Regras do Projeto DOM
  * Este arquivo contém as definições de tipos e interfaces para as regras do projeto
  */

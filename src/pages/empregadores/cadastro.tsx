@@ -1,6 +1,14 @@
+/**
+ * Arquivo: cadastro.tsx
+ * Caminho: src/pages/empregadores/cadastro.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de cadastro de empregador doméstico
+ */
+
 import { Container, Typography, Alert } from '@mui/material';
-import { EmpregadorForm } from '../../components/forms/EmpregadorForm';
-import { Layout } from '../../components/layout/Layout';
+import { EmpregadorForm } from '@/components/forms/EmpregadorForm';
+import { Layout } from '@/components/layout/Layout';
 import { SnackbarProvider } from 'notistack';
 
 export default function CadastroEmpregador() {

@@ -1,59 +1,115 @@
-import React from 'react';
-import styled from '@emotion/styled';
-import { useTheme } from '@emotion/react';
+/**
+ * Arquivo: Select.tsx
+ * Caminho: src/components/common/Select.tsx
+ * Criado em: 2025-06-07
+ * Última atualização: 2025-06-07
+ * Descrição: Componente de seleção baseado no TextField do Material UI com suporte a opções customizadas, estados de erro e acessibilidade
+ */
 
-interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+import React from 'react';
+import { TextField, MenuItem, SxProps, Theme } from '@mui/material';
+
+export interface SelectOption {
+  value: string;
   label: string;
-  options: { value: string; label: string }[];
-  id?: string;
-  'aria-labelledby'?: string;
 }
 
-const StyledLabel = styled.label(({ theme }) => ({
-  fontWeight: theme.typography.fontWeightMedium,
-  fontSize: theme.typography.fontSize.medium,
-  color: theme.palette.text.primary,
-  marginBottom: theme.spacing(1),
-  display: 'inline-block',
-}));
+export interface SelectProps {
+  label?: string;
+  options: SelectOption[];
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  name?: string;
+  id?: string;
+  required?: boolean;
+  disabled?: boolean;
+  error?: boolean;
+  helperText?: string;
+  placeholder?: string;
+  sx?: SxProps<Theme>;
+  'aria-label'?: string;
+  'aria-required'?: boolean;
+  'aria-invalid'?: boolean;
+  'aria-describedby'?: string;
+}
 
-const StyledSelect = styled.select(({ theme }) => ({
-  padding: theme.spacing(2),
-  borderRadius: theme.shape.borderRadius,
-  border: `1px solid ${theme.palette.text.primary}`,
-  fontSize: theme.typography.fontSize.medium,
-  color: theme.palette.text.primary,
-  backgroundColor: theme.palette.background.default,
-  width: '100%',
-  boxSizing: 'border-box',
-  appearance: 'none',
-  '&:focus': {
-    outline: 'none',
-    borderColor: theme.palette.primary.main,
-    boxShadow: `0 0 0 0.2rem ${theme.palette.primary.main}40`,
-  },
-}));
-
-const Select: React.FC<SelectProps> = ({ label, options, id, 'aria-labelledby': ariaLabelledby, ...props }) => {
-  const selectId = id || `select-${Math.random().toString(36).substr(2, 9)}`;
-
+const Select: React.FC<SelectProps> = ({
+  label,
+  options,
+  value,
+  onChange,
+  name,
+  id,
+  required = false,
+  disabled = false,
+  error = false,
+  helperText,
+  placeholder,
+  sx,
+  'aria-label': ariaLabel,
+  'aria-required': ariaRequired,
+  'aria-invalid': ariaInvalid,
+  'aria-describedby': ariaDescribedby,
+}) => {
   return (
-    <>
-      <StyledLabel htmlFor={selectId}>{label}</StyledLabel>
-      <StyledSelect
-        id={selectId}
-        name={props.name || selectId}
-        aria-label={label}
-        aria-labelledby={ariaLabelledby}
-        {...props}
-      >
-        {options.map(opt => (
-          <option key={opt.value} value={opt.value}>
-            {opt.label}
-          </option>
-        ))}
-      </StyledSelect>
-    </>
+    <TextField
+      select
+      fullWidth
+      label={label}
+      value={value}
+      onChange={onChange}
+      name={name}
+      id={id}
+      required={required}
+      disabled={disabled}
+      error={error}
+      helperText={helperText}
+      placeholder={placeholder}
+      sx={{
+        '& .MuiOutlinedInput-root': {
+          '& fieldset': {
+            borderColor: error ? 'error.main' : 'divider'
+          },
+          '&:hover fieldset': {
+            borderColor: error ? 'error.main' : 'primary.main'
+          },
+          '&.Mui-focused fieldset': {
+            borderColor: error ? 'error.main' : 'primary.main'
+          }
+        },
+        '& .MuiSelect-select': {
+          py: 1.5
+        },
+        ...sx
+      }}
+      inputProps={{
+        'aria-label': ariaLabel,
+        'aria-required': ariaRequired,
+        'aria-invalid': ariaInvalid,
+        'aria-describedby': ariaDescribedby
+      }}
+    >
+      {options.map((opt) => (
+        <MenuItem 
+          key={opt.value} 
+          value={opt.value}
+          sx={{
+            py: 1,
+            '&:hover': {
+              bgcolor: 'action.hover'
+            },
+            '&.Mui-selected': {
+              bgcolor: 'action.selected',
+              '&:hover': {
+                bgcolor: 'action.selected'
+              }
+            }
+          }}
+        >
+          {opt.label}
+        </MenuItem>
+      ))}
+    </TextField>
   );
 };
 

@@ -1,3 +1,11 @@
+/**
+ * Arquivo: PreviewESocial.tsx
+ * Caminho: src/components/empregador/PreviewESocial.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { Box, Paper, Typography, Divider } from '@mui/material';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';

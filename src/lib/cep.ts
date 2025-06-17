@@ -1,3 +1,11 @@
+/**
+ * Arquivo: cep.ts
+ * Caminho: src/lib/cep.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 interface CEPResponse {
   cep: string;
   logradouro: string;

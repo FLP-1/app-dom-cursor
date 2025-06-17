@@ -1,13 +1,21 @@
-import { LogService, TipoLog, CategoriaLog } from './log.service';
-import { CacheService } from './cache.service';
-import { I18nService } from './i18n.service';
+/**
+ * Arquivo: websocket.service.ts
+ * Caminho: src/services/websocket.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de WebSocket
+ */
+
+import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';
+import { CacheService } from '@/services/cache.service';
+import { I18nService } from '@/services/i18n.service';
 
 /**
  * Serviço de WebSocket
  * @description Gerencia as conexões em tempo real do sistema
  * @author DOM
  * @version 1.0.0
- * @since 2024-01-01
+ * @since 2025-01-01
  */
 
 export type TipoEvento = 'sistema' | 'usuario' | 'empresa' | 'ponto' | 'ocorrencia' | 'documento' | 'esocial' | 'backup' | 'seguranca';

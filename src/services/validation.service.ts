@@ -1,5 +1,13 @@
+/**
+ * Arquivo: validation.service.ts
+ * Caminho: src/services/validation.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de validação
+ */
+
 import axios from 'axios';
-import { LogService, TipoLog, CategoriaLog } from './log.service';
+import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';
 import { cpf, cnpj } from 'cpf-cnpj-validator';
 import { isValidPhoneNumber } from 'react-phone-number-input';
 import { isValidEmail } from '@/utils/validations/email';
@@ -37,6 +45,18 @@ export interface ValidacaoEsocial {
   schema?: boolean;
   regras?: boolean;
   datas?: boolean;
+}
+
+export interface DadosCPF {
+  cpf: string;
+  nome: string;
+  dataNascimento: string;
+  sexo: 'M' | 'F';
+  situacao: 'REGULAR' | 'SUSPENSA' | 'TITULAR_FALECIDO' | 'PENDENTE_DE_DECLARACAO' | 'CANCELADA';
+  dataInscricao: string;
+  digitoVerificador: string;
+  comarca: string;
+  uf: string;
 }
 
 export class ValidationError extends Error {
@@ -369,5 +389,28 @@ export class ValidationService {
   async validarTituloEleitor(titulo: string): Promise<boolean> {
     const { data: validacao } = await axios.post<boolean>('/api/validation/titulo-eleitor', { titulo });
     return validacao;
+  }
+
+  async consultarCPF(cpf: string): Promise<DadosCPF> {
+    try {
+      const { data } = await axios.get<DadosCPF>(`/api/validation/receita-federal/cpf/${cpf}`);
+      
+      await LogService.create({
+        tipo: TipoLog.INFO,
+        categoria: CategoriaLog.SISTEMA,
+        mensagem: 'Consulta CPF realizada',
+        detalhes: { cpf }
+      });
+
+      return data;
+    } catch (error) {
+      await LogService.create({
+        tipo: TipoLog.ERROR,
+        categoria: CategoriaLog.SISTEMA,
+        mensagem: 'Erro ao consultar CPF',
+        detalhes: { cpf, error }
+      });
+      throw new Error('Não foi possível consultar os dados do CPF');
+    }
   }
 } 

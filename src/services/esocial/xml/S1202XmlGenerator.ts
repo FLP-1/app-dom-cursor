@@ -1,3 +1,11 @@
+/**
+ * Arquivo: S1202XmlGenerator.ts
+ * Caminho: src/services/esocial/xml/S1202XmlGenerator.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Gerador de XML do evento S-1202
+ */
+
 import { S1202Schema } from '@/schemas/esocial/S1202Schema';
 import { format } from 'date-fns';
 

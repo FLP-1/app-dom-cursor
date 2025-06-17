@@ -1,3 +1,11 @@
+/**
+ * Arquivo: Calendar.tsx
+ * Caminho: src/components/common/Calendar.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import React, { useState } from 'react';
 import {
   Box,
@@ -15,6 +23,7 @@ import {
 } from '@mui/icons-material';
 import { format, addMonths, subMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isToday } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { tooltips } from '@/i18n/tooltips';
 
 export interface CalendarEvent {
   id: string;
@@ -112,7 +121,9 @@ export const Calendar: React.FC<CalendarProps> = ({
                 {dayEvents.map((event) => (
                   <Tooltip
                     key={event.id}
-                    title={`${event.title} - ${format(event.start, 'HH:mm')}`}
+                    title={tooltips.calendarioEvento.pt
+                      .replace('{titulo}', event.title)
+                      .replace('{hora}', format(event.start, 'HH:mm'))}
                   >
                     <Box
                       sx={{
@@ -156,7 +167,7 @@ export const Calendar: React.FC<CalendarProps> = ({
           <IconButton onClick={handleNextMonth}>
             <ChevronRightIcon />
           </IconButton>
-          <Tooltip title="Hoje">
+          <Tooltip title={tooltips.calendarioHoje.pt}>
             <IconButton onClick={handleToday}>
               <TodayIcon />
             </IconButton>

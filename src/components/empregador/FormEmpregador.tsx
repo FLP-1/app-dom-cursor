@@ -1,10 +1,18 @@
+/**
+ * Arquivo: FormEmpregador.tsx
+ * Caminho: src/components/empregador/FormEmpregador.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-14
+ * Descrição: Formulário para cadastro de empregador com validação de campos e preview eSocial
+ */
+
 import { Box, Button, Grid, Typography, Alert, Chip } from '@mui/material';
-import { FormInput } from '../common/FormInput';
-import { FormSelect } from '../common/FormSelect';
-import { FormDatePicker } from '../common/FormDatePicker';
-import { FormCheckbox } from '../common/FormCheckbox';
-import { useEmpregadorForm } from '../../hooks/useEmpregadorForm';
-import { PreviewESocial } from './PreviewESocial';
+import { FormInput } from '@/components/common/FormInput';
+import { FormSelect } from '@/components/common/FormSelect';
+import { FormDatePicker } from '@/components/common/FormDatePicker';
+import { CheckboxField } from '@/components/common/forms/CheckboxField';
+import { useEmpregadorForm } from '@/hooks/useEmpregadorForm';
+import { PreviewESocial } from '@/components/empregador/PreviewESocial';
 import { useState } from 'react';
 import { CheckCircle, Error, Warning } from '@mui/icons-material';
 import { FormData } from '@/types/forms';
@@ -123,7 +131,7 @@ export function FormEmpregador() {
         Dados Básicos
       </Typography>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
+        <Grid>
           <FormInput
             name="cpf"
             label="CPF"
@@ -132,7 +140,7 @@ export function FormEmpregador() {
             disabled={!!dadosCPF}
           />
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid>
           <FormInput
             name="nomeCompleto"
             label="Nome Completo"
@@ -140,7 +148,7 @@ export function FormEmpregador() {
             disabled={!!dadosCPF}
           />
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid>
           <FormDatePicker
             name="dataNascimento"
             label="Data de Nascimento"
@@ -148,7 +156,7 @@ export function FormEmpregador() {
             disabled={!!dadosCPF}
           />
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid>
           <FormSelect
             name="sexo"
             label="Sexo"
@@ -166,7 +174,7 @@ export function FormEmpregador() {
         Dados Complementares
       </Typography>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
+        <Grid>
           <FormSelect
             name="tipoEmpregador"
             label="Tipo de Empregador"
@@ -178,7 +186,7 @@ export function FormEmpregador() {
           />
         </Grid>
         {form.watch('tipoEmpregador') === '22' && (
-          <Grid item xs={12} md={6}>
+          <Grid>
             <FormInput
               name="caepf"
               label="CAEPF"
@@ -187,7 +195,7 @@ export function FormEmpregador() {
             />
           </Grid>
         )}
-        <Grid item xs={12} md={6}>
+        <Grid>
           <FormInput
             name="telefone"
             label="Telefone"
@@ -197,7 +205,7 @@ export function FormEmpregador() {
           />
           {renderStatusValidacao('telefone')}
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid>
           <FormInput
             name="email"
             label="Email"
@@ -213,18 +221,18 @@ export function FormEmpregador() {
         Preferências de Comunicação
       </Typography>
       <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <FormCheckbox
+        <Grid>
+          <CheckboxField
             name="aceitaComunicacoes"
-            label="Aceito receber comunicações sobre serviços e novidades"
             control={form.control}
+            label="Aceito receber comunicações sobre serviços e novidades"
           />
         </Grid>
-        <Grid item xs={12}>
-          <FormCheckbox
+        <Grid>
+          <CheckboxField
             name="aceitaTermos"
-            label="Li e aceito os termos de uso e política de privacidade"
             control={form.control}
+            label="Li e aceito os termos de uso e política de privacidade"
           />
         </Grid>
       </Grid>

@@ -1,5 +1,13 @@
+/**
+ * Arquivo: esocial-integration.service.ts
+ * Caminho: src/services/esocial-integration.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de integração com o eSocial
+ */
+
 import axios from 'axios';
-import { EsocialEvent, TipoEventoEsocial } from '../types/esocial';
+import { EsocialEvent, TipoEventoEsocial } from '@/types/esocial';
 
 export interface EsocialConfig {
   ambiente: 'PRODUCAO' | 'HOMOLOGACAO';

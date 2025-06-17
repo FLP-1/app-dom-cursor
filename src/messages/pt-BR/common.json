@@ -1,0 +1,24 @@
+{
+  "institutional": {
+    "subtitle": "Transformando a gestão de documentos",
+    "lastUpdate": "Última atualização"
+  },
+  "terms": {
+    "title": "Termos de Uso",
+    "lastUpdate": "19/03/2024"
+  },
+  "privacy": {
+    "title": "Política de Privacidade",
+    "lastUpdate": "19/03/2024"
+  },
+  "cancellation": {
+    "title": "Política de Cancelamento e Reembolso",
+    "lastUpdate": "19/03/2024"
+  },
+  "home": {
+    "planos": "Planos de assinatura",
+    "termos": "Termos de uso",
+    "privacidade": "Política de privacidade",
+    "cancelamento": "Cancelamento e reembolso"
+  }
+} 

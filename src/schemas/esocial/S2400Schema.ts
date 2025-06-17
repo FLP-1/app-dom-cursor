@@ -1,3 +1,11 @@
+/**
+ * Arquivo: S2400Schema.ts
+ * Caminho: src/schemas/esocial/S2400Schema.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Schema para o evento S-2400
+ */
+
 import { z } from 'zod';
 
 export const S2400Schema = z.object({

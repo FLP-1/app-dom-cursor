@@ -1,6 +1,14 @@
+/**
+ * Arquivo: telefone.ts
+ * Caminho: src/pages/api/validacao/telefone.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para validar telefone
+ */
+
 import { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '../../../lib/prisma';
-import { sendSMS } from '../../../services/sms';
+import { prisma } from '@/lib/prisma';
+import { sendSMS } from '@/services/sms';
 
 export default async function handler(
   req: NextApiRequest,

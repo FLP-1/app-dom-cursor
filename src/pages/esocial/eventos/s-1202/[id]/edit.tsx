@@ -1,8 +1,15 @@
+/**
+ * Arquivo: edit.tsx
+ * Caminho: src/pages/esocial/eventos/s-1202/[id]/edit.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de edição de evento S-1202
+ */
+
 import { useTranslation } from 'react-i18next';
 import { Container, Paper, Typography } from '@mui/material';
 import { S1202Form } from '@/components/esocial/events/S1202Form';
 import { useS1202Form } from '@/hooks/esocial/useS1202Form';
-import { FormProvider } from 'react-hook-form';
 import { useEsocialApi } from '@/hooks/useEsocialApi';
 import { useRouter } from 'next/router';
 import { EsocialEventsLayout } from '@/components/esocial/EsocialEventsLayout';
@@ -41,11 +48,9 @@ export default function EditS1202Page() {
             {t('esocial.S1202.title')}
           </Typography>
 
-          <FormProvider {...methods}>
-            <form onSubmit={onSubmit}>
-              <S1202Form control={methods.control} />
-            </form>
-          </FormProvider>
+          <form onSubmit={onSubmit}>
+            <S1202Form control={methods.control} />
+          </form>
         </Paper>
       </Container>
     </EsocialEventsLayout>

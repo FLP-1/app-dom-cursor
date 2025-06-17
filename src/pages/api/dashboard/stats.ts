@@ -1,6 +1,14 @@
+/**
+ * Arquivo: stats.ts
+ * Caminho: src/pages/api/dashboard/stats.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para buscar estatísticas do dashboard
+ */
+
 import { NextApiRequest, NextApiResponse } from 'next';
-import { pool } from '../../../database/db';
-import { verifyToken } from '../../../utils/token';
+import { pool } from '@/database/db';
+import { verifyToken } from '@/utils/token';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'GET') {
@@ -23,10 +31,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const stats = await pool.query(`
       SELECT
         COUNT(*) as total_alerts,
-        COUNT(CASE WHEN status = 'active' THEN 1 END) as active_alerts,
-        COUNT(CASE WHEN severity = 'urgent' THEN 1 END) as urgent_alerts,
-        COUNT(CASE WHEN created_at >= NOW() - INTERVAL '24 hours' THEN 1 END) as recent_alerts
-      FROM alerts
+        COUNT(CASE WHEN type = 'AVISO' THEN 1 END) as active_alerts,
+        COUNT(CASE WHEN type = 'MOTIVACIONAL' THEN 1 END) as urgent_alerts,
+        COUNT(CASE WHEN "createdAt" >= NOW() - INTERVAL '24 hours' THEN 1 END) as recent_alerts
+      FROM "Alert"
     `);
 
     return res.status(200).json({

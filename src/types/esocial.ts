@@ -1,5 +1,11 @@
-import { User } from './user';
-import { EmpregadorDomestico } from './empregador-domestico';
+/**
+ * Arquivo: esocial.ts
+ * Caminho: src/types/esocial.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Tipos de tabelas e estruturas do eSocial
+ */
+
 import { EsocialTabela, EsocialTabelaItem } from '@prisma/client';
 
 // Tipos para as tabelas do eSocial
@@ -15,41 +21,103 @@ export type TipoOcorrencia = EsocialTabelaItem & { tabela: EsocialTabela };
 export type StatusEvento = EsocialTabelaItem & { tabela: EsocialTabela };
 export type TipoEvento = EsocialTabelaItem & { tabela: EsocialTabela };
 
-export interface EsocialEvent {
-  id: string;
-  tipo: string;
-  dataEvento: Date;
-  status: string;
-  dataEnvio?: Date;
-  dataProcessamento?: Date;
-  detalhes?: unknown;
-}
-
-export interface EsocialEventFilter {
-  tipo?: string;
-  status?: string;
-  dataInicio?: Date;
+// Tipos específicos para itens das tabelas do eSocial
+export interface CategoriaTrabalhadorItem {
+  codigo: string;
+  descricao: string;
+  valor?: string;
+  dataInicio: Date;
   dataFim?: Date;
+  ativo: boolean;
 }
 
-export interface EsocialEventLog {
-  id: string;
-  eventId: string;
-  level: 'info' | 'warn' | 'error';
-  message: string;
-  details?: unknown;
-  timestamp: Date;
+export interface TipoInscricaoItem {
+  codigo: string;
+  descricao: string;
+  valor?: string;
+  dataInicio: Date;
+  dataFim?: Date;
+  ativo: boolean;
 }
 
-export interface EsocialEventProcessor {
-  validateBusinessRules(data: unknown): Promise<void>;
-  processEvent(data: unknown): Promise<void>;
-  log(level: string, message: string, details?: unknown): Promise<EsocialEventLog>;
+export interface PaisItem {
+  codigo: string;
+  descricao: string;
+  valor?: string;
+  dataInicio: Date;
+  dataFim?: Date;
+  ativo: boolean;
 }
 
-export interface EsocialEventFormData {
-  tipo: TipoEvento;
-  dataEvento: Date;
-  payload: Record<string, unknown>;
-  empregadoDomesticoId: string;
+// Tipos específicos para outras tabelas do eSocial
+export interface AgenteRiscoItem {
+  codigo: string;
+  descricao: string;
+  valor?: string;
+  dataInicio: Date;
+  dataFim?: Date;
+  ativo: boolean;
+}
+
+export interface TipoExameItem {
+  codigo: string;
+  descricao: string;
+  valor?: string;
+  dataInicio: Date;
+  dataFim?: Date;
+  ativo: boolean;
+}
+
+export interface TipoLocalItem {
+  codigo: string;
+  descricao: string;
+  valor?: string;
+  dataInicio: Date;
+  dataFim?: Date;
+  ativo: boolean;
+}
+
+export interface ParteAtingidaItem {
+  codigo: string;
+  descricao: string;
+  valor?: string;
+  dataInicio: Date;
+  dataFim?: Date;
+  ativo: boolean;
+}
+
+export interface MotivoAfastamentoItem {
+  codigo: string;
+  descricao: string;
+  valor?: string;
+  dataInicio: Date;
+  dataFim?: Date;
+  ativo: boolean;
+}
+
+export interface CidItem {
+  codigo: string;
+  descricao: string;
+  valor?: string;
+  dataInicio: Date;
+  dataFim?: Date;
+  ativo: boolean;
+}
+
+export interface EpiItem {
+  codigo: string;
+  descricao: string;
+  valor?: string;
+  dataInicio: Date;
+  dataFim?: Date;
+  ativo: boolean;
+}
+
+export interface MotivoAvisoItem {
+  codigo: string;
+  descricao: string;
+  valor?: string;
+  dataInicio: Date;
+  dataFim?: Date;
+  ativo: boolean;
 } 

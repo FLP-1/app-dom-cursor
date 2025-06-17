@@ -1,8 +1,16 @@
+/**
+ * Arquivo: employer.ts
+ * Caminho: src/pages/api/auth/login/employer.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para login de empregadores
+ */
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { validateCPF } from '../../../../utils/validators';
+import { validateCPF } from '@/utils/validations';
 
 const prisma = new PrismaClient();
 

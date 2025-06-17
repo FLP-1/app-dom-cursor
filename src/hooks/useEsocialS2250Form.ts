@@ -1,10 +1,19 @@
+/**
+ * Arquivo: useEsocialS2250Form.ts
+ * Caminho: src/hooks/useEsocialS2250Form.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import { useEsocialEvent } from './useEsocialEvent';
+import { useEsocialEvent } from '@/hooks/useEsocialEvent';
 import { S2250Schema } from '@/schemas/esocial/S2250Schema';
 import { useSnackbar } from 'notistack';
+import type { z } from 'zod';
 
 export const useEsocialS2250Form = () => {
   const { t } = useTranslation();
@@ -38,7 +47,7 @@ export const useEsocialS2250Form = () => {
     }
   });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: z.infer<typeof S2250Schema>) => {
     try {
       const eventData = {
         tipo: 'S2250',

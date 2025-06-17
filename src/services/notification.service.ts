@@ -1,13 +1,29 @@
+/**
+ * Arquivo: notification.service.ts
+ * Caminho: src/services/notification.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de notificações
+ */
+
 import axios from 'axios';
-import { LogService, TipoLog, CategoriaLog } from './log.service';
+import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';
+import { MessagePriority } from '@/lib/communication/types';
 
 /**
  * Serviço de Notificação
  * @description Gerencia notificações do sistema
  * @author DOM
  * @version 1.0.0
- * @since 2024-01-01
+ * @since 2025-01-01
  */
+
+export enum NotificationType {
+  SUCCESS = 'success',
+  ERROR = 'error',
+  WARNING = 'warning',
+  INFO = 'info',
+}
 
 export interface Notificacao {
   id: string;
@@ -53,6 +69,97 @@ export interface NotificacaoConfig {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface Notification {
+  id: string;
+  type: NotificationType;
+  title: string;
+  message: string;
+  priority: MessagePriority;
+  duration?: number;
+  action?: {
+    label: string;
+    onClick: () => void;
+  };
+}
+
+class NotificationManager {
+  private static instance: NotificationManager;
+  private listeners: ((notification: Notification) => void)[] = [];
+
+  private constructor() {}
+
+  static getInstance(): NotificationManager {
+    if (!NotificationManager.instance) {
+      NotificationManager.instance = new NotificationManager();
+    }
+    return NotificationManager.instance;
+  }
+
+  subscribe(listener: (notification: Notification) => void): () => void {
+    this.listeners.push(listener);
+    return () => {
+      this.listeners = this.listeners.filter(l => l !== listener);
+    };
+  }
+
+  private notify(notification: Notification) {
+    this.listeners.forEach(listener => listener(notification));
+  }
+
+  success(message: string, title = 'Sucesso', duration = 5000) {
+    this.notify({
+      id: crypto.randomUUID(),
+      type: NotificationType.SUCCESS,
+      title,
+      message,
+      priority: MessagePriority.NORMAL,
+      duration,
+    });
+  }
+
+  error(message: string, title = 'Erro', duration = 0) {
+    this.notify({
+      id: crypto.randomUUID(),
+      type: NotificationType.ERROR,
+      title,
+      message,
+      priority: MessagePriority.ERROR,
+      duration,
+    });
+  }
+
+  warning(message: string, title = 'Atenção', duration = 5000) {
+    this.notify({
+      id: crypto.randomUUID(),
+      type: NotificationType.WARNING,
+      title,
+      message,
+      priority: MessagePriority.CRITICAL,
+      duration,
+    });
+  }
+
+  info(message: string, title = 'Informação', duration = 3000) {
+    this.notify({
+      id: crypto.randomUUID(),
+      type: NotificationType.INFO,
+      title,
+      message,
+      priority: MessagePriority.NORMAL,
+      duration,
+    });
+  }
+
+  custom(notification: Omit<Notification, 'id'>) {
+    this.notify({
+      id: crypto.randomUUID(),
+      ...notification,
+    });
+  }
+}
+
+export const notificationManager = NotificationManager.getInstance();
 
 export const NotificationService = {
   /**
@@ -393,5 +500,62 @@ export const NotificationService = {
       });
       throw error;
     }
+  },
+
+  /**
+   * Envia uma notificação de sucesso
+   * @param message Mensagem da notificação
+   * @param title Título da notificação
+   * @param duration Duração da notificação em ms
+   */
+  success(message: string, title = 'Sucesso', duration = 5000) {
+    notificationManager.success(message, title, duration);
+  },
+
+  /**
+   * Envia uma notificação de erro
+   * @param message Mensagem da notificação
+   * @param title Título da notificação
+   * @param duration Duração da notificação em ms
+   */
+  error(message: string, title = 'Erro', duration = 0) {
+    notificationManager.error(message, title, duration);
+  },
+
+  /**
+   * Envia uma notificação de aviso
+   * @param message Mensagem da notificação
+   * @param title Título da notificação
+   * @param duration Duração da notificação em ms
+   */
+  warning(message: string, title = 'Atenção', duration = 5000) {
+    notificationManager.warning(message, title, duration);
+  },
+
+  /**
+   * Envia uma notificação informativa
+   * @param message Mensagem da notificação
+   * @param title Título da notificação
+   * @param duration Duração da notificação em ms
+   */
+  info(message: string, title = 'Informação', duration = 3000) {
+    notificationManager.info(message, title, duration);
+  },
+
+  /**
+   * Envia uma notificação customizada
+   * @param notification Dados da notificação
+   */
+  custom(notification: Omit<Notification, 'id'>) {
+    notificationManager.custom(notification);
+  },
+
+  /**
+   * Inscreve um listener para receber notificações
+   * @param listener Função que recebe as notificações
+   * @returns Função para cancelar a inscrição
+   */
+  subscribe(listener: (notification: Notification) => void): () => void {
+    return notificationManager.subscribe(listener);
   }
 }; 

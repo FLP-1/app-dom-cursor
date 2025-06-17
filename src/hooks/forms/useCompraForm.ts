@@ -1,8 +1,16 @@
+/**
+ * Arquivo: useCompraForm.ts
+ * Caminho: src/hooks/forms/useCompraForm.ts
+ * Criado em: 2025-06-13
+ * Última atualização: 2025-06-13
+ * Descrição: Hook customizado para lógica, validação e submit do formulário de compras, com validação de datas e integração com API.
+ */
+
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 // Importe o serviço de notificação e integração com API conforme padrão do projeto
 import { notificationService } from '@/services/NotificationService';
-import { MESSAGES } from '../../i18n/messages';
+import { MESSAGES } from '@/i18n/messages';
 
 export interface CompraFormValues {
   produto: string;

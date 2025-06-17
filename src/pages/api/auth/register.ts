@@ -1,7 +1,15 @@
+/**
+ * Arquivo: register.ts
+ * Caminho: src/pages/api/auth/register.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para cadastro de usuários
+ */
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import { hash } from 'bcryptjs';
 import { prisma } from '../../../lib/prisma';
-import { validateCPF } from '../../../utils/validators';
+import { validateCPF } from '@/utils/validations';
 
 export default async function handler(
   req: NextApiRequest,

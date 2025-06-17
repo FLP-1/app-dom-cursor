@@ -1,0 +1,122 @@
+<!--
+  Arquivo: ajuda.html
+  Caminho: telas_exemplo_html/ajuda.html
+  Criado em: 2025-06-07
+  Última atualização: 2025-06-07
+  Descrição: Arquivo do projeto.
+-->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajuda e Suporte - Gestão DOM</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #f5f5f5;
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 700px;
+      margin: 2.5rem auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      padding: 2rem 1.5rem;
+    }
+    .title {
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: #1976d2;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    .faq {
+      margin-bottom: 2rem;
+    }
+    .faq-item {
+      margin-bottom: 1.1rem;
+    }
+    .faq-q {
+      font-weight: 500;
+      color: #1976d2;
+      margin-bottom: 0.2rem;
+    }
+    .faq-a {
+      color: #333;
+      font-size: 1rem;
+    }
+    .duvida-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-bottom: 2rem;
+    }
+    .duvida-form textarea {
+      padding: 0.7rem;
+      border: 1px solid #bdbdbd;
+      border-radius: 6px;
+      font-size: 1rem;
+      resize: vertical;
+      min-height: 60px;
+      max-height: 180px;
+    }
+    .duvida-form button {
+      background: #1976d2;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.7rem 1.3rem;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+      align-self: flex-end;
+    }
+    .duvida-form button:hover {
+      background: #1565c0;
+    }
+    .contato {
+      background: #e3f2fd;
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      color: #1976d2;
+      font-size: 1.05rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">Ajuda e Suporte</div>
+    <div class="faq">
+      <div class="faq-item">
+        <div class="faq-q">Como redefinir minha senha?</div>
+        <div class="faq-a">Acesse a tela de login e clique em "Esqueceu a senha?" para receber as instruções por e-mail.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Como cadastrar um novo empregado?</div>
+        <div class="faq-a">No menu principal, acesse "Empregados" e clique em "Novo Cadastro".</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Como solicitar férias?</div>
+        <div class="faq-a">Acesse a área de solicitações e preencha o formulário de férias. Aguarde a aprovação do gestor.</div>
+      </div>
+    </div>
+    <form class="duvida-form">
+      <label for="duvida">Não encontrou sua resposta? Envie sua dúvida:</label>
+      <textarea id="duvida" placeholder="Descreva sua dúvida..."></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+    <div class="contato">
+      Precisa de suporte imediato?<br>
+      E-mail: suporte@gestaodom.com.br<br>
+      Telefone: (11) 4002-8922
+    </div>
+  </div>
+</body>
+</html> 

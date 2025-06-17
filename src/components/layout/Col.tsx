@@ -1,3 +1,11 @@
+/**
+ * Arquivo: Col.tsx
+ * Caminho: src/components/layout/Col.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import React from 'react';
 import styled from '@emotion/styled';
 

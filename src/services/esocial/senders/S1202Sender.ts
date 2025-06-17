@@ -1,3 +1,11 @@
+/**
+ * Arquivo: S1202Sender.ts
+ * Caminho: src/services/esocial/senders/S1202Sender.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Remetente do evento S-1202
+ */
+
 import { prisma } from '@/lib/prisma';
 import { Event } from '@prisma/client';
 import { S1202XmlGenerator } from '../xml/S1202XmlGenerator';
@@ -58,7 +66,7 @@ export class S1202Sender {
     });
   }
 
-  private async log(level: string, message: string, details?: any): Promise<void> {
+  private async log(level: string, message: string, details?: unknown): Promise<void> {
     await prisma.eventLog.create({
       data: {
         eventId: this.event.id,
@@ -69,6 +77,6 @@ export class S1202Sender {
     });
 
     // Registrar também no logger do sistema
-    logger[level.toLowerCase()](message, { eventId: this.event.id, ...details });
+    logger[level.toLowerCase()](message, { eventId: this.event.id, ...(typeof details === 'object' && details ? details : {}) });
   }
 } 

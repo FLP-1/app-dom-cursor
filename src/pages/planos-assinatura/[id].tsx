@@ -1,8 +1,16 @@
+/**
+ * Arquivo: [id].tsx
+ * Caminho: src/pages/planos-assinatura/[id].tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de detalhes de plano de assinatura
+ */
+
 import React from 'react';
 import { Box, Typography, Card, CardContent, Button, Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
-import { PageHeader } from '../../../components/common/PageHeader';
+import PageHeader from '@/components/common/PageHeader';
 
 export default function PlanoAssinaturaDetalhesPage() {
   const { t } = useTranslation();
@@ -56,8 +64,8 @@ export default function PlanoAssinaturaDetalhesPage() {
               ))}
             </Box>
 
-            <Grid container spacing={2} sx={{ mt: 3 }}>
-              <Grid item xs={12} sm={6}>
+            <Grid container spacing={2} columns={12} sx={{ mt: 3 }}>
+              <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
                 <Button
                   fullWidth
                   variant="outlined"
@@ -67,7 +75,7 @@ export default function PlanoAssinaturaDetalhesPage() {
                   {t('planosAssinatura.voltar')}
                 </Button>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
                 <Button
                   fullWidth
                   variant="contained"
@@ -83,4 +91,4 @@ export default function PlanoAssinaturaDetalhesPage() {
       </Box>
     </Box>
   );
-} 
+}

@@ -1,3 +1,11 @@
+/**
+ * Arquivo: S1000Types.ts
+ * Caminho: src/schemas/esocial/types/S1000Types.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Tipos para o evento S-1000
+ */
+
 import { z } from 'zod';
 
 export type S1000Schema = z.infer<typeof s1000Schema>;

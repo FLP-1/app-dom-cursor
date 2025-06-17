@@ -1,12 +1,20 @@
+/**
+ * Arquivo: sms.service.ts
+ * Caminho: src/services/sms.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de integração com SMS
+ */
+
 import axios from 'axios';
-import { LogService, TipoLog, CategoriaLog } from './log.service';
+import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';
 
 /**
  * Serviço de integração com SMS
  * @description Gerencia o envio de mensagens SMS e templates
  * @author DOM
  * @version 1.0.0
- * @since 2024-01-01
+ * @since 2025-01-01
  */
 
 export enum SMSErrorType {
@@ -68,40 +76,33 @@ export interface SMSTestCase {
   };
 }
 
-export const SMSService = {
-  /**
-   * Valida o formato do número de telefone
-   * @param numero Número de telefone a ser validado
-   * @returns true se o número for válido
-   */
+class SMSManager {
+  private static instance: SMSManager;
+
+  private constructor() {}
+
+  static getInstance(): SMSManager {
+    if (!SMSManager.instance) {
+      SMSManager.instance = new SMSManager();
+    }
+    return SMSManager.instance;
+  }
+
   validarNumeroTelefone(numero: string): boolean {
     const regex = /^\+?[1-9]\d{1,14}$/;
     return regex.test(numero.replace(/\D/g, ''));
-  },
+  }
 
-  /**
-   * Valida o conteúdo da mensagem
-   * @param conteudo Conteúdo da mensagem a ser validado
-   * @returns true se o conteúdo for válido
-   */
   validarConteudo(conteudo: string): boolean {
     return conteudo.length > 0 && conteudo.length <= 160;
-  },
+  }
 
-  /**
-   * Envia uma mensagem SMS
-   * @param destinatario Número do destinatário
-   * @param conteudo Conteúdo da mensagem
-   * @param finalidade Finalidade do envio (LGPD)
-   * @returns Mensagem enviada
-   */
   async enviarSMS(
     destinatario: string,
     conteudo: string,
     finalidade: string
   ): Promise<SMSMessage> {
     try {
-      // Validações
       if (!this.validarNumeroTelefone(destinatario)) {
         throw new SMSError(
           SMSErrorType.NUMERO_INVALIDO,
@@ -125,7 +126,6 @@ export const SMSService = {
         dataConsentimento: new Date()
       });
 
-      // Log de auditoria
       await LogService.create({
         tipo: TipoLog.INFO,
         categoria: CategoriaLog.SMS,
@@ -139,7 +139,6 @@ export const SMSService = {
 
       return data;
     } catch (error) {
-      // Log de erro
       await LogService.create({
         tipo: TipoLog.ERROR,
         categoria: CategoriaLog.SMS,
@@ -148,17 +147,8 @@ export const SMSService = {
       });
       throw error;
     }
-  },
+  }
 
-  /**
-   * Envia uma mensagem SMS usando template
-   * @param destinatario Número do destinatário
-   * @param template Nome do template
-   * @param variaveis Variáveis do template
-   * @param finalidade Finalidade do envio (LGPD)
-   * @param idioma Idioma da mensagem
-   * @returns Mensagem enviada
-   */
   async enviarTemplate(
     destinatario: string,
     template: string,
@@ -191,8 +181,8 @@ export const SMSService = {
         mensagem: `SMS template enviado para ${destinatario}`,
         detalhes: {
           mensagemId: data.id,
-          template,
           status: data.status,
+          template,
           finalidade
         }
       });
@@ -207,13 +197,8 @@ export const SMSService = {
       });
       throw error;
     }
-  },
+  }
 
-  /**
-   * Obtém o status de uma mensagem
-   * @param mensagemId ID da mensagem
-   * @returns Status da mensagem
-   */
   async obterStatus(mensagemId: string): Promise<SMSMessage> {
     try {
       const { data } = await axios.get<SMSMessage>(`/api/sms/${mensagemId}`);
@@ -227,12 +212,8 @@ export const SMSService = {
       });
       throw error;
     }
-  },
+  }
 
-  /**
-   * Lista todos os templates disponíveis
-   * @returns Lista de templates
-   */
   async listarTemplates(): Promise<SMSTemplate[]> {
     try {
       const { data } = await axios.get<SMSTemplate[]>('/api/sms/templates');
@@ -246,16 +227,11 @@ export const SMSService = {
       });
       throw error;
     }
-  },
+  }
 
-  /**
-   * Obtém um template específico
-   * @param templateId ID do template
-   * @returns Template encontrado
-   */
   async obterTemplate(templateId: string): Promise<SMSTemplate> {
     try {
-      const { data } = await axios.get<SMSTemplate>(`/api/sms/template/${templateId}`);
+      const { data } = await axios.get<SMSTemplate>(`/api/sms/templates/${templateId}`);
       return data;
     } catch (error) {
       await LogService.create({
@@ -266,21 +242,16 @@ export const SMSService = {
       });
       throw error;
     }
-  },
+  }
 
-  /**
-   * Cria um novo template
-   * @param template Dados do template
-   * @returns Template criado
-   */
   async criarTemplate(template: Omit<SMSTemplate, 'id' | 'createdAt' | 'updatedAt'>): Promise<SMSTemplate> {
     try {
-      const { data } = await axios.post<SMSTemplate>('/api/sms/template', template);
-      
+      const { data } = await axios.post<SMSTemplate>('/api/sms/templates', template);
+
       await LogService.create({
         tipo: TipoLog.INFO,
         categoria: CategoriaLog.SMS,
-        mensagem: `Template de SMS criado: ${template.nome}`,
+        mensagem: 'Template de SMS criado',
         detalhes: { templateId: data.id }
       });
 
@@ -294,26 +265,20 @@ export const SMSService = {
       });
       throw error;
     }
-  },
+  }
 
-  /**
-   * Atualiza um template existente
-   * @param templateId ID do template
-   * @param template Dados do template
-   * @returns Template atualizado
-   */
   async atualizarTemplate(
     templateId: string,
     template: Partial<Omit<SMSTemplate, 'id' | 'createdAt' | 'updatedAt'>>
   ): Promise<SMSTemplate> {
     try {
-      const { data } = await axios.put<SMSTemplate>(`/api/sms/template/${templateId}`, template);
-      
+      const { data } = await axios.put<SMSTemplate>(`/api/sms/templates/${templateId}`, template);
+
       await LogService.create({
         tipo: TipoLog.INFO,
         categoria: CategoriaLog.SMS,
-        mensagem: `Template de SMS atualizado: ${templateId}`,
-        detalhes: { template }
+        mensagem: 'Template de SMS atualizado',
+        detalhes: { templateId }
       });
 
       return data;
@@ -321,48 +286,41 @@ export const SMSService = {
       await LogService.create({
         tipo: TipoLog.ERROR,
         categoria: CategoriaLog.SMS,
-        mensagem: `Erro ao atualizar template de SMS ${templateId}`,
+        mensagem: 'Erro ao atualizar template de SMS',
         detalhes: { error }
       });
       throw error;
     }
-  },
+  }
 
-  /**
-   * Remove um template
-   * @param templateId ID do template
-   */
   async removerTemplate(templateId: string): Promise<void> {
     try {
-      await axios.delete(`/api/sms/template/${templateId}`);
-      
+      await axios.delete(`/api/sms/templates/${templateId}`);
+
       await LogService.create({
         tipo: TipoLog.INFO,
         categoria: CategoriaLog.SMS,
-        mensagem: `Template de SMS removido: ${templateId}`
+        mensagem: 'Template de SMS removido',
+        detalhes: { templateId }
       });
     } catch (error) {
       await LogService.create({
         tipo: TipoLog.ERROR,
         categoria: CategoriaLog.SMS,
-        mensagem: `Erro ao remover template de SMS ${templateId}`,
+        mensagem: 'Erro ao remover template de SMS',
         detalhes: { error }
       });
       throw error;
     }
-  },
+  }
 
-  /**
-   * Obtém a configuração do serviço
-   * @returns Configuração atual
-   */
   async obterConfiguracao(): Promise<{
     provedor: string;
     apiKey: string;
     remetente: string;
   }> {
     try {
-      const { data } = await axios.get('/api/sms/config');
+      const { data } = await axios.get('/api/sms/configuracao');
       return data;
     } catch (error) {
       await LogService.create({
@@ -373,20 +331,16 @@ export const SMSService = {
       });
       throw error;
     }
-  },
+  }
 
-  /**
-   * Atualiza a configuração do serviço
-   * @param config Nova configuração
-   */
   async atualizarConfiguracao(config: {
     provedor: string;
     apiKey: string;
     remetente: string;
   }): Promise<void> {
     try {
-      await axios.put('/api/sms/config', config);
-      
+      await axios.put('/api/sms/configuracao', config);
+
       await LogService.create({
         tipo: TipoLog.INFO,
         categoria: CategoriaLog.SMS,
@@ -402,18 +356,14 @@ export const SMSService = {
       });
       throw error;
     }
-  },
+  }
 
-  /**
-   * Testa a configuração do serviço
-   * @returns Resultado do teste
-   */
   async testarConfiguracao(): Promise<{
     sucesso: boolean;
     mensagem: string;
   }> {
     try {
-      const { data } = await axios.post('/api/sms/testar');
+      const { data } = await axios.post('/api/sms/configuracao/teste');
       return data;
     } catch (error) {
       await LogService.create({
@@ -424,12 +374,8 @@ export const SMSService = {
       });
       throw error;
     }
-  },
+  }
 
-  /**
-   * Obtém o saldo disponível
-   * @returns Saldo e data de atualização
-   */
   async obterSaldo(): Promise<{
     saldo: number;
     dataAtualizacao: Date;
@@ -446,27 +392,20 @@ export const SMSService = {
       });
       throw error;
     }
-  },
+  }
 
-  /**
-   * Obtém o histórico de mensagens
-   * @param dataInicio Data inicial
-   * @param dataFim Data final
-   * @param status Status das mensagens
-   * @returns Lista de mensagens
-   */
   async obterHistorico(
     dataInicio: Date,
     dataFim: Date,
     status?: SMSMessage['status']
   ): Promise<SMSMessage[]> {
     try {
-      const { data } = await axios.get<SMSMessage[]>('/api/sms/historico', {
+      const { data } = await axios.get('/api/sms/historico', {
         params: {
           dataInicio: dataInicio.toISOString(),
           dataFim: dataFim.toISOString(),
-          status,
-        },
+          status
+        }
       });
       return data;
     } catch (error) {
@@ -478,5 +417,100 @@ export const SMSService = {
       });
       throw error;
     }
+  }
+}
+
+export const smsManager = SMSManager.getInstance();
+
+export const SMSService = {
+  validarNumeroTelefone(numero: string): boolean {
+    return smsManager.validarNumeroTelefone(numero);
   },
+
+  validarConteudo(conteudo: string): boolean {
+    return smsManager.validarConteudo(conteudo);
+  },
+
+  async enviarSMS(
+    destinatario: string,
+    conteudo: string,
+    finalidade: string
+  ): Promise<SMSMessage> {
+    return smsManager.enviarSMS(destinatario, conteudo, finalidade);
+  },
+
+  async enviarTemplate(
+    destinatario: string,
+    template: string,
+    variaveis: Record<string, string>,
+    finalidade: string,
+    idioma: string = 'pt-BR'
+  ): Promise<SMSMessage> {
+    return smsManager.enviarTemplate(destinatario, template, variaveis, finalidade, idioma);
+  },
+
+  async obterStatus(mensagemId: string): Promise<SMSMessage> {
+    return smsManager.obterStatus(mensagemId);
+  },
+
+  async listarTemplates(): Promise<SMSTemplate[]> {
+    return smsManager.listarTemplates();
+  },
+
+  async obterTemplate(templateId: string): Promise<SMSTemplate> {
+    return smsManager.obterTemplate(templateId);
+  },
+
+  async criarTemplate(template: Omit<SMSTemplate, 'id' | 'createdAt' | 'updatedAt'>): Promise<SMSTemplate> {
+    return smsManager.criarTemplate(template);
+  },
+
+  async atualizarTemplate(
+    templateId: string,
+    template: Partial<Omit<SMSTemplate, 'id' | 'createdAt' | 'updatedAt'>>
+  ): Promise<SMSTemplate> {
+    return smsManager.atualizarTemplate(templateId, template);
+  },
+
+  async removerTemplate(templateId: string): Promise<void> {
+    return smsManager.removerTemplate(templateId);
+  },
+
+  async obterConfiguracao(): Promise<{
+    provedor: string;
+    apiKey: string;
+    remetente: string;
+  }> {
+    return smsManager.obterConfiguracao();
+  },
+
+  async atualizarConfiguracao(config: {
+    provedor: string;
+    apiKey: string;
+    remetente: string;
+  }): Promise<void> {
+    return smsManager.atualizarConfiguracao(config);
+  },
+
+  async testarConfiguracao(): Promise<{
+    sucesso: boolean;
+    mensagem: string;
+  }> {
+    return smsManager.testarConfiguracao();
+  },
+
+  async obterSaldo(): Promise<{
+    saldo: number;
+    dataAtualizacao: Date;
+  }> {
+    return smsManager.obterSaldo();
+  },
+
+  async obterHistorico(
+    dataInicio: Date,
+    dataFim: Date,
+    status?: SMSMessage['status']
+  ): Promise<SMSMessage[]> {
+    return smsManager.obterHistorico(dataInicio, dataFim, status);
+  }
 }; 

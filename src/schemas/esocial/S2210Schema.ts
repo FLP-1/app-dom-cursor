@@ -1,3 +1,11 @@
+/**
+ * Arquivo: S2210Schema.ts
+ * Caminho: src/schemas/esocial/S2210Schema.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Schema para o evento S-2210
+ */
+
 import { z } from 'zod';
 
 export const S2210Schema = z.object({

@@ -1,5 +1,13 @@
+/**
+ * Arquivo: S1000Validation.ts
+ * Caminho: src/schemas/esocial/validation/S1000Validation.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Validação do evento S-1000
+ */
+
 import { z } from 'zod';
-import { cnpjSchema, cpfSchema } from '../../commonSchemas';
+import { cnpjSchema, cpfSchema } from '@/schemas/commonSchemas';
 import {
   TIPO_INSCRICAO,
   CLASSIFICACAO_TRIBUTARIA,
@@ -16,7 +24,7 @@ import {
   INDICADOR_CONTRIBUINTE_APROVADO,
   INDICADOR_RPPS,
   INDICADOR_SUBTETO,
-} from '../constants/S1000Constants';
+} from '@/schemas/esocial/validation/constants/S1000Constants';
 
 export const ideEmpregadorSchema = z.object({
   tpInsc: z.enum([TIPO_INSCRICAO.CNPJ, TIPO_INSCRICAO.CPF, TIPO_INSCRICAO.CAEPF, TIPO_INSCRICAO.CNO]),

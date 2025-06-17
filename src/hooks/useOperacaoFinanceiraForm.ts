@@ -1,3 +1,12 @@
+/**
+ * Arquivo: useOperacaoFinanceiraForm.ts
+ * Caminho: src/hooks/useOperacaoFinanceiraForm.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';

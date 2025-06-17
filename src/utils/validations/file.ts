@@ -1,3 +1,11 @@
+/**
+ * Arquivo: file.ts
+ * Caminho: src/utils/validations/file.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Função para validar arquivos
+ */
+
 export const isValidFile = (file: File): boolean => {
   // Tamanho máximo de 10MB
   const MAX_SIZE = 10 * 1024 * 1024;

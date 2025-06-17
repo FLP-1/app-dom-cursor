@@ -1,3 +1,11 @@
+/**
+ * Arquivo: index.tsx
+ * Caminho: src/pages/backup/index.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de backup
+ */
+
 import React, { useState, useEffect } from 'react';
 import { 
   Box, 
@@ -15,23 +23,27 @@ import {
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
-import { useNotification } from '../../hooks/useNotification';
-import { useBackup } from '../../hooks/useBackup';
-import { Backup } from '../../types/backup';
-import { PageHeader } from '../../components/common/PageHeader';
-import { TableActions } from '../../components/common/TableActions';
-import { api } from '../../services/api';
-import { formatDateBR, formatFileSize } from '../../utils/formatters';
+import { useNotification } from '@/hooks/useNotification';
+import { PageHeader } from '@/components/common/PageHeader';
+import { TableActions } from '@/components/common/TableActions';
+import { api } from '@/services/api';
+import { formatDateBR, formatFileSize } from '@/utils/formatters';
+import { Layout } from '@/components/layout/Layout';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import RestoreIcon from '@mui/icons-material/Restore';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { tooltips } from '@/i18n/tooltips';
 
 export default function BackupPage() {
   const { t } = useTranslation();
   const router = useRouter();
   const { showNotification } = useNotification();
-  const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
-  const [backups, setBackups] = useState<Backup[]>([]);
-  const { loading, createBackup, restoreBackup, deleteBackup } = useBackup();
+  const [backups, setBackups] = useState<any[]>([]); // TODO: Criar tipagem Backup
+  const loading = false;
+  const createBackup = async () => { throw new Error('Função não implementada'); };
+  const restoreBackup = async (id: string) => { throw new Error('Função não implementada'); };
+  const deleteBackup = async (id: string) => { throw new Error('Função não implementada'); };
   const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: 'success' | 'error' }>({ open: false, message: '', severity: 'success' });
 
   const loadBackups = async () => {
@@ -78,7 +90,7 @@ export default function BackupPage() {
     }
   };
 
-  const handleDownload = async (backup: Backup) => {
+  const handleDownload = async (backup: any) => { // TODO: Criar tipagem Backup
     try {
       const response = await api.get(`/api/backups/${backup.id}/download`, {
         responseType: 'blob',
@@ -111,58 +123,79 @@ export default function BackupPage() {
   }
 
   return (
-    <Box sx={{ p: 3 }}>
-      <PageHeader
-        title={t('Backups')}
-        onAdd={handleCreate}
-        onRefresh={loadBackups}
-        addButtonText={t('Novo Backup')}
-      />
+    <Layout>
+      <Box sx={{ p: 3 }}>
+        <PageHeader
+          title={t('Backups')}
+          onAdd={handleCreate}
+          onRefresh={loadBackups}
+          addButtonText={t('Novo Backup')}
+        />
 
-      <Box sx={{ mt: 3 }}>
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>{t('backups.nome.label')}</TableCell>
-                <TableCell>{t('backups.data.label')}</TableCell>
-                <TableCell>{t('backups.tamanho.label')}</TableCell>
-                <TableCell>{t('backups.status.label')}</TableCell>
-                <TableCell>Ações</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {backups.map((backup) => (
-                <TableRow key={backup.id}>
-                  <TableCell>{backup.nome}</TableCell>
-                  <TableCell>{formatDateBR(backup.data)}</TableCell>
-                  <TableCell>{formatFileSize(backup.tamanho)}</TableCell>
-                  <TableCell>{backup.status}</TableCell>
-                  <TableCell>
-                    <TableActions
-                      onView={() => handleDownload(backup)}
-                      onEdit={() => handleRestore(backup.id)}
-                      onDelete={() => handleDelete(backup.id)}
-                      disabled={loading}
-                    />
-                  </TableCell>
+        <Box sx={{ mt: 3 }}>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>{t('backups.nome.label')}</TableCell>
+                  <TableCell>{t('backups.data.label')}</TableCell>
+                  <TableCell>{t('backups.tamanho.label')}</TableCell>
+                  <TableCell>{t('backups.status.label')}</TableCell>
+                  <TableCell>Ações</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Box>
+              </TableHead>
+              <TableBody>
+                {backups.map((backup) => (
+                  <TableRow key={backup.id}>
+                    <TableCell>{backup.nome}</TableCell>
+                    <TableCell>{formatDateBR(backup.data)}</TableCell>
+                    <TableCell>{formatFileSize(backup.tamanho)}</TableCell>
+                    <TableCell>{backup.status}</TableCell>
+                    <TableCell>
+                      <TableActions
+                        actions={[
+                          {
+                            icon: <VisibilityIcon color="info" />, 
+                            tooltip: tooltips.visualizar.pt,
+                            onClick: () => handleDownload(backup),
+                            disabled: loading,
+                            ariaLabel: 'Visualizar backup'
+                          },
+                          {
+                            icon: <RestoreIcon color="primary" />, 
+                            tooltip: tooltips.restaurar?.pt || 'Restaurar backup',
+                            onClick: () => handleRestore(backup.id),
+                            disabled: loading,
+                            ariaLabel: 'Restaurar backup'
+                          },
+                          {
+                            icon: <DeleteIcon color="error" />, 
+                            tooltip: tooltips.excluir.pt,
+                            onClick: () => handleDelete(backup.id),
+                            disabled: loading,
+                            ariaLabel: 'Excluir backup'
+                          }
+                        ]}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
 
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={3000}
-        onClose={() => setSnackbar({ ...snackbar, open: false })}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
-        <Alert onClose={() => setSnackbar({ ...snackbar, open: false })} severity={snackbar.severity} sx={{ width: '100%' }}>
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
-    </Box>
+        <Snackbar
+          open={snackbar.open}
+          autoHideDuration={3000}
+          onClose={() => setSnackbar({ ...snackbar, open: false })}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        >
+          <Alert onClose={() => setSnackbar({ ...snackbar, open: false })} severity={snackbar.severity} sx={{ width: '100%' }}>
+            {snackbar.message}
+          </Alert>
+        </Snackbar>
+      </Box>
+    </Layout>
   );
 } 

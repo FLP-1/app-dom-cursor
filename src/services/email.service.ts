@@ -1,14 +1,23 @@
+/**
+ * Arquivo: email.service.ts
+ * Caminho: src/services/email.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de email com integração SendGrid
+ */
+
 import axios from 'axios';
-import { LogService, TipoLog, CategoriaLog } from './log.service';
-import { CacheService } from './cache.service';
-import { I18nService } from './i18n.service';
+import sgMail from '@sendgrid/mail';
+import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';
+import { CacheService } from '@/services/cache.service';
+import { I18nService } from '@/services/i18n.service';
 
 /**
  * Serviço de Email
  * @description Gerencia o envio de emails do sistema
  * @author DOM
  * @version 1.0.0
- * @since 2024-01-01
+ * @since 2025-01-01
  */
 
 export type TipoEmail = 'sistema' | 'usuario' | 'empresa' | 'ponto' | 'ocorrencia' | 'documento' | 'esocial' | 'backup' | 'seguranca';
@@ -73,6 +82,95 @@ export interface EmailConfig {
 export const EmailService = {
   CACHE_KEY: 'email:',
   CACHE_EXPIRACAO: 3600, // 1 hora
+  private initialized = false,
+
+  async initialize() {
+    if (!this.initialized) {
+      sgMail.setApiKey(process.env.SENDGRID_API_KEY || '');
+      this.initialized = true;
+    }
+  },
+
+  async sendEmailWithSendGrid(options: {
+    to: string;
+    from?: string;
+    subject: string;
+    text?: string;
+    html?: string;
+    templateId?: string;
+    dynamicTemplateData?: Record<string, unknown>;
+  }): Promise<boolean> {
+    try {
+      await this.initialize();
+
+      const msg = {
+        to: options.to,
+        from: options.from || process.env.SENDGRID_FROM_EMAIL || '',
+        subject: options.subject,
+        text: options.text,
+        html: options.html,
+        templateId: options.templateId,
+        dynamicTemplateData: options.dynamicTemplateData,
+      };
+
+      await sgMail.send(msg);
+
+      await LogService.create({
+        tipo: TipoLog.INFO,
+        categoria: CategoriaLog.EMAIL,
+        mensagem: 'Email enviado com sucesso via SendGrid',
+        detalhes: { to: options.to, subject: options.subject }
+      });
+
+      return true;
+    } catch (error) {
+      await LogService.create({
+        tipo: TipoLog.ERROR,
+        categoria: CategoriaLog.EMAIL,
+        mensagem: 'Erro ao enviar email via SendGrid',
+        detalhes: { error, options }
+      });
+
+      return false;
+    }
+  },
+
+  async sendTemplateEmail(
+    to: string,
+    templateId: string,
+    dynamicTemplateData: Record<string, unknown>
+  ): Promise<boolean> {
+    return this.sendEmailWithSendGrid({
+      to,
+      subject: typeof dynamicTemplateData.subject === 'string' ? dynamicTemplateData.subject : 'Notificação',
+      templateId,
+      dynamicTemplateData
+    });
+  },
+
+  async sendWelcomeEmail(to: string, name: string): Promise<boolean> {
+    return this.sendTemplateEmail(to, 'd-welcome-template-id', {
+      name,
+      subject: 'Bem-vindo ao DOM!'
+    });
+  },
+
+  async sendPasswordResetEmail(to: string, resetToken: string): Promise<boolean> {
+    return this.sendTemplateEmail(to, 'd-password-reset-template-id', {
+      resetToken,
+      subject: 'Recuperação de Senha'
+    });
+  },
+
+  async sendNotificationEmail(to: string, notification: unknown): Promise<boolean> {
+    const subject = typeof notification === 'object' && notification && 'title' in notification && typeof (notification as any).title === 'string'
+      ? (notification as any).title
+      : 'Notificação';
+    return this.sendTemplateEmail(to, 'd-notification-template-id', {
+      notification,
+      subject
+    });
+  },
 
   /**
    * Lista todos os emails

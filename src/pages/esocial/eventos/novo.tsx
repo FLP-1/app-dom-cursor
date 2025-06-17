@@ -1,4 +1,12 @@
-import { useEsocialEventForm } from '@/hooks/useEsocialEventForm';
+/**
+ * Arquivo: novo.tsx
+ * Caminho: src/pages/esocial/eventos/novo.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de novo evento eSocial
+ */
+
+import { useEsocialEventForm } from '@/hooks/forms/useEsocialEventForm';
 import { EsocialEventForm } from '@/components/esocial/EsocialEventForm';
 import { Button } from '@mui/material';
 import { useTranslation } from 'next-i18next';

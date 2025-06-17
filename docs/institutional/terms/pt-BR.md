@@ -1,0 +1,67 @@
+# Termos de Uso do DOM
+
+**Última atualização:** 19/03/2024
+
+## 1. Introdução
+
+Este Termo de Uso rege o acesso e a utilização dos serviços oferecidos pela plataforma DOM, que disponibiliza planos de assinatura e soluções de gestão de informações para usuários e parceiros. Ao acessar ou utilizar os serviços do DOM, o Usuário concorda expressamente com todos os termos e condições aqui estabelecidos.
+
+## 2. Aceitação dos Termos
+
+Ao criar uma conta ou utilizar qualquer recurso da plataforma DOM, o Usuário declara ter lido, compreendido e aceito integralmente este Termo de Uso, bem como todas as políticas e diretrizes eventualmente vinculadas, como a Política de Privacidade.
+
+## 3. Definições
+
+- **DOM:** Refere-se à empresa e à plataforma que fornece serviços de gestão e planos de assinatura.
+- **Usuário:** Qualquer pessoa física ou jurídica que acesse ou utilize os serviços do DOM.
+- **Serviços:** Incluem, mas não se limitam, aos planos de assinatura, funcionalidades de gestão, suporte, e demais ferramentas disponibilizadas na plataforma.
+- **Planos de Assinatura:** Modalidades de contratação dos serviços, com regras específicas de cobrança, cancelamento, upgrade e reembolso.
+
+## 4. Serviços Prestados
+
+O DOM disponibiliza uma plataforma digital com recursos voltados para a gestão de informações e operações domésticas, permitindo a contratação de planos mensais ou anuais, conforme condições específicas previstas neste Termo. A empresa reserva-se o direito de modificar ou atualizar os serviços, visando sempre a melhoria contínua da experiência do Usuário.
+
+## 5. Condições de Uso
+
+- O Usuário compromete-se a utilizar a plataforma em conformidade com a legislação vigente, os princípios de boa-fé e os presentes termos, abstendo-se de atividades que possam comprometer a segurança ou o bom funcionamento dos serviços.
+- É vedado o compartilhamento de credenciais de acesso, sendo cada conta de uso pessoal e intransferível.
+- O Usuário é responsável por manter atualizados os seus dados cadastrais, garantindo a integridade e veracidade das informações fornecidas.
+
+## 6. Propriedade Intelectual
+
+Todos os conteúdos, marcas, logotipos, designs, textos, imagens e demais elementos disponíveis na plataforma DOM são de propriedade exclusiva da empresa ou de seus licenciadores. É expressamente proibida a reprodução, modificação ou redistribuição, no todo ou em parte, sem autorização prévia e por escrito.
+
+## 7. Cancelamento, Upgrade e Reembolso
+
+Para os serviços contratados, aplicam-se as seguintes regras:
+
+### 7.1. Plano Mensal
+
+- **Cancelamento e Reembolso:**
+  - Se o pedido de cancelamento for formalizado até o dia 15 do mês, o Usuário receberá o reembolso de 50% do valor pago no mês em curso.
+  - Solicitações efetuadas a partir do dia 16 não ensejarão reembolso relativo ao mês corrente.
+
+### 7.2. Plano Anual
+
+- **Cancelamento e Reembolso:**
+  - O reembolso será calculado de forma proporcional ao período não usufruído, considerando o início do mês subsequente ao pedido de cancelamento.
+  - Caso o plano anual inclua bonificações (meses gratuitos), os benefícios serão imediatamente cancelados, passando a vigorar exclusivamente o critério proporcional descrito.
+
+### 7.3. Upgrade de Plano
+
+- Em caso de upgrade, o valor já pago poderá ser abatido proporcionalmente no novo plano, com ajustes na data de vencimento, conforme as regras específicas divulgadas na plataforma.
+
+## 8. Modificações dos Termos
+
+O DOM reserva-se o direito de alterar os presentes Termos de Uso a qualquer momento, mediante publicação da nova versão na plataforma. As modificações serão aplicáveis a partir da data de sua publicação, e a continuidade do uso dos serviços implicará a aceitação das alterações.
+
+## 9. Limitação de Responsabilidade
+
+- O DOM envidará esforços razoáveis para garantir a disponibilidade e a segurança da plataforma, mas não será responsável por interrupções, falhas ou perdas decorrentes de manutenção, incidentes técnicos fora de seu controle ou de utilização equivocada dos serviços pelo Usuário.
+- O Usuário concorda em isentar o DOM de quaisquer responsabilidades por danos diretos ou indiretos, decorrentes do uso da plataforma, na medida permitida pela legislação vigente.
+
+## 10. Disposições Gerais
+
+- Este Termo de Uso não cria vínculo empregatício, parceria, sociedade ou relação de representação entre o DOM e o Usuário.
+- Caso alguma disposição deste Termo seja considerada inválida ou inexequível, as demais continuarão em pleno vigor.
+- Qualquer controvérsia oriunda deste Termo será submetida ao foro da comarca de São Paulo, renunciando as partes a qualquer outro, por mais privilegiado que seja. 

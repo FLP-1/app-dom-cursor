@@ -1,3 +1,11 @@
+/**
+ * Arquivo: date.ts
+ * Caminho: src/utils/validations/date.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Funções para validar datas e horários
+ */
+
 export const isValidDate = (date: string): boolean => {
   const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
   if (!dateRegex.test(date)) return false;

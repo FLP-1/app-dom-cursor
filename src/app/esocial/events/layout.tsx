@@ -1,3 +1,11 @@
+/**
+ * Arquivo: layout.tsx
+ * Caminho: src/app/esocial/events/layout.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { Box } from '@mui/material';
 import { Header } from '@/components/Header';
 

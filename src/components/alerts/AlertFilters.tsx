@@ -1,0 +1,117 @@
+/**
+ * Arquivo: AlertFilters.tsx
+ * Caminho: src/components/alerts/AlertFilters.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
+import React from 'react';
+import { Grid, TextField, MenuItem, Tooltip, InputAdornment } from '@mui/material';
+import { Controller } from 'react-hook-form';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { tooltips } from '@/i18n/tooltips';
+
+interface AlertFiltersProps {
+  control: any; // Use o tipo correto do react-hook-form se disponível
+  tipos?: string[];
+}
+
+const severidades = [
+  { value: '', label: 'Todas' },
+  { value: 'baixa', label: 'Baixa' },
+  { value: 'média', label: 'Média' },
+  { value: 'severa', label: 'Severa' },
+  { value: 'urgente', label: 'Urgente' },
+];
+
+export const AlertFilters: React.FC<AlertFiltersProps> = ({ control, tipos }) => {
+  return (
+    <Grid container columns={12} spacing={2} alignItems="center">
+      <Grid gridColumn={{ xs: 'span 12', sm: 'span 2', md: 'span 2', lg: 'span 2', xl: 'span 2' }}>
+        <Controller
+          name="type"
+          control={control}
+          render={({ field }) => (
+            <Tooltip title={tooltips.tipoAlerta.pt} arrow>
+              <span>
+                <TextField select label="Tipo" fullWidth size="small" {...field}>
+                  <MenuItem value="">Todos</MenuItem>
+                  {tipos?.map((tipo) => (
+                    <MenuItem key={tipo} value={tipo}>{tipo}</MenuItem>
+                  ))}
+                </TextField>
+              </span>
+            </Tooltip>
+          )}
+        />
+      </Grid>
+      <Grid gridColumn={{ xs: 'span 12', sm: 'span 2', md: 'span 2', lg: 'span 2', xl: 'span 2' }}>
+        <Controller
+          name="severity"
+          control={control}
+          render={({ field }) => (
+            <Tooltip title={tooltips.severidadeAlerta.pt} arrow>
+              <span>
+                <TextField select label="Severidade" fullWidth size="small" {...field}>
+                  {severidades.map((s) => (
+                    <MenuItem key={s.value} value={s.value}>{s.label}</MenuItem>
+                  ))}
+                </TextField>
+              </span>
+            </Tooltip>
+          )}
+        />
+      </Grid>
+      <Grid gridColumn={{ xs: 'span 12', sm: 'span 2', md: 'span 2', lg: 'span 2', xl: 'span 2' }}>
+        <Controller
+          name="startDate"
+          control={control}
+          render={({ field }) => (
+            <Tooltip title={tooltips.alertaDataInicial.pt} arrow>
+              <span>
+                <DatePicker
+                  label="Data inicial"
+                  inputFormat="dd/MM/yyyy"
+                  {...field}
+                  slotProps={{ textField: { fullWidth: true, size: 'small' } }}
+                />
+              </span>
+            </Tooltip>
+          )}
+        />
+      </Grid>
+      <Grid gridColumn={{ xs: 'span 12', sm: 'span 2', md: 'span 2', lg: 'span 2', xl: 'span 2' }}>
+        <Controller
+          name="endDate"
+          control={control}
+          render={({ field }) => (
+            <Tooltip title={tooltips.alertaDataFinal.pt} arrow>
+              <span>
+                <DatePicker
+                  label="Data final"
+                  inputFormat="dd/MM/yyyy"
+                  {...field}
+                  slotProps={{ textField: { fullWidth: true, size: 'small' } }}
+                />
+              </span>
+            </Tooltip>
+          )}
+        />
+      </Grid>
+      <Grid gridColumn={{ xs: 'span 12', sm: 'span 4', md: 'span 4', lg: 'span 4', xl: 'span 4' }}>
+        <Controller
+          name="message"
+          control={control}
+          render={({ field }) => (
+            <Tooltip title={tooltips.descricaoAlerta.pt} arrow>
+              <span>
+                <TextField label="Mensagem" fullWidth size="medium" {...field} />
+              </span>
+            </Tooltip>
+          )}
+        />
+      </Grid>
+    </Grid>
+  );
+}; 

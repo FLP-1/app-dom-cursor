@@ -1,5 +1,13 @@
+/**
+ * Arquivo: auditLog.ts
+ * Caminho: src/middleware/auditLog.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '../lib/prisma';
+import { prisma } from '@/lib/prisma';
 
 export interface AuditLogData {
   userId?: string;

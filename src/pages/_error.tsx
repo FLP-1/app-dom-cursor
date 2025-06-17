@@ -1,8 +1,16 @@
+/**
+ * Arquivo: _error.tsx
+ * Caminho: src/pages/_error.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de erro
+ */
+
 import React from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
-import { PageHeader } from '../components/common/PageHeader';
+import { PageHeader } from '@/components/common/PageHeader';
 import { NextPage } from 'next';
 
 interface ErrorProps {

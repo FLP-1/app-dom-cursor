@@ -1,3 +1,11 @@
+/**
+ * Arquivo: task.ts
+ * Caminho: src/types/task.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Tipos de tarefas
+ */
+
 export enum TaskStatus {
   PENDING = 'PENDING',
   IN_PROGRESS = 'IN_PROGRESS',

@@ -1,3 +1,11 @@
+<!--
+  Arquivo: processo_desenvolvimento.md
+  Caminho: docs/processos/processo_desenvolvimento.md
+  Criado em: 2025-06-01
+  Última atualização: 2025-05-24
+  Descrição: Arquivo do projeto.
+-->
+
 # Processo de Desenvolvimento DOM
 
 Este documento descreve o fluxo de trabalho e as diretrizes para o desenvolvimento no projeto DOM, com base nas **Project Rules** definidas. O objetivo é garantir a consistência, a qualidade e a conformidade com os requisitos, as normas de segurança e privacidade, e a identidade visual do projeto.

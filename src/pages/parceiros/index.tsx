@@ -1,12 +1,24 @@
+/**
+ * Arquivo: index.tsx
+ * Caminho: src/pages/parceiros/index.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de listagem de parceiros
+ */
+
 import React, { useEffect, useState } from 'react';
 import { Box, Typography, CircularProgress } from '@mui/material';
-import { parceiroService } from '../../services/parceiro.service';
-import { Parceiro } from '../../types/parceiro';
+import { parceiroService } from '@/services/parceiro.service';
+import { Parceiro } from '@/types/parceiro';
 import { useTranslation } from 'react-i18next';
-import { DataTable } from '../../components/common/DataTable';
-import { PageHeader } from '../../components/common/PageHeader';
-import { TableActions } from '../../components/common/TableActions';
+import { DataTable } from '@/components/common/DataTable';
+import { PageHeader } from '@/components/common/PageHeader';
+import { TableActions } from '@/components/common/TableActions';
 import { useRouter } from 'next/router';
+import { Layout } from '@/components/layout/Layout';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import EditIcon from '@mui/icons-material/Edit';
+import { tooltips } from '@/i18n/tooltips';
 
 export default function ParceirosListPage() {
   const { t } = useTranslation();
@@ -40,8 +52,20 @@ export default function ParceirosListPage() {
     { id: 'responsavel', label: t('Responsável'), sortable: true },
     { id: 'actions', label: t('Ações'), render: (_: unknown, row: Parceiro) => (
       <TableActions
-        onView={() => router.push(`/parceiros/${row.id}`)}
-        onEdit={() => router.push(`/parceiros/${row.id}/editar`)}
+        actions={[
+          {
+            icon: <VisibilityIcon color="info" />, 
+            tooltip: tooltips.visualizar.pt,
+            onClick: () => router.push(`/parceiros/${row.id}`),
+            ariaLabel: 'Visualizar parceiro'
+          },
+          {
+            icon: <EditIcon color="primary" />, 
+            tooltip: tooltips.editar.pt,
+            onClick: () => router.push(`/parceiros/${row.id}/editar`),
+            ariaLabel: 'Editar parceiro'
+          }
+        ]}
       />
     ) },
   ];
@@ -63,20 +87,22 @@ export default function ParceirosListPage() {
   }
 
   return (
-    <Box sx={{ p: 3 }}>
-      <PageHeader
-        title={t('Parceiros')}
-        onAdd={() => router.push('/parceiros/novo')}
-        onRefresh={loadParceiros}
-        addButtonText={t('Novo Parceiro')}
-      />
-      <DataTable
-        columns={columns}
-        data={parceiros}
-        loading={loading}
-        error={error}
-      />
-    </Box>
+    <Layout>
+      <Box sx={{ p: 3 }}>
+        <PageHeader
+          title={t('Parceiros')}
+          onAdd={() => router.push('/parceiros/novo')}
+          onRefresh={loadParceiros}
+          addButtonText={t('Novo Parceiro')}
+        />
+        <DataTable
+          columns={columns}
+          data={parceiros}
+          loading={loading}
+          error={error}
+        />
+      </Box>
+    </Layout>
   );
 }
 

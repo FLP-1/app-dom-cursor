@@ -1,3 +1,11 @@
+/**
+ * Arquivo: react-imask.tsx
+ * Caminho: src/__mocks__/react-imask.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import React from 'react';
 
 interface IMaskInputProps extends React.InputHTMLAttributes<HTMLInputElement> {

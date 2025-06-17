@@ -1,3 +1,11 @@
+/**
+ * Arquivo: utils.ts
+ * Caminho: src/hooks/esocial/utils.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { EsocialEvent } from '@/types/esocial';
 import { esocialEventService } from '@/services/esocial/event.service';
 

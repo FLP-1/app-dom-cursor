@@ -1,6 +1,14 @@
-import { EmpregadoDomestico, CboCargo } from '../types/empregado-domestico';
-import { i18n } from 'i18next';
-import { empregadoDomesticoMessages } from '../i18n/messages';
+/**
+ * Arquivo: empregado-domestico.service.ts
+ * Caminho: src/services/empregado-domestico.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de empregado doméstico
+ */
+
+import { EmpregadoDomestico, CboCargo } from '@/types/empregado-domestico';
+import { I18nService } from '@/services/i18n.service';
+import { empregadoDomesticoMessages } from '@/i18n/messages';
 
 interface ApiError {
   message: string;
@@ -19,7 +27,7 @@ export const empregadoDomesticoService = {
 
       if (!response.ok) {
         const errorData = await response.json() as ApiError;
-        throw new Error(errorData.message || empregadoDomesticoMessages[i18n?.language as 'pt' | 'en' || 'pt'].genericError);
+        throw new Error(errorData.message || empregadoDomesticoMessages[I18nService.language as 'pt' | 'en' || 'pt'].genericError);
       }
 
       return response.json();
@@ -27,7 +35,7 @@ export const empregadoDomesticoService = {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
-      throw new Error(empregadoDomesticoMessages[i18n?.language as 'pt' | 'en' || 'pt'].genericError);
+      throw new Error(empregadoDomesticoMessages[I18nService.language as 'pt' | 'en' || 'pt'].genericError);
     }
   },
 
@@ -41,7 +49,7 @@ export const empregadoDomesticoService = {
 
       if (!response.ok) {
         const errorData = await response.json() as ApiError;
-        throw new Error(errorData.message || empregadoDomesticoMessages[i18n?.language as 'pt' | 'en' || 'pt'].genericError);
+        throw new Error(errorData.message || empregadoDomesticoMessages[I18nService.language as 'pt' | 'en' || 'pt'].genericError);
       }
 
       return response.json();
@@ -49,7 +57,7 @@ export const empregadoDomesticoService = {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
-      throw new Error(empregadoDomesticoMessages[i18n?.language as 'pt' | 'en' || 'pt'].genericError);
+      throw new Error(empregadoDomesticoMessages[I18nService.language as 'pt' | 'en' || 'pt'].genericError);
     }
   },
 
@@ -59,10 +67,10 @@ export const empregadoDomesticoService = {
 
       if (!response.ok) {
         if (response.status === 404) {
-          throw new Error(empregadoDomesticoMessages[i18n?.language as 'pt' | 'en' || 'pt'].notFound);
+          throw new Error(empregadoDomesticoMessages[I18nService.language as 'pt' | 'en' || 'pt'].notFound);
         }
         const errorData = await response.json() as ApiError;
-        throw new Error(errorData.message || empregadoDomesticoMessages[i18n?.language as 'pt' | 'en' || 'pt'].genericError);
+        throw new Error(errorData.message || empregadoDomesticoMessages[I18nService.language as 'pt' | 'en' || 'pt'].genericError);
       }
 
       return response.json();
@@ -70,7 +78,7 @@ export const empregadoDomesticoService = {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
-      throw new Error(empregadoDomesticoMessages[i18n?.language as 'pt' | 'en' || 'pt'].genericError);
+      throw new Error(empregadoDomesticoMessages[I18nService.language as 'pt' | 'en' || 'pt'].genericError);
     }
   },
 
@@ -80,7 +88,7 @@ export const empregadoDomesticoService = {
 
       if (!response.ok) {
         const errorData = await response.json() as ApiError;
-        throw new Error(errorData.message || empregadoDomesticoMessages[i18n?.language as 'pt' | 'en' || 'pt'].genericError);
+        throw new Error(errorData.message || empregadoDomesticoMessages[I18nService.language as 'pt' | 'en' || 'pt'].genericError);
       }
 
       return response.json();
@@ -88,7 +96,7 @@ export const empregadoDomesticoService = {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
-      throw new Error(empregadoDomesticoMessages[i18n?.language as 'pt' | 'en' || 'pt'].genericError);
+      throw new Error(empregadoDomesticoMessages[I18nService.language as 'pt' | 'en' || 'pt'].genericError);
     }
   },
 
@@ -100,13 +108,13 @@ export const empregadoDomesticoService = {
 
       if (!response.ok) {
         const errorData = await response.json() as ApiError;
-        throw new Error(errorData.message || empregadoDomesticoMessages[i18n?.language as 'pt' | 'en' || 'pt'].genericError);
+        throw new Error(errorData.message || empregadoDomesticoMessages[I18nService.language as 'pt' | 'en' || 'pt'].genericError);
       }
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
-      throw new Error(empregadoDomesticoMessages[i18n?.language as 'pt' | 'en' || 'pt'].genericError);
+      throw new Error(empregadoDomesticoMessages[I18nService.language as 'pt' | 'en' || 'pt'].genericError);
     }
   }
 }; 

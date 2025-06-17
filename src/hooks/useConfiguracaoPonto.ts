@@ -1,5 +1,13 @@
+/**
+ * Arquivo: useConfiguracaoPonto.ts
+ * Caminho: src/hooks/useConfiguracaoPonto.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useState, useEffect } from 'react';
-import { useNotification } from './useNotification';
+import { useNotification } from '@/hooks/useNotification';
 import { useRouter } from 'next/router';
 
 interface ConfiguracaoPonto {

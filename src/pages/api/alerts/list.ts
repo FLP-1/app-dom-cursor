@@ -1,6 +1,14 @@
+/**
+ * Arquivo: list.ts
+ * Caminho: src/pages/api/alerts/list.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para listar alertas
+ */
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Pool } from 'pg';
-import { verifyToken } from '../../utils/auth';
+import { verifyToken } from '@/utils/auth';
 
 // Configure your PostgreSQL connection pool using environment variables
 const pool = new Pool({
@@ -26,11 +34,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const client = await pool.connect();
     let query = 'SELECT * FROM alerts';
     const queryParams = [];
+    const whereClauses = [];
 
     // Implement authorization logic for listing alerts
     if (authUser.userType === 'Empregador') {
-      // Employers list alerts they created
-      query += ' WHERE created_by = $1';
+      whereClauses.push('created_by = $' + (queryParams.length + 1));
       queryParams.push(authUser.userId);
     } else if (authUser.userType !== 'Administrador') {
       // Other user types (Empregado, Familiar, Parceiro) - Placeholder for listing relevant alerts
@@ -40,9 +48,33 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(403).json({ message: 'Permissão negada para listar alertas para este tipo de usuário (ainda não implementado).' });
     }
 
-    // Admins list all alerts (no WHERE clause added)
+    // Filtros recebidos via query params
+    const { type, severity, startDate, endDate, message } = req.query;
+    if (type) {
+      whereClauses.push('type = $' + (queryParams.length + 1));
+      queryParams.push(type);
+    }
+    if (severity) {
+      whereClauses.push('severity = $' + (queryParams.length + 1));
+      queryParams.push(severity);
+    }
+    if (startDate) {
+      whereClauses.push('created_at >= $' + (queryParams.length + 1));
+      queryParams.push(new Date(startDate as string));
+    }
+    if (endDate) {
+      whereClauses.push('created_at <= $' + (queryParams.length + 1));
+      queryParams.push(new Date(endDate as string));
+    }
+    if (message) {
+      whereClauses.push('message ILIKE $' + (queryParams.length + 1));
+      queryParams.push(`%${message}%`);
+    }
 
-    // Optional: Add ordering (e.g., ORDER BY created_at DESC)
+    if (whereClauses.length > 0) {
+      query += ' WHERE ' + whereClauses.join(' AND ');
+    }
+
     query += ' ORDER BY created_at DESC';
 
     const result = await client.query(query, queryParams);

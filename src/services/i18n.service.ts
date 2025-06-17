@@ -1,13 +1,24 @@
-import { LogService, TipoLog, CategoriaLog } from './log.service';
-import { CacheService } from './cache.service';
-import { ConfigService } from './config.service';
+/**
+ * Arquivo: i18n.service.ts
+ * Caminho: src/services/i18n.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de internacionalização
+ */
+
+import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';
+import { CacheService } from '@/services/cache.service';
+import { ConfigService } from '@/services/config.service';
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import axios from 'axios';
 
 /**
  * Serviço de Internacionalização
  * @description Gerencia traduções e formatação de datas/números
  * @author DOM
  * @version 1.0.0
- * @since 2024-01-01
+ * @since 2025-01-01
  */
 
 export type Idioma = 'pt-BR' | 'en-US' | 'es-ES';
@@ -28,15 +39,23 @@ export interface TraducaoFilter {
   categoria?: Traducao['categoria'];
 }
 
-export const I18nService = {
-  CACHE_KEY: 'i18n:',
-  CACHE_EXPIRACAO: 3600, // 1 hora
-  idiomaAtual: 'pt-BR' as Idioma,
+class I18nManager {
+  private static instance: I18nManager;
+  private readonly CACHE_KEY = 'i18n:';
+  private readonly CACHE_EXPIRACAO = 3600; // 1 hora
+  private idiomaAtual: Idioma;
 
-  /**
-   * Define o idioma atual
-   * @param idioma Idioma a ser definido
-   */
+  private constructor() {
+    this.idiomaAtual = 'pt-BR';
+  }
+
+  static getInstance(): I18nManager {
+    if (!I18nManager.instance) {
+      I18nManager.instance = new I18nManager();
+    }
+    return I18nManager.instance;
+  }
+
   async definirIdioma(idioma: Idioma): Promise<void> {
     try {
       this.idiomaAtual = idioma;
@@ -65,12 +84,8 @@ export const I18nService = {
       });
       throw error;
     }
-  },
+  }
 
-  /**
-   * Obtém o idioma atual
-   * @returns Idioma atual
-   */
   async obterIdioma(): Promise<Idioma> {
     try {
       const idioma = await ConfigService.obter<Idioma>('idioma');
@@ -87,14 +102,8 @@ export const I18nService = {
       });
       throw error;
     }
-  },
+  }
 
-  /**
-   * Traduz uma chave
-   * @param chave Chave a ser traduzida
-   * @param variaveis Variáveis para substituição
-   * @returns Texto traduzido
-   */
   async traduzir(
     chave: string,
     variaveis?: Record<string, string>
@@ -123,15 +132,8 @@ export const I18nService = {
       });
       return chave;
     }
-  },
+  }
 
-  /**
-   * Define uma tradução
-   * @param chave Chave da tradução
-   * @param valor Valor da tradução
-   * @param idioma Idioma da tradução
-   * @param categoria Categoria da tradução
-   */
   async definirTraducao(
     chave: string,
     valor: string,
@@ -167,13 +169,8 @@ export const I18nService = {
       });
       throw error;
     }
-  },
+  }
 
-  /**
-   * Remove uma tradução
-   * @param chave Chave da tradução
-   * @param idioma Idioma da tradução
-   */
   async removerTraducao(chave: string, idioma: Idioma): Promise<void> {
     try {
       await axios.delete(`/api/i18n/${idioma}/${chave}`);
@@ -197,13 +194,8 @@ export const I18nService = {
       });
       throw error;
     }
-  },
+  }
 
-  /**
-   * Lista todas as traduções
-   * @param filtros Filtros para a listagem
-   * @returns Lista de traduções
-   */
   async listarTraducoes(filtros?: TraducaoFilter): Promise<Traducao[]> {
     try {
       const { data } = await axios.get<Traducao[]>('/api/i18n', {
@@ -219,13 +211,8 @@ export const I18nService = {
       });
       throw error;
     }
-  },
+  }
 
-  /**
-   * Importa traduções de um arquivo
-   * @param arquivo Arquivo com as traduções
-   * @returns Resultado da importação
-   */
   async importarTraducoes(arquivo: File): Promise<{
     total: number;
     sucesso: number;
@@ -239,16 +226,17 @@ export const I18nService = {
         total: number;
         sucesso: number;
         erro: number;
-      }>('/api/i18n/importar', formData);
-
-      // Limpa o cache
-      await CacheService.limpar();
+      }>('/api/i18n/importar', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
 
       await LogService.create({
         tipo: TipoLog.INFO,
         categoria: CategoriaLog.SISTEMA,
         mensagem: 'Traduções importadas',
-        detalhes: data
+        detalhes: { data }
       });
 
       return data;
@@ -261,49 +249,48 @@ export const I18nService = {
       });
       throw error;
     }
-  },
+  }
 
-  /**
-   * Exporta traduções para um arquivo
-   * @param filtros Filtros para a exportação
-   * @param formato Formato do arquivo (csv, xlsx, json)
-   * @returns URL do arquivo
-   */
   async exportarTraducoes(
     filtros?: TraducaoFilter,
     formato: 'csv' | 'xlsx' | 'json' = 'json'
   ): Promise<string> {
     try {
-      const { data } = await axios.post<{ url: string }>('/api/i18n/exportar', {
-        ...filtros,
-        formato
+      const { data } = await axios.get('/api/i18n/exportar', {
+        params: {
+          ...filtros,
+          formato
+        },
+        responseType: 'blob'
       });
+
+      const url = window.URL.createObjectURL(new Blob([data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `traducoes.${formato}`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
 
       await LogService.create({
         tipo: TipoLog.INFO,
         categoria: CategoriaLog.SISTEMA,
         mensagem: 'Traduções exportadas',
-        detalhes: { filtros, formato }
+        detalhes: { formato }
       });
 
-      return data.url;
+      return url;
     } catch (error) {
       await LogService.create({
         tipo: TipoLog.ERROR,
         categoria: CategoriaLog.SISTEMA,
         mensagem: 'Erro ao exportar traduções',
-        detalhes: { filtros, formato, error }
+        detalhes: { formato, error }
       });
       throw error;
     }
-  },
+  }
 
-  /**
-   * Formata uma data
-   * @param data Data a ser formatada
-   * @param formato Formato da data
-   * @returns Data formatada
-   */
   formatarData(data: Date, formato: Intl.DateTimeFormatOptions = {
     day: '2-digit',
     month: '2-digit',
@@ -322,14 +309,8 @@ export const I18nService = {
       });
       return data.toISOString();
     }
-  },
+  }
 
-  /**
-   * Formata um número
-   * @param numero Número a ser formatado
-   * @param formato Formato do número
-   * @returns Número formatado
-   */
   formatarNumero(
     numero: number,
     formato: Intl.NumberFormatOptions = {
@@ -349,14 +330,8 @@ export const I18nService = {
       });
       return numero.toString();
     }
-  },
+  }
 
-  /**
-   * Formata uma moeda
-   * @param valor Valor a ser formatado
-   * @param moeda Código da moeda
-   * @returns Valor formatado
-   */
   formatarMoeda(
     valor: number,
     moeda: string = 'BRL'
@@ -375,14 +350,8 @@ export const I18nService = {
       });
       return valor.toString();
     }
-  },
+  }
 
-  /**
-   * Substitui variáveis em um texto
-   * @param texto Texto com variáveis
-   * @param variaveis Variáveis para substituição
-   * @returns Texto com variáveis substituídas
-   */
   private substituirVariaveis(
     texto: string,
     variaveis?: Record<string, string>
@@ -391,8 +360,86 @@ export const I18nService = {
       return texto;
     }
 
-    return texto.replace(/\{(\w+)\}/g, (match, key) => {
+    return texto.replace(/\{\{(\w+)\}\}/g, (match, key) => {
       return variaveis[key] || match;
     });
   }
-}; 
+}
+
+export const i18nManager = I18nManager.getInstance();
+
+export const I18nService = {
+  async definirIdioma(idioma: Idioma): Promise<void> {
+    return i18nManager.definirIdioma(idioma);
+  },
+
+  async obterIdioma(): Promise<Idioma> {
+    return i18nManager.obterIdioma();
+  },
+
+  async traduzir(
+    chave: string,
+    variaveis?: Record<string, string>
+  ): Promise<string> {
+    return i18nManager.traduzir(chave, variaveis);
+  },
+
+  async definirTraducao(
+    chave: string,
+    valor: string,
+    idioma: Idioma,
+    categoria: Traducao['categoria']
+  ): Promise<void> {
+    return i18nManager.definirTraducao(chave, valor, idioma, categoria);
+  },
+
+  async removerTraducao(chave: string, idioma: Idioma): Promise<void> {
+    return i18nManager.removerTraducao(chave, idioma);
+  },
+
+  async listarTraducoes(filtros?: TraducaoFilter): Promise<Traducao[]> {
+    return i18nManager.listarTraducoes(filtros);
+  },
+
+  async importarTraducoes(arquivo: File): Promise<{
+    total: number;
+    sucesso: number;
+    erro: number;
+  }> {
+    return i18nManager.importarTraducoes(arquivo);
+  },
+
+  async exportarTraducoes(
+    filtros?: TraducaoFilter,
+    formato: 'csv' | 'xlsx' | 'json' = 'json'
+  ): Promise<string> {
+    return i18nManager.exportarTraducoes(filtros, formato);
+  },
+
+  formatarData(data: Date, formato?: Intl.DateTimeFormatOptions): string {
+    return i18nManager.formatarData(data, formato);
+  },
+
+  formatarNumero(numero: number, formato?: Intl.NumberFormatOptions): string {
+    return i18nManager.formatarNumero(numero, formato);
+  },
+
+  formatarMoeda(valor: number, moeda?: string): string {
+    return i18nManager.formatarMoeda(valor, moeda);
+  }
+};
+
+// Inicialização básica do i18next para integração com react-i18next
+// Ajuste as configurações conforme necessário para seu projeto
+if (!i18n.isInitialized) {
+  i18n
+    .use(initReactI18next)
+    .init({
+      lng: 'pt-BR',
+      fallbackLng: 'pt-BR',
+      interpolation: { escapeValue: false },
+      resources: {}, // Carregue seus recursos conforme necessário
+    });
+}
+
+export default i18n; 
