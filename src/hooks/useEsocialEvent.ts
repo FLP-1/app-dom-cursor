@@ -1,6 +1,15 @@
-import { useState } from 'react';
+/**
+ * Arquivo: useEsocialEvent.ts
+ * Caminho: src/hooks/useEsocialEvent.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
+import { useState, useCallback } from 'react';
 import { EsocialEventService } from '@/services/esocial-event.service';
 import { EsocialEvent, EsocialEventFilter, EsocialEventFormData } from '@/types/esocial';
+import { EsocialEventResponse } from '@/types/esocial';
 
 export function useEsocialEvent() {
   const [loading, setLoading] = useState(false);
@@ -21,47 +30,68 @@ export function useEsocialEvent() {
     }
   };
 
-  const getEvent = async (id: string) => {
+  const getEvent = useCallback(async (id: string) => {
     try {
       setLoading(true);
       setError(null);
-      const event = await service.getEvent(id);
-      return event;
+      const response = await fetch(`/api/esocial/eventos/${id}`);
+      
+      if (!response.ok) {
+        throw new Error('Erro ao buscar evento');
+      }
+
+      return response.json();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao buscar evento');
       return null;
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const createEvent = async (data: EsocialEventFormData) => {
+  const createEvent = useCallback(async (data: EsocialEventFormData) => {
     try {
       setLoading(true);
       setError(null);
-      const event = await service.createEvent(data);
-      return event;
+      const response = await fetch('/api/esocial/eventos', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Erro ao criar evento');
+      }
+
+      return response.json();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao criar evento');
       return null;
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const updateEventStatus = async (id: string, status: string, mensagemErro?: string) => {
+  const updateEventStatus = useCallback(async (id: string, status: string) => {
     try {
       setLoading(true);
       setError(null);
-      const event = await service.updateEventStatus(id, status, mensagemErro);
-      return event;
+      const response = await fetch(`/api/esocial/eventos/${id}/status`, {
+        method: 'PUT',
+        body: JSON.stringify({ status }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Erro ao atualizar status do evento');
+      }
+
+      return response.json();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao atualizar status do evento');
       return null;
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   const deleteEvent = async (id: string) => {
     try {

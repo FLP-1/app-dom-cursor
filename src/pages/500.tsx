@@ -1,41 +1,50 @@
-import React from 'react';
-import { Box, Typography, Button } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import { useRouter } from 'next/router';
-import { PageHeader } from '../components/common/PageHeader';
+/**
+ * Arquivo: 500.tsx
+ * Caminho: src/pages/500.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de erro 500
+ */
 
-export default function ErrorPage() {
-  const { t } = useTranslation();
-  const router = useRouter();
+import { Box, Button, Container, Typography } from '@mui/material';
+import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
+
+export default function ServerError() {
+  const { t } = useTranslation('common');
 
   return (
-    <Box sx={{ p: 3 }}>
-      <PageHeader
-        title={t('Erro interno')}
-      />
-
-      <Box sx={{ mt: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
-        <Typography variant="h1" color="text.secondary" gutterBottom>
+    <Container maxWidth="sm">
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: '100vh',
+          textAlign: 'center',
+          gap: 2
+        }}
+      >
+        <Typography variant="h1" component="h1" gutterBottom>
           500
         </Typography>
-
-        <Typography variant="h5" color="text.secondary" gutterBottom>
-          {t('500.titulo')}
+        <Typography variant="h5" component="h2" gutterBottom>
+          {t('errors.serverError')}
         </Typography>
-
         <Typography variant="body1" color="text.secondary" paragraph>
-          {t('500.descricao')}
+          {t('errors.serverErrorDescription')}
         </Typography>
-
         <Button
+          component={Link}
+          href="/"
           variant="contained"
           color="primary"
-          onClick={() => router.push('/')}
-          sx={{ mt: 3 }}
+          size="large"
         >
-          {t('500.voltar')}
+          {t('common.backToHome')}
         </Button>
       </Box>
-    </Box>
+    </Container>
   );
 } 

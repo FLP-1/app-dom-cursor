@@ -1,3 +1,11 @@
+/**
+ * Arquivo: useS1000Form.ts
+ * Caminho: src/hooks/esocial/useS1000Form.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslation } from 'react-i18next';

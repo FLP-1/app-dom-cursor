@@ -1,12 +1,20 @@
+/**
+ * Arquivo: useEsocialEventForm.ts
+ * Caminho: src/hooks/esocial/useEsocialEventForm.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import { useNotification } from '../useNotification';
+import { useNotification } from '@/hooks/useNotification';
 import { EsocialEvent } from '@/types/esocial';
-import { esocialEventSchema, EsocialEventFormValues } from './types';
-import { loadEvent, updateEventStatus, createNewEvent } from './utils';
+import { esocialEventSchema, EsocialEventFormValues } from '@/hooks/esocial/types';
+import { loadEvent, updateEventStatus, createNewEvent } from '@/hooks/esocial/utils';
 
 export function useEsocialEventForm(eventId?: string) {
   const { t } = useTranslation();

@@ -1,3 +1,11 @@
+/**
+ * Arquivo: useEsocialConfig.ts
+ * Caminho: src/hooks/useEsocialConfig.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -55,8 +63,8 @@ export function useEsocialConfig() {
 
   // Simular integração com gestão de alertas
   const alertasRecentes = [
-    { tipo: 'expiracao_certificado', mensagem: 'Certificado expira em 30 dias', data: '2024-06-10' },
-    { tipo: 'falha_envio', mensagem: 'Falha no envio do evento S-1200', data: '2024-06-09' },
+    { tipo: 'expiracao_certificado', mensagem: 'Certificado expira em 30 dias', data: '2025-06-10' },
+    { tipo: 'falha_envio', mensagem: 'Falha no envio do evento S-1200', data: '2025-06-09' },
   ];
 
   // Simular permissões
@@ -64,8 +72,8 @@ export function useEsocialConfig() {
 
   // Simular histórico de alterações
   const historicoAlteracoes: LogAlteracao[] = [
-    { data: '2024-06-01 10:00', usuario: 'admin@empresa.com', acao: 'Alterou certificado digital' },
-    { data: '2024-05-15 09:30', usuario: 'admin@empresa.com', acao: 'Atualizou e-mail de contato' },
+    { data: '2025-06-01 10:00', usuario: 'admin@empresa.com', acao: 'Alterou certificado digital' },
+    { data: '2025-05-15 09:30', usuario: 'admin@empresa.com', acao: 'Atualizou e-mail de contato' },
   ];
 
   const onSubmit = async (data: EsocialConfigFormValues) => {

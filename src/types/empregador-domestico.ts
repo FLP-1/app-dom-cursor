@@ -1,8 +1,16 @@
-import { User } from './user';
-import { Document } from './document';
-import { EsocialEvent } from './esocial';
-import { Ocorrencia } from './ocorrencia';
-import { RegistroPonto } from './ponto';
+/**
+ * Arquivo: empregador-domestico.ts
+ * Caminho: src/types/empregador-domestico.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Tipos de empregador doméstico
+ */
+
+import { User } from '@/types/user';
+import { Document } from '@/types/document';
+import { EsocialEvent } from '@/types/esocial';
+import { Ocorrencia } from '@/types/ocorrencia';
+import { RegistroPonto } from '@/types/ponto';
 
 export enum TipoContrato {
   CLT = 'CLT',
@@ -17,7 +25,7 @@ export enum TipoJornada {
   INTERMITENTE = 'INTERMITENTE',
 }
 
-export interface EmpregadorDomestico {
+export interface EmpregadoDomestico {
   id: string;
   nome: string;
   cpf: string;
@@ -50,7 +58,7 @@ export interface EmpregadorDomestico {
   updatedAt: Date;
 }
 
-export interface EmpregadorDomesticoFilter {
+export interface EmpregadoDomesticoFilter {
   nome?: string;
   cpf?: string;
   tipoContrato?: TipoContrato;
@@ -61,7 +69,7 @@ export interface EmpregadorDomesticoFilter {
   dataDemissaoFim?: Date;
 }
 
-export interface EmpregadorDomesticoFormData {
+export interface EmpregadoDomesticoFormData {
   nome: string;
   cpf: string;
   rg?: string;

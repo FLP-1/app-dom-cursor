@@ -1,3 +1,11 @@
+/**
+ * Arquivo: init.ts
+ * Caminho: src/database/init.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { pool } from './db';
 import fs from 'fs';
 import path from 'path';

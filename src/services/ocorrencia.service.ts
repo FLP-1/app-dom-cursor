@@ -1,4 +1,12 @@
-import { Ocorrencia, OcorrenciaFilter, OcorrenciaFormData } from '../types/ocorrencia';
+/**
+ * Arquivo: ocorrencia.service.ts
+ * Caminho: src/services/ocorrencia.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de ocorrências
+ */
+
+import { Ocorrencia, OcorrenciaFilter, OcorrenciaFormData } from '@/types/ocorrencia';
 import axios from 'axios';
 
 const API_URL = '/api/ocorrencia';

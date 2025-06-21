@@ -1,3 +1,11 @@
+/**
+ * Arquivo: privacy.tsx
+ * Caminho: src/pages/privacy.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de política de privacidade
+ */
+
 import {
   Container,
   Box,
@@ -7,20 +15,15 @@ import {
   ListItem,
   ListItemText,
   Divider,
+  ListItemButton,
 } from '@mui/material';
-import Logo from '../components/Logo';
-import { formatDateBR } from '../utils/date';
+import Logo from '@/components/Logo';
+import { formatDateBR } from '@/utils/date';
+import { Layout } from '@/components/layout/Layout';
 
 export default function Privacy() {
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        background: 'linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%)',
-      }}
-    >
+    <Layout>
       {/* Cabeçalho */}
       <Box
         sx={{
@@ -83,7 +86,7 @@ export default function Privacy() {
           </Typography>
 
           <List>
-            <ListItem>
+            <ListItemButton>
               <ListItemText
                 primary="1. Informações que Coletamos"
                 secondary={
@@ -101,11 +104,11 @@ export default function Privacy() {
                   </>
                 }
               />
-            </ListItem>
+            </ListItemButton>
 
             <Divider component="li" />
 
-            <ListItem>
+            <ListItemButton>
               <ListItemText
                 primary="2. Como Usamos Suas Informações"
                 secondary={
@@ -123,29 +126,29 @@ export default function Privacy() {
                   </>
                 }
               />
-            </ListItem>
+            </ListItemButton>
 
             <Divider component="li" />
 
-            <ListItem>
+            <ListItemButton>
               <ListItemText
                 primary="3. Proteção de Dados"
                 secondary="Implementamos medidas de segurança técnicas e organizacionais para proteger suas informações pessoais contra acesso não autorizado, alteração, divulgação ou destruição."
               />
-            </ListItem>
+            </ListItemButton>
 
             <Divider component="li" />
 
-            <ListItem>
+            <ListItemButton>
               <ListItemText
                 primary="4. Compartilhamento de Dados"
                 secondary="Não compartilhamos suas informações pessoais com terceiros, exceto quando necessário para fornecer nossos serviços ou quando exigido por lei."
               />
-            </ListItem>
+            </ListItemButton>
 
             <Divider component="li" />
 
-            <ListItem>
+            <ListItemButton>
               <ListItemText
                 primary="5. Seus Direitos"
                 secondary={
@@ -163,43 +166,43 @@ export default function Privacy() {
                   </>
                 }
               />
-            </ListItem>
+            </ListItemButton>
 
             <Divider component="li" />
 
-            <ListItem>
+            <ListItemButton>
               <ListItemText
                 primary="6. Cookies e Tecnologias Similares"
                 secondary="Utilizamos cookies e tecnologias similares para melhorar sua experiência, analisar o uso do site e personalizar o conteúdo."
               />
-            </ListItem>
+            </ListItemButton>
 
             <Divider component="li" />
 
-            <ListItem>
+            <ListItemButton>
               <ListItemText
                 primary="7. Retenção de Dados"
                 secondary="Mantemos suas informações pessoais apenas pelo tempo necessário para cumprir as finalidades para as quais foram coletadas, incluindo obrigações legais."
               />
-            </ListItem>
+            </ListItemButton>
 
             <Divider component="li" />
 
-            <ListItem>
+            <ListItemButton>
               <ListItemText
                 primary="8. Alterações na Política"
                 secondary="Podemos atualizar esta política periodicamente. Notificaremos você sobre quaisquer alterações significativas através do e-mail ou por meio de um aviso em nosso site."
               />
-            </ListItem>
+            </ListItemButton>
 
             <Divider component="li" />
 
-            <ListItem>
+            <ListItemButton>
               <ListItemText
                 primary="9. Contato"
                 secondary="Se você tiver dúvidas sobre esta Política de Privacidade ou sobre como tratamos suas informações, entre em contato conosco através do email: privacidade@dom.com.br"
               />
-            </ListItem>
+            </ListItemButton>
           </List>
 
           <Box sx={{ mt: 4, textAlign: 'center' }}>
@@ -209,6 +212,6 @@ export default function Privacy() {
           </Box>
         </Paper>
       </Container>
-    </Box>
+    </Layout>
   );
 } 

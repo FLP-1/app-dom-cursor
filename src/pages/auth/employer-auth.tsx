@@ -1,3 +1,11 @@
+/**
+ * Arquivo: employer-auth.tsx
+ * Caminho: src/pages/auth/employer-auth.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de autenticação para empregadores
+ */
+
 import React, { useState } from 'react';
 import {
   Box,

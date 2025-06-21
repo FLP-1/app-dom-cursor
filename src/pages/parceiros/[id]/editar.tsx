@@ -1,12 +1,20 @@
+/**
+ * Arquivo: editar.tsx
+ * Caminho: src/pages/parceiros/[id]/editar.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de edição de parceiro
+ */
+
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Box, Typography, Paper, CircularProgress, Button } from '@mui/material';
-import { Parceiro } from '../../../types/parceiro';
-import { useParceiroForm } from '../../../hooks/forms/useParceiroForm';
-import { ParceiroForm } from '../../../components/ParceiroForm';
+import { Parceiro } from '@/types/parceiro';
+import { useParceiroForm } from '@/hooks/forms/useParceiroForm';
+import { ParceiroForm } from '@/components/ParceiroForm';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
-import { parceiroService } from '../../../services/parceiro.service';
+import { parceiroService } from '@/services/parceiro.service';
 
 export default function EditarParceiroPage() {
   const { t } = useTranslation();

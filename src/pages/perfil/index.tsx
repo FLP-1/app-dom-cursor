@@ -1,21 +1,29 @@
+/**
+ * Arquivo: index.tsx
+ * Caminho: src/pages/perfil/index.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de perfil do usuário
+ */
+
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, CircularProgress, Alert, Snackbar, Card, CardContent, Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
-import { useNotification } from '../../hooks/useNotification';
-import { usePerfilForm } from '../../hooks/usePerfilForm';
-import { usePerfil } from '../../hooks/usePerfil';
-import { Perfil } from '../../types/perfil';
-import { PerfilForm } from '../../components/perfil/PerfilForm';
-import { PageHeader } from '../../components/common/PageHeader';
-import { api } from '../../services/api';
+import { useNotification } from '@/hooks/useNotification';
+import { usePerfilForm } from '@/hooks/usePerfilForm';
+import { usePerfil } from '@/hooks/usePerfil';
+import { Perfil } from '@/types/perfil';
+import PerfilForm from '@/components/perfil/PerfilForm';
+import { PageHeader } from '@/components/common/PageHeader';
+import { api } from '@/services/api';
+import { Layout } from '@/components/layout/Layout';
+import { formatDateBR } from '@/utils/formatters';
 
 export default function PerfilPage() {
   const { t } = useTranslation();
   const router = useRouter();
   const { showNotification } = useNotification();
-  const { data: session } = useSession();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [perfil, setPerfil] = useState<Perfil | null>(null);
@@ -59,86 +67,86 @@ export default function PerfilPage() {
   }
 
   return (
-    <Box sx={{ p: 3 }}>
-      <PageHeader
-        title={t('Perfil')}
-        onEdit={handleOpenForm}
-      />
+    <Layout>
+      <Box sx={{ p: 3 }}>
+        <PageHeader
+          title={t('Perfil')}
+          onEdit={handleOpenForm}
+        />
 
-      <Box sx={{ mt: 3 }}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6" color="text.secondary">
-                  {t('perfil.informacoesPessoais')}
-                </Typography>
-                <Box sx={{ mt: 2 }}>
-                  <Typography variant="body1">
-                    <strong>{t('perfil.nome.label')}:</strong> {perfil?.nome}
+        <Box sx={{ mt: 3 }}>
+          <Grid container spacing={3} columns={12}>
+            <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" color="text.secondary">
+                    {t('perfil.informacoesPessoais')}
                   </Typography>
-                  <Typography variant="body1">
-                    <strong>{t('perfil.email.label')}:</strong> {perfil?.email}
+                  <Box sx={{ mt: 2 }}>
+                    <Typography variant="body1">
+                      <strong>{t('perfil.nome.label')}:</strong> {perfil?.nome}
+                    </Typography>
+                    <Typography variant="body1">
+                      <strong>{t('perfil.email.label')}:</strong> {perfil?.email}
+                    </Typography>
+                    <Typography variant="body1">
+                      <strong>{t('perfil.telefone.label')}:</strong> {perfil?.telefone}
+                    </Typography>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" color="text.secondary">
+                    {t('perfil.informacoesConta')}
                   </Typography>
-                  <Typography variant="body1">
-                    <strong>{t('perfil.telefone.label')}:</strong> {perfil?.telefone}
+                  <Box sx={{ mt: 2 }}>
+                    <Typography variant="body1">
+                      <strong>{t('perfil.perfil.label')}:</strong> {perfil?.perfil}
+                    </Typography>
+                    <Typography variant="body1">
+                      <strong>{t('perfil.status.label')}:</strong> {perfil?.status}
+                    </Typography>
+                    <Typography variant="body1">
+                      <strong>{t('perfil.dataCriacao.label')}:</strong> {formatDateBR(perfil?.dataCriacao)}
+                    </Typography>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid gridColumn={{ xs: 'span 12' }}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" color="text.secondary">
+                    {t('perfil.ultimasAtividades')}
                   </Typography>
-                </Box>
-              </CardContent>
-            </Card>
+                  {/* Adicionar lista de últimas atividades */}
+                </CardContent>
+              </Card>
+            </Grid>
           </Grid>
+        </Box>
 
-          <Grid item xs={12} md={6}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6" color="text.secondary">
-                  {t('perfil.informacoesConta')}
-                </Typography>
-                <Box sx={{ mt: 2 }}>
-                  <Typography variant="body1">
-                    <strong>{t('perfil.perfil.label')}:</strong> {perfil?.perfil}
-                  </Typography>
-                  <Typography variant="body1">
-                    <strong>{t('perfil.status.label')}:</strong> {perfil?.status}
-                  </Typography>
-                  <Typography variant="body1">
-                    <strong>{t('perfil.dataCriacao.label')}:</strong> {formatDateBR(perfil?.dataCriacao)}
-                  </Typography>
-                </Box>
-              </CardContent>
-            </Card>
-          </Grid>
+        <PerfilForm
+          perfil={perfil}
+          onSuccess={handleSuccess}
+          open={isFormOpen}
+          onClose={handleCloseForm}
+        />
 
-          <Grid item xs={12}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6" color="text.secondary">
-                  {t('perfil.ultimasAtividades')}
-                </Typography>
-                {/* Adicionar lista de últimas atividades */}
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
+        <Snackbar
+          open={snackbar.open}
+          autoHideDuration={3000}
+          onClose={() => setSnackbar({ ...snackbar, open: false })}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        >
+          <Alert onClose={() => setSnackbar({ ...snackbar, open: false })} severity={snackbar.severity} sx={{ width: '100%' }}>
+            {snackbar.message}
+          </Alert>
+        </Snackbar>
       </Box>
-
-      <PerfilForm
-        perfil={perfil}
-        onSuccess={handleSuccess}
-        open={isFormOpen}
-        onClose={handleCloseForm}
-      />
-
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={3000}
-        onClose={() => setSnackbar({ ...snackbar, open: false })}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
-        <Alert onClose={() => setSnackbar({ ...snackbar, open: false })} severity={snackbar.severity} sx={{ width: '100%' }}>
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
-    </Box>
+    </Layout>
   );
 } 

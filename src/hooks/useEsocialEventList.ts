@@ -1,44 +1,43 @@
-import { useState, useEffect, useCallback } from 'react';
-import { EsocialEvent, EsocialEventFilter, EsocialEventType } from '../types/esocial-event';
-import { EsocialEventService } from '../services/esocial-event.service';
+/**
+ * Arquivo: useEsocialEventList.ts
+ * Caminho: src/hooks/useEsocialEventList.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
 
-interface UseEsocialEventListResult {
-  eventos: EsocialEvent[];
-  tipos: EsocialEventType[];
-  loading: boolean;
-  error: string | null;
-  filtros: EsocialEventFilter;
-  setFiltros: (filtros: EsocialEventFilter) => void;
-  atualizar: () => void;
+import { useState, useCallback } from 'react';
+import { EsocialEventResponse } from '@/types/esocial';
+
+interface EsocialEventFilter {
+  tipo?: string;
+  status?: string;
+  dataInicio?: string;
+  dataFim?: string;
 }
 
-export function useEsocialEventList(): UseEsocialEventListResult {
-  const [eventos, setEventos] = useState<EsocialEvent[]>([]);
-  const [tipos, setTipos] = useState<EsocialEventType[]>([]);
+export const useEsocialEventList = () => {
+  const [eventos, setEventos] = useState<EsocialEventResponse[]>([]);
+  const [tipos, setTipos] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [filtros, setFiltros] = useState<EsocialEventFilter>({});
 
-  const fetchEventos = useCallback(async () => {
+  const atualizar = useCallback(async () => {
     setLoading(true);
-    setError(null);
     try {
-      const [eventosData, tiposData] = await Promise.all([
-        EsocialEventService.list(filtros),
-        EsocialEventService.listTypes(),
-      ]);
-      setEventos(eventosData);
-      setTipos(tiposData);
-    } catch (e) {
-      setError('Erro ao carregar eventos do eSocial.');
+      // Simular chamada à API
+      const response = await fetch('/api/esocial/eventos');
+      const data = await response.json();
+      setEventos(data.eventos);
+      setTipos(data.tipos);
+      setError(null);
+    } catch (err) {
+      setError('Erro ao carregar eventos');
     } finally {
       setLoading(false);
     }
-  }, [filtros]);
-
-  useEffect(() => {
-    fetchEventos();
-  }, [fetchEventos]);
+  }, []);
 
   return {
     eventos,
@@ -47,6 +46,6 @@ export function useEsocialEventList(): UseEsocialEventListResult {
     error,
     filtros,
     setFiltros,
-    atualizar: fetchEventos,
+    atualizar,
   };
-} 
+}; 

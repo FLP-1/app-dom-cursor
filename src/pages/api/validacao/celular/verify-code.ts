@@ -1,6 +1,14 @@
+/**
+ * Arquivo: verify-code.ts
+ * Caminho: src/pages/api/validacao/celular/verify-code.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para verificar código de verificação para celular
+ */
+
 import { NextApiRequest, NextApiResponse } from 'next';
-import { verifyCode } from '../../../../lib/phoneVerification';
-import { validateBrazilianCellPhone } from '../../../../utils/validation';
+import { verifyCode } from '@/lib/phoneVerification';
+import { validateBrazilianCellPhone } from '@/utils/validation';
 
 export default async function handler(
   req: NextApiRequest,

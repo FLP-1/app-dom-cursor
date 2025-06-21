@@ -1,10 +1,18 @@
+/**
+ * Arquivo: useEsocialEventForm.ts
+ * Caminho: src/hooks/useEsocialEventForm.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import { useEsocialEvent } from './useEsocialEvent';
+import { useEsocialEvent } from '@/hooks/useEsocialEvent';
 import { TipoEvento } from '@/types/esocial';
 import { S2200Schema } from '@/schemas/esocial/S2200Schema';
 import { S2205Schema } from '@/schemas/esocial/S2205Schema';
@@ -21,9 +29,11 @@ import { S1210Schema } from '@/schemas/esocial/S1210Schema';
 import { S2300Schema } from '@/schemas/esocial/S2300Schema';
 import { S2399Schema } from '@/schemas/esocial/S2399Schema';
 import { S1207Schema } from '@/schemas/esocial/S1207Schema';
-import { useNotification } from './useNotification';
-import { esocialEventService } from '../services/esocial/event.service';
-import { EsocialEvent } from '../types/esocial';
+import { useNotification } from '@/hooks/useNotification';
+import { esocialEventService } from '@/services/esocial/event.service';
+import { EsocialEvent } from '@/types/esocial';
+import { useSnackbar } from 'notistack';
+import { EsocialEventResponse } from '@/types/esocial';
 
 const esocialEventSchema = z.object({
   tipo: z.object({
@@ -84,114 +94,49 @@ const esocialEventSchema = z.object({
 
 type EsocialEventFormValues = z.infer<typeof esocialEventSchema>;
 
-export function useEsocialEventForm(eventId?: string) {
-  const { t } = useTranslation();
-  const router = useRouter();
-  const { createEvent, updateEventStatus } = useEsocialEvent();
-  const { showNotification } = useNotification();
-  const [loading, setLoading] = useState(false);
-  const [event, setEvent] = useState<EsocialEvent | null>(null);
+interface EsocialEventFormData {
+  tipo: string;
+  data: string;
+  xml: string;
+}
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
-    watch,
-  } = useForm<EsocialEventFormValues>({
-    resolver: zodResolver(esocialEventSchema),
-    defaultValues: {
-      tipo: {
-        codigo: 'S2200',
-        descricao: 'Cadastramento Inicial do Vínculo'
-      },
-      dataEvento: new Date(),
-      payload: {},
+export const useEsocialEventForm = (evento?: EsocialEventResponse) => {
+  const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
+  const { control, handleSubmit, formState: { errors } } = useForm<EsocialEventFormData>({
+    defaultValues: evento ? {
+      tipo: evento.tipo,
+      data: evento.data,
+      xml: evento.xml,
+    } : {
+      tipo: '',
+      data: '',
+      xml: '',
     },
   });
 
-  const tipo = watch('tipo');
-
-  const loadEvent = useCallback(async () => {
-    const { id } = router.query;
-    if (!id) return;
-
+  const onSubmit = async (data: EsocialEventFormData) => {
     try {
-      setLoading(true);
-      const data = await esocialEventService.getEvent(id as string);
-      setEvent(data);
-      reset(data);
-    } catch {
-      showNotification({
-        type: 'error',
-        message: t('esocial.messages.erroCarregarEvento')
+      // Simular chamada à API
+      const response = await fetch('/api/esocial/eventos', {
+        method: evento ? 'PUT' : 'POST',
+        body: JSON.stringify(data),
       });
-    } finally {
-      setLoading(false);
+      
+      if (!response.ok) {
+        throw new Error('Erro ao salvar evento');
+      }
+
+      enqueueSnackbar('Evento salvo com sucesso', { variant: 'success' });
+      router.push('/esocial/eventos');
+    } catch (error) {
+      enqueueSnackbar('Erro ao salvar evento', { variant: 'error' });
     }
-  }, [router.query, reset, t]);
-
-  useEffect(() => {
-    loadEvent();
-  }, [loadEvent]);
-
-  const onSubmit = useCallback(
-    async (data: EsocialEventFormValues) => {
-      try {
-        setLoading(true);
-        if (eventId) {
-          await updateEventStatus(eventId, 'PENDENTE');
-          showNotification({
-            type: 'success',
-            message: t('messages:esocial.event.updated')
-          });
-        } else {
-          await createEvent(data);
-          showNotification({
-            type: 'success',
-            message: t('messages:esocial.event.created')
-          });
-        }
-        router.push('/esocial/eventos');
-      } catch {
-        showNotification({
-          type: 'error',
-          message: t('messages:esocial.event.error')
-        });
-      } finally {
-        setLoading(false);
-      }
-    },
-    [eventId, showNotification, t, router, createEvent, updateEventStatus]
-  );
-
-  const enviarEvento = useCallback(
-    async (eventId: string) => {
-      try {
-        await updateEventStatus(eventId, 'ENVIADO');
-        showNotification({
-          type: 'success',
-          message: t('messages:esocial.event.sent')
-        });
-      } catch {
-        showNotification({
-          type: 'error',
-          message: t('messages:esocial.event.sendError')
-        });
-      }
-    },
-    [showNotification, t, updateEventStatus]
-  );
+  };
 
   return {
     control,
-    handleSubmit,
     errors,
-    isSubmitting,
-    reset,
-    onSubmit,
-    enviarEvento,
-    tipo,
-    loading,
+    handleSubmit: handleSubmit(onSubmit),
   };
-} 
+}; 

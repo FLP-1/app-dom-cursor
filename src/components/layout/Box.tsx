@@ -1,3 +1,11 @@
+/**
+ * Arquivo: Box.tsx
+ * Caminho: src/components/layout/Box.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import React from 'react';
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
@@ -13,6 +21,7 @@ interface BoxProps extends React.HTMLAttributes<HTMLDivElement> {
   display?: string;
   alignItems?: string;
   justifyContent?: string;
+  as?: React.ElementType;
 }
 
 const StyledBox = styled.div<BoxProps>(({ theme, ...props }) => ({
@@ -27,9 +36,9 @@ const StyledBox = styled.div<BoxProps>(({ theme, ...props }) => ({
   justifyContent: props.justifyContent,
 }));
 
-const Box: React.FC<BoxProps> = ({ children, ...props }) => {
+const Box: React.FC<BoxProps> = ({ children, as: Component = 'div', ...props }) => {
   const theme = useTheme();
-  return <StyledBox theme={theme} {...props}>{children}</StyledBox>;
+  return <StyledBox as={Component} theme={theme} {...props}>{children}</StyledBox>;
 };
 
 export default Box; 

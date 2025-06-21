@@ -1,3 +1,11 @@
+/**
+ * Arquivo: service.ts
+ * Caminho: src/lib/communication/service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { Message, ChatRoom, MessageFilter, MessageType, MessagePriority, MessageStatus } from './types';
 import { PermissionChecker } from '../permissions/checker';
 

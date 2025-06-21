@@ -1,8 +1,16 @@
+/**
+ * Arquivo: index.tsx
+ * Caminho: src/pages/documents/index.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de documentos
+ */
+
 import React, { useState } from 'react';
-import DocumentHeader from '../../components/documents/DocumentHeader';
-import DocumentFilters from '../../components/documents/DocumentFilters';
-import DocumentList from '../../components/documents/DocumentList';
-import DocumentUploadModal from '../../components/documents/DocumentUploadModal';
+import DocumentHeader from '@/components/documents/DocumentHeader';
+import DocumentFilters from '@/components/documents/DocumentFilters';
+import DocumentList from '@/components/documents/DocumentList';
+import DocumentUploadModal from '@/components/documents/DocumentUploadModal';
 import Box from '@mui/material/Box';
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -11,7 +19,7 @@ import { Container } from '@/components/Container';
 
 const DocumentsPage: React.FC = () => {
   const [uploadOpen, setUploadOpen] = useState(false);
-  const [filters, setFilters] = useState<any>(null);
+  const [filters, setFilters] = useState<Record<string, unknown> | null>(null);
   const { t } = useTranslation();
 
   return (

@@ -1,3 +1,11 @@
+/**
+ * Arquivo: index.tsx
+ * Caminho: src/pages/esocial/tabelas/index.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de tabelas eSocial
+ */
+
 import React, { useState } from 'react';
 import {
   Box,
@@ -9,7 +17,7 @@ import {
   useTheme
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { EsocialTabelaManager } from '../../../components/EsocialTabelaManager';
+import { EsocialTabelaManager } from '@/components/EsocialTabelaManager';
 
 interface TabPanelProps {
   children?: React.ReactNode;

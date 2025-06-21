@@ -1,9 +1,17 @@
+/**
+ * Arquivo: useEsocialEventForm.ts
+ * Caminho: src/hooks/forms/useEsocialEventForm.ts
+ * Criado em: 2025-06-13
+ * Última atualização: 2025-06-13
+ * Descrição: Hook customizado para lógica, validação e submit do formulário de evento do eSocial, com carregamento de tipos, busca por ID e validação de datas.
+ */
+
 import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
-import { EsocialEvent, EsocialEventType } from '../../types/esocial-event';
-import { EsocialEventService } from '../../services/esocial-event.service';
+import { EsocialEvent, EsocialEventType } from '@/types/esocial-event';
+import { EsocialEventService } from '@/services/esocial-event.service';
 import { useTranslation } from 'react-i18next';
-import { MESSAGES } from '../../i18n/messages';
+import { MESSAGES } from '@/i18n/messages';
 
 interface UseEsocialEventFormProps {
   id?: string;
@@ -86,6 +94,8 @@ export function useEsocialEventForm(props?: UseEsocialEventFormProps) {
       ? { ...methods.register(name, { validate: validateDateBR }) }
       : { ...methods.register(name) };
 
+  const submit = () => {};
+
   return {
     ...methods,
     control: methods.control,
@@ -93,5 +103,6 @@ export function useEsocialEventForm(props?: UseEsocialEventFormProps) {
     loading,
     eventTypes,
     registerWithValidation,
+    submit,
   };
 } 

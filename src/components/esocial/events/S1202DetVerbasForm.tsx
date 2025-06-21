@@ -1,3 +1,11 @@
+/**
+ * Arquivo: S1202DetVerbasForm.tsx
+ * Caminho: src/components/esocial/events/S1202DetVerbasForm.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useTranslation } from 'react-i18next';
 import { Control, useFieldArray } from 'react-hook-form';
 import { Grid, IconButton, Typography, Paper, Box, Tooltip } from '@mui/material';
@@ -6,6 +14,7 @@ import { S1202Schema } from '@/schemas/esocial/S1202Schema';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { tooltips } from '@/i18n/tooltips';
 
 interface S1202DetVerbasFormProps {
   control: Control<S1202Schema>;
@@ -27,7 +36,7 @@ export const S1202DetVerbasForm = ({ control, dmDevIndex, estabLotIndex }: S1202
           <Typography variant="subtitle2">
             {t('esocial.S1202.dmDev.infoPerApur.ideEstabLot.detVerbas.title')}
           </Typography>
-          <Tooltip title={t('esocial.S1202.dmDev.infoPerApur.ideEstabLot.detVerbas.help')}>
+          <Tooltip title={tooltips.esocialS1202DetVerbasHelp.pt}>
             <HelpOutlineIcon fontSize="small" color="action" />
           </Tooltip>
         </Box>
@@ -54,7 +63,7 @@ export const S1202DetVerbasForm = ({ control, dmDevIndex, estabLotIndex }: S1202
             </Typography>
             <IconButton
               onClick={() => remove(index)}
-              aria-label={t('common.actions.remove')}
+              aria-label="Remover verba"
               color="error"
               size="small"
             >
@@ -62,24 +71,22 @@ export const S1202DetVerbasForm = ({ control, dmDevIndex, estabLotIndex }: S1202
             </IconButton>
           </Box>
 
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={3}>
+          <Grid container spacing={2} columns={12}>
+            <Grid gridColumn={{ xs: 'span 12', md: 'span 3' }}>
               <FormInput
                 name={`dmDev.${dmDevIndex}.infoPerApur.ideEstabLot.${estabLotIndex}.detVerbas.${index}.codRubr`}
                 label={t('esocial.S1202.dmDev.infoPerApur.ideEstabLot.detVerbas.codRubr')}
                 control={control}
               />
             </Grid>
-
-            <Grid item xs={12} md={3}>
+            <Grid gridColumn={{ xs: 'span 12', md: 'span 3' }}>
               <FormInput
                 name={`dmDev.${dmDevIndex}.infoPerApur.ideEstabLot.${estabLotIndex}.detVerbas.${index}.ideTabRubr`}
                 label={t('esocial.S1202.dmDev.infoPerApur.ideEstabLot.detVerbas.ideTabRubr')}
                 control={control}
               />
             </Grid>
-
-            <Grid item xs={12} md={2}>
+            <Grid gridColumn={{ xs: 'span 12', md: 'span 2' }}>
               <FormInput
                 name={`dmDev.${dmDevIndex}.infoPerApur.ideEstabLot.${estabLotIndex}.detVerbas.${index}.qtdRubr`}
                 label={t('esocial.S1202.dmDev.infoPerApur.ideEstabLot.detVerbas.qtdRubr')}
@@ -87,8 +94,7 @@ export const S1202DetVerbasForm = ({ control, dmDevIndex, estabLotIndex }: S1202
                 type="number"
               />
             </Grid>
-
-            <Grid item xs={12} md={2}>
+            <Grid gridColumn={{ xs: 'span 12', md: 'span 2' }}>
               <FormInput
                 name={`dmDev.${dmDevIndex}.infoPerApur.ideEstabLot.${estabLotIndex}.detVerbas.${index}.vrRubr`}
                 label={t('esocial.S1202.dmDev.infoPerApur.ideEstabLot.detVerbas.vrRubr')}
@@ -96,8 +102,7 @@ export const S1202DetVerbasForm = ({ control, dmDevIndex, estabLotIndex }: S1202
                 mask="currency"
               />
             </Grid>
-
-            <Grid item xs={12} md={2}>
+            <Grid gridColumn={{ xs: 'span 12', md: 'span 2' }}>
               <FormSelect
                 name={`dmDev.${dmDevIndex}.infoPerApur.ideEstabLot.${estabLotIndex}.detVerbas.${index}.indApurIR`}
                 label={t('esocial.S1202.dmDev.infoPerApur.ideEstabLot.detVerbas.indApurIR')}

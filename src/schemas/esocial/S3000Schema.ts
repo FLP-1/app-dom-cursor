@@ -1,3 +1,11 @@
+/**
+ * Arquivo: S3000Schema.ts
+ * Caminho: src/schemas/esocial/S3000Schema.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Schema para o evento S-3000
+ */
+
 import { z } from 'zod';
 import { TipoEventoEsocial } from '@/types/esocial';
 

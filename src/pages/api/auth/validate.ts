@@ -1,3 +1,11 @@
+/**
+ * Arquivo: validate.ts
+ * Caminho: src/pages/api/auth/validate.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para validar tokens de acesso
+ */
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
 

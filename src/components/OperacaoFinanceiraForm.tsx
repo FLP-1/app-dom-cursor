@@ -1,7 +1,16 @@
+/**
+ * Arquivo: OperacaoFinanceiraForm.tsx
+ * Caminho: src/components/OperacaoFinanceiraForm.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useOperacaoFinanceiraForm } from '@/hooks/useOperacaoFinanceiraForm';
+import type { OperacaoFinanceiraFormData } from '@/hooks/useOperacaoFinanceiraForm';
 import { FormInput } from './FormInput';
 import { FormSelect } from './FormSelect';
-import { FormDatePicker } from './FormDatePicker';
+import { FormDatePicker } from '@/components/common/forms/FormDatePicker';
 import { Button, Grid, Paper, Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { formatCurrency } from '@/utils/format';
@@ -20,7 +29,7 @@ export const OperacaoFinanceiraForm = ({ empregadoDomesticoId, onSuccess }: Oper
   const valor = watch('valor');
   const numeroParcelas = watch('numeroParcelas');
 
-  const handleFormSubmit = async (data: any) => {
+  const handleFormSubmit = async (data: OperacaoFinanceiraFormData) => {
     try {
       await onSubmit({ ...data, empregadoDomesticoId });
       onSuccess?.();
@@ -32,14 +41,13 @@ export const OperacaoFinanceiraForm = ({ empregadoDomesticoId, onSuccess }: Oper
   return (
     <Paper sx={{ p: 3 }}>
       <form onSubmit={handleSubmit(handleFormSubmit)}>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
+        <Grid container spacing={3} columns={12}>
+          <Grid gridColumn="span 12">
             <Typography variant="h6" gutterBottom>
               {t('operacaoFinanceira.titulo')}
             </Typography>
           </Grid>
-
-          <Grid item xs={12} md={6}>
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
             <FormSelect
               name="tipo"
               label={t('operacaoFinanceira.tipo')}
@@ -51,8 +59,7 @@ export const OperacaoFinanceiraForm = ({ empregadoDomesticoId, onSuccess }: Oper
               required
             />
           </Grid>
-
-          <Grid item xs={12} md={6}>
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
             <FormInput
               name="valor"
               label={t('operacaoFinanceira.valor')}
@@ -64,8 +71,7 @@ export const OperacaoFinanceiraForm = ({ empregadoDomesticoId, onSuccess }: Oper
               }}
             />
           </Grid>
-
-          <Grid item xs={12} md={6}>
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
             <FormDatePicker
               name="dataOperacao"
               label={t('operacaoFinanceira.dataOperacao')}
@@ -73,8 +79,7 @@ export const OperacaoFinanceiraForm = ({ empregadoDomesticoId, onSuccess }: Oper
               required
             />
           </Grid>
-
-          <Grid item xs={12} md={6}>
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
             <FormDatePicker
               name="dataVencimento"
               label={t('operacaoFinanceira.dataVencimento')}
@@ -82,9 +87,8 @@ export const OperacaoFinanceiraForm = ({ empregadoDomesticoId, onSuccess }: Oper
               required
             />
           </Grid>
-
           {tipoOperacao === 'EMPRESTIMO' && (
-            <Grid item xs={12} md={6}>
+            <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
               <FormInput
                 name="numeroParcelas"
                 label={t('operacaoFinanceira.numeroParcelas')}
@@ -96,16 +100,14 @@ export const OperacaoFinanceiraForm = ({ empregadoDomesticoId, onSuccess }: Oper
               />
             </Grid>
           )}
-
           {tipoOperacao === 'EMPRESTIMO' && numeroParcelas && valor && (
-            <Grid item xs={12} md={6}>
+            <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
               <Typography variant="body2" color="textSecondary">
                 {t('operacaoFinanceira.valorParcela')}: {formatCurrency(valor / numeroParcelas)}
               </Typography>
             </Grid>
           )}
-
-          <Grid item xs={12} md={6}>
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
             <FormSelect
               name="formaPagamento"
               label={t('operacaoFinanceira.formaPagamento')}
@@ -119,8 +121,7 @@ export const OperacaoFinanceiraForm = ({ empregadoDomesticoId, onSuccess }: Oper
               required
             />
           </Grid>
-
-          <Grid item xs={12}>
+          <Grid gridColumn="span 12">
             <FormInput
               name="observacao"
               label={t('operacaoFinanceira.observacao')}
@@ -129,8 +130,7 @@ export const OperacaoFinanceiraForm = ({ empregadoDomesticoId, onSuccess }: Oper
               rows={4}
             />
           </Grid>
-
-          <Grid item xs={12}>
+          <Grid gridColumn="span 12">
             <Button
               type="submit"
               variant="contained"

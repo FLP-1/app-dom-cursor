@@ -1,3 +1,11 @@
+<!--
+  Arquivo: README.md
+  Caminho: src/components/common/README.md
+  Criado em: 2025-06-01
+  Última atualização: 2025-06-13
+  Descrição: /*
+-->
+
 # Componentes Reutilizáveis
 
 Este diretório contém componentes reutilizáveis que podem ser utilizados em toda a aplicação. A organização é feita por categorias para facilitar a manutenção e localização.

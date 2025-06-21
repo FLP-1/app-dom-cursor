@@ -1,3 +1,11 @@
+/**
+ * Arquivo: validators.ts
+ * Caminho: src/utils/validators.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Funções para validar dados
+ */
+
 export function validateCPF(cpf: string): boolean {
   // Remove caracteres não numéricos
   cpf = cpf.replace(/\D/g, '');

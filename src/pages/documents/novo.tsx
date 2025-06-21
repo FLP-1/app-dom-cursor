@@ -1,3 +1,11 @@
+/**
+ * Arquivo: novo.tsx
+ * Caminho: src/pages/documents/novo.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de novo documento
+ */
+
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { DocumentForm } from '@/components/DocumentForm';

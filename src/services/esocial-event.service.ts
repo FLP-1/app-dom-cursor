@@ -1,3 +1,11 @@
+/**
+ * Arquivo: esocial-event.service.ts
+ * Caminho: src/services/esocial-event.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de eventos do eSocial
+ */
+
 import { prisma } from '@/lib/prisma';
 import { EsocialEvent, EsocialEventFilter, EsocialEventFormData } from '@/types/esocial';
 
@@ -79,4 +87,13 @@ export class EsocialEventService {
       where: { id }
     });
   }
+}
+
+export function getEsocialEvents() {
+  return [];
+}
+
+export function addEsocialEvent(event: EsocialEvent) {
+  // mock
+  return event;
 } 

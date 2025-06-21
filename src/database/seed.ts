@@ -1,3 +1,11 @@
+/**
+ * Arquivo: seed.ts
+ * Caminho: src/database/seed.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { pool } from './db';
 
 const alerts = [
@@ -16,7 +24,7 @@ const alerts = [
     severity: 'high',
     status: 'active',
     channels: ['email'],
-    criteria: { dueDate: '2024-05-25' },
+    criteria: { dueDate: '2025-05-25' },
     preferences: { notifyBefore: 3 }
   },
   {

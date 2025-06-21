@@ -1,14 +1,29 @@
+/**
+ * Arquivo: TarefaList.tsx
+ * Caminho: src/components/TarefaList.tsx
+ * Criado em: 2025-06-13
+ * Última atualização: 2025-06-13
+ * Descrição: Componente de tabela para exibição de tarefas, com ações de visualizar, editar e excluir.
+ */
+
 import React from 'react';
-import { Task } from '../types/task';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress, Typography } from '@mui/material';
-import { formatDateBR } from '../utils/date';
+import { Task } from '@/types/task';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress, Typography, IconButton, Tooltip } from '@mui/material';
+import { formatDateBR } from '@/utils/date';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { tooltips } from '@/i18n/tooltips';
 
 interface TarefaListProps {
   tarefas: Task[];
   loading: boolean;
+  onEdit?: (tarefa: Task) => void;
+  onView?: (tarefa: Task) => void;
+  onDelete?: (tarefa: Task) => void;
 }
 
-const TarefaList: React.FC<TarefaListProps> = ({ tarefas, loading }) => {
+const TarefaList: React.FC<TarefaListProps> = ({ tarefas, loading, onEdit, onView, onDelete }) => {
   if (loading) {
     return <CircularProgress aria-label="Carregando tarefas" />;
   }
@@ -36,7 +51,35 @@ const TarefaList: React.FC<TarefaListProps> = ({ tarefas, loading }) => {
               <TableCell>{tarefa.prioridade}</TableCell>
               <TableCell>{tarefa.responsavelNome || '-'}</TableCell>
               <TableCell>{tarefa.dataVencimento ? formatDateBR(tarefa.dataVencimento) : '-'}</TableCell>
-              <TableCell>{/* Placeholder para ações (editar, visualizar, etc) */}-</TableCell>
+              <TableCell>
+                {onView && (
+                  <Tooltip title={tooltips.tarefaVisualizar.pt}>
+                    <span>
+                      <IconButton aria-label="Visualizar tarefa" onClick={() => onView(tarefa)} size="small">
+                        <VisibilityIcon color="info" />
+                      </IconButton>
+                    </span>
+                  </Tooltip>
+                )}
+                {onEdit && (
+                  <Tooltip title={tooltips.tarefaEditar.pt}>
+                    <span>
+                      <IconButton aria-label="Editar tarefa" onClick={() => onEdit(tarefa)} size="small">
+                        <EditIcon color="primary" />
+                      </IconButton>
+                    </span>
+                  </Tooltip>
+                )}
+                {onDelete && (
+                  <Tooltip title={tooltips.tarefaExcluir.pt}>
+                    <span>
+                      <IconButton aria-label="Excluir tarefa" onClick={() => onDelete(tarefa)} size="small">
+                        <DeleteIcon color="error" />
+                      </IconButton>
+                    </span>
+                  </Tooltip>
+                )}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -45,4 +88,4 @@ const TarefaList: React.FC<TarefaListProps> = ({ tarefas, loading }) => {
   );
 };
 
-export default TarefaList; 
+export default React.memo(TarefaList); 

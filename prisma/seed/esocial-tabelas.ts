@@ -1,3 +1,11 @@
+/**
+ * Arquivo: esocial-tabelas.ts
+ * Caminho: prisma/seed/esocial-tabelas.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-05-30
+ * Descrição: Arquivo do projeto.
+ */
+
 import { PrismaClient } from '@prisma/client';
 import { TipoDocumentoEsocial, TipoOcorrenciaEsocial } from '@prisma/client';
 

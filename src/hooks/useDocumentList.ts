@@ -1,3 +1,11 @@
+/**
+ * Arquivo: useDocumentList.ts
+ * Caminho: src/hooks/useDocumentList.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useState, useCallback } from 'react';
 import { Document, TipoDocumentoEsocial } from '@prisma/client';
 import { DocumentService, DocumentFilter } from '@/services/DocumentService';

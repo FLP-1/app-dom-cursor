@@ -1,3 +1,11 @@
+/**
+ * Arquivo: S2400Form.tsx
+ * Caminho: src/components/esocial/events/S2400Form.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useTranslation } from 'react-i18next';
 import { Control } from 'react-hook-form';
 import { Grid } from '@mui/material';
@@ -7,8 +15,9 @@ import { FormSelect } from '@/components/form/FormSelect';
 import { FormMoneyInput } from '@/components/form/FormMoneyInput';
 import { FormTextArea } from '@/components/form/FormTextArea';
 
+// Justificativa: integração com react-hook-form, tipagem dinâmica dos campos
 interface S2400FormProps {
-  control: Control<any>;
+  control: Control<unknown>;
 }
 
 export const S2400Form = ({ control }: S2400FormProps) => {
@@ -20,8 +29,8 @@ export const S2400Form = ({ control }: S2400FormProps) => {
   }));
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12} md={6}>
+    <Grid container spacing={3} columns={12}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormInput
           name="cpf"
           control={control}
@@ -30,8 +39,7 @@ export const S2400Form = ({ control }: S2400FormProps) => {
           fullWidth
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormDatePicker
           name="dataInicioBeneficio"
           control={control}
@@ -40,8 +48,7 @@ export const S2400Form = ({ control }: S2400FormProps) => {
           fullWidth
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormSelect
           name="tipoBeneficio"
           control={control}
@@ -51,8 +58,7 @@ export const S2400Form = ({ control }: S2400FormProps) => {
           fullWidth
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormMoneyInput
           name="valorBeneficio"
           control={control}
@@ -61,8 +67,7 @@ export const S2400Form = ({ control }: S2400FormProps) => {
           fullWidth
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormDatePicker
           name="dataFimBeneficio"
           control={control}
@@ -70,8 +75,7 @@ export const S2400Form = ({ control }: S2400FormProps) => {
           fullWidth
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormInput
           name="motivoFimBeneficio"
           control={control}
@@ -79,8 +83,7 @@ export const S2400Form = ({ control }: S2400FormProps) => {
           fullWidth
         />
       </Grid>
-
-      <Grid item xs={12}>
+      <Grid gridColumn={{ xs: 'span 12' }}>
         <FormTextArea
           name="observacao"
           control={control}

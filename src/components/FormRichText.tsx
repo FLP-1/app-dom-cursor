@@ -1,3 +1,11 @@
+/**
+ * Arquivo: FormRichText.tsx
+ * Caminho: src/components/FormRichText.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { Control } from 'react-hook-form';
 import { Box, Typography } from '@mui/material';
 import dynamic from 'next/dynamic';
@@ -12,7 +20,6 @@ const ReactQuill = dynamic(() => import('react-quill'), {
 interface FormRichTextProps {
   name: string;
   label: string;
-  control: Control;
   value: string;
   onChange: (value: string) => void;
   disabled?: boolean;
@@ -52,7 +59,6 @@ const formats = [
 export function FormRichText({
   name,
   label,
-  control,
   value,
   onChange,
   disabled = false,
@@ -72,7 +78,7 @@ export function FormRichText({
         sx={{ mb: 1, display: 'block' }}
       >
         {label}
-        {required && <span style={{ color: 'red' }}> *</span>}
+        {required && <span sx={{ color: 'error.main' }}> *</span>}
       </Typography>
 
       <Box

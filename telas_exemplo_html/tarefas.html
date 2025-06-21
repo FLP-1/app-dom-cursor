@@ -1,0 +1,124 @@
+<!--
+  Arquivo: tarefas.html
+  Caminho: telas_exemplo_html/tarefas.html
+  Criado em: 2025-06-07
+  Última atualização: 2025-06-07
+  Descrição: Arquivo do projeto.
+-->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tarefas - Gestão DOM</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #f5f5f5;
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 700px;
+      margin: 2.5rem auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      padding: 2rem 1.5rem;
+    }
+    .title {
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: #1976d2;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    .task-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.5rem 0;
+    }
+    .task {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f5f5f5;
+      border-radius: 7px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 0.8rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .task-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .task-title {
+      font-size: 1.08rem;
+      font-weight: 500;
+      color: #333;
+    }
+    .task-status {
+      font-size: 0.97rem;
+      font-weight: 400;
+      color: #1976d2;
+      margin-top: 0.1rem;
+    }
+    .status-pendente { color: #f57c00; }
+    .status-andamento { color: #1976d2; }
+    .status-concluida { color: #388e3c; }
+    .btn-nova {
+      background: #1976d2;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.8rem 1.3rem;
+      font-size: 1.05rem;
+      font-weight: 500;
+      cursor: pointer;
+      margin-bottom: 1.2rem;
+      transition: background 0.2s;
+      display: block;
+      margin-left: auto;
+    }
+    .btn-nova:hover {
+      background: #1565c0;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 1rem 0.2rem; }
+      .task { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">Tarefas</div>
+    <button class="btn-nova">Nova Tarefa</button>
+    <ul class="task-list">
+      <li class="task">
+        <div class="task-info">
+          <span class="task-title">Reunião de alinhamento com equipe</span>
+          <span class="task-status status-andamento">Em andamento</span>
+        </div>
+        <span>10:00</span>
+      </li>
+      <li class="task">
+        <div class="task-info">
+          <span class="task-title">Envio de relatório mensal</span>
+          <span class="task-status status-pendente">Pendente</span>
+        </div>
+        <span>14:00</span>
+      </li>
+      <li class="task">
+        <div class="task-info">
+          <span class="task-title">Atualização de cadastro de empregado</span>
+          <span class="task-status status-concluida">Concluída</span>
+        </div>
+        <span>Ontem</span>
+      </li>
+    </ul>
+  </div>
+</body>
+</html> 

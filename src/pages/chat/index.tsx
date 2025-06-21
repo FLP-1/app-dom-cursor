@@ -1,8 +1,16 @@
+/**
+ * Arquivo: index.tsx
+ * Caminho: src/pages/chat/index.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de chat
+ */
+
 import React from 'react';
 import { Box, Typography, Paper } from '@mui/material';
-import { useChat } from '../../hooks/useChat';
-import ChatWindow from '../../components/ChatWindow';
-import ChatInput from '../../components/ChatInput';
+import { useChat } from '@/hooks/useChat';
+import ChatWindow from '@/components/ChatWindow';
+import ChatInput from '@/components/ChatInput';
 
 const ChatPage: React.FC = () => {
   const { mensagens, enviarMensagem, loading, enviarDocumento } = useChat();

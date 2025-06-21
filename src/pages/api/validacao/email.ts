@@ -1,6 +1,14 @@
+/**
+ * Arquivo: email.ts
+ * Caminho: src/pages/api/validacao/email.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para validar email
+ */
+
 import { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '../../../lib/prisma';
-import { sendEmail } from '../../../services/email';
+import { prisma } from '@/lib/prisma';
+import { sendEmail } from '@/services/email';
 
 export default async function handler(
   req: NextApiRequest,

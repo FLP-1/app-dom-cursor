@@ -1,3 +1,11 @@
+/**
+ * Arquivo: geolocation.service.ts
+ * Caminho: src/services/geolocation.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de geolocalização
+ */
+
 import axios from 'axios';
 
 export interface Geolocation {

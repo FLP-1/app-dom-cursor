@@ -1,3 +1,11 @@
+/**
+ * Arquivo: token.ts
+ * Caminho: src/utils/token.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Funções para manipulação de tokens
+ */
+
 import { randomBytes } from 'crypto';
 import jwt from 'jsonwebtoken';
 

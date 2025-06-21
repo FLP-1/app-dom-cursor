@@ -1,3 +1,11 @@
+/**
+ * Arquivo: index.ts
+ * Caminho: src/components/common/index.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 // Layout
 export { default as Box } from '../layout/Box';
 export { default as Container } from '../layout/Container';

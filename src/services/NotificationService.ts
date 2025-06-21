@@ -1,4 +1,12 @@
-import { MessagePriority } from '../lib/communication/types';
+/**
+ * Arquivo: NotificationService.ts
+ * Caminho: src/services/NotificationService.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de notificações
+ */
+
+import { MessagePriority } from '@/lib/communication/types';
 
 export enum NotificationType {
   SUCCESS = 'success',
@@ -96,4 +104,5 @@ class NotificationService {
   }
 }
 
-export const notificationService = NotificationService.getInstance(); 
+export const notificationService = NotificationService.getInstance();
+export { NotificationService }; 

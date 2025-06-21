@@ -1,4 +1,12 @@
-import React, { useState, useEffect } from 'react';
+/**
+ * Arquivo: EsocialTabelaManager.tsx
+ * Caminho: src/components/EsocialTabelaManager.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Box,
   Typography,
@@ -16,15 +24,11 @@ import {
   DialogContent,
   DialogActions,
   TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   Alert,
   CircularProgress
 } from '@mui/material';
 import { Edit as EditIcon, Delete as DeleteIcon, Add as AddIcon } from '@mui/icons-material';
-import { useEsocialTabela } from '../hooks/useEsocialTabela';
+import { useEsocialTabela } from '@/hooks/useEsocialTabela';
 import { useTranslation } from 'react-i18next';
 import { EsocialTabela, EsocialTabelaItem } from '@prisma/client';
 
@@ -38,7 +42,6 @@ export function EsocialTabelaManager({ codigoTabela }: EsocialTabelaManagerProps
     loading,
     error,
     getTabela,
-    getItemTabela,
     adicionarItemTabela,
     atualizarItemTabela,
     desativarItemTabela
@@ -55,14 +58,14 @@ export function EsocialTabelaManager({ codigoTabela }: EsocialTabelaManagerProps
     dataFim: ''
   });
 
-  useEffect(() => {
-    carregarTabela();
-  }, [codigoTabela]);
-
-  const carregarTabela = async () => {
+  const carregarTabela = useCallback(async () => {
     const data = await getTabela(codigoTabela);
     setTabela(data);
-  };
+  }, [codigoTabela, getTabela]);
+
+  useEffect(() => {
+    carregarTabela();
+  }, [carregarTabela]);
 
   const handleOpenDialog = (item?: EsocialTabelaItem) => {
     if (item) {

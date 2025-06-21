@@ -1,19 +1,27 @@
+/**
+ * Arquivo: index.ts
+ * Caminho: src/store/index.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Arquivo de configuração do Redux
+ */
+
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { combineReducers } from 'redux';
 
-import authReducer from './slices/authSlice';
-import userReducer from './slices/userSlice';
-import notificationReducer from './slices/notificationSlice';
-import esocialReducer from './slices/esocialSlice';
-import documentReducer from './slices/documentSlice';
-import taskReducer from './slices/taskSlice';
-import groupReducer from './slices/groupSlice';
-import partnerReducer from './slices/partnerSlice';
-import logReducer from './slices/logSlice';
-import validationReducer from './slices/validationSlice';
+import authReducer from '@/store/slices/authSlice';
+import userReducer from '@/store/slices/userSlice';
+import notificationReducer from '@/store/slices/notificationSlice';
+import esocialReducer from '@/store/slices/esocialSlice';
+import documentReducer from '@/store/slices/documentSlice';
+import taskReducer from '@/store/slices/taskSlice';
+import groupReducer from '@/store/slices/groupSlice';
+import partnerReducer from '@/store/slices/partnerSlice';
+import logReducer from '@/store/slices/logSlice';
+import validationReducer from '@/store/slices/validationSlice';
 
 const persistConfig = {
   key: 'root',

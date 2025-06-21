@@ -1,8 +1,16 @@
+/**
+ * Arquivo: [id].tsx
+ * Caminho: src/pages/planos/[id].tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de detalhes de plano
+ */
+
 import React from 'react';
 import { Box, Typography, Card, CardContent, Button, Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
-import { PageHeader } from '../../components/common/PageHeader';
+import { PageHeader } from '@/components/common/PageHeader';
 
 export default function PlanoDetalhesPage() {
   const { t } = useTranslation();
@@ -56,26 +64,28 @@ export default function PlanoDetalhesPage() {
               ))}
             </Box>
 
-            <Grid container spacing={2} sx={{ mt: 3 }}>
-              <Grid item xs={12} sm={6}>
-                <Button
-                  fullWidth
-                  variant="outlined"
-                  color="primary"
-                  onClick={() => router.push('/planos')}
-                >
-                  {t('planos.voltar')}
-                </Button>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  onClick={() => router.push(`/cadastro?plano=${id}`)}
-                >
-                  {t('planos.assinar')}
-                </Button>
+            <Grid container columns={12}>
+              <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }} sx={{ mt: 3 }}>
+                <Grid gridColumn="span 12">
+                  <Button
+                    fullWidth
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => router.push('/planos')}
+                  >
+                    {t('planos.voltar')}
+                  </Button>
+                </Grid>
+                <Grid gridColumn="span 12">
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    onClick={() => router.push(`/cadastro?plano=${id}`)}
+                  >
+                    {t('planos.assinar')}
+                  </Button>
+                </Grid>
               </Grid>
             </Grid>
           </CardContent>

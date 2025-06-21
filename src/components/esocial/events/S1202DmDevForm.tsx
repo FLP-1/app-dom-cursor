@@ -1,3 +1,11 @@
+/**
+ * Arquivo: S1202DmDevForm.tsx
+ * Caminho: src/components/esocial/events/S1202DmDevForm.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useTranslation } from 'react-i18next';
 import { Control, useFieldArray } from 'react-hook-form';
 import { Grid, IconButton, Typography, Paper, Box, Tooltip } from '@mui/material';
@@ -6,7 +14,8 @@ import { S1202Schema } from '@/schemas/esocial/S1202Schema';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import { S1202InfoPerApurForm } from './S1202InfoPerApurForm';
+import { S1202InfoPerApurForm } from '@/components/esocial/events/S1202InfoPerApurForm';
+import { tooltips } from '@/i18n/tooltips';
 
 interface S1202DmDevFormProps {
   control: Control<S1202Schema>;
@@ -26,7 +35,7 @@ export const S1202DmDevForm = ({ control }: S1202DmDevFormProps) => {
           <Typography variant="subtitle2">
             {t('esocial.S1202.dmDev.title')}
           </Typography>
-          <Tooltip title={t('esocial.S1202.dmDev.help')}>
+          <Tooltip title={tooltips.esocialS1202DmDevHelp.pt}>
             <HelpOutlineIcon fontSize="small" color="action" />
           </Tooltip>
         </Box>
@@ -71,16 +80,15 @@ export const S1202DmDevForm = ({ control }: S1202DmDevFormProps) => {
             </IconButton>
           </Box>
 
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
+          <Grid container spacing={2} columns={12}>
+            <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
               <FormInput
                 name={`dmDev.${index}.ideDmDev`}
                 label={t('esocial.S1202.dmDev.ideDmDev')}
                 control={control}
               />
             </Grid>
-
-            <Grid item xs={12} md={6}>
+            <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
               <FormInput
                 name={`dmDev.${index}.codCateg`}
                 label={t('esocial.S1202.dmDev.codCateg')}
@@ -88,8 +96,7 @@ export const S1202DmDevForm = ({ control }: S1202DmDevFormProps) => {
                 type="number"
               />
             </Grid>
-
-            <Grid item xs={12}>
+            <Grid gridColumn={{ xs: 'span 12' }}>
               <S1202InfoPerApurForm
                 control={control}
                 dmDevIndex={index}

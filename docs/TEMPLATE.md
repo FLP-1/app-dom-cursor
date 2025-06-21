@@ -1,0 +1,1 @@
+> **Atenção:** Sempre que modificar este arquivo, atualize o campo 'Última atualização:' no cabeçalho, conforme padrão do projeto. 

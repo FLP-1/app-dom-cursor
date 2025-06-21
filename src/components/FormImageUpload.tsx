@@ -1,14 +1,23 @@
-import { useForm, Control } from 'react-hook-form';
+/**
+ * Arquivo: FormImageUpload.tsx
+ * Caminho: src/components/FormImageUpload.tsx
+ * Criado em: 2025-06-07
+ * Última atualização: 2025-06-07
+ * Descrição: Componente de upload de imagem com preview, validação e suporte a drag and drop
+ */
+
+import { useForm, Control, FieldValues } from 'react-hook-form';
 import { Box, Typography, IconButton, CircularProgress } from '@mui/material';
 import { Image as ImageIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { useTranslation } from 'next-i18next';
 import { useNotification } from '@/hooks/useNotification';
 import { useState, useRef } from 'react';
+import Image from 'next/image';
 
-interface FormImageUploadProps {
+interface FormImageUploadProps<T extends FieldValues> {
   name: string;
   label: string;
-  control: Control;
+  control: Control<T>;
   aspectRatio?: number;
   maxSize?: number;
   onUpload?: (file: File) => Promise<void>;
@@ -18,7 +27,7 @@ interface FormImageUploadProps {
   error?: string;
 }
 
-export function FormImageUpload({
+export function FormImageUpload<T extends FieldValues>({
   name,
   label,
   control,
@@ -29,7 +38,7 @@ export function FormImageUpload({
   required = false,
   helperText,
   error
-}: FormImageUploadProps) {
+}: FormImageUploadProps<T>) {
   const { t } = useTranslation();
   const { showNotification } = useNotification();
   const [loading, setLoading] = useState(false);
@@ -56,7 +65,6 @@ export function FormImageUpload({
       return;
     }
 
-    // Criar preview
     const reader = new FileReader();
     reader.onload = (e) => {
       setPreview(e.target?.result as string);
@@ -99,7 +107,7 @@ export function FormImageUpload({
   };
 
   return (
-    <Box>
+    <Box sx={{ position: 'relative' }}>
       <input
         type="file"
         id={name}
@@ -121,6 +129,10 @@ export function FormImageUpload({
             textAlign: 'center',
             cursor: disabled || loading ? 'not-allowed' : 'pointer',
             opacity: disabled || loading ? 0.5 : 1,
+            '&:hover': {
+              borderColor: 'primary.main',
+              bgcolor: 'action.hover'
+            }
           }}
           onClick={() => !disabled && !loading && fileInputRef.current?.click()}
         >
@@ -138,6 +150,8 @@ export function FormImageUpload({
             position: 'relative',
             width: '100%',
             paddingTop: aspectRatio ? `${(1 / aspectRatio) * 100}%` : 'auto',
+            borderRadius: 1,
+            overflow: 'hidden'
           }}
         >
           <Box
@@ -150,16 +164,19 @@ export function FormImageUpload({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              bgcolor: 'background.paper'
             }}
           >
-            <img
+            <Box
+              component={Image}
               src={preview}
               alt={label}
-              style={{
-                maxWidth: '100%',
-                maxHeight: '100%',
-                objectFit: 'contain',
+              fill
+              sx={{
+                objectFit: 'contain'
               }}
+              sizes="100vw"
+              priority
             />
             <IconButton
               onClick={handleRemove}
@@ -169,8 +186,9 @@ export function FormImageUpload({
                 top: 8,
                 right: 8,
                 bgcolor: 'background.paper',
-                '&:hover': { bgcolor: 'background.paper' },
+                '&:hover': { bgcolor: 'background.paper' }
               }}
+              aria-label="Remover imagem"
             >
               <DeleteIcon />
             </IconButton>
@@ -189,15 +207,16 @@ export function FormImageUpload({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            bgcolor: 'rgba(255, 255, 255, 0.7)',
+            bgcolor: 'rgba(255, 255, 255, 0.8)',
+            borderRadius: 1
           }}
         >
           <CircularProgress />
         </Box>
       )}
 
-      {helperText && !error && (
-        <Typography variant="caption" color="textSecondary" sx={{ mt: 1, display: 'block' }}>
+      {helperText && (
+        <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
           {helperText}
         </Typography>
       )}

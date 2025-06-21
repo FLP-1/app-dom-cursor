@@ -1,11 +1,19 @@
+/**
+ * Arquivo: index.tsx
+ * Caminho: src/pages/empregados-domesticos/[id]/index.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de detalhes de empregado doméstico
+ */
+
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Box, Typography, Paper, Grid, CircularProgress, Alert, Button, Divider } from '@mui/material';
-import { EmpregadoDomestico } from '../../../types/empregado-domestico';
+import { EmpregadoDomestico } from '@/types/empregado-domestico';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
-import { empregadoDomesticoMessages } from '../../../i18n/messages';
-import { formatDateBR } from '../../../utils/date';
+import { empregadoDomesticoMessages } from '@/i18n/messages';
+import { formatDateBR } from '@/utils/date';
 
 export default function DetalhesEmpregadoDomesticoPage() {
   const { t, i18n } = useTranslation();
@@ -52,84 +60,84 @@ export default function DetalhesEmpregadoDomesticoPage() {
           </Link>
         </Box>
         <Divider sx={{ mb: 2 }} />
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} md={4}>
+        <Grid container spacing={2} columns={12}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Nome Completo')}</Typography>
             <Typography>{empregado.nomeCompleto}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('CPF')}</Typography>
             <Typography>{empregado.cpf}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Nascimento')}</Typography>
             <Typography>{empregado.dataNascimento ? formatDateBR(empregado.dataNascimento) : '-'}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Sexo')}</Typography>
             <Typography>{empregado.sexo}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Nacionalidade')}</Typography>
             <Typography>{empregado.nacionalidade}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Grau de Instrução')}</Typography>
             <Typography>{empregado.grauInstrucao}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Nome da Mãe')}</Typography>
             <Typography>{empregado.nomeMae}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Endereço')}</Typography>
             <Typography>{empregado.endereco}, {empregado.numero} {empregado.complemento ? `- ${empregado.complemento}` : ''}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Bairro')}</Typography>
             <Typography>{empregado.bairro}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Município')}</Typography>
             <Typography>{empregado.municipio} - {empregado.uf}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('CEP')}</Typography>
             <Typography>{empregado.cep}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Telefone')}</Typography>
             <Typography>{empregado.telefone}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('E-mail')}</Typography>
             <Typography>{empregado.email}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Matrícula')}</Typography>
             <Typography>{empregado.matricula}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Categoria')}</Typography>
             <Typography>{empregado.categoria}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Remuneração')}</Typography>
             <Typography>{empregado.remuneracao?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Cargo')}</Typography>
             <Typography>{empregado.cargo?.descricao || empregado.cargoId}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Jornada de Trabalho')}</Typography>
             <Typography>{empregado.jornadaTrabalho}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('CTPS')}</Typography>
             <Typography>{empregado.ctpsNumero} / {empregado.ctpsSerie} - {empregado.ctpsUf}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('PIS/PASEP')}</Typography>
             <Typography>{empregado.pisPasep}</Typography>
           </Grid>
@@ -139,24 +147,24 @@ export default function DetalhesEmpregadoDomesticoPage() {
         {empregado.dependentes && empregado.dependentes.length > 0 && (
           <>
             <Typography variant="h6" mb={1}>{t('Dependentes')}</Typography>
-            <Grid container spacing={2} mb={2}>
+            <Grid container spacing={2} mb={2} columns={12}>
               {empregado.dependentes.map((dep, idx) => (
-                <Grid item xs={12} key={idx}>
+                <Grid gridColumn="span 12" key={idx}>
                   <Paper variant="outlined" sx={{ p: 2, mb: 1, bgcolor: 'background.default' }}>
-                    <Grid container spacing={1}>
-                      <Grid item xs={12} sm={6} md={3}>
+                    <Grid container spacing={1} columns={12}>
+                      <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}>
                         <Typography variant="subtitle2">{t('Nome')}</Typography>
                         <Typography>{dep.nome}</Typography>
                       </Grid>
-                      <Grid item xs={12} sm={6} md={3}>
+                      <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}>
                         <Typography variant="subtitle2">{t('Parentesco')}</Typography>
                         <Typography>{dep.parentesco}</Typography>
                       </Grid>
-                      <Grid item xs={12} sm={6} md={3}>
+                      <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}>
                         <Typography variant="subtitle2">{t('Data de Nascimento')}</Typography>
                         <Typography>{dep.dataNascimento ? formatDateBR(dep.dataNascimento) : '-'}</Typography>
                       </Grid>
-                      <Grid item xs={12} sm={6} md={3}>
+                      <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}>
                         <Typography variant="subtitle2">{t('CPF')}</Typography>
                         <Typography>{dep.cpf || '-'}</Typography>
                       </Grid>
@@ -170,43 +178,43 @@ export default function DetalhesEmpregadoDomesticoPage() {
         <Divider sx={{ my: 3 }} />
         {/* Integrações */}
         <Typography variant="h6" mb={1}>{t('Integrações')}</Typography>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} md={4}>
+        <Grid container spacing={2} columns={12}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Ponto')}</Typography>
             {/* TODO: Integrar com registros de ponto do empregado */}
             <Link href={`/ponto?empregadoId=${empregado.id}`} passHref legacyBehavior>
               <Button variant="text" color="info">{t('Ver Ponto')}</Button>
             </Link>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Tarefas')}</Typography>
             {/* TODO: Integrar com tarefas do empregado */}
             <Link href={`/tarefas?empregadoId=${empregado.id}`} passHref legacyBehavior>
               <Button variant="text" color="info">{t('Ver Tarefas')}</Button>
             </Link>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Comunicação')}</Typography>
             {/* TODO: Integrar com chat/comunicação do empregado */}
             <Link href={`/chat?empregadoId=${empregado.id}`} passHref legacyBehavior>
               <Button variant="text" color="info">{t('Ver Comunicação')}</Button>
             </Link>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Alertas')}</Typography>
             {/* TODO: Integrar com alertas do empregado */}
             <Link href={`/alerts?empregadoId=${empregado.id}`} passHref legacyBehavior>
               <Button variant="text" color="info">{t('Ver Alertas')}</Button>
             </Link>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Compras')}</Typography>
             {/* TODO: Integrar com compras do empregado */}
             <Link href={`/compras?empregadoId=${empregado.id}`} passHref legacyBehavior>
               <Button variant="text" color="info">{t('Ver Compras')}</Button>
             </Link>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Documentos')}</Typography>
             {/* TODO: Integrar com documentos do empregado */}
             <Link href={`/documents?empregadoId=${empregado.id}`} passHref legacyBehavior>

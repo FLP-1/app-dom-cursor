@@ -1,77 +1,26 @@
-import { useState, useCallback } from 'react';
-import { notificationService, NotificationType, MessagePriority } from '../services/NotificationService';
+/**
+ * Arquivo: useNotification.ts
+ * Caminho: src/hooks/useNotification.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
 
-export type NotificationType = 'success' | 'error' | 'warning' | 'info';
+import { useSnackbar } from 'notistack';
 
-export interface Notification {
-  type: NotificationType;
+interface NotificationOptions {
+  type: 'success' | 'error' | 'warning' | 'info';
   message: string;
 }
 
-export function useNotification() {
-  const [notification, setNotification] = useState<Notification | null>(null);
+export const useNotification = () => {
+  const { enqueueSnackbar } = useSnackbar();
 
-  const showNotification = useCallback((notification: Notification) => {
-    setNotification(notification);
-  }, []);
-
-  const hideNotification = useCallback(() => {
-    setNotification(null);
-  }, []);
-
-  const success = useCallback(
-    (message: string, title = 'Sucesso', duration = 5000) => {
-      notificationService.success(message, title, duration);
-    },
-    []
-  );
-
-  const error = useCallback(
-    (message: string, title = 'Erro', duration = 0) => {
-      notificationService.error(message, title, duration);
-    },
-    []
-  );
-
-  const warning = useCallback(
-    (message: string, title = 'Atenção', duration = 5000) => {
-      notificationService.warning(message, title, duration);
-    },
-    []
-  );
-
-  const info = useCallback(
-    (message: string, title = 'Informação', duration = 3000) => {
-      notificationService.info(message, title, duration);
-    },
-    []
-  );
-
-  const custom = useCallback(
-    (notification: {
-      type: NotificationType;
-      title: string;
-      message: string;
-      priority: MessagePriority;
-      duration?: number;
-      action?: {
-        label: string;
-        onClick: () => void;
-      };
-    }) => {
-      notificationService.custom(notification);
-    },
-    []
-  );
+  const showNotification = ({ type, message }: NotificationOptions) => {
+    enqueueSnackbar(message, { variant: type });
+  };
 
   return {
-    notification,
     showNotification,
-    hideNotification,
-    success,
-    error,
-    warning,
-    info,
-    custom,
   };
-} 
+}; 

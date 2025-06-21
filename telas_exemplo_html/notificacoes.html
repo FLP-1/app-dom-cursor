@@ -1,0 +1,122 @@
+<!--
+  Arquivo: notificacoes.html
+  Caminho: telas_exemplo_html/notificacoes.html
+  Criado em: 2025-06-07
+  Última atualização: 2025-06-07
+  Descrição: Arquivo do projeto.
+-->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notificações - Gestão DOM</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #f5f5f5;
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 2.5rem auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      padding: 2rem 1.5rem;
+    }
+    .title {
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: #1976d2;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    .notification-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .notification {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: #f5f5f5;
+      border-radius: 7px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 0.8rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      justify-content: space-between;
+    }
+    .notif-content {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .notif-icon {
+      width: 22px;
+      height: 22px;
+      display: inline-block;
+      border-radius: 50%;
+      background: #1976d2;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    .notif-info { background: #1976d2; }
+    .notif-alert { background: #fbc02d; color: #333; }
+    .notif-success { background: #388e3c; }
+    .notif-text {
+      font-size: 1.05rem;
+      color: #333;
+    }
+    .btn-lida {
+      background: #1976d2;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-lida:hover {
+      background: #1565c0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">Notificações</div>
+    <ul class="notification-list">
+      <li class="notification">
+        <div class="notif-content">
+          <span class="notif-icon notif-info">i</span>
+          <span class="notif-text">Nova atualização disponível no sistema.</span>
+        </div>
+        <button class="btn-lida">Marcar como lida</button>
+      </li>
+      <li class="notification">
+        <div class="notif-content">
+          <span class="notif-icon notif-alert">!</span>
+          <span class="notif-text">Prazo para envio do relatório termina hoje.</span>
+        </div>
+        <button class="btn-lida">Marcar como lida</button>
+      </li>
+      <li class="notification">
+        <div class="notif-content">
+          <span class="notif-icon notif-success">✓</span>
+          <span class="notif-text">Cadastro de empregado realizado com sucesso.</span>
+        </div>
+        <button class="btn-lida">Marcar como lida</button>
+      </li>
+    </ul>
+  </div>
+</body>
+</html> 

@@ -1,3 +1,11 @@
+/**
+ * Arquivo: BadgeIcon.tsx
+ * Caminho: src/components/common/BadgeIcon.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import React from 'react';
 import { Badge, IconButton, Tooltip, SxProps, Theme } from '@mui/material';
 import { SvgIconComponent } from '@mui/icons-material';
@@ -7,6 +15,10 @@ interface BadgeIconProps {
   count?: number;
   max?: number;
   onClick?: () => void;
+  /**
+   * Tooltip do ícone. Sempre utilize texto do dicionário central de tooltips (ex: tooltips.algumaChave.pt).
+   * É proibido usar texto hardcoded.
+   */
   tooltip?: string;
   color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
   size?: 'small' | 'medium' | 'large';

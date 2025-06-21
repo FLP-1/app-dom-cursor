@@ -1,3 +1,11 @@
+/**
+ * Arquivo: api.ts
+ * Caminho: src/services/api.ts
+ * Criado em: 2025-06-13
+ * Última atualização: 2025-06-13
+ * Descrição: Configuração do axios para requisições HTTP, incluindo interceptors de autenticação e tratamento de erros.
+ */
+
 import axios from 'axios';
 
 export const api = axios.create({
@@ -22,7 +30,7 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('token');
-      window.location.href = '/login';
+      window.location.href = '/auth/login';
     }
     return Promise.reject(error);
   }

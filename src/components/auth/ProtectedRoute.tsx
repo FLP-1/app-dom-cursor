@@ -1,3 +1,11 @@
+/**
+ * Arquivo: ProtectedRoute.tsx
+ * Caminho: src/components/auth/ProtectedRoute.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/hooks/useAuth';
@@ -14,11 +22,13 @@ export function ProtectedRoute({ children, requiredRoles }: ProtectedRouteProps)
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.push('/auth/login');
+      router.replace('/auth/login');
+      return;
     }
 
     if (!isLoading && isAuthenticated && requiredRoles && !requiredRoles.includes(user?.role || '')) {
-      router.push('/unauthorized');
+      router.replace('/unauthorized');
+      return;
     }
   }, [isLoading, isAuthenticated, user?.role, requiredRoles, router]);
 

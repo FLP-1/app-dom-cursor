@@ -1,6 +1,18 @@
-import '@testing-library/jest-dom';
-import { TextEncoder, TextDecoder } from 'util';
+/**
+ * Arquivo: jest.setup.js
+ * Caminho: jest.setup.js
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-03
+ * Descrição: Arquivo do projeto.
+ */
 
+// Importar jest-dom primeiro para garantir que expect esteja disponível
+import '@testing-library/jest-dom';
+
+// Configurar globais
+const { TextEncoder, TextDecoder } = require('util');
+
+// Configurar globais
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
 
@@ -23,7 +35,13 @@ const localStorageMock = {
 global.localStorage = localStorageMock;
 
 // Mock do fetch
-global.fetch = jest.fn();
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    ok: true,
+    json: () => Promise.resolve({}),
+    text: () => Promise.resolve(''),
+  })
+);
 
 // Mock do window.matchMedia
 Object.defineProperty(window, 'matchMedia', {
@@ -40,21 +58,93 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
+// Mock do IntersectionObserver
+class IntersectionObserver {
+  constructor() {}
+  observe() { return null; }
+  unobserve() { return null; }
+  disconnect() { return null; }
+}
+global.IntersectionObserver = IntersectionObserver;
+
 // Mock do ResizeObserver
-global.ResizeObserver = jest.fn().mockImplementation(() => ({
-  observe: jest.fn(),
-  unobserve: jest.fn(),
-  disconnect: jest.fn(),
+class ResizeObserver {
+  constructor() {}
+  observe() { return null; }
+  unobserve() { return null; }
+  disconnect() { return null; }
+}
+global.ResizeObserver = ResizeObserver;
+
+// Mock do window.scrollTo
+window.scrollTo = jest.fn();
+
+// Mock do window.getComputedStyle
+window.getComputedStyle = jest.fn(() => ({
+  getPropertyValue: jest.fn(),
 }));
 
-// Mock do IntersectionObserver
-global.IntersectionObserver = jest.fn().mockImplementation(() => ({
-  observe: jest.fn(),
-  unobserve: jest.fn(),
-  disconnect: jest.fn(),
+// Mock do Element.prototype.getBoundingClientRect
+Element.prototype.getBoundingClientRect = jest.fn(() => ({
+  width: 120,
+  height: 120,
+  top: 0,
+  left: 0,
+  bottom: 0,
+  right: 0,
 }));
+
+// Mock do Prisma
+jest.mock('@prisma/client', () => ({
+  PrismaClient: jest.fn().mockImplementation(() => ({
+    $connect: jest.fn(),
+    $disconnect: jest.fn(),
+    // Adicione aqui outros métodos do Prisma que você usa
+  })),
+}));
+
+// Mock do Next.js
+const mockRouter = {
+  push: jest.fn(),
+  replace: jest.fn(),
+  prefetch: jest.fn(),
+  back: jest.fn(),
+  pathname: '/',
+  query: {},
+  asPath: '/',
+  events: {
+    on: jest.fn(),
+    off: jest.fn(),
+    emit: jest.fn(),
+  },
+  isReady: true,
+  isLocaleDomain: false,
+  isPreview: false,
+  locale: 'pt-BR',
+  locales: ['pt-BR'],
+  defaultLocale: 'pt-BR',
+  domainLocales: [],
+  basePath: '',
+};
+
+jest.mock('next/router', () => ({
+  useRouter: () => mockRouter,
+}));
+
+jest.mock('next/link', () => {
+  return ({ children, href }) => {
+    return <a href={href}>{children}</a>;
+  };
+});
 
 // Limpar todos os mocks após cada teste
 afterEach(() => {
   jest.clearAllMocks();
+  localStorageMock.clear();
+});
+
+// Limpar todos os mocks antes de cada teste
+beforeEach(() => {
+  jest.clearAllMocks();
+  localStorageMock.clear();
 }); 

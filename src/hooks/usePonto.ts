@@ -1,6 +1,16 @@
-import { useState } from 'react';
-import { useNotification } from './useNotification';
+/**
+ * Arquivo: usePonto.ts
+ * Caminho: src/hooks/usePonto.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
+import { useState, useEffect } from 'react';
+import { useNotification } from '@/hooks/useNotification';
 import axios from 'axios';
+import { api } from '@/services/api';
+import { RegistroPonto, RegistroPontoFormData } from '@/types/ponto';
 
 interface PontoRegistro {
   id: string;
@@ -14,97 +24,139 @@ interface PontoRegistro {
 }
 
 interface UsePontoReturn {
-  registrarPonto: (tipo: 'ENTRADA' | 'SAIDA') => Promise<void>;
+  registros: RegistroPonto[];
+  filtros: any;
+  setFiltros: (f: any) => void;
   loading: boolean;
-  ultimoRegistro?: PontoRegistro;
+  error?: string;
+  horasDia?: string;
+  horasSemana?: string;
+  horasMes?: string;
+  alertas?: string[];
+  registrarPonto: (data: RegistroPontoFormData & { file?: File | null }) => Promise<void>;
+  editarPonto: (id: string, data: RegistroPontoFormData & { file?: File | null }) => Promise<void>;
+  excluirPonto: (id: string) => Promise<void>;
+  aprovarPonto: (id: string) => Promise<void>;
+  fetchRegistros: () => Promise<void>;
 }
 
 export function usePonto(): UsePontoReturn {
+  const [registros, setRegistros] = useState<RegistroPonto[]>([]);
+  const [filtros, setFiltros] = useState<any>({});
   const [loading, setLoading] = useState(false);
-  const [ultimoRegistro, setUltimoRegistro] = useState<PontoRegistro>();
-  const { error, success } = useNotification();
+  const [error, setError] = useState<string | undefined>(undefined);
+  const [horasDia, setHorasDia] = useState<string>('');
+  const [horasSemana, setHorasSemana] = useState<string>('');
+  const [horasMes, setHorasMes] = useState<string>('');
+  const [alertas, setAlertas] = useState<string[]>([]);
 
-  const validarDataHora = async (): Promise<boolean> => {
+  const fetchRegistros = async () => {
+    setLoading(true);
+    setError(undefined);
     try {
-      // Obtém timestamp do servidor para comparação
-      const { data: serverTime } = await axios.get('/api/time');
-      const localTime = new Date().getTime();
-      const diff = Math.abs(localTime - serverTime);
-      
-      // Permite diferença de até 5 minutos
-      if (diff > 5 * 60 * 1000) {
-        error('A data/hora do seu dispositivo está incorreta. Por favor, sincronize seu relógio.');
-        return false;
-      }
-      return true;
+      const response = await api.get('/ponto', { params: filtros });
+      setRegistros(response.data.registros);
+      setHorasDia(response.data.horasDia);
+      setHorasSemana(response.data.horasSemana);
+      setHorasMes(response.data.horasMes);
+      setAlertas(response.data.alertas || []);
     } catch (err) {
-      error('Não foi possível validar a data/hora. Tente novamente.');
-      return false;
-    }
-  };
-
-  const obterGeolocalizacao = async (): Promise<{ latitude: number; longitude: number } | null> => {
-    try {
-      return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            resolve({
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude
-            });
-          },
-          (err) => {
-            error('Não foi possível obter sua localização. O registro de ponto requer permissão de localização.');
-            reject(err);
-          },
-          { timeout: 10000 }
-        );
-      });
-    } catch (err) {
-      return null;
-    }
-  };
-
-  const registrarPonto = async (tipo: 'ENTRADA' | 'SAIDA'): Promise<void> => {
-    try {
-      setLoading(true);
-
-      // Valida data/hora do dispositivo
-      const dataHoraValida = await validarDataHora();
-      if (!dataHoraValida) return;
-
-      // Obtém geolocalização
-      const geolocalizacao = await obterGeolocalizacao();
-      if (!geolocalizacao) return;
-
-      // Obtém informações do dispositivo
-      const userAgent = navigator.userAgent;
-      const ip = await axios.get('https://api.ipify.org?format=json').then(res => res.data.ip);
-
-      const registro: Omit<PontoRegistro, 'id'> = {
-        dataHora: new Date(),
-        tipo,
-        latitude: geolocalizacao.latitude,
-        longitude: geolocalizacao.longitude,
-        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        dispositivo: userAgent,
-        ip
-      };
-
-      // Envia registro para API
-      const { data } = await axios.post('/api/ponto/registrar', registro);
-      setUltimoRegistro(data);
-      success('Ponto registrado com sucesso!');
-    } catch (err) {
-      error('Erro ao registrar ponto. Tente novamente.');
+      setError('Erro ao carregar registros de ponto.');
     } finally {
       setLoading(false);
     }
   };
 
+  const registrarPonto = async (data: RegistroPontoFormData & { file?: File | null }) => {
+    setLoading(true);
+    setError(undefined);
+    try {
+      const formData = new FormData();
+      Object.entries(data).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          formData.append(key, value as any);
+        }
+      });
+      if (data.file) formData.append('file', data.file);
+      await api.post('/ponto', formData);
+      await fetchRegistros();
+    } catch (err) {
+      setError('Erro ao registrar ponto.');
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const editarPonto = async (id: string, data: RegistroPontoFormData & { file?: File | null }) => {
+    setLoading(true);
+    setError(undefined);
+    try {
+      const formData = new FormData();
+      Object.entries(data).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          formData.append(key, value as any);
+        }
+      });
+      if (data.file) formData.append('file', data.file);
+      await api.put(`/ponto/${id}`, formData);
+      await fetchRegistros();
+    } catch (err) {
+      setError('Erro ao editar ponto.');
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const excluirPonto = async (id: string) => {
+    setLoading(true);
+    setError(undefined);
+    try {
+      await api.delete(`/ponto/${id}`);
+      await fetchRegistros();
+    } catch (err) {
+      setError('Erro ao excluir ponto.');
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const aprovarPonto = async (id: string) => {
+    setLoading(true);
+    setError(undefined);
+    try {
+      await api.post(`/ponto/${id}/aprovar`);
+      await fetchRegistros();
+    } catch (err) {
+      setError('Erro ao aprovar ponto.');
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch inicial e ao mudar filtros
+  useEffect(() => {
+    fetchRegistros();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(filtros)]);
+
   return {
-    registrarPonto,
+    registros,
+    filtros,
+    setFiltros,
     loading,
-    ultimoRegistro
+    error,
+    horasDia,
+    horasSemana,
+    horasMes,
+    alertas,
+    registrarPonto,
+    editarPonto,
+    excluirPonto,
+    aprovarPonto,
+    fetchRegistros,
   };
 } 

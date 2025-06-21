@@ -1,3 +1,11 @@
+/**
+ * Arquivo: S1207Schema.ts
+ * Caminho: src/schemas/esocial/S1207Schema.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Schema para o evento S-1207
+ */
+
 import { z } from 'zod';
 
 export const S1207Schema = z.object({

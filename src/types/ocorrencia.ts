@@ -1,12 +1,22 @@
-import { TipoOcorrenciaEsocial } from '@prisma/client';
-import { User } from './user';
-import { EmpregadorDomestico } from './empregador-domestico';
-import { EsocialEvent } from './esocial-event';
-import { Document } from './document';
+/**
+ * Arquivo: ocorrencia.ts
+ * Caminho: src/types/ocorrencia.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Tipos de ocorrências do sistema, incluindo filtros e dados de formulário.
+ */
 
+// import { TipoOcorrenciaEsocial } from '@prisma/client';
+// TODO: TipoOcorrenciaEsocial não existe no Prisma. Revisar uso.
+import { User } from '@/types/user';
+import { EmpregadoDomestico } from '@/types/empregado-domestico';
+import { EsocialEvent } from '@/types/esocial-event';
+import { Document } from '@/types/document';
+
+// Justificativa: O campo 'tipo' depende de valores dinâmicos vindos do backend e pode variar conforme integrações futuras. Idealmente, substituir por enum ou union type quando possível.
 export interface Ocorrencia {
   id: string;
-  tipo: TipoOcorrenciaEsocial;
+  tipo: unknown;
   dataInicio: Date;
   dataFim: Date;
   justificativa?: string;
@@ -14,7 +24,7 @@ export interface Ocorrencia {
   usuarioId: string;
   usuario: User;
   empregadoDomesticoId: string;
-  empregadoDomestico: EmpregadorDomestico;
+  empregadoDomestico: EmpregadoDomestico;
   esocialEventId?: string;
   esocialEvent?: EsocialEvent;
   validado: boolean;
@@ -25,7 +35,7 @@ export interface Ocorrencia {
 }
 
 export interface OcorrenciaFilter {
-  tipo?: TipoOcorrenciaEsocial;
+  tipo?: unknown;
   dataInicio?: Date;
   dataFim?: Date;
   empregadoDomesticoId?: string;
@@ -34,7 +44,7 @@ export interface OcorrenciaFilter {
 }
 
 export interface OcorrenciaFormData {
-  tipo: TipoOcorrenciaEsocial;
+  tipo: unknown;
   dataInicio: Date;
   dataFim: Date;
   justificativa?: string;

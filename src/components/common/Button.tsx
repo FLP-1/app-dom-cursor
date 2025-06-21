@@ -1,3 +1,11 @@
+/**
+ * Arquivo: Button.tsx
+ * Caminho: src/components/common/Button.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import React from 'react';
 import { Button as MuiButton, SxProps, Theme } from '@mui/material';
 

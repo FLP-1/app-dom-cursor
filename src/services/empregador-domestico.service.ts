@@ -1,26 +1,34 @@
-import { EmpregadorDomestico, EmpregadorDomesticoFilter, EmpregadorDomesticoFormData } from '../types/empregador-domestico';
+/**
+ * Arquivo: empregador-domestico.service.ts
+ * Caminho: src/services/empregador-domestico.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de empregador doméstico
+ */
+
+import { EmpregadoDomestico, EmpregadoDomesticoFilter, EmpregadoDomesticoFormData } from '@/types/empregado-domestico';
 import axios from 'axios';
 
 const API_URL = '/api/empregador-domestico';
 
-export const EmpregadorDomesticoService = {
-  async list(filters?: EmpregadorDomesticoFilter): Promise<EmpregadorDomestico[]> {
-    const { data } = await axios.get<EmpregadorDomestico[]>(API_URL, { params: filters });
+export const EmpregadoDomesticoService = {
+  async list(filters?: EmpregadoDomesticoFilter): Promise<EmpregadoDomestico[]> {
+    const { data } = await axios.get<EmpregadoDomestico[]>(API_URL, { params: filters });
     return data;
   },
 
-  async getById(id: string): Promise<EmpregadorDomestico> {
-    const { data } = await axios.get<EmpregadorDomestico>(`${API_URL}/${id}`);
+  async getById(id: string): Promise<EmpregadoDomestico> {
+    const { data } = await axios.get<EmpregadoDomestico>(`${API_URL}/${id}`);
     return data;
   },
 
-  async create(formData: EmpregadorDomesticoFormData): Promise<EmpregadorDomestico> {
-    const { data } = await axios.post<EmpregadorDomestico>(API_URL, formData);
+  async create(formData: EmpregadoDomesticoFormData): Promise<EmpregadoDomestico> {
+    const { data } = await axios.post<EmpregadoDomestico>(API_URL, formData);
     return data;
   },
 
-  async update(id: string, formData: Partial<EmpregadorDomesticoFormData>): Promise<EmpregadorDomestico> {
-    const { data } = await axios.put<EmpregadorDomestico>(`${API_URL}/${id}`, formData);
+  async update(id: string, formData: Partial<EmpregadoDomesticoFormData>): Promise<EmpregadoDomestico> {
+    const { data } = await axios.put<EmpregadoDomestico>(`${API_URL}/${id}`, formData);
     return data;
   },
 

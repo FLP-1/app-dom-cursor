@@ -1,15 +1,30 @@
+/**
+ * Arquivo: index.tsx
+ * Caminho: src/pages/esocial/eventos/index.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de listagem de eventos eSocial
+ */
+
 import React, { useState } from 'react';
 import { Box, Typography, CircularProgress, Alert, Snackbar } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
-import { useEsocialEventList } from '../../hooks/useEsocialEventList';
-import { EsocialEventFilter } from '../../types/esocial-event';
+import { useEsocialEventList } from '@/hooks/useEsocialEventList';
+import { EsocialEventFilter } from '@/types/esocial-event';
 import { useForm } from 'react-hook-form';
-import { EsocialEventFilters } from '../../components/esocial/EsocialEventFilters';
-import { EsocialEventTable } from '../../components/esocial/EsocialEventTable';
-import { EsocialEventService } from '../../services/esocial-event.service';
-import { PageHeader } from '../../components/common/PageHeader';
-import { TableActions } from '../../components/common/TableActions';
+import { EsocialEventFilters } from '@/components/esocial/EsocialEventFilters';
+import { EsocialEventTable } from '@/components/esocial/EsocialEventTable';
+import { EsocialEventService } from '@/services/esocial-event.service';
+import { PageHeader } from '@/components/common/PageHeader';
+import { TableActions } from '@/components/common/TableActions';
+
+const statusOptions = [
+  { value: 'PENDING', label: 'Pendente' },
+  { value: 'SENT', label: 'Enviado' },
+  { value: 'PROCESSED', label: 'Processado' },
+  { value: 'REJECTED', label: 'Rejeitado' },
+];
 
 export default function EsocialEventosPage() {
   const { t } = useTranslation();

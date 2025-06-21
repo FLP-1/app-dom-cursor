@@ -1,14 +1,22 @@
+/**
+ * Arquivo: whatsapp.service.ts
+ * Caminho: src/services/whatsapp.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de WhatsApp
+ */
+
 import axios from 'axios';
-import { LogService, TipoLog, CategoriaLog } from './log.service';
-import { CacheService } from './cache.service';
-import { I18nService } from './i18n.service';
+import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';
+import { CacheService } from '@/services/cache.service';
+import { I18nService } from '@/services/i18n.service';
 
 /**
  * Serviço de WhatsApp
  * @description Gerencia o envio de mensagens pelo WhatsApp
  * @author DOM
  * @version 1.0.0
- * @since 2024-01-01
+ * @since 2025-01-01
  */
 
 export type TipoWhatsApp = 'sistema' | 'usuario' | 'empresa' | 'ponto' | 'ocorrencia' | 'documento' | 'esocial' | 'backup' | 'seguranca';

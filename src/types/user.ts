@@ -1,4 +1,12 @@
-import { EmpregadorDomestico } from './empregador-domestico';
+/**
+ * Arquivo: user.ts
+ * Caminho: src/types/user.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Tipos de usuários
+ */
+
+import { EmpregadoDomestico } from '@/types/empregado-domestico';
 
 export enum TipoUsuario {
   ADMIN = 'ADMIN',
@@ -14,7 +22,7 @@ export interface User {
   tipo: TipoUsuario;
   ativo: boolean;
   ultimoAcesso?: Date;
-  empregadoresDomesticos: EmpregadorDomestico[];
+  empregadoresDomesticos: EmpregadoDomestico[];
   createdAt: Date;
   updatedAt: Date;
 }

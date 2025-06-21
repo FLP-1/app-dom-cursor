@@ -1,3 +1,11 @@
+/**
+ * Arquivo: definitions.ts
+ * Caminho: src/lib/permissions/definitions.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { UserRole, RolePermissions } from './types';
 
 export const rolePermissions: RolePermissions = {

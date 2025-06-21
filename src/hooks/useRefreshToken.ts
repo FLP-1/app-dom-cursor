@@ -1,3 +1,11 @@
+/**
+ * Arquivo: useRefreshToken.ts
+ * Caminho: src/hooks/useRefreshToken.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useCallback, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { api } from '@/services/api';

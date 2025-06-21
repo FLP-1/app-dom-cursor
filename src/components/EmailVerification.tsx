@@ -1,5 +1,13 @@
+/**
+ * Arquivo: EmailVerification.tsx
+ * Caminho: src/components/EmailVerification.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useState } from 'react';
-import { useEmailVerification } from '../hooks/useEmailVerification';
+import { useEmailVerification } from '@/hooks/useEmailVerification';
 import { TextField, Button, Box, Typography, Alert } from '@mui/material';
 
 interface EmailVerificationProps {

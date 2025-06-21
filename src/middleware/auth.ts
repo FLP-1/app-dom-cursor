@@ -1,3 +1,11 @@
+/**
+ * Arquivo: auth.ts
+ * Caminho: src/middleware/auth.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { verify } from 'jsonwebtoken';

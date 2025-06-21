@@ -13,7 +13,43 @@
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-empty-interface": "warn",
     "react-hooks/exhaustive-deps": "warn",
-    "@next/next/no-img-element": "warn"
+    "@next/next/no-img-element": "warn",
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "antd",
+            "message": "Use apenas Material UI (MUI) para componentes visuais."
+          },
+          {
+            "name": "@ant-design/icons",
+            "message": "Use apenas Material UI (MUI) para componentes visuais."
+          },
+          {
+            "name": "bootstrap",
+            "message": "Use apenas Material UI (MUI) para componentes visuais."
+          },
+          {
+            "name": "react-bootstrap",
+            "message": "Use apenas Material UI (MUI) para componentes visuais."
+          },
+          {
+            "name": "@chakra-ui/react",
+            "message": "Use apenas Material UI (MUI) para componentes visuais."
+          },
+          {
+            "name": "primereact",
+            "message": "Use apenas Material UI (MUI) para componentes visuais."
+          },
+          {
+            "name": "semantic-ui-react",
+            "message": "Use apenas Material UI (MUI) para componentes visuais."
+          }
+        ]
+      }
+    ],
+    "react/jsx-no-inline-styles": ["error"],
     // "react/require-control-prop": ["error", { "components": ["FormInput", "PasswordInput"] }]
   }
 } 

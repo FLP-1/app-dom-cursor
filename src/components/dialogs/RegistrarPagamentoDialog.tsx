@@ -1,3 +1,11 @@
+/**
+ * Arquivo: RegistrarPagamentoDialog.tsx
+ * Caminho: src/components/dialogs/RegistrarPagamentoDialog.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import {
@@ -63,8 +71,8 @@ export function RegistrarPagamentoDialog({
       <DialogTitle>{t('operacoesFinanceiras.acoes.pagar')}</DialogTitle>
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogContent>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
+          <Grid container spacing={2} columns={12}>
+            <Grid gridColumn={{ xs: 'span 12' }}>
               <FormInput
                 control={control}
                 name="valor"
@@ -75,8 +83,7 @@ export function RegistrarPagamentoDialog({
                 helperText={errors.valor?.message}
               />
             </Grid>
-
-            <Grid item xs={12}>
+            <Grid gridColumn={{ xs: 'span 12' }}>
               <FormDatePicker
                 control={control}
                 name="dataPagamento"
@@ -85,8 +92,7 @@ export function RegistrarPagamentoDialog({
                 helperText={errors.dataPagamento?.message}
               />
             </Grid>
-
-            <Grid item xs={12}>
+            <Grid gridColumn={{ xs: 'span 12' }}>
               <FormInput
                 control={control}
                 name="comprovanteUrl"
@@ -96,8 +102,7 @@ export function RegistrarPagamentoDialog({
                 helperText={errors.comprovanteUrl?.message}
               />
             </Grid>
-
-            <Grid item xs={12}>
+            <Grid gridColumn={{ xs: 'span 12' }}>
               <FormInput
                 control={control}
                 name="observacao"

@@ -1,11 +1,20 @@
+/**
+ * Arquivo: index.tsx
+ * Caminho: src/pages/cadastro/index.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de cadastro
+ */
+
 import React, { useState } from 'react';
 import { Box, Typography, Card, CardContent, TextField, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
-import { useCadastroForm } from '../../hooks/useCadastroForm';
-import { useNotification } from '../../hooks/useNotification';
-import { PageHeader } from '../../components/common/PageHeader';
+import { useCadastroForm } from '@/hooks/useCadastroForm';
+import { useNotification } from '@/hooks/useNotification';
+import { PageHeader } from '@/components/common/PageHeader';
 import { FormData } from '@/types/forms';
+import { Layout } from '@/components/layout/Layout';
 
 interface CadastroData extends FormData {
   nome: string;
@@ -40,7 +49,7 @@ export default function CadastroPage() {
         type: 'success',
         message: t('cadastro.messages.cadastroRealizado')
       });
-      router.push('/login');
+      router.push('/auth/login');
     } catch (error) {
       showNotification({
         type: 'error',
@@ -52,86 +61,88 @@ export default function CadastroPage() {
   };
 
   return (
-    <Box sx={{ p: 3 }}>
-      <PageHeader
-        title={t('Cadastro')}
-      />
+    <Layout>
+      <Box sx={{ p: 3 }}>
+        <PageHeader
+          title={t('Cadastro')}
+        />
 
-      <Box sx={{ mt: 3, display: 'flex', justifyContent: 'center' }}>
-        <Card sx={{ maxWidth: 400, width: '100%' }}>
-          <CardContent>
-            <Typography variant="h6" color="text.secondary" gutterBottom>
-              {t('cadastro.titulo')}
-            </Typography>
+        <Box sx={{ mt: 3, display: 'flex', justifyContent: 'center' }}>
+          <Card sx={{ maxWidth: 400, width: '100%' }}>
+            <CardContent>
+              <Typography variant="h6" color="text.secondary" gutterBottom>
+                {t('cadastro.titulo')}
+              </Typography>
 
-            <Typography variant="body2" color="text.secondary" paragraph>
-              {t('cadastro.descricao')}
-            </Typography>
+              <Typography variant="body2" color="text.secondary" paragraph>
+                {t('cadastro.descricao')}
+              </Typography>
 
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <TextField
-                fullWidth
-                label={t('cadastro.nome.label')}
-                margin="normal"
-                error={!!errors.nome}
-                helperText={errors.nome?.message}
-                {...control('nome')}
-              />
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <TextField
+                  fullWidth
+                  label={t('cadastro.nome.label')}
+                  margin="normal"
+                  error={!!errors.nome}
+                  helperText={errors.nome?.message}
+                  {...control('nome')}
+                />
 
-              <TextField
-                fullWidth
-                label={t('cadastro.email.label')}
-                type="email"
-                margin="normal"
-                error={!!errors.email}
-                helperText={errors.email?.message}
-                {...control('email')}
-              />
+                <TextField
+                  fullWidth
+                  label={t('cadastro.email.label')}
+                  type="email"
+                  margin="normal"
+                  error={!!errors.email}
+                  helperText={errors.email?.message}
+                  {...control('email')}
+                />
 
-              <TextField
-                fullWidth
-                label={t('cadastro.senha.label')}
-                type="password"
-                margin="normal"
-                error={!!errors.senha}
-                helperText={errors.senha?.message}
-                {...control('senha')}
-              />
+                <TextField
+                  fullWidth
+                  label={t('cadastro.senha.label')}
+                  type="password"
+                  margin="normal"
+                  error={!!errors.senha}
+                  helperText={errors.senha?.message}
+                  {...control('senha')}
+                />
 
-              <TextField
-                fullWidth
-                label={t('cadastro.confirmarSenha.label')}
-                type="password"
-                margin="normal"
-                error={!!errors.confirmarSenha}
-                helperText={errors.confirmarSenha?.message}
-                {...control('confirmarSenha')}
-              />
+                <TextField
+                  fullWidth
+                  label={t('cadastro.confirmarSenha.label')}
+                  type="password"
+                  margin="normal"
+                  error={!!errors.confirmarSenha}
+                  helperText={errors.confirmarSenha?.message}
+                  {...control('confirmarSenha')}
+                />
 
-              <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                type="submit"
-                disabled={isLoading}
-                sx={{ mt: 3 }}
-              >
-                {t('cadastro.cadastrar')}
-              </Button>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  disabled={isLoading}
+                  sx={{ mt: 3 }}
+                >
+                  {t('cadastro.cadastrar')}
+                </Button>
 
-              <Button
-                fullWidth
-                variant="text"
-                color="primary"
-                onClick={() => router.push('/login')}
-                sx={{ mt: 1 }}
-              >
-                {t('cadastro.voltar')}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+                <Button
+                  fullWidth
+                  variant="text"
+                  color="primary"
+                  onClick={() => router.push('/auth/login')}
+                  sx={{ mt: 1 }}
+                >
+                  {t('cadastro.voltar')}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+        </Box>
       </Box>
-    </Box>
+    </Layout>
   );
 } 

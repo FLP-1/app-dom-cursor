@@ -1,3 +1,11 @@
+/**
+ * Arquivo: cbo-cargos.ts
+ * Caminho: src/pages/api/cbo-cargos.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para buscar cargos CBO
+ */
+
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '../../lib/prisma';
 

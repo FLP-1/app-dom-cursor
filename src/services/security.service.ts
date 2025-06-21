@@ -1,12 +1,20 @@
+/**
+ * Arquivo: security.service.ts
+ * Caminho: src/services/security.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de segurança
+ */
+
 import axios from 'axios';
-import { LogService, TipoLog, CategoriaLog } from './log.service';
+import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';
 
 /**
  * Serviço de Segurança
  * @description Gerencia funcionalidades de segurança do sistema
  * @author DOM
  * @version 1.0.0
- * @since 2024-01-01
+ * @since 2025-01-01
  */
 
 export interface LoginAttempt {

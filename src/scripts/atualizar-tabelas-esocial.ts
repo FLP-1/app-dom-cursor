@@ -1,5 +1,13 @@
+/**
+ * Arquivo: atualizar-tabelas-esocial.ts
+ * Caminho: src/scripts/atualizar-tabelas-esocial.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Script para atualizar as tabelas do eSocial
+ */
+
 import { PrismaClient } from '@prisma/client';
-import { EsocialTabelaService } from '../services/esocial-tabela.service';
+import { EsocialTabelaService } from '@/services/esocial-tabela.service';
 import axios from 'axios';
 
 const prisma = new PrismaClient();

@@ -1,3 +1,11 @@
+/**
+ * Arquivo: FormFileUpload.tsx
+ * Caminho: src/components/FormFileUpload.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useForm, Control } from 'react-hook-form';
 import { Button, Typography, Box, CircularProgress } from '@mui/material';
 import { CloudUpload as CloudUploadIcon } from '@mui/icons-material';
@@ -89,7 +97,7 @@ export function FormFileUpload({
         multiple={multiple}
         onChange={handleFileChange}
         disabled={disabled || loading}
-        style={{ display: 'none' }}
+        sx={{ display: 'none' }}
       />
       <label htmlFor={name}>
         <Button

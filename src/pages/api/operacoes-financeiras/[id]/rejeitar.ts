@@ -1,3 +1,11 @@
+/**
+ * Arquivo: rejeitar.ts
+ * Caminho: src/pages/api/operacoes-financeiras/[id]/rejeitar.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para rejeitar operações financeiras
+ */
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import { prisma } from '@/lib/prisma';

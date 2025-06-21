@@ -1,12 +1,20 @@
+/**
+ * Arquivo: DocumentUploadModal.tsx
+ * Caminho: src/components/documents/DocumentUploadModal.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import React, { useRef } from 'react';
-import Box from '../layout/Box';
-import { FormInput } from '../common/forms/FormInput';
-import { FormSelect } from '../common/forms/FormSelect';
-import Button from '../common/Button';
-import { useDocumentForm } from '../../hooks/forms/useDocumentForm';
+import Box from '@/components/layout/Box';
+import { FormInput } from '@/components/common/forms/FormInput';
+import { FormSelect } from '@/components/common/forms/FormSelect';
+import Button from '@/components/common/Button';
+import { useDocumentForm } from '@/hooks/forms/useDocumentForm';
 import { styled } from '@mui/material/styles';
-import { FormSwitch } from '../common/forms/FormSwitch';
-import { formatDateBR, parseDateBRtoISO } from '../../utils/date';
+import { FormSwitch } from '@/components/common/forms/FormSwitch';
+import { formatDateBR, parseDateBRtoISO } from '@/utils/date';
 
 interface DocumentUploadModalProps {
   open: boolean;

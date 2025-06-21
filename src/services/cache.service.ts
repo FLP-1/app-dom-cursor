@@ -1,4 +1,12 @@
-import { LogService, TipoLog, CategoriaLog } from './log.service';
+/**
+ * Arquivo: cache.service.ts
+ * Caminho: src/services/cache.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de cache
+ */
+
+import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';
 import axios from 'axios';
 
 /**
@@ -6,7 +14,7 @@ import axios from 'axios';
  * @description Gerencia o cache do sistema
  * @author DOM
  * @version 1.0.0
- * @since 2024-01-01
+ * @since 2025-01-01
  */
 
 export type TipoCache = 'memoria' | 'redis' | 'localStorage' | 'sessionStorage';

@@ -1,9 +1,17 @@
+/**
+ * Arquivo: reset-password.tsx
+ * Caminho: src/pages/auth/reset-password.tsx
+ * Criado em: 2025-06-13
+ * Última atualização: 2025-06-13
+ * Descrição: Página de redefinição de senha, com validação de senha forte e integração com API.
+ */
+
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { Box, Button, Typography, Paper, CircularProgress, Link } from '@mui/material';
-import { FormInput } from '../../components/common';
-import { useNotification } from '../../hooks';
+import { FormInput } from '@/components/common';
+import { useNotification } from '@/hooks';
 
 interface ResetPasswordForm {
   password: string;

@@ -1,5 +1,13 @@
+/**
+ * Arquivo: validation.service.ts
+ * Caminho: src/services/validation.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de validação
+ */
+
 import axios from 'axios';
-import { LogService, TipoLog, CategoriaLog } from './log.service';
+import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';
 import { cpf, cnpj } from 'cpf-cnpj-validator';
 import { isValidPhoneNumber } from 'react-phone-number-input';
 import { isValidEmail } from '@/utils/validations/email';

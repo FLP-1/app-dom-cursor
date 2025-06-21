@@ -1,6 +1,14 @@
+/**
+ * Arquivo: PrivateRoute.tsx
+ * Caminho: src/components/auth/PrivateRoute.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { CircularProgress, Box } from '@mui/material';
 
 interface PrivateRouteProps {

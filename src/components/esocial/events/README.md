@@ -1,3 +1,11 @@
+<!--
+  Arquivo: README.md
+  Caminho: src/components/esocial/events/README.md
+  Criado em: 2025-06-01
+  Última atualização: 2025-06-13
+  Descrição: Componente React: CreateS1202Page
+-->
+
 # Componentes do eSocial
 
 ## S-1202 - Remuneração de Servidor Vinculado a Regime Próprio de Previdência Social

@@ -1,3 +1,11 @@
+/**
+ * Arquivo: DocumentService.ts
+ * Caminho: src/services/DocumentService.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de documentos
+ */
+
 import { Document, TipoDocumentoEsocial } from '@prisma/client';
 import { api } from '@/lib/api';
 

@@ -1,8 +1,24 @@
+/**
+ * Arquivo: selecionar-grupo.tsx
+ * Caminho: src/pages/selecionar-grupo.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de seleção de grupo
+ */
+
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Layout } from '@/components/layout/Layout';
+import { Box, Button, Typography } from '@mui/material';
+
+interface Grupo {
+  id: string;
+  name: string;
+  role: string;
+}
 
 export default function SelecionarGrupo() {
-  const [grupos, setGrupos] = useState([]);
+  const [grupos, setGrupos] = useState<Grupo[]>([]);
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState('');
 
@@ -10,7 +26,7 @@ export default function SelecionarGrupo() {
     async function fetchGrupos() {
       try {
         const token = localStorage.getItem('token');
-        const { data } = await axios.get('/api/meus-grupos', {
+        const { data } = await axios.get<Grupo[]>('/api/meus-grupos', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setGrupos(data);
@@ -28,21 +44,31 @@ export default function SelecionarGrupo() {
     window.location.href = '/dashboard';
   };
 
-  if (loading) return <div>Carregando...</div>;
-  if (erro) return <div style={{ color: 'red' }}>{erro}</div>;
+  if (loading) return <Typography>Carregando...</Typography>;
+  if (erro) return <Typography color="error.main">{erro}</Typography>;
 
   return (
-    <div style={{ maxWidth: 400, margin: '40px auto', padding: 24, border: '1px solid #ccc', borderRadius: 8 }}>
-      <h2>Selecione o grupo que deseja acessar</h2>
-      <ul style={{ listStyle: 'none', padding: 0 }}>
-        {grupos.map(grupo => (
-          <li key={grupo.id} style={{ marginBottom: 16 }}>
-            <button style={{ width: '100%', padding: 12, borderRadius: 6, border: '1px solid #1976d2', background: '#1976d2', color: '#fff', fontWeight: 'bold', cursor: 'pointer' }} onClick={() => selecionarGrupo(grupo)}>
-              {grupo.name} (Papel: {grupo.role})
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Layout>
+      <Box sx={{ maxWidth: 400, mx: 'auto', my: 5, p: 3, border: '1px solid', borderColor: 'grey.300', borderRadius: 2 }}>
+        <Typography variant="h6" sx={{ mb: 2 }}>Selecione o grupo que deseja acessar</Typography>
+        <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0 }}>
+          {grupos.map((grupo: Grupo) => {
+            return (
+              <Box component="li" key={grupo.id} sx={{ mb: 2 }}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  sx={{ py: 1.5, borderRadius: 1.5, fontWeight: 'bold' }}
+                  onClick={() => selecionarGrupo(grupo)}
+                >
+                  {grupo.name} (Papel: {grupo.role})
+                </Button>
+              </Box>
+            );
+          })}
+        </Box>
+      </Box>
+    </Layout>
   );
 } 

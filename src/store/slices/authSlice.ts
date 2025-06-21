@@ -1,3 +1,11 @@
+/**
+ * Arquivo: authSlice.ts
+ * Caminho: src/store/slices/authSlice.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Slice de autenticação
+ */
+
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { User } from '@prisma/client';
 

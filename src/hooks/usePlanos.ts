@@ -1,5 +1,13 @@
+/**
+ * Arquivo: usePlanos.ts
+ * Caminho: src/hooks/usePlanos.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useState, useEffect } from 'react';
-import { useAuth } from './useAuth';
+import { useAuth } from '@/hooks/useAuth';
 import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';
 
 interface Plano {

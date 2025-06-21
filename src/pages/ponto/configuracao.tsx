@@ -1,3 +1,11 @@
+/**
+ * Arquivo: configuracao.tsx
+ * Caminho: src/pages/ponto/configuracao.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de configuração de ponto
+ */
+
 import React from 'react';
 import { Box, Card, CardContent, Typography, TextField, Button, Switch, FormControlLabel } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';

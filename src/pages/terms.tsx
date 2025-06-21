@@ -1,3 +1,11 @@
+/**
+ * Arquivo: terms.tsx
+ * Caminho: src/pages/terms.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de termos de uso
+ */
+
 import {
   Container,
   Box,
@@ -7,20 +15,15 @@ import {
   ListItem,
   ListItemText,
   Divider,
+  ListItemButton,
 } from '@mui/material';
-import Logo from '../components/Logo';
-import { formatDateBR } from '../utils/date';
+import Logo from '@/components/Logo';
+import { formatDateBR } from '@/utils/date';
+import { Layout } from '@/components/layout/Layout';
 
 export default function Terms() {
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        background: 'linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%)',
-      }}
-    >
+    <Layout>
       {/* Cabeçalho */}
       <Box
         sx={{
@@ -83,93 +86,93 @@ export default function Terms() {
           </Typography>
 
           <List>
-            <ListItem>
+            <ListItemButton>
               <ListItemText
                 primary="1. Aceitação dos Termos"
                 secondary="Ao acessar e utilizar o DOM, você aceita e concorda em cumprir estes Termos de Uso. Se você não concordar com qualquer parte destes termos, não poderá acessar o serviço."
               />
-            </ListItem>
+            </ListItemButton>
 
             <Divider component="li" />
 
-            <ListItem>
+            <ListItemButton>
               <ListItemText
                 primary="2. Uso do Serviço"
                 secondary="O DOM é uma plataforma de gestão de documentos. Você concorda em utilizar o serviço apenas para fins legais e de acordo com estes termos."
               />
-            </ListItem>
+            </ListItemButton>
 
             <Divider component="li" />
 
-            <ListItem>
+            <ListItemButton>
               <ListItemText
                 primary="3. Conta do Usuário"
                 secondary="Para acessar certas funcionalidades, você precisará criar uma conta. Você é responsável por manter a confidencialidade de sua conta e senha."
               />
-            </ListItem>
+            </ListItemButton>
 
             <Divider component="li" />
 
-            <ListItem>
+            <ListItemButton>
               <ListItemText
                 primary="4. Privacidade e Dados"
                 secondary="Nossa Política de Privacidade descreve como coletamos e utilizamos suas informações. Ao usar o DOM, você concorda com nossa coleta e uso de dados conforme descrito."
               />
-            </ListItem>
+            </ListItemButton>
 
             <Divider component="li" />
 
-            <ListItem>
+            <ListItemButton>
               <ListItemText
                 primary="5. Propriedade Intelectual"
                 secondary="O DOM e seu conteúdo original, recursos e funcionalidades são de propriedade da empresa e estão protegidos por leis de propriedade intelectual."
               />
-            </ListItem>
+            </ListItemButton>
 
             <Divider component="li" />
 
-            <ListItem>
+            <ListItemButton>
               <ListItemText
                 primary="6. Limitações de Uso"
                 secondary="Você concorda em não usar o serviço para qualquer propósito ilegal ou não autorizado, ou de qualquer forma que possa danificar, desabilitar ou comprometer o serviço."
               />
-            </ListItem>
+            </ListItemButton>
 
             <Divider component="li" />
 
-            <ListItem>
+            <ListItemButton>
               <ListItemText
                 primary="7. Modificações"
                 secondary="Reservamo-nos o direito de modificar ou substituir estes Termos a qualquer momento. As alterações entrarão em vigor imediatamente após a publicação."
               />
-            </ListItem>
+            </ListItemButton>
 
             <Divider component="li" />
 
-            <ListItem>
+            <ListItemButton>
               <ListItemText
                 primary="8. Limitação de Responsabilidade"
                 secondary="O DOM é fornecido 'como está', sem garantias de qualquer tipo. Não nos responsabilizamos por quaisquer danos indiretos, incidentais ou consequentes."
               />
-            </ListItem>
+            </ListItemButton>
 
             <Divider component="li" />
 
-            <ListItem>
+            <ListItemButton>
               <ListItemText
                 primary="9. Lei Aplicável"
                 secondary="Estes termos serão regidos e interpretados de acordo com as leis do Brasil, independentemente de conflitos de disposições legais."
               />
-            </ListItem>
+            </ListItemButton>
 
             <Divider component="li" />
 
-            <ListItem>
+            <ListItemButton>
               <ListItemText
                 primary="10. Contato"
                 secondary="Se você tiver alguma dúvida sobre estes Termos, entre em contato conosco através do email: suporte@dom.com.br"
               />
-            </ListItem>
+            </ListItemButton>
           </List>
 
           <Box sx={{ mt: 4, textAlign: 'center' }}>
@@ -179,6 +182,6 @@ export default function Terms() {
           </Box>
         </Paper>
       </Container>
-    </Box>
+    </Layout>
   );
 } 

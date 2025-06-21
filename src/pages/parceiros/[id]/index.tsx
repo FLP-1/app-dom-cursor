@@ -1,10 +1,18 @@
+/**
+ * Arquivo: index.tsx
+ * Caminho: src/pages/parceiros/[id]/index.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de detalhes de parceiro
+ */
+
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Box, Typography, Paper, Grid, CircularProgress, Alert, Button, Divider } from '@mui/material';
-import { Parceiro } from '../../../types/parceiro';
+import { Parceiro } from '@/types/parceiro';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
-import { parceiroService } from '../../../services/parceiro.service';
+import { parceiroService } from '@/services/parceiro.service';
 
 export default function DetalhesParceiroPage() {
   const { t } = useTranslation();
@@ -49,44 +57,44 @@ export default function DetalhesParceiroPage() {
           </Link>
         </Box>
         <Divider sx={{ mb: 2 }} />
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} md={4}>
+        <Grid container spacing={2} columns={12}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Nome')}</Typography>
             <Typography>{parceiro.nome}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('CNPJ')}</Typography>
             <Typography>{parceiro.cnpj}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('E-mail')}</Typography>
             <Typography>{parceiro.email}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Telefone')}</Typography>
             <Typography>{parceiro.telefone}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Responsável')}</Typography>
             <Typography>{parceiro.responsavel}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Observação')}</Typography>
             <Typography>{parceiro.observacao || '-'}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={6}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 6' }}>
             <Typography variant="subtitle2">{t('Endereço')}</Typography>
             <Typography>{parceiro.endereco}, {parceiro.numero} {parceiro.complemento ? `- ${parceiro.complemento}` : ''}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}>
             <Typography variant="subtitle2">{t('Bairro')}</Typography>
             <Typography>{parceiro.bairro}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}>
             <Typography variant="subtitle2">{t('Município')}</Typography>
             <Typography>{parceiro.municipio} - {parceiro.uf}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}>
             <Typography variant="subtitle2">{t('CEP')}</Typography>
             <Typography>{parceiro.cep}</Typography>
           </Grid>

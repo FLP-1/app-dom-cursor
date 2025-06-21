@@ -1,13 +1,21 @@
-import { EsocialEvent } from '../types/esocial-event';
-import { DataTable } from './common/DataTable';
+/**
+ * Arquivo: EsocialEventTable.tsx
+ * Caminho: src/components/EsocialEventTable.tsx
+ * Criado em: 2025-06-13
+ * Última atualização: 2025-06-13
+ * Descrição: Componente de tabela para exibição dos eventos do eSocial, com ações de visualizar, editar, excluir e gerar alerta.
+ */
+
+import { EsocialEvent } from '@/types/esocial-event';
+import { DataTable } from '@/components/common/DataTable';
 import { Box, IconButton, Tooltip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import WarningIcon from '@mui/icons-material/WarningAmber';
-import Link from './common/Link';
-import { formatDateBR } from '../utils/date';
+import { formatDateBR } from '@/utils/date';
+import { tooltips } from '@/i18n/tooltips';
 
 interface EsocialEventTableProps {
   eventos: EsocialEvent[];
@@ -35,10 +43,26 @@ export function EsocialEventTable({ eventos, onVisualizar, onEditar, onExcluir, 
       flex: 1,
       renderCell: (row: EsocialEvent) => (
         <Box sx={{ display: 'flex', gap: 1 }}>
-          <Tooltip title={t('Visualizar')}><IconButton aria-label={t('Visualizar')} onClick={() => onVisualizar(row.id)}><VisibilityIcon /></IconButton></Tooltip>
-          <Tooltip title={t('Editar')}><IconButton aria-label={t('Editar')} onClick={() => onEditar(row.id)}><EditIcon /></IconButton></Tooltip>
-          <Tooltip title={t('Excluir')}><IconButton aria-label={t('Excluir')} onClick={() => onExcluir(row.id)}><DeleteIcon /></IconButton></Tooltip>
-          <Tooltip title={t('Gerar Alerta')}><IconButton aria-label={t('Gerar Alerta')} onClick={() => onGerarAlerta(row.id)}><WarningIcon /></IconButton></Tooltip>
+          <Tooltip title={tooltips.visualizar.pt}>
+            <span>
+              <IconButton aria-label={t('Visualizar')} onClick={() => onVisualizar(row.id)}><VisibilityIcon /></IconButton>
+            </span>
+          </Tooltip>
+          <Tooltip title={tooltips.editar.pt}>
+            <span>
+              <IconButton aria-label={t('Editar')} onClick={() => onEditar(row.id)}><EditIcon /></IconButton>
+            </span>
+          </Tooltip>
+          <Tooltip title={tooltips.excluir.pt}>
+            <span>
+              <IconButton aria-label={t('Excluir')} onClick={() => onExcluir(row.id)}><DeleteIcon /></IconButton>
+            </span>
+          </Tooltip>
+          <Tooltip title={tooltips.gerarAlerta.pt}>
+            <span>
+              <IconButton aria-label={t('Gerar Alerta')} onClick={() => onGerarAlerta(row.id)}><WarningIcon /></IconButton>
+            </span>
+          </Tooltip>
         </Box>
       ),
       sortable: false,

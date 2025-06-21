@@ -1,3 +1,11 @@
+/**
+ * Arquivo: validationSlice.ts
+ * Caminho: src/store/slices/validationSlice.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Slice de validação
+ */
+
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ValidationService } from '@/services/validation.service';
 

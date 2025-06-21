@@ -1,5 +1,13 @@
+/**
+ * Arquivo: sendgrid.service.ts
+ * Caminho: src/services/sendgrid.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de envio de email com SendGrid
+ */
+
 import sgMail from '@sendgrid/mail';
-import { LogService, TipoLog, CategoriaLog } from './log.service';
+import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';
 
 interface EmailOptions {
   to: string;
@@ -8,7 +16,7 @@ interface EmailOptions {
   text?: string;
   html?: string;
   templateId?: string;
-  dynamicTemplateData?: Record<string, any>;
+  dynamicTemplateData?: Record<string, unknown>;
 }
 
 export class SendGridService {
@@ -70,11 +78,11 @@ export class SendGridService {
   async sendTemplateEmail(
     to: string,
     templateId: string,
-    dynamicTemplateData: Record<string, any>
+    dynamicTemplateData: Record<string, unknown>
   ): Promise<boolean> {
     return this.sendEmail({
       to,
-      subject: dynamicTemplateData.subject || 'Notificação',
+      subject: typeof dynamicTemplateData.subject === 'string' ? dynamicTemplateData.subject : 'Notificação',
       templateId,
       dynamicTemplateData
     });
@@ -94,10 +102,13 @@ export class SendGridService {
     });
   }
 
-  async sendNotificationEmail(to: string, notification: any): Promise<boolean> {
+  async sendNotificationEmail(to: string, notification: unknown): Promise<boolean> {
+    const subject = typeof notification === 'object' && notification && 'title' in notification && typeof (notification as any).title === 'string'
+      ? (notification as any).title
+      : 'Notificação';
     return this.sendTemplateEmail(to, 'd-notification-template-id', {
       notification,
-      subject: notification.title
+      subject
     });
   }
 } 

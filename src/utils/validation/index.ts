@@ -1,4 +1,12 @@
-import { validateCPF, validatePhoneNumber } from '../validators';
+/**
+ * Arquivo: index.ts
+ * Caminho: src/utils/validation/index.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Arquivo de exportação das funções de validação
+ */
+
+import { validateCPF } from '@/utils/validators';
 
 /**
  * Valida um CNPJ
@@ -193,17 +201,18 @@ export function validatePhoneNumber(phone: string): boolean {
   // Remove caracteres não numéricos
   const cleanedPhone = phone.replace(/\D/g, '');
 
-  // Validação para números brasileiros com DDD
-  // Formato: (XX) XXXXX-XXXX ou (XX) XXXX-XXXX
-  const phoneRegex = /^\(?[1-9]{2}\)? ?(?:[2-8]|9[1-9])[0-9]{3}\-?[0-9]{4}$/;
-  
-  // Verifica se o número tem o formato correto
-  if (!phoneRegex.test(phone)) {
+  // Verifica se tem 10 ou 11 dígitos (com DDD)
+  if (cleanedPhone.length < 10 || cleanedPhone.length > 11) {
     return false;
   }
 
-  // Verifica se o número tem 10 ou 11 dígitos (com DDD)
-  return cleanedPhone.length === 10 || cleanedPhone.length === 11;
+  // Verifica se o DDD é válido (11 a 99)
+  const ddd = parseInt(cleanedPhone.substring(0, 2));
+  if (ddd < 11 || ddd > 99) {
+    return false;
+  }
+
+  return true;
 }
 
 /**
@@ -222,4 +231,4 @@ export function validateBrazilianCellPhone(phone: string): boolean {
 }
 
 // Re-exporta as funções existentes
-export { validateCPF, validatePhoneNumber }; 
+export { validateCPF }; 

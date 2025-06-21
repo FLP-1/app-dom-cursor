@@ -1,3 +1,11 @@
+/**
+ * Arquivo: jest.config.js
+ * Caminho: jest.config.js
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-03
+ * Descrição: Configuração do Jest
+ */
+
 const nextJest = require('next/jest');
 
 const createJestConfig = nextJest({
@@ -5,44 +13,55 @@ const createJestConfig = nextJest({
 });
 
 const customJestConfig = {
-  testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  testEnvironment: 'jest-environment-jsdom',
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1',
-    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
-    '^react-imask$': '<rootDir>/src/__mocks__/react-imask.tsx',
-    '^next/router$': '<rootDir>/src/__mocks__/next/router.ts',
-    '^@mui/x-date-pickers$': '<rootDir>/src/__mocks__/@mui/x-date-pickers.tsx',
-    '^@mui/x-date-pickers/AdapterDateFns$': '<rootDir>/src/__mocks__/@mui/x-date-pickers.tsx',
+    '^@/components/(.*)$': '<rootDir>/src/components/$1',
+    '^@/hooks/(.*)$': '<rootDir>/src/hooks/$1',
+    '^@/services/(.*)$': '<rootDir>/src/services/$1',
+    '^@/utils/(.*)$': '<rootDir>/src/utils/$1',
+    '^@/lib/(.*)$': '<rootDir>/src/lib/$1',
+    '^@/types/(.*)$': '<rootDir>/src/types/$1',
+    '^@/contexts/(.*)$': '<rootDir>/src/contexts/$1',
+    '^@/store/(.*)$': '<rootDir>/src/store/$1',
+    '^@/pages/(.*)$': '<rootDir>/src/pages/$1',
+    '^@/styles/(.*)$': '<rootDir>/src/styles/$1',
+    '^@/config/(.*)$': '<rootDir>/src/config/$1',
+    '^@/constants/(.*)$': '<rootDir>/src/constants/$1',
+    '^@/mocks/(.*)$': '<rootDir>/src/__mocks__/$1',
+    '^@/tests/(.*)$': '<rootDir>/src/tests/$1',
+    '.*TextareaAutosize.*': '<rootDir>/src/__mocks__/@mui/base/TextareaAutosize.js',
   },
   testPathIgnorePatterns: [
-    '<rootDir>/.next/',
     '<rootDir>/node_modules/',
-    '<rootDir>/node_modules_old/'
+    '<rootDir>/.next/',
+    '<rootDir>/coverage/',
   ],
   transform: {
-    '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
+    '^.+\\.(js|jsx|ts|tsx)$': ['@swc/jest'],
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  collectCoverage: true,
-  collectCoverageFrom: [
-    'src/**/*.{js,jsx,ts,tsx}',
-    '!src/**/*.d.ts',
-    '!src/**/*.stories.{js,jsx,ts,tsx}',
-    '!src/**/*.test.{js,jsx,ts,tsx}',
-    '!src/**/index.{js,jsx,ts,tsx}',
+  testMatch: [
+    '**/__tests__/**/*.+(ts|tsx|js)',
+    '**/?(*.)+(spec|test).+(ts|tsx|js)',
   ],
-  moduleDirectories: ['node_modules', 'src'],
-  testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
   transformIgnorePatterns: [
     '/node_modules/',
     '^.+\\.module\\.(css|sass|scss)$',
   ],
-  globals: {
-    'ts-jest': {
-      tsconfig: 'tsconfig.json',
-    },
+  testEnvironmentOptions: {
+    url: 'http://localhost',
   },
+  verbose: true,
+  testTimeout: 10000,
+  maxWorkers: '50%',
+  bail: 1,
+  clearMocks: true,
+  restoreMocks: true,
+  resetMocks: true,
+  moduleDirectories: ['node_modules', '<rootDir>'],
+  roots: ['<rootDir>/src'],
+  modulePaths: ['<rootDir>/src'],
 };
 
 module.exports = createJestConfig(customJestConfig); 

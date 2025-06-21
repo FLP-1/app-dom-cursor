@@ -1,50 +1,65 @@
-import React from 'react';
-import styled from '@emotion/styled';
-import { useTheme } from '@emotion/react';
+/**
+ * Arquivo: Logo.tsx
+ * Caminho: src/components/Logo.tsx
+ * Criado em: 2025-06-07
+ * Última atualização: 2025-06-07
+ * Descrição: Componente de logo do sistema com suporte a diferentes variantes.
+ * Utiliza gradiente e tipografia do Material UI.
+ */
 
-interface LogoProps {
-  variant?: 'default' | 'compact';
+import React from 'react';
+import { Box, Typography, SxProps, Theme } from '@mui/material';
+
+export type LogoVariant = 'default' | 'compact';
+
+export interface LogoProps {
+  variant?: LogoVariant;
+  sx?: SxProps<Theme>;
 }
 
-// Styled component para o container principal (substitui Box)
-const LogoContainer = styled.div(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: theme.spacing.medium, // Usando espaçamento do tema
-}));
-
-// Styled component para a imagem (substitui img com estilo inline)
-const LogoImage = styled.img<LogoProps>(({ variant = 'default' }) => ({
-  width: variant === 'default' ? 48 : 32,
-  height: variant === 'default' ? 48 : 32,
-}));
-
-// Styled component para o texto "DOM" (substitui Typography)
-const LogoText = styled.h1<LogoProps>(({ theme, variant = 'default' }) => ({
-  fontWeight: theme.typography.fontWeight.bold, // Usando peso da fonte do tema
-  fontSize: variant === 'default' ? theme.typography.fontSize.large : theme.typography.fontSize.medium, // Usando tamanho da fonte do tema
-  background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
-  backgroundClip: 'text',
-  textFillColor: 'transparent',
-  WebkitBackgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
-  margin: 0, // Remover margem padrão do h1
-}));
-
-const Logo: React.FC<LogoProps> = ({ variant = 'default' }) => {
-  const theme = useTheme();
+const Logo: React.FC<LogoProps> = ({ 
+  variant = 'default',
+  sx 
+}) => {
+  const isCompact = variant === 'compact';
+  const logoSize = isCompact ? 32 : 48;
+  const fontSize = isCompact ? 'h4' : 'h1';
 
   return (
-    <LogoContainer>
-      <LogoImage
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 2,
+        ...sx,
+      }}
+    >
+      <Box
+        component="img"
         src="/logo.png"
         alt="DOM Logo"
-        variant={variant}
+        sx={{
+          width: logoSize,
+          height: logoSize,
+          objectFit: 'contain',
+        }}
       />
-      <LogoText variant={variant}>
+      <Typography
+        variant={fontSize}
+        component="h1"
+        sx={{
+          fontWeight: 'bold',
+          background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+          backgroundClip: 'text',
+          textFillColor: 'transparent',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          m: 0,
+        }}
+      >
         DOM
-      </LogoText>
-    </LogoContainer>
+      </Typography>
+    </Box>
   );
 };
 

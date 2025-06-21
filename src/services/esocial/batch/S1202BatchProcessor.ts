@@ -1,3 +1,11 @@
+/**
+ * Arquivo: S1202BatchProcessor.ts
+ * Caminho: src/services/esocial/batch/S1202BatchProcessor.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Processador de lotes do evento S-1202
+ */
+
 import { prisma } from '@/lib/prisma';
 import { Event, EventStatus } from '@prisma/client';
 import { S1202Processor } from '../processors/S1202Processor';
@@ -60,7 +68,7 @@ export class S1202BatchProcessor {
   }
 
   private async processEventWithRetry(event: Event): Promise<void> {
-    let retryCount = event.retryCount || 0;
+    const retryCount = event.retryCount || 0;
 
     try {
       // Atualizar contador de tentativas
@@ -94,12 +102,12 @@ export class S1202BatchProcessor {
     });
   }
 
-  private async markAsError(eventId: string, error: any): Promise<void> {
+  private async markAsError(eventId: string, error: unknown): Promise<void> {
     await prisma.event.update({
       where: { id: eventId },
       data: {
         status: 'ERROR',
-        error: error instanceof Error ? error.message : 'Erro desconhecido'
+        error: error instanceof Error ? error.message : typeof error === 'string' ? error : 'Erro desconhecido'
       }
     });
   }

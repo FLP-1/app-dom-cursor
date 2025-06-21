@@ -1,14 +1,28 @@
+/**
+ * Arquivo: index.tsx
+ * Caminho: src/pages/esocial/eventos/[id]/index.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de detalhes de evento eSocial
+ */
+
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Box, Typography, Paper, Grid, CircularProgress, Alert, Button, Chip, Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { EsocialEvent, EsocialEventType } from '../../../types/esocial-event';
-import { EsocialEventService } from '../../../services/esocial-event.service';
+import { EsocialEvent, EsocialEventType } from '@/types/esocial-event';
+import { EsocialEventService } from '@/services/esocial-event.service';
 import Link from 'next/link';
 
 // TODO: Substituir por hooks reais de documento, ponto e alerta quando disponíveis
 // import { useDocument } from '../../../hooks/useDocument';
 // import { usePonto } from '../../../hooks/usePonto';
+
+const getEventTypes = async () => [
+  { id: 'S1000', codigo: 'S1000', descricao: 'Informação do Empregador', createdAt: new Date().toISOString() },
+  { id: 'S1200', codigo: 'S1200', descricao: 'Remuneração do Trabalhador', createdAt: new Date().toISOString() },
+  // ... outros tipos
+];
 
 export default function DetalhesEventoEsocialPage() {
   const { t } = useTranslation();
@@ -18,13 +32,14 @@ export default function DetalhesEventoEsocialPage() {
   const [event, setEvent] = useState<EsocialEvent | null>(null);
   const [tipos, setTipos] = useState<EsocialEventType[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const service = new EsocialEventService();
 
   useEffect(() => {
     if (!id) return;
     setLoading(true);
     Promise.all([
-      EsocialEventService.getById(id),
-      EsocialEventService.listTypes(),
+      service.getEvent(id),
+      getEventTypes(),
     ])
       .then(([eventData, tiposData]) => {
         setEvent(eventData);
@@ -62,59 +77,59 @@ export default function DetalhesEventoEsocialPage() {
           </Link>
         </Box>
         <Divider sx={{ mb: 2 }} />
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} md={3}>
+        <Grid container spacing={2} columns={12}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}>
             <Typography variant="subtitle2">{t('Código')}</Typography>
-            <Typography>{event.codigo}</Typography>
+            <Typography>{event?.codigo ?? '-'}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={5}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 5' }}>
             <Typography variant="subtitle2">{t('Descrição')}</Typography>
-            <Typography>{event.descricao}</Typography>
+            <Typography>{event?.descricao ?? '-'}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Tipo de Evento')}</Typography>
-            <Typography>{tipo ? `${tipo.codigo} - ${tipo.descricao}` : event.tipoId}</Typography>
+            <Typography>{tipo ? `${tipo.codigo} - ${tipo.descricao}` : event?.tipoId ?? '-'}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}>
             <Typography variant="subtitle2">{t('Status')}</Typography>
-            <Chip label={t(event.status)} color={
-              event.status === 'PROCESSED' ? 'success' :
-              event.status === 'REJECTED' ? 'error' :
-              event.status === 'SENT' ? 'info' : 'warning'
+            <Chip label={event ? t(event.status) : '-'} color={
+              event?.status === 'PROCESSED' ? 'success' :
+              event?.status === 'REJECTED' ? 'error' :
+              event?.status === 'SENT' ? 'info' : 'warning'
             } />
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}>
             <Typography variant="subtitle2">{t('Data de Envio')}</Typography>
-            <Typography>{event.dataEnvio ? new Date(event.dataEnvio).toLocaleString() : '-'}</Typography>
+            <Typography>{event?.dataEnvio ? new Date(event.dataEnvio).toLocaleString() : '-'}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}>
             <Typography variant="subtitle2">{t('Data de Retorno')}</Typography>
-            <Typography>{event.dataRetorno ? new Date(event.dataRetorno).toLocaleString() : '-'}</Typography>
+            <Typography>{event?.dataRetorno ? new Date(event.dataRetorno).toLocaleString() : '-'}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={6}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 6' }}>
             <Typography variant="subtitle2">{t('Mensagem de Retorno')}</Typography>
-            <Typography>{event.mensagemRetorno || '-'}</Typography>
+            <Typography>{event?.mensagemRetorno || '-'}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}>
             <Typography variant="subtitle2">{t('Empregador')}</Typography>
-            <Typography>{event.empregadorId}</Typography>
+            <Typography>{event?.empregadorId ?? '-'}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}>
             <Typography variant="subtitle2">{t('Usuário')}</Typography>
-            <Typography>{event.usuarioId}</Typography>
+            <Typography>{event?.usuarioId ?? '-'}</Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid gridColumn="span 12">
             <Typography variant="subtitle2">{t('XML do Evento')}</Typography>
             <Paper variant="outlined" sx={{ p: 2, mt: 1, maxHeight: 200, overflow: 'auto', bgcolor: 'background.default' }}>
-              <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>{event.xmlPayload || '-'}</Typography>
+              <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>{event?.xmlPayload || '-'}</Typography>
             </Paper>
           </Grid>
         </Grid>
         <Divider sx={{ my: 3 }} />
         {/* Integrações */}
         <Typography variant="h6" mb={1}>{t('Integrações')}</Typography>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} md={4}>
+        <Grid container spacing={2} columns={12}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Alerta Vinculado')}</Typography>
             {event.alertaId ? (
               <Link href={`/alerts?id=${event.alertaId}`} passHref legacyBehavior>
@@ -124,7 +139,7 @@ export default function DetalhesEventoEsocialPage() {
               <Typography color="text.secondary">{t('Nenhum alerta vinculado')}</Typography>
             )}
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Registro de Ponto Vinculado')}</Typography>
             {event.timeRecordId ? (
               <Link href={`/ponto?id=${event.timeRecordId}`} passHref legacyBehavior>
@@ -134,7 +149,7 @@ export default function DetalhesEventoEsocialPage() {
               <Typography color="text.secondary">{t('Nenhum ponto vinculado')}</Typography>
             )}
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
             <Typography variant="subtitle2">{t('Documento Anexado')}</Typography>
             {event.documentId ? (
               <Link href={`/documents?id=${event.documentId}`} passHref legacyBehavior>

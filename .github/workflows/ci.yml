@@ -1,0 +1,91 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: dom_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/dom_test
+
+    steps:
+      # Checa o código do repositório
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      # Configura Node.js 20.x
+      - name: Configura Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Instala dependências
+      - name: Instala dependências
+        run: npm ci
+
+      # Gera o cliente Prisma
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
+      # Roda migrações do Prisma
+      - name: Run Prisma Migrate
+        run: npx prisma migrate deploy
+
+      # Roda testes
+      - name: Run ESLint
+        run: npx eslint . --ext .ts,.tsx
+
+      # Build de produção
+      - name: Build de produção (Next.js)
+        run: npm run build
+
+      # Roda testes com cobertura
+      - name: Run tests with coverage
+        run: npx jest --coverage
+
+      # Publica cobertura no summary do job
+      - name: Publica cobertura no summary
+        if: always()
+        run: |
+          if [ -f coverage/lcov-report/index.html ]; then
+            echo '### Cobertura de Testes (HTML)' >> $GITHUB_STEP_SUMMARY
+            echo '[Ver relatório de cobertura](./coverage/lcov-report/index.html)' >> $GITHUB_STEP_SUMMARY
+          fi
+
+      # Opcional: Upload do relatório de cobertura como artefato
+      - name: Salva relatório de cobertura como artefato
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+
+      # Envia cobertura para o Codecov
+      - name: Envia cobertura para Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage/lcov.info
+        # Este step envia o relatório de cobertura para o Codecov, gerando badge dinâmico e histórico.
+
+# Este workflow garante que PRs só sejam aprovados se todas as etapas de qualidade forem bem-sucedidas.
+# Adapte conforme necessário para deploy, integração com outros serviços ou steps adicionais. 

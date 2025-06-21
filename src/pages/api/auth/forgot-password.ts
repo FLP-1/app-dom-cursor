@@ -1,3 +1,11 @@
+/**
+ * Arquivo: forgot-password.ts
+ * Caminho: src/pages/api/auth/forgot-password.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para redefinição de senha
+ */
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '../../../lib/prisma';
 import { z } from 'zod';

@@ -1,13 +1,23 @@
-import { LogService, TipoLog, CategoriaLog } from './log.service';
-import { CacheService } from './cache.service';
-import { ConfigService } from './config.service';
+/**
+ * Arquivo: i18n.service.ts
+ * Caminho: src/services/i18n.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de internacionalização
+ */
+
+import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';
+import { CacheService } from '@/services/cache.service';
+import { ConfigService } from '@/services/config.service';
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
 
 /**
  * Serviço de Internacionalização
  * @description Gerencia traduções e formatação de datas/números
  * @author DOM
  * @version 1.0.0
- * @since 2024-01-01
+ * @since 2025-01-01
  */
 
 export type Idioma = 'pt-BR' | 'en-US' | 'es-ES';
@@ -314,12 +324,7 @@ export const I18nService = {
     try {
       return new Intl.DateTimeFormat(this.idiomaAtual, formato).format(data);
     } catch (error) {
-      await LogService.create({
-        tipo: TipoLog.ERROR,
-        categoria: CategoriaLog.SISTEMA,
-        mensagem: 'Erro ao formatar data',
-        detalhes: { data, formato, error }
-      });
+      console.error('Erro ao formatar data', { data, formato, error });
       return data.toISOString();
     }
   },
@@ -341,12 +346,7 @@ export const I18nService = {
     try {
       return new Intl.NumberFormat(this.idiomaAtual, formato).format(numero);
     } catch (error) {
-      await LogService.create({
-        tipo: TipoLog.ERROR,
-        categoria: CategoriaLog.SISTEMA,
-        mensagem: 'Erro ao formatar número',
-        detalhes: { numero, formato, error }
-      });
+      console.error('Erro ao formatar número', { numero, formato, error });
       return numero.toString();
     }
   },
@@ -367,12 +367,7 @@ export const I18nService = {
         currency: moeda
       }).format(valor);
     } catch (error) {
-      await LogService.create({
-        tipo: TipoLog.ERROR,
-        categoria: CategoriaLog.SISTEMA,
-        mensagem: 'Erro ao formatar moeda',
-        detalhes: { valor, moeda, error }
-      });
+      console.error('Erro ao formatar moeda', { valor, moeda, error });
       return valor.toString();
     }
   },
@@ -395,4 +390,19 @@ export const I18nService = {
       return variaveis[key] || match;
     });
   }
-}; 
+};
+
+// Inicialização básica do i18next para integração com react-i18next
+// Ajuste as configurações conforme necessário para seu projeto
+if (!i18n.isInitialized) {
+  i18n
+    .use(initReactI18next)
+    .init({
+      lng: 'pt-BR',
+      fallbackLng: 'pt-BR',
+      interpolation: { escapeValue: false },
+      resources: {}, // Carregue seus recursos conforme necessário
+    });
+}
+
+export default i18n; 

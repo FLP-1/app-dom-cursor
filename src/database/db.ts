@@ -1,3 +1,11 @@
+/**
+ * Arquivo: db.ts
+ * Caminho: src/database/db.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
 

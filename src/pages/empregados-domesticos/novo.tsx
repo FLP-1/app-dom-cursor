@@ -1,7 +1,15 @@
+/**
+ * Arquivo: novo.tsx
+ * Caminho: src/pages/empregados-domesticos/novo.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de novo empregado doméstico
+ */
+
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { EmpregadoDomesticoForm } from '../../components/EmpregadoDomesticoForm';
-import { CboCargo } from '../../types/empregado-domestico';
+import { EmpregadoDomesticoForm } from '@/components/forms/empregado-domestico/EmpregadoDomesticoForm';
+import { CboCargo } from '@/types/empregado-domestico';
 import { CircularProgress, Box } from '@mui/material';
 
 const fetchCargos = async (): Promise<CboCargo[]> => {

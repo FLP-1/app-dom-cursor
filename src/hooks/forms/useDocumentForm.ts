@@ -1,7 +1,15 @@
+/**
+ * Arquivo: useDocumentForm.ts
+ * Caminho: src/hooks/forms/useDocumentForm.ts
+ * Criado em: 2025-06-13
+ * Última atualização: 2025-06-13
+ * Descrição: Hook customizado para lógica, validação e submit do formulário de documentos, com validação de datas e integração com API.
+ */
+
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { notificationService } from '@/services/NotificationService';
-import { MESSAGES } from '../../i18n/messages';
+import { MESSAGES } from '@/i18n/messages';
 
 export interface DocumentFormValues {
   name: string;

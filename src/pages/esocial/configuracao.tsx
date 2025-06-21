@@ -1,7 +1,15 @@
+/**
+ * Arquivo: configuracao.tsx
+ * Caminho: src/pages/esocial/configuracao.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de configuração da integração eSocial
+ */
+
 import React from 'react';
 import { Box, Typography, Paper, Alert } from '@mui/material';
-import { useEsocialConfig } from '../../hooks/useEsocialConfig';
-import EsocialConfigForm from '../../components/EsocialConfigForm';
+import { useEsocialConfig } from '@/hooks/useEsocialConfig';
+import EsocialConfigForm from '@/components/EsocialConfigForm';
 
 const EsocialConfiguracaoPage: React.FC = () => {
   const {

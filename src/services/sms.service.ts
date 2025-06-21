@@ -1,12 +1,20 @@
+/**
+ * Arquivo: sms.service.ts
+ * Caminho: src/services/sms.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de integração com SMS
+ */
+
 import axios from 'axios';
-import { LogService, TipoLog, CategoriaLog } from './log.service';
+import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';
 
 /**
  * Serviço de integração com SMS
  * @description Gerencia o envio de mensagens SMS e templates
  * @author DOM
  * @version 1.0.0
- * @since 2024-01-01
+ * @since 2025-01-01
  */
 
 export enum SMSErrorType {

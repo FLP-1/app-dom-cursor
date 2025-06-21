@@ -1,3 +1,11 @@
+/**
+ * Arquivo: index.tsx
+ * Caminho: src/pages/alerts/index.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import React, { useState, useEffect } from 'react';
 import {
   Box,
@@ -40,17 +48,18 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { ptBR } from 'date-fns/locale';
-import { formatDateBR } from '../../utils/date';
+import { formatDateBR } from '@/utils/date';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
-import { useAlerts } from '../../hooks/useAlerts';
-import { AlertFilter } from '../../types/alert';
+import { useAlerts } from '@/hooks/useAlerts';
+import { AlertFilter } from '@/types/alert';
 import { useForm } from 'react-hook-form';
-import { AlertFilters } from '../../components/alerts/AlertFilters';
-import { AlertTable } from '../../components/alerts/AlertTable';
-import { AlertService } from '../../services/alert.service';
-import { PageHeader } from '../../components/common/PageHeader';
-import { TableActions } from '../../components/common/TableActions';
+import { AlertFilters } from '@/components/alerts/AlertFilters';
+import { AlertTable } from '@/components/alerts/AlertTable';
+import { AlertService } from '@/services/alert.service';
+import { PageHeader } from '@/components/common/PageHeader';
+import { TableActions } from '@/components/common/TableActions';
+import { Layout } from '@/components/layout/Layout';
 
 // Define a basic interface for an Alert (should match backend structure)
 interface AlertData {
@@ -91,7 +100,11 @@ const AlertManagement: React.FC = () => {
   const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: 'success' | 'error' }>({ open: false, message: '', severity: 'success' });
 
   const onSubmit = (data: AlertFilter) => {
-    setFiltros(data);
+    setFiltros({
+      ...data,
+      type: typeof data.type === 'undefined' ? '' : data.type,
+      severity: typeof data.severity === 'undefined' ? '' : data.severity,
+    });
   };
 
   const handleVisualizar = (id: string) => {
@@ -128,40 +141,42 @@ const AlertManagement: React.FC = () => {
     );
   }
 
-  return (
-    <Box sx={{ p: 3 }}>
-      <PageHeader
-        title={t('Alertas')}
-        onAdd={() => router.push('/alerts/novo')}
-        onRefresh={atualizar}
-        addButtonText={t('Novo Alerta')}
-      />
-
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <AlertFilters control={control} tipos={tipos} />
-      </form>
-
-      <Box sx={{ mt: 4 }}>
-        <AlertTable
-          alerts={alerts}
-          onVisualizar={handleVisualizar}
-          onEditar={handleEditar}
-          onExcluir={handleExcluir}
-          loading={loading}
+       return (
+    <Layout>
+      <Box sx={{ p: 3 }}>
+        <PageHeader
+          title={t('Alertas')}
+          onAdd={() => router.push('/alerts/novo')}
+          onRefresh={atualizar}
+          addButtonText={t('Novo Alerta')}
         />
-      </Box>
 
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={3000}
-        onClose={() => setSnackbar({ ...snackbar, open: false })}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
-        <Alert onClose={() => setSnackbar({ ...snackbar, open: false })} severity={snackbar.severity} sx={{ width: '100%' }}>
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
-    </Box>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <AlertFilters control={control} tipos={tipos} />
+        </form>
+
+        <Box sx={{ mt: 4 }}>
+          <AlertTable
+            alerts={alerts}
+            onVisualizar={handleVisualizar}
+            onEditar={handleEditar}
+            onExcluir={handleExcluir}
+            loading={loading}
+          />
+        </Box>
+
+        <Snackbar
+          open={snackbar.open}
+          autoHideDuration={3000}
+          onClose={() => setSnackbar({ ...snackbar, open: false })}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        >
+          <Alert onClose={() => setSnackbar({ ...snackbar, open: false })} severity={snackbar.severity} sx={{ width: '100%' }}>
+            {snackbar.message}
+          </Alert>
+        </Snackbar>
+      </Box>
+    </Layout>
   );
 };
 

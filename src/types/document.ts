@@ -1,6 +1,14 @@
-import { User } from './user';
-import { EmpregadorDomestico } from './empregador-domestico';
-import { EsocialEvent } from './esocial';
+/**
+ * Arquivo: document.ts
+ * Caminho: src/types/document.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Tipos de documentos
+ */
+
+import { User } from '@/types/user';
+import { EmpregadoDomestico } from '@/types/empregado-domestico';
+import { EsocialEvent } from '@/types/esocial';
 
 export enum TipoDocumento {
   RG = 'RG',
@@ -29,7 +37,7 @@ export interface Document {
   empregadoDomesticoId: string;
   esocialEventId?: string;
   usuario: User;
-  empregadoDomestico: EmpregadorDomestico;
+  empregadoDomestico: EmpregadoDomestico;
   esocialEvent?: EsocialEvent;
   createdAt: Date;
   updatedAt: Date;

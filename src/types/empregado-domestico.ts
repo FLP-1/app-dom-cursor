@@ -1,3 +1,11 @@
+/**
+ * Arquivo: empregado-domestico.ts
+ * Caminho: src/types/empregado-domestico.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Tipos de empregado doméstico
+ */
+
 export interface CboCargo {
   codigo: string;
   descricao: string;

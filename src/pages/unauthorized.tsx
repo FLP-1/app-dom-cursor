@@ -1,3 +1,11 @@
+/**
+ * Arquivo: unauthorized.tsx
+ * Caminho: src/pages/unauthorized.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de acesso não autorizado
+ */
+
 import { Box, Typography, Button } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';

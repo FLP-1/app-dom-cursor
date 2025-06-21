@@ -1,7 +1,16 @@
+/**
+ * Arquivo: EsocialConfigForm.tsx
+ * Caminho: src/components/EsocialConfigForm.tsx
+ * Criado em: 2025-06-13
+ * Última atualização: 2025-06-13
+ * Descrição: Formulário de configuração do eSocial, incluindo dados do empregador, certificado digital e alertas.
+ */
+
 import React from 'react';
-import { Box, Button, Grid, TextField, MenuItem, InputLabel, FormControl, FormHelperText, Chip, Typography, Alert } from '@mui/material';
+import { Box, Button, Grid, TextField, MenuItem, InputLabel, FormControl, FormHelperText, Chip, Typography, Alert, Tooltip } from '@mui/material';
 import { Controller, useFieldArray, Control, SubmitHandler, UseFormHandleSubmit } from 'react-hook-form';
-import { EsocialConfigFormValues, CertificadoAtual, LogAlteracao } from '../hooks/useEsocialConfig';
+import { EsocialConfigFormValues, CertificadoAtual, LogAlteracao } from '@/hooks/useEsocialConfig';
+import { tooltips } from '@/i18n/tooltips';
 
 interface EsocialConfigFormProps {
   control: Control<EsocialConfigFormValues>;
@@ -33,8 +42,8 @@ const EsocialConfigForm: React.FC<EsocialConfigFormProps> = ({
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
+      <Grid container spacing={2} columns={12}>
+        <Grid gridColumn="span 12">
           <Controller
             name="cnpj"
             control={control}
@@ -43,7 +52,7 @@ const EsocialConfigForm: React.FC<EsocialConfigFormProps> = ({
             )}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid gridColumn="span 12">
           <Controller
             name="razaoSocial"
             control={control}
@@ -52,7 +61,7 @@ const EsocialConfigForm: React.FC<EsocialConfigFormProps> = ({
             )}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid gridColumn="span 12">
           <Controller
             name="endereco"
             control={control}
@@ -61,7 +70,7 @@ const EsocialConfigForm: React.FC<EsocialConfigFormProps> = ({
             )}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid gridColumn="span 12">
           <Controller
             name="emailContato"
             control={control}
@@ -70,7 +79,7 @@ const EsocialConfigForm: React.FC<EsocialConfigFormProps> = ({
             )}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid gridColumn="span 12">
           <Controller
             name="ambiente"
             control={control}
@@ -82,28 +91,31 @@ const EsocialConfigForm: React.FC<EsocialConfigFormProps> = ({
             )}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid gridColumn="span 12">
           <Controller
             name="certificado"
             control={control}
             render={({ field }) => (
               <FormControl fullWidth>
                 <InputLabel shrink htmlFor="certificado-upload">Certificado Digital</InputLabel>
-                <input
-                  id="certificado-upload"
-                  type="file"
-                  accept=".pfx,.pem,.crt"
-                  onChange={e => field.onChange(e.target.files ? e.target.files[0] : null)}
-                  style={{ marginTop: 8 }}
-                  title="Selecione o arquivo do certificado digital"
-                  placeholder="Selecione o arquivo do certificado digital"
-                />
+                <Tooltip title={tooltips.certificadoDigital?.pt || 'Selecione o arquivo do certificado digital'} arrow>
+                  <span>
+                    <input
+                      id="certificado-upload"
+                      type="file"
+                      accept=".pfx,.pem,.crt"
+                      onChange={e => field.onChange(e.target.files ? e.target.files[0] : null)}
+                      sx={{ mt: 1 }}
+                      placeholder="Selecione o arquivo do certificado digital"
+                    />
+                  </span>
+                </Tooltip>
                 <FormHelperText>{field.value ? (typeof field.value === 'string' ? field.value : field.value.name) : 'Selecione o arquivo do certificado digital'}</FormHelperText>
               </FormControl>
             )}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid gridColumn="span 12">
           <Controller
             name="urlWebservice"
             control={control}
@@ -112,7 +124,7 @@ const EsocialConfigForm: React.FC<EsocialConfigFormProps> = ({
             )}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid gridColumn="span 12">
           <Controller
             name="timeout"
             control={control}
@@ -121,7 +133,7 @@ const EsocialConfigForm: React.FC<EsocialConfigFormProps> = ({
             )}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid gridColumn="span 12">
           <Controller
             name="emailsNotificacao"
             control={control}
@@ -168,7 +180,7 @@ const EsocialConfigForm: React.FC<EsocialConfigFormProps> = ({
             )}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid gridColumn="span 12">
           <Typography variant="subtitle2" sx={{ mb: 0.5 }}>Status do Certificado:</Typography>
           <Chip
             label={statusCertificado.charAt(0).toUpperCase() + statusCertificado.slice(1)}
@@ -176,7 +188,7 @@ const EsocialConfigForm: React.FC<EsocialConfigFormProps> = ({
             aria-label="Status do certificado digital"
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid gridColumn="span 12">
           <Typography variant="subtitle2" sx={{ mb: 0.5 }}>Certificado Atual:</Typography>
           {certificadoAtual ? (
             <Typography variant="body2">{certificadoAtual.nome} (Válido até {certificadoAtual.validade})</Typography>
@@ -184,19 +196,19 @@ const EsocialConfigForm: React.FC<EsocialConfigFormProps> = ({
             <Typography variant="body2" color="text.secondary">Nenhum certificado cadastrado</Typography>
           )}
         </Grid>
-        <Grid item xs={12}>
+        <Grid gridColumn="span 12">
           <Typography variant="subtitle2" sx={{ mb: 0.5 }}>Alertas Recentes:</Typography>
           {alertasRecentes.length === 0 ? (
             <Typography variant="body2" color="text.secondary">Nenhum alerta recente</Typography>
           ) : (
             alertasRecentes.map((a, idx) => (
               <Alert key={idx} severity={a.tipo === 'falha_envio' ? 'error' : 'warning'} sx={{ mb: 1 }}>
-                {a.mensagem} <span style={{ color: '#888', fontSize: 12 }}>({a.data})</span>
+                {a.mensagem} <span sx={{ color: '#888', fontSize: 12 }}>({a.data})</span>
               </Alert>
             ))
           )}
         </Grid>
-        <Grid item xs={12}>
+        <Grid gridColumn="span 12">
           <Typography variant="subtitle2" sx={{ mb: 0.5 }}>Histórico de Alterações:</Typography>
           {historicoAlteracoes.length === 0 ? (
             <Typography variant="body2" color="text.secondary">Nenhuma alteração registrada</Typography>
@@ -208,7 +220,7 @@ const EsocialConfigForm: React.FC<EsocialConfigFormProps> = ({
             ))
           )}
         </Grid>
-        <Grid item xs={12}>
+        <Grid>
           <Button type="submit" variant="contained" color="primary" fullWidth disabled={disabled} aria-label="Salvar configuração">
             {loading ? 'Salvando...' : 'Salvar Configuração'}
           </Button>

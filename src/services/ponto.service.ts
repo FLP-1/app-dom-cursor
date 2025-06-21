@@ -1,4 +1,12 @@
-import { RegistroPonto, RegistroPontoFilter, RegistroPontoFormData } from '../types/ponto';
+/**
+ * Arquivo: ponto.service.ts
+ * Caminho: src/services/ponto.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de ponto
+ */
+
+import { RegistroPonto, RegistroPontoFilter, RegistroPontoFormData } from '@/types/ponto';
 import axios from 'axios';
 
 const API_URL = '/api/ponto';

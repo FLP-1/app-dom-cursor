@@ -1,3 +1,11 @@
+/**
+ * Arquivo: registrar.tsx
+ * Caminho: src/pages/ponto/registrar.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: 
+ */
+
 import React from 'react';
 import { Box, Button, Card, CardContent, Typography, CircularProgress } from '@mui/material';
 import { usePonto } from '@/hooks/usePonto';

@@ -1,12 +1,20 @@
+/**
+ * Arquivo: notification.service.ts
+ * Caminho: src/services/notification.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de notificações
+ */
+
 import axios from 'axios';
-import { LogService, TipoLog, CategoriaLog } from './log.service';
+import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';
 
 /**
  * Serviço de Notificação
  * @description Gerencia notificações do sistema
  * @author DOM
  * @version 1.0.0
- * @since 2024-01-01
+ * @since 2025-01-01
  */
 
 export interface Notificacao {

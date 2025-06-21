@@ -1,20 +1,36 @@
+/**
+ * Arquivo: next.config.mjs
+ * Caminho: next.config.mjs
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-05-31
+ * Descrição: Configuração do Next.js
+ */
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   productionBrowserSourceMaps: false,
-  webpack: (config, { isServer }) => {
+  webpack: (config, { isServer, dev }) => {
+    // Configurações de fallback
     config.resolve.fallback = {
       ...config.resolve.fallback,
       abab: false,
       domexception: false
     };
     
-    // Desabilitar cache do webpack
+    // Configurações de cache
     config.cache = false;
-    
-    // Configurações adicionais para resolver problemas de build
     config.resolve.symlinks = false;
     config.resolve.cache = false;
+
+    // Configurações de watch para desenvolvimento
+    if (dev) {
+      config.watchOptions = {
+        aggregateTimeout: 300,
+        poll: 1000,
+        ignored: '**/node_modules/**'
+      };
+    }
     
     // Otimizações para reduzir o tamanho do bundle
     if (!isServer) {

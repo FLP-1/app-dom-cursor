@@ -1,24 +1,38 @@
-import { useState, useEffect } from 'react';
-import { EsocialTabelaService } from '../services/esocial-tabela.service';
+/**
+ * Arquivo: useEsocialTabela.ts
+ * Caminho: src/hooks/useEsocialTabela.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
+import { useState, useEffect, useCallback } from 'react';
+import { EsocialTabelaService } from '@/services/esocial-tabela.service';
 import { EsocialTabela, EsocialTabelaItem } from '@prisma/client';
 
-export function useEsocialTabela() {
+export const useEsocialTabela = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const service = new EsocialTabelaService();
 
-  const getTabela = async (codigo: string): Promise<EsocialTabela | null> => {
+  const getTabela = useCallback(async (codigo: string): Promise<EsocialTabela | null> => {
     try {
       setLoading(true);
       setError(null);
-      return await service.getTabela(codigo);
+      const response = await fetch(`/api/esocial/tabelas/${codigo}`);
+      
+      if (!response.ok) {
+        throw new Error('Erro ao buscar tabela');
+      }
+
+      return response.json();
     } catch (err) {
       setError(err instanceof Error ? err : new Error('Erro ao buscar tabela'));
       return null;
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   const getItemTabela = async (tabelaCodigo: string, itemCodigo: string): Promise<EsocialTabelaItem | null> => {
     try {
@@ -105,4 +119,4 @@ export function useEsocialTabela() {
     atualizarItemTabela,
     desativarItemTabela
   };
-} 
+}; 

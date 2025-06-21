@@ -1,4 +1,12 @@
-import { Control } from 'react-hook-form';
+/**
+ * Arquivo: FormCepInput.tsx
+ * Caminho: src/components/FormCepInput.tsx
+ * Criado em: 2025-06-07
+ * Última atualização: 2025-06-07
+ * Descrição: Componente de input de CEP com máscara, validação e busca automática de endereço
+ */
+
+import { Control, FieldValues } from 'react-hook-form';
 import { Box, Typography, TextField, IconButton } from '@mui/material';
 import { IMaskInput } from 'react-imask';
 import { forwardRef } from 'react';
@@ -7,10 +15,10 @@ import { useTranslation } from 'next-i18next';
 import { useNotification } from '@/hooks/useNotification';
 import { FormControl } from '@/types/forms';
 
-interface FormCepInputProps extends FormControl {
+interface FormCepInputProps<T extends FieldValues> extends FormControl {
   name: string;
   label: string;
-  control: Control;
+  control: Control<T>;
   value: string;
   onChange: (value: string) => void;
   onSearch?: (cep: string) => Promise<void>;
@@ -36,14 +44,18 @@ const CepMask = forwardRef<HTMLElement, CustomProps>(
         definitions={{
           '#': /[1-9]/,
         }}
-        onAccept={(value: any) => onChange({ target: { name: props.name, value } })}
+        onAccept={(value: unknown) => {
+          if (typeof value === 'string' || typeof value === 'number') {
+            onChange({ target: { name: props.name, value: String(value) } });
+          }
+        }}
         overwrite
       />
     );
   },
 );
 
-export function FormCepInput({
+export function FormCepInput<T extends FieldValues>({
   name,
   label,
   control,
@@ -55,7 +67,7 @@ export function FormCepInput({
   helperText,
   error,
   placeholder,
-}: FormCepInputProps) {
+}: FormCepInputProps<T>) {
   const { t } = useTranslation();
   const { showNotification } = useNotification();
 
@@ -83,7 +95,11 @@ export function FormCepInput({
         sx={{ mb: 1, display: 'block' }}
       >
         {label}
-        {required && <span style={{ color: 'red' }}> *</span>}
+        {required && (
+          <Box component="span" sx={{ color: 'error.main' }}>
+            {' '}*
+          </Box>
+        )}
       </Typography>
 
       <Box sx={{ display: 'flex', gap: 1 }}>
@@ -98,13 +114,18 @@ export function FormCepInput({
           error={!!error}
           fullWidth
           InputProps={{
-            inputComponent: CepMask as any,
+            inputComponent: CepMask as React.ElementType,
             endAdornment: onSearch && (
               <IconButton
                 onClick={handleSearch}
                 disabled={disabled || !value || value.length < 8}
                 edge="end"
-                aria-label={t('cepInput.searchButton')}
+                aria-label="Buscar CEP"
+                sx={{
+                  '&:hover': {
+                    bgcolor: 'action.hover'
+                  }
+                }}
               >
                 <SearchIcon />
               </IconButton>

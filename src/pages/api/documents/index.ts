@@ -1,29 +1,42 @@
+/**
+ * Arquivo: index.ts
+ * Caminho: src/pages/api/documents/index.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para gerenciar documentos
+ */
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/prisma';
 import { getSession } from 'next-auth/react';
 import { TipoDocumentoEsocial } from '@prisma/client';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const session = await getSession({ req });
-
-  if (!session) {
-    return res.status(401).json({ error: 'Não autorizado' });
+  // Permitir acesso público para GET com isPublic=true
+  const isPublic = req.method === 'GET' && req.query.isPublic === 'true';
+  let session = null;
+  if (!isPublic) {
+    session = await getSession({ req });
+    if (!session) {
+      return res.status(401).json({ error: 'Não autorizado' });
+    }
   }
 
   switch (req.method) {
     case 'GET':
       try {
         const { tipo, empregadoId, esocialEventId, page = 1, limit = 10 } = req.query;
-        
         const skip = (Number(page) - 1) * Number(limit);
-        
-        const where = {
+        const where: any = {
           ...(tipo && { tipo: tipo as TipoDocumentoEsocial }),
           ...(empregadoId && { empregadoDomesticoId: String(empregadoId) }),
           ...(esocialEventId && { esocialEventId: String(esocialEventId) }),
-          uploadedBy: session.user.id
         };
-
+        if (isPublic) {
+          where.isPublic = true;
+        } else {
+          where.uploadedBy = session.user.id;
+        }
         const [documents, total] = await Promise.all([
           prisma.document.findMany({
             where,
@@ -34,7 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               empregadoDomestico: {
                 select: {
                   id: true,
-                  nome: true
+                  nomeCompleto: true
                 }
               },
               esocialEvent: {
@@ -47,7 +60,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           }),
           prisma.document.count({ where })
         ]);
-
         return res.status(200).json({
           documents,
           total,
@@ -57,11 +69,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         console.error('Erro ao buscar documentos:', error);
         return res.status(500).json({ error: 'Erro ao buscar documentos' });
       }
-
     case 'POST':
       try {
         const { nome, tipo, url, dataValidade, empregadoDomesticoId, esocialEventId, isPublic } = req.body;
-
         const document = await prisma.document.create({
           data: {
             nome,
@@ -74,13 +84,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             isPublic: isPublic || false
           }
         });
-
         return res.status(201).json(document);
       } catch (error) {
         console.error('Erro ao criar documento:', error);
         return res.status(500).json({ error: 'Erro ao criar documento' });
       }
-
     default:
       res.setHeader('Allow', ['GET', 'POST']);
       return res.status(405).json({ error: `Método ${req.method} não permitido` });

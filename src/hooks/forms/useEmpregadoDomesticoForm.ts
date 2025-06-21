@@ -1,11 +1,19 @@
+/**
+ * Arquivo: useEmpregadoDomesticoForm.ts
+ * Caminho: src/hooks/forms/useEmpregadoDomesticoForm.ts
+ * Criado em: 2025-06-13
+ * Última atualização: 2025-06-13
+ * Descrição: Hook customizado para lógica, validação e submit do formulário de empregado doméstico, com validações de CPF, PIS, CEP, telefone e integração com API.
+ */
+
 import { useForm, SubmitHandler, Control } from 'react-hook-form';
 import { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { EmpregadoDomestico } from '../../types/empregado-domestico';
-import { empregadoDomesticoService } from '../../services/empregado-domestico.service';
+import { EmpregadoDomestico } from '@/types/empregado-domestico';
+import { empregadoDomesticoService } from '@/services/empregado-domestico.service';
 import { useTranslation } from 'react-i18next';
-import { empregadoDomesticoMessages } from '../../i18n/messages';
+import { empregadoDomesticoMessages } from '@/i18n/messages';
 
 // Funções auxiliares de validação
 const validarCPF = (cpf: string) => {
@@ -15,20 +23,19 @@ const validarCPF = (cpf: string) => {
   // Validação do primeiro dígito verificador
   let soma = 0;
   for (let i = 0; i < 9; i++) {
-    soma += parseInt(cpf.charAt(i)) * (10 - i);
+    soma += Number(cpf.charAt(i)) * (10 - i);
   }
-  let resto = 11 - (soma % 11);
-  let digitoVerificador1 = resto > 9 ? 0 : resto;
-  if (digitoVerificador1 !== parseInt(cpf.charAt(9))) return false;
+  const resto = 11 - (soma % 11);
+  const digitoVerificador1 = resto > 9 ? 0 : resto;
+  if (digitoVerificador1 !== Number(cpf.charAt(9))) return false;
 
   // Validação do segundo dígito verificador
   soma = 0;
   for (let i = 0; i < 10; i++) {
-    soma += parseInt(cpf.charAt(i)) * (11 - i);
+    soma += Number(cpf.charAt(i)) * (11 - i);
   }
-  resto = 11 - (soma % 11);
-  let digitoVerificador2 = resto > 9 ? 0 : resto;
-  if (digitoVerificador2 !== parseInt(cpf.charAt(10))) return false;
+  const digitoVerificador2 = resto > 9 ? 0 : resto;
+  if (digitoVerificador2 !== Number(cpf.charAt(10))) return false;
 
   return true;
 };
@@ -46,11 +53,11 @@ const validarPIS = (pis: string) => {
   const multiplicadores = [3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
   let soma = 0;
   for (let i = 0; i < 10; i++) {
-    soma += parseInt(pis.charAt(i)) * multiplicadores[i];
+    soma += Number(pis.charAt(i)) * multiplicadores[i];
   }
-  let resto = 11 - (soma % 11);
-  let digitoVerificador = resto > 9 ? 0 : resto;
-  return digitoVerificador === parseInt(pis.charAt(10));
+  const resto = 11 - (soma % 11);
+  const digitoVerificador = resto > 9 ? 0 : resto;
+  return digitoVerificador === Number(pis.charAt(10));
 };
 
 const validarTelefone = (telefone: string) => {

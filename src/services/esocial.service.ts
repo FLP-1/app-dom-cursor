@@ -1,4 +1,12 @@
-import { EsocialEvent, EsocialEventFilter, EsocialEventFormData } from '../types/esocial';
+/**
+ * Arquivo: esocial.service.ts
+ * Caminho: src/services/esocial.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de eSocial
+ */
+
+import { EsocialEvent, EsocialEventFilter, EsocialEventFormData } from '@/types/esocial';
 import axios from 'axios';
 
 const API_URL = '/api/esocial';

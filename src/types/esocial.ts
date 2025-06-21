@@ -1,5 +1,13 @@
-import { User } from './user';
-import { EmpregadorDomestico } from './empregador-domestico';
+/**
+ * Arquivo: esocial.ts
+ * Caminho: src/types/esocial.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Tipos de eventos do eSocial
+ */
+
+import { User } from '@/types/user';
+import { EmpregadoDomestico } from '@/types/empregado-domestico';
 import { EsocialTabela, EsocialTabelaItem } from '@prisma/client';
 
 // Tipos para as tabelas do eSocial
@@ -52,4 +60,105 @@ export interface EsocialEventFormData {
   dataEvento: Date;
   payload: Record<string, unknown>;
   empregadoDomesticoId: string;
+}
+
+// Tipos específicos para itens das tabelas do eSocial
+export interface CategoriaTrabalhadorItem {
+  codigo: string;
+  descricao: string;
+  valor?: string;
+  dataInicio: Date;
+  dataFim?: Date;
+  ativo: boolean;
+}
+
+export interface TipoInscricaoItem {
+  codigo: string;
+  descricao: string;
+  valor?: string;
+  dataInicio: Date;
+  dataFim?: Date;
+  ativo: boolean;
+}
+
+export interface PaisItem {
+  codigo: string;
+  descricao: string;
+  valor?: string;
+  dataInicio: Date;
+  dataFim?: Date;
+  ativo: boolean;
+}
+
+// Tipos específicos para outras tabelas do eSocial
+export interface AgenteRiscoItem {
+  codigo: string;
+  descricao: string;
+  valor?: string;
+  dataInicio: Date;
+  dataFim?: Date;
+  ativo: boolean;
+}
+
+export interface TipoExameItem {
+  codigo: string;
+  descricao: string;
+  valor?: string;
+  dataInicio: Date;
+  dataFim?: Date;
+  ativo: boolean;
+}
+
+export interface TipoLocalItem {
+  codigo: string;
+  descricao: string;
+  valor?: string;
+  dataInicio: Date;
+  dataFim?: Date;
+  ativo: boolean;
+}
+
+export interface ParteAtingidaItem {
+  codigo: string;
+  descricao: string;
+  valor?: string;
+  dataInicio: Date;
+  dataFim?: Date;
+  ativo: boolean;
+}
+
+export interface MotivoAfastamentoItem {
+  codigo: string;
+  descricao: string;
+  valor?: string;
+  dataInicio: Date;
+  dataFim?: Date;
+  ativo: boolean;
+}
+
+export interface CidItem {
+  codigo: string;
+  descricao: string;
+  valor?: string;
+  dataInicio: Date;
+  dataFim?: Date;
+  ativo: boolean;
+}
+
+export interface EpiItem {
+  codigo: string;
+  descricao: string;
+  valor?: string;
+  dataInicio: Date;
+  dataFim?: Date;
+  ativo: boolean;
+}
+
+export interface MotivoAvisoItem {
+  codigo: string;
+  descricao: string;
+  valor?: string;
+  dataInicio: Date;
+  dataFim?: Date;
+  ativo: boolean;
 } 

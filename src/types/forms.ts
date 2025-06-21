@@ -1,7 +1,16 @@
-import { Control } from 'react-hook-form';
+/**
+ * Arquivo: forms.ts
+ * Caminho: src/types/forms.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Tipos de formulários
+ */
 
+import type { Control, FieldValues } from 'react-hook-form';
+
+// Justificativa: integração com react-hook-form, tipagem dinâmica dos campos
 export interface FormControl {
-  control: Control<any>;
+  control: Control<FieldValues>;
 }
 
 export interface FormData {
@@ -24,8 +33,9 @@ export interface FormValidationError {
   type: string;
 }
 
+// Justificativa: integração com react-hook-form, tipagem dinâmica dos campos
 export interface FormProps {
-  control: Control<FormData>;
+  control: Control<FieldValues>;
   name: string;
   label?: string;
   required?: boolean;

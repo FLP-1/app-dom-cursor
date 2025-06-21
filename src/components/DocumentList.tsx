@@ -1,3 +1,11 @@
+/**
+ * Arquivo: DocumentList.tsx
+ * Caminho: src/components/DocumentList.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import {
   Box,
   Button,
@@ -71,8 +79,8 @@ export function DocumentList({ initialFilters }: DocumentListProps) {
 
   return (
     <Box>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
+      <Grid container spacing={2} columns={12}>
+        <Grid gridColumn="span 12">
           <Box display="flex" justifyContent="space-between" alignItems="center">
             <Typography variant="h6">{t('document.list.title')}</Typography>
             <Button
@@ -84,8 +92,7 @@ export function DocumentList({ initialFilters }: DocumentListProps) {
             </Button>
           </Box>
         </Grid>
-
-        <Grid item xs={12}>
+        <Grid gridColumn="span 12">
           <Card>
             <CardContent>
               <TableContainer>
@@ -124,12 +131,14 @@ export function DocumentList({ initialFilters }: DocumentListProps) {
                           <IconButton
                             onClick={() => router.push(`/documents/${document.id}/editar`)}
                             size="small"
+                            aria-label="Editar documento"
                           >
                             <EditIcon />
                           </IconButton>
                           <IconButton
                             onClick={() => handleDownload(document)}
                             size="small"
+                            aria-label="Baixar documento"
                           >
                             <DownloadIcon />
                           </IconButton>
@@ -137,6 +146,7 @@ export function DocumentList({ initialFilters }: DocumentListProps) {
                             onClick={() => showConfirmDialog(() => handleDelete(document.id))}
                             size="small"
                             color="error"
+                            aria-label="Excluir documento"
                           >
                             <DeleteIcon />
                           </IconButton>

@@ -1,12 +1,20 @@
+/**
+ * Arquivo: DocumentFilters.tsx
+ * Caminho: src/components/documents/DocumentFilters.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import React from 'react';
-import { FormInput } from '../common/forms/FormInput';
-import { FormSelect } from '../common/forms/FormSelect';
-import Box from '../layout/Box';
-import { useDocumentFiltersForm, DocumentFiltersFormValues } from '../../hooks/forms/useDocumentFiltersForm';
+import { FormInput } from '@/components/common/forms/FormInput';
+import { FormSelect } from '@/components/common/forms/FormSelect';
+import Box from '@/components/layout/Box';
+import { useDocumentFiltersForm, DocumentFiltersFormValues } from '@/hooks/forms/useDocumentFiltersForm';
 import { styled } from '@mui/material/styles';
-import Button from '../common/Button';
-import { documentMessages } from '../../i18n/messages';
-import { formatDateBR, parseDateBRtoISO } from '../../utils/date';
+import Button from '@/components/common/Button';
+import { documentMessages } from '@/i18n/messages';
+import { formatDateBR, parseDateBRtoISO } from '@/utils/date';
 import { DocumentFilter } from '@/types/documents';
 
 const tipos = [

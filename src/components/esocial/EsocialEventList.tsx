@@ -1,3 +1,11 @@
+/**
+ * Arquivo: EsocialEventList.tsx
+ * Caminho: src/components/esocial/EsocialEventList.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useEsocialTabela } from '@/hooks/useEsocialTabela';
 import { useEffect, useState } from 'react';
 import { StatusEvento } from '@/types/esocial';

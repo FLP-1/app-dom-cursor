@@ -1,3 +1,11 @@
+/**
+ * Arquivo: ChatInput.tsx
+ * Caminho: src/components/ChatInput.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { Box, TextField, Button, IconButton, InputAdornment } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';

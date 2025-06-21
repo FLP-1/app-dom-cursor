@@ -1,4 +1,12 @@
-import { User, LoginFormData, LoginResponse } from '../types/user';
+/**
+ * Arquivo: auth.service.ts
+ * Caminho: src/services/auth.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de autenticação
+ */
+
+import { User, LoginFormData, LoginResponse } from '@/types/user';
 import axios from 'axios';
 
 const API_URL = '/api/auth';

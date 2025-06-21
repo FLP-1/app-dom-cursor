@@ -1,3 +1,11 @@
+/**
+ * Arquivo: report.service.ts
+ * Caminho: src/services/report.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de relatórios
+ */
+
 import axios from 'axios';
 
 export enum TipoRelatorio {

@@ -1,3 +1,11 @@
+/**
+ * Arquivo: OperacaoFinanceiraList.tsx
+ * Caminho: src/components/OperacaoFinanceiraList.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import {
   Table,
   TableBody,
@@ -22,6 +30,7 @@ import {
 import { useTranslation } from 'next-i18next';
 import { formatCurrency, formatDate } from '@/utils/format';
 import { StatusOperacao, TipoOperacao } from '@prisma/client';
+import React from 'react';
 
 interface OperacaoFinanceira {
   id: string;
@@ -54,7 +63,7 @@ interface OperacaoFinanceiraListProps {
   isLoading?: boolean;
 }
 
-export const OperacaoFinanceiraList = ({
+export const OperacaoFinanceiraList = React.memo(({
   operacoes,
   onEdit,
   onDelete,
@@ -139,6 +148,7 @@ export const OperacaoFinanceiraList = ({
                         color="success"
                         onClick={() => onAprovar?.(operacao.id)}
                         disabled={isLoading}
+                        aria-label="Aprovar operação"
                       >
                         <CheckIcon />
                       </IconButton>
@@ -147,6 +157,7 @@ export const OperacaoFinanceiraList = ({
                         color="error"
                         onClick={() => onRejeitar?.(operacao.id)}
                         disabled={isLoading}
+                        aria-label="Rejeitar operação"
                       >
                         <CloseIcon />
                       </IconButton>
@@ -164,6 +175,7 @@ export const OperacaoFinanceiraList = ({
                         }
                       }}
                       disabled={isLoading}
+                      aria-label="Registrar pagamento"
                     >
                       <MoneyIcon />
                     </IconButton>
@@ -176,6 +188,7 @@ export const OperacaoFinanceiraList = ({
                         color="primary"
                         onClick={() => onEdit?.(operacao.id)}
                         disabled={isLoading}
+                        aria-label="Editar operação"
                       >
                         <EditIcon />
                       </IconButton>
@@ -184,6 +197,7 @@ export const OperacaoFinanceiraList = ({
                         color="error"
                         onClick={() => onDelete?.(operacao.id)}
                         disabled={isLoading}
+                        aria-label="Excluir operação"
                       >
                         <DeleteIcon />
                       </IconButton>
@@ -197,4 +211,4 @@ export const OperacaoFinanceiraList = ({
       </Table>
     </TableContainer>
   );
-}; 
+}); 

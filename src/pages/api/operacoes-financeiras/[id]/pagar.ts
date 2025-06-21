@@ -1,3 +1,11 @@
+/**
+ * Arquivo: pagar.ts
+ * Caminho: src/pages/api/operacoes-financeiras/[id]/pagar.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para registrar pagamento de operações financeiras
+ */
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import { prisma } from '@/lib/prisma';

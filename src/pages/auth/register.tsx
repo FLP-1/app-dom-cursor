@@ -1,8 +1,16 @@
+/**
+ * Arquivo: register.tsx
+ * Caminho: src/pages/auth/register.tsx
+ * Criado em: 2025-06-13
+ * Última atualização: 2025-06-13
+ * Descrição: Página de cadastro de usuário, com validação de CPF, e-mail, telefone e senha, e integração com API.
+ */
+
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Box, Button, Typography, Paper, CircularProgress, Link } from '@mui/material';
-import { FormInput } from '../../components/common';
-import { useNotification } from '../../hooks';
+import { FormInput } from '@/components/common';
+import { useNotification } from '@/hooks';
 import { useRouter } from 'next/router';
 
 interface RegisterForm {

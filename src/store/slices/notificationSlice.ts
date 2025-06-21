@@ -1,3 +1,11 @@
+/**
+ * Arquivo: notificationSlice.ts
+ * Caminho: src/store/slices/notificationSlice.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Slice de notificações
+ */
+
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Notification } from '@prisma/client';
 

@@ -1,14 +1,26 @@
+/**
+ * Arquivo: index.tsx
+ * Caminho: src/pages/empregados-domesticos/index.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Página de listagem de empregados domésticos
+ */
+
 import React, { useEffect, useState } from 'react';
 import { Box, Typography, CircularProgress } from '@mui/material';
-import { empregadoDomesticoService } from '../../services/empregado-domestico.service';
-import { EmpregadoDomestico } from '../../types/empregado-domestico';
+import { empregadoDomesticoService } from '@/services/empregado-domestico.service';
+import { EmpregadoDomestico } from '@/types/empregado-domestico';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
-import { DataTable } from '../../components/common/DataTable';
-import { PageHeader } from '../../components/common/PageHeader';
-import { TableActions } from '../../components/common/TableActions';
+import { DataTable } from '@/components/common/DataTable';
+import { PageHeader } from '@/components/common/PageHeader';
+import { TableActions } from '@/components/common/TableActions';
 import { useRouter } from 'next/router';
-import { formatDateBR } from '../../utils/date';
+import { formatDateBR } from '@/utils/date';
+import { Layout } from '@/components/layout/Layout';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import EditIcon from '@mui/icons-material/Edit';
+import { tooltips } from '@/i18n/tooltips';
 
 export default function EmpregadosDomesticosListPage() {
   const { t } = useTranslation();
@@ -44,8 +56,20 @@ export default function EmpregadosDomesticosListPage() {
     { id: 'categoria', label: t('Categoria'), sortable: true },
     { id: 'actions', label: t('Ações'), render: (_: unknown, row: EmpregadoDomestico) => (
       <TableActions
-        onView={() => router.push(`/empregados-domesticos/${row.id}`)}
-        onEdit={() => router.push(`/empregados-domesticos/${row.id}/editar`)}
+        actions={[
+          {
+            icon: <VisibilityIcon color="info" />, 
+            tooltip: tooltips.visualizar.pt,
+            onClick: () => router.push(`/empregados-domesticos/${row.id}`),
+            ariaLabel: 'Visualizar empregado doméstico'
+          },
+          {
+            icon: <EditIcon color="primary" />, 
+            tooltip: tooltips.editar.pt,
+            onClick: () => router.push(`/empregados-domesticos/${row.id}/editar`),
+            ariaLabel: 'Editar empregado doméstico'
+          }
+        ]}
       />
     ) },
   ];
@@ -67,20 +91,22 @@ export default function EmpregadosDomesticosListPage() {
   }
 
   return (
-    <Box sx={{ p: 3 }}>
-      <PageHeader
-        title={t('Empregados Domésticos')}
-        onAdd={() => router.push('/empregados-domesticos/novo')}
-        onRefresh={loadEmpregados}
-        addButtonText={t('Novo Empregado')}
-      />
-      <DataTable
-        columns={columns}
-        data={empregados}
-        loading={loading}
-        error={error}
-      />
-    </Box>
+    <Layout>
+      <Box sx={{ p: 3 }}>
+        <PageHeader
+          title={t('Empregados Domésticos')}
+          onAdd={() => router.push('/empregados-domesticos/novo')}
+          onRefresh={loadEmpregados}
+          addButtonText={t('Novo Empregado')}
+        />
+        <DataTable
+          columns={columns}
+          data={empregados}
+          loading={loading}
+          error={error}
+        />
+      </Box>
+    </Layout>
   );
 }
 

@@ -1,3 +1,11 @@
+/**
+ * Arquivo: FormPhoneInput.tsx
+ * Caminho: src/components/FormPhoneInput.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { Control, FieldValues } from 'react-hook-form';
 import { FormInput } from './common/forms/FormInput';
 

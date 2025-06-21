@@ -1,3 +1,11 @@
+/**
+ * Arquivo: log.service.ts
+ * Caminho: src/services/log.service.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Serviço de logs
+ */
+
 import axios from 'axios';
 import { CacheService } from './cache.service';
 import { I18nService } from './i18n.service';
@@ -7,29 +15,36 @@ import { I18nService } from './i18n.service';
  * @description Gerencia os logs do sistema
  * @author DOM
  * @version 1.0.0
- * @since 2024-01-01
+ * @since 2025-01-01
  */
 
-export type TipoLog = 'info' | 'warn' | 'error' | 'debug' | 'trace';
+export enum TipoLog {
+  INFO = 'info',
+  WARN = 'warn',
+  ERROR = 'error',
+  DEBUG = 'debug',
+  TRACE = 'trace'
+}
 
-export type CategoriaLog =
-  | 'sistema'
-  | 'usuario'
-  | 'empresa'
-  | 'ponto'
-  | 'ocorrencia'
-  | 'documento'
-  | 'esocial'
-  | 'backup'
-  | 'seguranca'
-  | 'email'
-  | 'sms'
-  | 'whatsapp'
-  | 'push'
-  | 'websocket'
-  | 'cache'
-  | 'i18n'
-  | 'theme';
+export enum CategoriaLog {
+  SISTEMA = 'sistema',
+  USUARIO = 'usuario',
+  EMPRESA = 'empresa',
+  PONTO = 'ponto',
+  OCORRENCIA = 'ocorrencia',
+  DOCUMENTO = 'documento',
+  ESOCIAL = 'esocial',
+  BACKUP = 'backup',
+  SEGURANCA = 'seguranca',
+  EMAIL = 'email',
+  SMS = 'sms',
+  WHATSAPP = 'whatsapp',
+  PUSH = 'push',
+  WEBSOCKET = 'websocket',
+  CACHE = 'cache',
+  I18N = 'i18n',
+  THEME = 'theme'
+}
 
 export interface Log {
   id: string;
@@ -296,13 +311,12 @@ export const LogService = {
    * Obtém o IP do usuário
    * @returns IP do usuário
    */
-  private async obterIP(): Promise<string> {
+  async obterIP(): Promise<string> {
     try {
       const { data } = await axios.get<{ ip: string }>('/api/ip');
       return data.ip;
-    } catch (error) {
-      console.error('Erro ao obter IP:', error);
-      return '0.0.0.0';
+    } catch {
+      return '';
     }
   },
 
@@ -310,7 +324,9 @@ export const LogService = {
    * Obtém o User Agent do usuário
    * @returns User Agent do usuário
    */
-  private async obterUserAgent(): Promise<string> {
+  async obterUserAgent(): Promise<string> {
     return navigator.userAgent;
   }
-}; 
+};
+
+export type { TipoLog, CategoriaLog }; 

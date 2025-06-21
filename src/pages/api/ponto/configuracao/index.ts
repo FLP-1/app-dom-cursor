@@ -1,3 +1,11 @@
+/**
+ * Arquivo: index.ts
+ * Caminho: src/pages/api/ponto/configuracao/index.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: API para buscar configuração de ponto
+ */
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import { prisma } from '@/lib/prisma';

@@ -1,24 +1,39 @@
+/**
+ * Arquivo: S2210Form.tsx
+ * Caminho: src/components/esocial/events/S2210Form.tsx
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { Grid, Typography } from '@mui/material';
 import { Control } from 'react-hook-form';
 import { FormInput } from '@/components/form/FormInput';
-import { FormDatePicker } from '@/components/form/FormDatePicker';
+import { FormDatePicker } from '@/components/common/forms/FormDatePicker';
 import { FormSelect } from '@/components/form/FormSelect';
 import { useTranslation } from 'next-i18next';
 import { useEsocialTabela } from '@/hooks/useEsocialTabela';
 import { useEffect, useState } from 'react';
+import type { PaisItem, ParteAtingidaItem } from '@/types/esocial';
 
+// Justificativa: integração com react-hook-form, tipagem dinâmica dos campos
 interface S2210FormProps {
-  control: Control<any>;
+  control: Control<unknown>;
 }
 
 export const S2210Form = ({ control }: S2210FormProps) => {
   const { t } = useTranslation();
   const { getTabela } = useEsocialTabela();
-  const [tiposAcidente, setTiposAcidente] = useState<any[]>([]);
-  const [tiposLocal, setTiposLocal] = useState<any[]>([]);
-  const [partesAtingidas, setPartesAtingidas] = useState<any[]>([]);
-  const [agentesCausadores, setAgentesCausadores] = useState<any[]>([]);
-  const [paises, setPaises] = useState<any[]>([]);
+  // Justificativa: tipo depende de dados dinâmicos da API
+  const [tiposAcidente, setTiposAcidente] = useState<{ codigo: string; descricao: string }[]>([]);
+  // Justificativa: tipo depende de dados dinâmicos da API
+  const [tiposLocal, setTiposLocal] = useState<{ codigo: string; descricao: string }[]>([]);
+  // Justificativa: tipo depende de dados dinâmicos da API
+  const [partesAtingidas, setPartesAtingidas] = useState<ParteAtingidaItem[]>([]);
+  // Justificativa: tipo depende de dados dinâmicos da API
+  const [agentesCausadores, setAgentesCausadores] = useState<{ codigo: string; descricao: string }[]>([]);
+  // Justificativa: tipo depende de dados dinâmicos da API
+  const [paises, setPaises] = useState<PaisItem[]>([]);
 
   useEffect(() => {
     const carregarTabelas = async () => {
@@ -41,8 +56,8 @@ export const S2210Form = ({ control }: S2210FormProps) => {
   }, [getTabela]);
 
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={12} md={6}>
+    <Grid container spacing={3} columns={12}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormInput
           control={control}
           name="payload.cpf"
@@ -50,16 +65,14 @@ export const S2210Form = ({ control }: S2210FormProps) => {
           mask="999.999.999-99"
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormDatePicker
           control={control}
           name="payload.dataAcidente"
           label={t('esocial:events.S2210.dataAcidente')}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormInput
           control={control}
           name="payload.horaAcidente"
@@ -67,8 +80,7 @@ export const S2210Form = ({ control }: S2210FormProps) => {
           mask="99:99"
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormSelect
           control={control}
           name="payload.tipoAcidente"
@@ -79,14 +91,12 @@ export const S2210Form = ({ control }: S2210FormProps) => {
           }))}
         />
       </Grid>
-
-      <Grid item xs={12}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <Typography variant="h6" gutterBottom>
           {t('esocial:events.S2210.localAcidente')}
         </Typography>
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormSelect
           control={control}
           name="payload.localAcidente.tipo"
@@ -97,16 +107,14 @@ export const S2210Form = ({ control }: S2210FormProps) => {
           }))}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormInput
           control={control}
           name="payload.localAcidente.endereco"
           label={t('esocial:events.S2210.localAcidente.endereco')}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormInput
           control={control}
           name="payload.localAcidente.cep"
@@ -114,16 +122,14 @@ export const S2210Form = ({ control }: S2210FormProps) => {
           mask="99999-999"
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormInput
           control={control}
           name="payload.localAcidente.municipio"
           label={t('esocial:events.S2210.localAcidente.municipio')}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormSelect
           control={control}
           name="payload.localAcidente.uf"
@@ -134,14 +140,12 @@ export const S2210Form = ({ control }: S2210FormProps) => {
           }))}
         />
       </Grid>
-
-      <Grid item xs={12}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <Typography variant="h6" gutterBottom>
           {t('esocial:events.S2210.parteAtingida')}
         </Typography>
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormSelect
           control={control}
           name="payload.parteAtingida.codigo"
@@ -152,8 +156,7 @@ export const S2210Form = ({ control }: S2210FormProps) => {
           }))}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormSelect
           control={control}
           name="payload.parteAtingida.lateralidade"
@@ -165,14 +168,12 @@ export const S2210Form = ({ control }: S2210FormProps) => {
           ]}
         />
       </Grid>
-
-      <Grid item xs={12}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <Typography variant="h6" gutterBottom>
           {t('esocial:events.S2210.agenteCausador')}
         </Typography>
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormSelect
           control={control}
           name="payload.agenteCausador.codigo"
@@ -183,38 +184,33 @@ export const S2210Form = ({ control }: S2210FormProps) => {
           }))}
         />
       </Grid>
-
-      <Grid item xs={12}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <Typography variant="h6" gutterBottom>
           {t('esocial:events.S2210.atestadoMedico')}
         </Typography>
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormInput
           control={control}
           name="payload.atestadoMedico.numero"
           label={t('esocial:events.S2210.atestadoMedico.numero')}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormDatePicker
           control={control}
           name="payload.atestadoMedico.dataEmissao"
           label={t('esocial:events.S2210.atestadoMedico.dataEmissao')}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormDatePicker
           control={control}
           name="payload.atestadoMedico.dataAfastamento"
           label={t('esocial:events.S2210.atestadoMedico.dataAfastamento')}
         />
       </Grid>
-
-      <Grid item xs={12} md={6}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
         <FormInput
           control={control}
           name="payload.atestadoMedico.diasAfastamento"
@@ -222,8 +218,7 @@ export const S2210Form = ({ control }: S2210FormProps) => {
           type="number"
         />
       </Grid>
-
-      <Grid item xs={12}>
+      <Grid gridColumn={{ xs: 'span 12', md: 'span 12' }}>
         <FormInput
           control={control}
           name="payload.observacao"

@@ -1,3 +1,11 @@
+/**
+ * Arquivo: emailVerification.ts
+ * Caminho: src/lib/emailVerification.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { sendEmail } from './email';
 import crypto from 'crypto';
 

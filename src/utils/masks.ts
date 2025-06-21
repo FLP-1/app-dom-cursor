@@ -1,3 +1,11 @@
+/**
+ * Arquivo: masks.ts
+ * Caminho: src/utils/masks.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: Funções para aplicar máscaras a dados
+ */
+
 export const masks = {
   cpf: (value: string) => {
     return value

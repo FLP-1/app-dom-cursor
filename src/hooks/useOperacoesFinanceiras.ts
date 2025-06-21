@@ -1,3 +1,11 @@
+/**
+ * Arquivo: useOperacoesFinanceiras.ts
+ * Caminho: src/hooks/useOperacoesFinanceiras.ts
+ * Criado em: 2025-06-01
+ * Última atualização: 2025-06-13
+ * Descrição: /*
+ */
+
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';

@@ -1,7 +1,15 @@
+/**
+ * Arquivo: useAuth.ts
+ * Caminho: src/hooks/useAuth.ts
+ * Criado em: 2025-06-13
+ * Última atualização: 2025-06-13
+ * Descrição: Hook de autenticação, controle de login, logout e validação de token JWT para o sistema.
+ */
+
 import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { api } from '@/services/api';
-import { useRefreshToken } from './useRefreshToken';
+import { useRefreshToken } from '@/hooks/useRefreshToken';
 import { FormError } from '@/types/forms';
 
 export interface User {
