@@ -16,7 +16,7 @@ import { usePerfil } from '@/hooks/usePerfil';
 import { Perfil } from '@/types/perfil';
 import PerfilForm from '@/components/perfil/PerfilForm';
 import { PageHeader } from '@/components/common/PageHeader';
-import { api } from '@/services/api';
+import { api } from '@/lib/api';
 import { Layout } from '@/components/layout/Layout';
 import { formatDateBR } from '@/utils/formatters';
 

@@ -12,7 +12,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useTranslation } from 'next-i18next';
 import { useNotification } from '@/hooks/useNotification';
-import { api } from '@/services/api';
+import { api } from '@/lib/api';
 import { TipoOperacao, StatusOperacao, FormaPagamento } from '@prisma/client';
 
 const operacaoFinanceiraSchema = z.object({

@@ -8,14 +8,14 @@
 
 import axios from 'axios';
 import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';
-import { cpf, cnpj } from 'cpf-cnpj-validator';
-import { isValidPhoneNumber } from 'react-phone-number-input';
 import { isValidEmail } from '@/utils/validations/email';
 import { isValidCEP } from '@/utils/validations/cep';
 import { isValidPassword } from '@/utils/validations/password';
 import { isValidURL } from '@/utils/validations/url';
 import { isValidFile } from '@/utils/validations/file';
 import { isValidDate, isValidTime } from '@/utils/validations/date';
+import { validateCPF } from '@/utils/validations/cpf';
+import { validateCNPJ } from '@/utils/validations/cnpj';
 
 export interface ValidacaoPonto {
   valido: boolean;
@@ -72,11 +72,11 @@ export class ValidationError extends Error {
 
 export class ValidationService {
   static validateCPF(value: string): boolean {
-    return cpf.isValid(value);
+    return validateCPF(value);
   }
 
   static validateCNPJ(value: string): boolean {
-    return cnpj.isValid(value);
+    return validateCNPJ(value);
   }
 
   static validateEmail(value: string): boolean {
@@ -84,7 +84,11 @@ export class ValidationService {
   }
 
   static validatePhone(value: string): boolean {
-    return isValidPhoneNumber(value);
+    // Remove caracteres não numéricos
+    const cleanValue = value.replace(/\D/g, '');
+    
+    // Verifica se tem entre 10 e 11 dígitos (telefone brasileiro)
+    return cleanValue.length >= 10 && cleanValue.length <= 11;
   }
 
   static validateCEP(value: string): boolean {
@@ -413,4 +417,12 @@ export class ValidationService {
       throw new Error('Não foi possível consultar os dados do CPF');
     }
   }
-} 
+}
+
+export const validarEmail = async (email: string): Promise<boolean> => {
+  return await new ValidationService().validarEmail(email);
+};
+
+export const validarTelefone = async (telefone: string): Promise<boolean> => {
+  return await new ValidationService().validarTelefone(telefone);
+}; 

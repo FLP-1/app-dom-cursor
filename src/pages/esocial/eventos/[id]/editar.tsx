@@ -7,8 +7,8 @@
  */
 
 import { useRouter } from 'next/router';
-import { useEsocialEventForm } from '@/hooks/forms/useEsocialEventForm';
-import EsocialEventForm from '@/components/EsocialEventForm';
+import { useEsocialEventForm } from '@/hooks/esocial/useEsocialEventForm';
+import { EsocialEventForm } from '@/components/esocial/EsocialEventForm';
 import { Box, Alert, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';

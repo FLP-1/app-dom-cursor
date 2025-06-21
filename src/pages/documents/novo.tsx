@@ -8,7 +8,7 @@
 
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { DocumentForm } from '@/components/DocumentForm';
+import { DocumentForm } from '@/components/forms/documentos/DocumentForm';
 import { Container } from '@/components/Container';
 import { useTranslation } from 'next-i18next';
 

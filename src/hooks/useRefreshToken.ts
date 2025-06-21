@@ -8,7 +8,7 @@
 
 import { useCallback, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
-import { api } from '@/services/api';
+import { api } from '@/lib/api';
 
 const REFRESH_TOKEN_INTERVAL = 4 * 60 * 1000; // 4 minutos
 

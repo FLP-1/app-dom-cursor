@@ -2,20 +2,20 @@
  * Arquivo: NotificationContainer.tsx
  * Caminho: src/components/common/NotificationContainer.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-06-20
+ * Descrição: Container de notificações para exibir alertas no sistema
  */
 
 import React, { useEffect, useState } from 'react';
 import { Box, Snackbar, Alert, AlertTitle, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { Notification, notificationService, NotificationType } from '@/services/NotificationService';
+import { Notification, notificationManager, NotificationType } from '@/services/notification.service';
 
 export const NotificationContainer: React.FC = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
   useEffect(() => {
-    const unsubscribe = notificationService.subscribe((notification) => {
+    const unsubscribe = notificationManager.subscribe((notification) => {
       setNotifications((prev) => [...prev, notification]);
 
       if (notification.duration) {

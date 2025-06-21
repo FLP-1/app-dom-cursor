@@ -9,11 +9,11 @@
 import { useTranslation } from 'react-i18next';
 import { Control } from 'react-hook-form';
 import { Grid } from '@mui/material';
-import { FormInput } from '@/components/form/FormInput';
-import { FormDatePicker } from '@/components/form/FormDatePicker';
-import { FormSelect } from '@/components/form/FormSelect';
-import { FormMoneyInput } from '@/components/form/FormMoneyInput';
-import { FormTextArea } from '@/components/form/FormTextArea';
+import { FormInput } from '@/components/forms/inputs/FormInput';
+import { FormDatePicker } from '@/components/forms/inputs/FormDatePicker';
+import { FormSelect } from '@/components/forms/inputs/FormSelect';
+import { FormMoneyInput } from '@/components/forms/inputs/FormMoneyInput';
+import { FormTextArea } from '@/components/forms/inputs/FormTextArea';
 
 // Justificativa: integração com react-hook-form, tipagem dinâmica dos campos
 interface S2400FormProps {

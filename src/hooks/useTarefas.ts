@@ -8,7 +8,7 @@
 
 import { useState, useEffect } from 'react';
 import { Task, TaskStatus, TaskPriority } from '@/types/task';
-import { api } from '@/services/api';
+import { api } from '@/lib/api';
 
 export interface FiltrosTarefa {
   status?: TaskStatus;

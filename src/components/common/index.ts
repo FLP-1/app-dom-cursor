@@ -2,8 +2,8 @@
  * Arquivo: index.ts
  * Caminho: src/components/common/index.ts
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-06-20
+ * Descrição: Exportações dos componentes comuns
  */
 
 // Layout
@@ -13,7 +13,7 @@ export { default as Row } from '../layout/Row';
 export { default as Col } from '../layout/Col';
 
 // Form
-export { FormInput } from './forms/FormInput';
+export { FormInput } from './FormInput';
 export { default as FormGroup } from './FormGroup';
 export { default as Label } from './Label';
 export { default as HelperText } from './HelperText';
@@ -21,7 +21,7 @@ export { default as Input } from './Input';
 export { default as TextArea } from './TextArea';
 export { default as Select } from './Select';
 export { default as Checkbox } from './Checkbox';
-export { PasswordInput } from './forms/PasswordInput';
+export { PasswordInput } from '../forms/inputs/PasswordInput';
 
 // UI
 export { default as Button } from './Button';

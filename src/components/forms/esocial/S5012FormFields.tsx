@@ -10,7 +10,11 @@ import React from 'react';
 import { Grid } from '@mui/material';
 import { Control } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { FormInput } from '@/components/form';
+import { FormInput } from '@/components/forms/inputs/FormInput';
+import { FormDatePicker } from '@/components/forms/inputs/FormDatePicker';
+import { FormSelect } from '@/components/forms/inputs/FormSelect';
+import { FormMoneyInput } from '@/components/forms/inputs/FormMoneyInput';
+import { FormTextArea } from '@/components/forms/inputs/FormTextArea';
 import { S5012FormData } from './S5012FormTypes';
 
 interface S5012FormFieldsProps {

@@ -13,13 +13,12 @@ import { Parceiro } from '@/types/parceiro';
 import { useTranslation } from 'react-i18next';
 import { partnerMessages } from '@/messages/partner.messages';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { parceiroSchemaSimplificado, parceiroSchemaCompleto } from '@/components/forms/parceiro/ParceiroFormSchema';
+import { parceiroFormSchema } from '@/components/forms/parceiro/ParceiroFormTypes';
 
 export interface ParceiroFormValues extends Omit<Parceiro, 'id' | 'createdAt' | 'updatedAt'> {}
 
 export function useParceiroForm({ complementar }: { complementar: boolean }) {
-  const schema = complementar ? parceiroSchemaCompleto : parceiroSchemaSimplificado;
-  const methods = useForm({ resolver: zodResolver(schema) });
+  const methods = useForm({ resolver: zodResolver(parceiroFormSchema) });
   return methods;
 }
 

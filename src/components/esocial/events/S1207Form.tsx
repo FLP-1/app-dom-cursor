@@ -8,7 +8,11 @@
 
 import { useTranslation } from 'react-i18next';
 import { Grid, Button, Paper } from '@mui/material';
-import { FormInput, FormDatePicker, FormSelect, FormMoneyInput, FormTextArea } from '@/components/form';
+import { FormInput } from '@/components/forms/inputs/FormInput';
+import { FormDatePicker } from '@/components/forms/inputs/FormDatePicker';
+import { FormSelect } from '@/components/forms/inputs/FormSelect';
+import { FormMoneyInput } from '@/components/forms/inputs/FormMoneyInput';
+import { FormTextArea } from '@/components/forms/inputs/FormTextArea';
 import { tooltips } from '@/i18n/tooltips';
 import { useS1207Form } from '@/hooks/esocial/useS1207Form';
 import { S1207Schema } from '@/schemas/esocial/S1207Schema';

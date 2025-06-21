@@ -8,7 +8,7 @@
 
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/prisma';
-import { sendSMS } from '@/services/sms';
+import { smsService } from '@/services/sms.service';
 
 export default async function handler(
   req: NextApiRequest,
@@ -55,7 +55,7 @@ export default async function handler(
     });
 
     // Enviar SMS com código
-    await sendSMS({
+    await smsService.sendSMS({
       to: telefone,
       message: `Seu código de validação é: ${codigoValidacao}`,
     });

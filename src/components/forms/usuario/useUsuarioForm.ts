@@ -12,7 +12,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslation } from 'next-i18next';
 import { UsuarioFormData, usuarioFormSchema } from './UsuarioFormTypes';
 import { formatUsuarioData, validateUsuarioData } from './UsuarioFormUtils';
-import { showNotification } from '@/utils/notifications';
+import { showNotification } from '@/hooks/useNotification';
 
 interface UseUsuarioFormProps {
   initialValues?: Partial<UsuarioFormData>;

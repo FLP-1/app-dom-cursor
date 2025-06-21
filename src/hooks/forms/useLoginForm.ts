@@ -8,7 +8,7 @@
 
 import { useForm } from 'react-hook-form';
 import { useAuth } from '@/contexts/AuthContext';
-import { notificationService } from '@/services/NotificationService';
+import { notificationManager } from '@/services/notification.service';
 
 export interface LoginForm {
   dom_cpf_login: string;
@@ -32,20 +32,20 @@ export function useLoginForm(onSuccess?: () => void) {
   const onSubmit = async (data: LoginForm) => {
     console.log('[Login] onSubmit chamado com:', data);
     if (!data.acceptTerms) {
-      notificationService.error('Você precisa aceitar os termos de uso para continuar');
+      notificationManager.error('Você precisa aceitar os termos de uso para continuar');
       return;
     }
     try {
       await signIn(data.dom_cpf_login, data.password, data.rememberMe);
-      notificationService.success('Login realizado com sucesso!');
+      notificationManager.success('Login realizado com sucesso!');
       console.log('[Login] Login realizado com sucesso!');
       onSuccess?.();
     } catch (err: unknown) {
       console.error('[Login] Erro ao fazer login:', err);
       if (err instanceof Error) {
-        notificationService.error(err.message || 'Erro ao fazer login');
+        notificationManager.error(err.message || 'Erro ao fazer login');
       } else {
-        notificationService.error('Erro ao fazer login');
+        notificationManager.error('Erro ao fazer login');
       }
     }
   };

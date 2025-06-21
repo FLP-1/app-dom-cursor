@@ -8,10 +8,10 @@
 
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { DocumentForm } from '@/components/DocumentForm';
+import { DocumentForm } from '@/components/forms/documentos/DocumentForm';
 import { Container } from '@/components/Container';
 import { useTranslation } from 'next-i18next';
-import { DocumentService } from '@/services/DocumentService';
+import { documentService } from '@/services/document.service';
 import { Document } from '@prisma/client';
 
 interface EditDocumentPageProps {
@@ -30,7 +30,7 @@ export default function EditDocumentPage({ document }: EditDocumentPageProps) {
 
 export const getServerSideProps: GetServerSideProps = async ({ params, locale }) => {
   try {
-    const document = await DocumentService.getById(params?.id as string);
+    const document = await documentService.getById(params?.id as string);
 
     return {
       props: {

@@ -2,16 +2,19 @@
  * Arquivo: S1000Form.tsx
  * Caminho: src/components/esocial/events/S1000Form.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-06-20
+ * Descrição: Formulário para evento S1000 do eSocial
  */
 
 import { useTranslation } from 'react-i18next';
 import { Control } from 'react-hook-form';
 import { Grid } from '@mui/material';
-import { FormInput, FormDatePicker, FormSelect, FormTextArea } from '@/components/form';
+import { FormInput } from '@/components/forms/inputs/FormInput';
+import { FormDatePicker } from '@/components/forms/inputs/FormDatePicker';
+import { FormSelect } from '@/components/forms/inputs/FormSelect';
+import { FormTextArea } from '@/components/forms/inputs/FormTextArea';
 import { S1000Schema } from '@/schemas/esocial/S1000Schema';
-import { tooltips } from '@/utils/tooltips';
+import { tooltips } from '@/i18n/tooltips';
 
 interface S1000FormProps {
   control: Control<S1000Schema>;

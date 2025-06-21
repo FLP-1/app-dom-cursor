@@ -9,11 +9,11 @@ import React from 'react';
 import { Grid } from '@mui/material';
 import { Control } from 'react-hook-form';
 import { EmpregadoFormData } from './EmpregadoFormTypes';
-import { FormInput } from '@/components/form/inputs/FormInput';
-import { FormMaskedInput } from '@/components/form/inputs/FormMaskedInput';
-import { FormDatePicker } from '@/components/form/inputs/FormDatePicker';
-import { FormMoneyInput } from '@/components/form/inputs/FormMoneyInput';
-import { FormCEP } from '@/components/form/inputs/FormCEP';
+import { FormInput } from '@/components/forms/inputs/FormInput';
+import { FormMaskedInput } from '@/components/forms/inputs/FormMaskedInput';
+import { FormDatePicker } from '@/components/forms/inputs/FormDatePicker';
+import { FormMoneyInput } from '@/components/forms/inputs/FormMoneyInput';
+import { FormCepInput } from '@/components/forms/inputs/FormCepInput';
 import { tooltips } from '@/i18n/tooltips';
 
 interface EmpregadoFormFieldsProps {
@@ -95,7 +95,7 @@ export const EmpregadoFormFields: React.FC<EmpregadoFormFieldsProps> = ({ contro
       </Grid>
 
       <Grid gridColumn={{ xs: 'span 12' }}>
-        <FormCEP
+        <FormCepInput
           name="endereco.cep"
           control={control}
           label="CEP"

@@ -9,7 +9,7 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 // Importe o serviço de notificação e integração com API conforme padrão do projeto
-import { notificationService } from '@/services/NotificationService';
+import { notificationManager } from '@/services/notification.service';
 import { MESSAGES } from '@/i18n/messages';
 
 export interface CompraFormValues {
@@ -44,14 +44,14 @@ export function useCompraForm(onSuccess?: () => void) {
       // const formData = new FormData();
       // Object.entries(data).forEach(([key, value]) => formData.append(key, value as any));
       // await api.post('/compras', formData);
-      notificationService.success('Compra cadastrada com sucesso!');
+      notificationManager.success('Compra cadastrada com sucesso!');
       onSuccess?.();
       methods.reset();
     } catch (err: unknown) {
       if (err instanceof Error) {
-        notificationService.error(err.message || 'Erro ao cadastrar compra');
+        notificationManager.error(err.message || 'Erro ao cadastrar compra');
       } else {
-        notificationService.error('Erro ao cadastrar compra');
+        notificationManager.error('Erro ao cadastrar compra');
       }
     } finally {
       setLoading(false);

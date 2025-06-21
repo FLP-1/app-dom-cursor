@@ -2,15 +2,15 @@
  * Arquivo: S2200Form.tsx
  * Caminho: src/components/esocial/events/S2200Form.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-06-20
+ * Descrição: Formulário para evento S2200 do eSocial
  */
 
 import { Grid } from '@mui/material';
 import { Control } from 'react-hook-form';
-import { FormInput } from '@/components/form/FormInput';
-import { FormDatePicker } from '@/components/form/FormDatePicker';
-import { FormSelect } from '@/components/form/FormSelect';
+import { FormInput } from '@/components/forms/inputs/FormInput';
+import { FormDatePicker } from '@/components/forms/inputs/FormDatePicker';
+import { FormSelect } from '@/components/forms/inputs/FormSelect';
 import { useTranslation } from 'next-i18next';
 import { useEsocialTabela } from '@/hooks/useEsocialTabela';
 import { useEffect, useState } from 'react';

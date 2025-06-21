@@ -32,7 +32,7 @@ import RejeitarOperacaoDialog from '@/components/operacoes-financeiras/RejeitarO
 import RegistrarPagamentoDialog from '@/components/operacoes-financeiras/RegistrarPagamentoDialog';
 import { PageHeader } from '@/components/common/PageHeader';
 import { TableActions } from '@/components/common/TableActions';
-import { api } from '@/services/api';
+import { api } from '@/lib/api';
 import { formatCurrency, formatDateBR } from '@/utils/formatters';
 import { Layout } from '@/components/layout/Layout';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';

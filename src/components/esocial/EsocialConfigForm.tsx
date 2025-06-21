@@ -18,7 +18,8 @@ import {
   Grid,
   Typography,
 } from '@mui/material';
-import { FormSelect, FormInput } from '@/components/form';
+import { FormSelect } from '@/components/forms/inputs/FormSelect';
+import { FormInput } from '@/components/forms/inputs/FormInput';
 import { useNotification } from '@/hooks/useNotification';
 
 // Schema base para endereço

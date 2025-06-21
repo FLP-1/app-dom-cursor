@@ -2,17 +2,20 @@
  * Arquivo: S1202Form.tsx
  * Caminho: src/components/esocial/events/S1202Form.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-06-20
+ * Descrição: Formulário para evento S1202 do eSocial
  */
 
 import { useTranslation } from 'react-i18next';
 import { Control } from 'react-hook-form';
 import { Grid } from '@mui/material';
-import { FormInput, FormDatePicker, FormSelect, FormTextArea } from '@/components/form';
+import { FormInput } from '@/components/forms/inputs/FormInput';
+import { FormDatePicker } from '@/components/forms/inputs/FormDatePicker';
+import { FormSelect } from '@/components/forms/inputs/FormSelect';
+import { FormTextArea } from '@/components/forms/inputs/FormTextArea';
 import { S1202Schema } from '@/schemas/esocial/S1202Schema';
 import { S1202DmDevForm } from '@/components/esocial/events/S1202DmDevForm';
-import { tooltips } from '@/utils/tooltips';
+import { tooltips } from '@/i18n/tooltips';
 
 interface S1202FormProps {
   control: Control<S1202Schema>;

@@ -558,4 +558,6 @@ export const NotificationService = {
   subscribe(listener: (notification: Notification) => void): () => void {
     return notificationManager.subscribe(listener);
   }
-}; 
+};
+
+export const notificationService = NotificationService; 

@@ -88,4 +88,6 @@ const TarefaList: React.FC<TarefaListProps> = ({ tarefas, loading, onEdit, onVie
   );
 };
 
-export default React.memo(TarefaList); 
+export default React.memo(TarefaList);
+
+export { TarefaList }; 

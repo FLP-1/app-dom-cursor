@@ -3,11 +3,11 @@
  * Caminho: src/hooks/esocial/utils.ts
  * Criado em: 2025-06-01
  * Última atualização: 2025-06-13
- * Descrição: /*
+ * Descrição: Utilitários para hooks do eSocial
  */
 
 import { EsocialEvent } from '@/types/esocial';
-import { esocialEventService } from '@/services/esocial/event.service';
+import { esocialEventService } from '@/services/esocial-event.service';
 
 export const loadEvent = async (id: string): Promise<EsocialEvent> => {
   return await esocialEventService.getEvent(id);

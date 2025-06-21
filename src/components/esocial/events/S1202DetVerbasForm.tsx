@@ -9,7 +9,10 @@
 import { useTranslation } from 'react-i18next';
 import { Control, useFieldArray } from 'react-hook-form';
 import { Grid, IconButton, Typography, Paper, Box, Tooltip } from '@mui/material';
-import { FormInput, FormSelect } from '@/components/form';
+import { FormInput } from '@/components/forms/inputs/FormInput';
+import { FormDatePicker } from '@/components/forms/inputs/FormDatePicker';
+import { FormSelect } from '@/components/forms/inputs/FormSelect';
+import { FormTextArea } from '@/components/forms/inputs/FormTextArea';
 import { S1202Schema } from '@/schemas/esocial/S1202Schema';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';

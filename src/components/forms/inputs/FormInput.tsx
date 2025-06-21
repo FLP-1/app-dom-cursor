@@ -78,4 +78,6 @@ const FormInput = <T extends FieldValues>({
   );
 };
 
-export default FormInput; 
+export default FormInput;
+
+export { FormInput }; 

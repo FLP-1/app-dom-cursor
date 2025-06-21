@@ -29,4 +29,6 @@ export function parseISOtoDateBR(iso: string): string {
   const [year, month, day] = iso.split('-');
   if (!year || !month || !day) return '';
   return `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
-} 
+}
+
+export { formatDateBR as formatDate }; 

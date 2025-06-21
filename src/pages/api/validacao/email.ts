@@ -8,7 +8,7 @@
 
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/prisma';
-import { sendEmail } from '@/services/email';
+import { emailService } from '@/services/email.service';
 
 export default async function handler(
   req: NextApiRequest,
@@ -55,7 +55,7 @@ export default async function handler(
     });
 
     // Enviar email com código
-    await sendEmail({
+    await emailService.sendEmail({
       to: email,
       subject: 'Validação de Email - DOM',
       text: `Seu código de validação é: ${codigoValidacao}`,

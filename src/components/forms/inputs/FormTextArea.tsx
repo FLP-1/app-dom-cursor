@@ -80,4 +80,4 @@ const FormTextArea = <T extends FieldValues>({
   );
 };
 
-export default FormTextArea; 
+export { FormTextArea }; 

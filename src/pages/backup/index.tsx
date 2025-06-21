@@ -26,7 +26,7 @@ import { useRouter } from 'next/router';
 import { useNotification } from '@/hooks/useNotification';
 import { PageHeader } from '@/components/common/PageHeader';
 import { TableActions } from '@/components/common/TableActions';
-import { api } from '@/services/api';
+import { api } from '@/lib/api';
 import { formatDateBR, formatFileSize } from '@/utils/formatters';
 import { Layout } from '@/components/layout/Layout';
 import VisibilityIcon from '@mui/icons-material/Visibility';

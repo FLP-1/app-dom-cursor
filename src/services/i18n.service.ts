@@ -301,7 +301,8 @@ class I18nManager {
     try {
       return new Intl.DateTimeFormat(this.idiomaAtual, formato).format(data);
     } catch (error) {
-      await LogService.create({
+      // Log do erro sem await
+      LogService.create({
         tipo: TipoLog.ERROR,
         categoria: CategoriaLog.SISTEMA,
         mensagem: 'Erro ao formatar data',
@@ -322,7 +323,8 @@ class I18nManager {
     try {
       return new Intl.NumberFormat(this.idiomaAtual, formato).format(numero);
     } catch (error) {
-      await LogService.create({
+      // Log do erro sem await
+      LogService.create({
         tipo: TipoLog.ERROR,
         categoria: CategoriaLog.SISTEMA,
         mensagem: 'Erro ao formatar número',
@@ -342,7 +344,8 @@ class I18nManager {
         currency: moeda
       }).format(valor);
     } catch (error) {
-      await LogService.create({
+      // Log do erro sem await
+      LogService.create({
         tipo: TipoLog.ERROR,
         categoria: CategoriaLog.SISTEMA,
         mensagem: 'Erro ao formatar moeda',

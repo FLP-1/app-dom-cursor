@@ -9,12 +9,12 @@
 import React, { useState } from 'react';
 import { Box, Typography, CircularProgress } from '@mui/material';
 import { usePonto } from '@/hooks/usePonto';
-import PontoList from '@/components/PontoList';
-import PontoFilter from '@/components/PontoFilter';
+import { PontoList } from '@/components/ponto/PontoList';
+import { PontoFilter } from '@/components/ponto/PontoFilter';
 import { PageHeader } from '@/components/common/PageHeader';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
-import PontoForm from '@/components/forms/PontoForm';
+import { PontoForm } from '@/components/forms/ponto/PontoForm';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';

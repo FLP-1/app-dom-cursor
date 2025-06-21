@@ -7,7 +7,7 @@
  */
 
 import { Container, Typography, Alert } from '@mui/material';
-import { EmpregadorForm } from '@/components/forms/EmpregadorForm';
+import { EmpregadorForm } from '@/components/forms/empregador/EmpregadorForm';
 import { Layout } from '@/components/layout/Layout';
 import { SnackbarProvider } from 'notistack';
 

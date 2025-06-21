@@ -8,7 +8,7 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { api } from '@/services/api';
+import { api } from '@/lib/api';
 import { useRefreshToken } from '@/hooks/useRefreshToken';
 import { FormError } from '@/types/forms';
 

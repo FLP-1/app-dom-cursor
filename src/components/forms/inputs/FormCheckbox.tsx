@@ -64,4 +64,6 @@ const FormCheckbox = <T extends FieldValues>({
   );
 };
 
-export default FormCheckbox; 
+export default FormCheckbox;
+
+export { FormCheckbox }; 

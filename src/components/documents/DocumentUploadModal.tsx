@@ -2,8 +2,8 @@
  * Arquivo: DocumentUploadModal.tsx
  * Caminho: src/components/documents/DocumentUploadModal.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-06-20
+ * Descrição: Modal para upload de documentos
  */
 
 import React, { useRef } from 'react';
@@ -11,9 +11,9 @@ import Box from '@/components/layout/Box';
 import { FormInput } from '@/components/forms/inputs/FormInput';
 import { FormSelect } from '@/components/forms/inputs/FormSelect';
 import Button from '@/components/common/Button';
-import { useDocumentForm } from '@/hooks/forms/useDocumentForm';
+import { useDocumentForm } from '@/hooks/useDocumentForm';
 import { styled } from '@mui/material/styles';
-import { FormSwitch } from '@/components/common/forms/FormSwitch';
+import { FormSwitch } from '@/components/forms/inputs/FormSwitch';
 import { formatDateBR, parseDateBRtoISO } from '@/utils/date';
 
 interface DocumentUploadModalProps {

@@ -167,4 +167,6 @@ const PontoList: React.FC<PontoListProps> = ({
   );
 };
 
-export default React.memo(PontoList); 
+export default React.memo(PontoList);
+
+export { PontoList }; 

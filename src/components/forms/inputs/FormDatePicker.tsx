@@ -82,4 +82,6 @@ const FormDatePicker = <T extends FieldValues>({
   );
 };
 
-export default FormDatePicker; 
+export default FormDatePicker;
+
+export { FormDatePicker }; 

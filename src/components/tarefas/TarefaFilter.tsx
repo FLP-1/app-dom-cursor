@@ -94,4 +94,4 @@ const TarefaFilter: React.FC<TarefaFilterProps> = ({ filtros, setFiltros }) => {
   );
 };
 
-export default TarefaFilter; 
+export { TarefaFilter }; 

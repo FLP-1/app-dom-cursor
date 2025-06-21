@@ -8,14 +8,14 @@
 
 import { Grid, Typography } from '@mui/material';
 import { Control } from 'react-hook-form';
-import { FormInput } from '@/components/form/FormInput';
-import { FormDatePicker } from '@/components/form/FormDatePicker';
-import { FormSelect } from '@/components/form/FormSelect';
+import { FormInput } from '@/components/forms/inputs/FormInput';
+import { FormDatePicker } from '@/components/forms/inputs/FormDatePicker';
+import { FormSelect } from '@/components/forms/inputs/FormSelect';
 import { useTranslation } from 'next-i18next';
 import { useEsocialTabela } from '@/hooks/useEsocialTabela';
 import { useEffect, useState } from 'react';
 import type { PaisItem, TipoExameItem } from '@/types/esocial';
-import { tooltips } from '@/constants/tooltips';
+import { tooltips } from '@/i18n/tooltips';
 
 // Justificativa: integração com react-hook-form, tipagem dinâmica dos campos
 interface S2220FormProps {

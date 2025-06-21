@@ -11,7 +11,7 @@ import { Control, FieldErrors } from 'react-hook-form';
 import { useTranslation } from 'next-i18next';
 import { FormInput } from '@/components/forms/inputs/FormInput';
 import { FormDatePicker } from '@/components/forms/inputs/FormDatePicker';
-import { FormTimePicker } from '@/components/common/forms/FormTimePicker';
+import { FormTimePicker } from '@/components/forms/inputs/FormTimePicker';
 import { PontoFormData } from './PontoFormTypes';
 
 interface PontoFormFieldsProps {

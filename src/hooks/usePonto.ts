@@ -9,7 +9,7 @@
 import { useState, useEffect } from 'react';
 import { useNotification } from '@/hooks/useNotification';
 import axios from 'axios';
-import { api } from '@/services/api';
+import { api } from '@/lib/api';
 import { RegistroPonto, RegistroPontoFormData } from '@/types/ponto';
 
 interface PontoRegistro {

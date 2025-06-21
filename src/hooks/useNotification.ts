@@ -13,14 +13,16 @@ interface NotificationOptions {
   message: string;
 }
 
+export function showNotification(enqueueSnackbar: (msg: string, opts: any) => void, { type, message }: NotificationOptions) {
+  enqueueSnackbar(message, { variant: type });
+}
+
 export const useNotification = () => {
   const { enqueueSnackbar } = useSnackbar();
 
-  const showNotification = ({ type, message }: NotificationOptions) => {
-    enqueueSnackbar(message, { variant: type });
-  };
-
   return {
-    showNotification,
+    showNotification: (options: NotificationOptions) => showNotification(enqueueSnackbar, options),
   };
-}; 
+};
+
+export default useNotification; 

@@ -1,9 +1,9 @@
 /**
  * Arquivo: PageHeader.tsx
  * Caminho: src/components/common/PageHeader.tsx
- * Criado em: 2025-06-01
+ * Criado em: 2025-06-13
  * Última atualização: 2025-06-13
- * Descrição: /*
+ * Descrição: Componente de cabeçalho de página
  */
 
 import React from 'react';
@@ -14,13 +14,19 @@ interface PageHeaderProps {
   subtitle?: string;
 }
 
-const PageHeader: React.FC<PageHeaderProps> = ({ title, subtitle }) => (
-  <Box mb={2}>
-    <Typography variant="h4" component="h1">{title}</Typography>
-    {subtitle && (
-      <Typography variant="subtitle1" color="textSecondary">{subtitle}</Typography>
-    )}
-  </Box>
-);
+export function PageHeader({ title, subtitle }: PageHeaderProps) {
+  return (
+    <Box sx={{ mb: 3 }}>
+      <Typography variant="h4" component="h1">
+        {title}
+      </Typography>
+      {subtitle && (
+        <Typography variant="body1" color="text.secondary">
+          {subtitle}
+        </Typography>
+      )}
+    </Box>
+  );
+}
 
-export { PageHeader }; 
+export default PageHeader; 

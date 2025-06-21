@@ -2,14 +2,14 @@
  * Arquivo: EsocialEventForm.tsx
  * Caminho: src/components/esocial/EsocialEventForm.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-06-20
+ * Descrição: Formulário para eventos do eSocial
  */
 
 import { Box, Button, Grid, Paper, Typography } from '@mui/material';
-import { FormDatePicker } from '@/components/form/FormDatePicker';
-import { FormSelect } from '@/components/form/FormSelect';
-import { FormInput } from '@/components/form/FormInput';
+import { FormDatePicker } from '@/components/forms/inputs/FormDatePicker';
+import { FormSelect } from '@/components/forms/inputs/FormSelect';
+import { FormInput } from '@/components/forms/inputs/FormInput';
 import { TipoEventoEsocial } from '@/types/esocial';
 import { useTranslation } from 'next-i18next';
 import { Control } from 'react-hook-form';

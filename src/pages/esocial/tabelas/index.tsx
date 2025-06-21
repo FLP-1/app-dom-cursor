@@ -17,7 +17,7 @@ import {
   useTheme
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { EsocialTabelaManager } from '@/components/EsocialTabelaManager';
+import { EsocialTabelaManager } from '@/components/esocial/EsocialTabelaManager';
 
 interface TabPanelProps {
   children?: React.ReactNode;

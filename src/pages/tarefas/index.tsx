@@ -9,12 +9,12 @@
 import React, { useState } from 'react';
 import { Box, Typography, CircularProgress } from '@mui/material';
 import { useTarefas } from '@/hooks/useTarefas';
-import TarefaList from '@/components/TarefaList';
-import TarefaFilter from '@/components/TarefaFilter';
+import { TarefaList } from '@/components/tarefas/TarefaList';
+import { TarefaFilter } from '@/components/tarefas/TarefaFilter';
 import { PageHeader } from '@/components/common/PageHeader';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
-import TarefaForm from '@/components/forms/TarefaForm';
+import { TarefaForm } from '@/components/forms/tarefa/TarefaForm';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';

@@ -32,4 +32,5 @@ const useLogs = () => {
   };
 };
 
-export default useLogs; 
+export default useLogs;
+export { useLogs }; 

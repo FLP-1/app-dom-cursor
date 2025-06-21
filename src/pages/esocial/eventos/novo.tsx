@@ -6,7 +6,7 @@
  * Descrição: Página de novo evento eSocial
  */
 
-import { useEsocialEventForm } from '@/hooks/forms/useEsocialEventForm';
+import { useEsocialEventForm } from '@/hooks/esocial/useEsocialEventForm';
 import { EsocialEventForm } from '@/components/esocial/EsocialEventForm';
 import { Button } from '@mui/material';
 import { useTranslation } from 'next-i18next';

@@ -8,10 +8,14 @@
 
 import React from 'react';
 import { Grid, Button, Paper } from '@mui/material';
-import { FormInput } from '@/components/form';
+import { FormInput } from '@/components/forms/inputs/FormInput';
+import { FormDatePicker } from '@/components/forms/inputs/FormDatePicker';
+import { FormSelect } from '@/components/forms/inputs/FormSelect';
+import { FormMoneyInput } from '@/components/forms/inputs/FormMoneyInput';
+import { FormTextArea } from '@/components/forms/inputs/FormTextArea';
 import { useS5002Form } from '@/hooks/esocial/useS5002Form';
 import { S5002Schema } from '@/schemas/esocial/S5002Schema';
-import { tooltips } from '@/constants/tooltips';
+import { tooltips } from '@/i18n/tooltips';
 
 export const S5002Form: React.FC<{ initialData?: Partial<typeof S5002Schema._type> }> = ({ initialData }) => {
   const { methods, onSubmit } = useS5002Form(initialData);

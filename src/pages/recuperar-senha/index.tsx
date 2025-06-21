@@ -10,7 +10,7 @@ import React, { useState } from 'react';
 import { Box, Typography, Card, CardContent, TextField, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
-import { useRecuperarSenhaForm } from '@/hooks/useRecuperarSenhaForm';
+import { useSenhaForm } from '@/hooks/useSenhaForm';
 import { useNotification } from '@/hooks/useNotification';
 import { PageHeader } from '@/components/common/PageHeader';
 import { FormData } from '@/types/forms';
@@ -24,7 +24,7 @@ export default function RecuperarSenhaPage() {
   const { t } = useTranslation();
   const router = useRouter();
   const { showNotification } = useNotification();
-  const { control, handleSubmit, formState: { errors } } = useRecuperarSenhaForm();
+  const { control, handleSubmit, formState: { errors } } = useSenhaForm();
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (data: RecuperarSenhaData) => {

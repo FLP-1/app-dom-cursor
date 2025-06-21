@@ -10,7 +10,7 @@ import React, { useState } from 'react';
 import { Box, Typography, Card, CardContent, TextField, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
-import { useRedefinirSenhaForm } from '@/hooks/useRedefinirSenhaForm';
+import { useSenhaForm } from '@/hooks/useSenhaForm';
 import { useNotification } from '@/hooks/useNotification';
 import { PageHeader } from '@/components/common/PageHeader';
 import { FormData } from '@/types/forms';
@@ -27,7 +27,7 @@ export default function RedefinirSenhaPage() {
   const router = useRouter();
   const { token } = router.query;
   const { showNotification } = useNotification();
-  const { control, handleSubmit, formState: { errors } } = useRedefinirSenhaForm();
+  const { control, handleSubmit, formState: { errors } } = useSenhaForm();
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (data: RedefinirSenhaData) => {

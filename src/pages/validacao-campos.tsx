@@ -11,7 +11,7 @@ import { FormInput } from '@/components/common/FormInput';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { validarEmail, validarTelefone, ValidacaoResponse } from '@/services/validacao';
+import { validarEmail, validarTelefone, ValidacaoResponse } from '@/services/validation.service';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { CheckCircle, Warning } from '@mui/icons-material';

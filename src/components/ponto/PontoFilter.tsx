@@ -79,4 +79,6 @@ const PontoFilter: React.FC<PontoFilterProps> = ({ filtros, setFiltros }) => {
   );
 };
 
-export default PontoFilter; 
+export default PontoFilter;
+
+export { PontoFilter }; 

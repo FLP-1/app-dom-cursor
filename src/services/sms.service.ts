@@ -513,4 +513,6 @@ export const SMSService = {
   ): Promise<SMSMessage[]> {
     return smsManager.obterHistorico(dataInicio, dataFim, status);
   }
-}; 
+};
+
+export const smsService = SMSService; 

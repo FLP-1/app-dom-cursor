@@ -9,7 +9,7 @@
 import React from 'react';
 import { Box, Typography, Paper, Alert } from '@mui/material';
 import { useEsocialConfig } from '@/hooks/useEsocialConfig';
-import EsocialConfigForm from '@/components/EsocialConfigForm';
+import { EsocialConfigForm } from '@/components/esocial/EsocialConfigForm';
 
 const EsocialConfiguracaoPage: React.FC = () => {
   const {

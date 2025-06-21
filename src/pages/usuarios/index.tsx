@@ -24,13 +24,13 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
 import { useNotification } from '@/hooks/useNotification';
-import { useUsuarioForm } from '@/hooks/useUsuarioForm';
+import { useUsuarioForm } from '@/components/forms/usuario/useUsuarioForm';
 import { useUsuarios } from '@/hooks/useUsuarios';
 import { Usuario } from '@/types/usuario';
 import { UsuarioForm } from '@/components/usuarios/UsuarioForm';
 import { PageHeader } from '@/components/common/PageHeader';
 import { TableActions } from '@/components/common/TableActions';
-import { api } from '@/services/api';
+import { api } from '@/lib/api';
 import { formatDateBR } from '@/utils/formatters';
 import { Layout } from '@/components/layout/Layout';
 import EditIcon from '@mui/icons-material/Edit';

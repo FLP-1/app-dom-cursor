@@ -82,7 +82,7 @@ export interface EmailConfig {
 export const EmailService = {
   CACHE_KEY: 'email:',
   CACHE_EXPIRACAO: 3600, // 1 hora
-  private initialized = false,
+  initialized: false,
 
   async initialize() {
     if (!this.initialized) {
@@ -501,4 +501,6 @@ export const EmailService = {
       throw error;
     }
   }
-}; 
+};
+
+export const emailService = EmailService; 

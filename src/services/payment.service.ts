@@ -9,7 +9,7 @@
 import Stripe from 'stripe';
 import { prisma } from '@/lib/prisma';
 import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';
-import { NotificationService } from '@/services/NotificationService';
+import { notificationService } from '@/services/notification.service';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2023-10-16',
@@ -209,7 +209,7 @@ export const PaymentService = {
       }
     });
 
-    await NotificationService.success(
+    await notificationService.success(
       'Assinatura ativada com sucesso!',
       'Pagamento confirmado'
     );
@@ -253,7 +253,7 @@ export const PaymentService = {
       }
     });
 
-    await NotificationService.error(
+    await notificationService.error(
       'Falha no pagamento da assinatura. Por favor, verifique seus dados de pagamento.',
       'Erro no pagamento'
     );
@@ -278,7 +278,7 @@ export const PaymentService = {
       }
     });
 
-    await NotificationService.warning(
+    await notificationService.warning(
       'Sua assinatura foi cancelada. Você ainda tem acesso até o final do período pago.',
       'Assinatura cancelada'
     );

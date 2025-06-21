@@ -17,11 +17,11 @@ import Link from 'next/link';
 import Box from '@/components/layout/Box';
 import { FormInput } from '@/components/forms/inputs/FormInput';
 import Button from '@/components/common/Button';
-import { CheckboxField } from '@/components/common/forms/CheckboxField';
 import { PasswordInput } from '@/components/common';
 import { validateCPF } from '@/utils/validations';
 import { useLoginForm, LoginForm } from '@/hooks/forms/useLoginForm';
 import { Tooltip } from '@mui/material';
+import { FormCheckbox } from '@/components/forms/inputs/FormCheckbox';
 
 const messages = [
   'O DOM da gestão doméstica.',
@@ -272,7 +272,7 @@ const Login: React.FC = () => {
                 autoComplete="new-password"
                 control={control}
               />
-              <CheckboxField<LoginForm>
+              <FormCheckbox
                 name="rememberMe"
                 control={control}
                 label="Lembrar de mim"
@@ -301,7 +301,7 @@ const Login: React.FC = () => {
             </LabelRow>
           </Box>
           <ConsentRow>
-            <CheckboxField<LoginForm>
+            <FormCheckbox<LoginForm>
               name="acceptTerms"
               control={control}
             />

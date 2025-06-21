@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Document, TipoDocumentoEsocial } from '@prisma/client';
-import { DocumentService } from '@/services/DocumentService';
+import { documentService } from '@/services/document.service';
 import { useNotification } from '@/hooks/useNotification';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -60,13 +60,13 @@ export function useDocumentForm({ document, onSuccess }: UseDocumentFormProps = 
   const onSubmit = async (data: DocumentFormData) => {
     try {
       if (document) {
-        await DocumentService.update(document.id, data);
+        await documentService.update(document.id, data);
         showNotification({
           type: 'success',
           message: t('document.messages.updateSuccess'),
         });
       } else {
-        await DocumentService.create(data);
+        await documentService.create(data);
         showNotification({
           type: 'success',
           message: t('document.messages.createSuccess'),
@@ -88,7 +88,7 @@ export function useDocumentForm({ document, onSuccess }: UseDocumentFormProps = 
     if (!document) return;
 
     try {
-      await DocumentService.delete(document.id);
+      await documentService.delete(document.id);
       showNotification({
         type: 'success',
         message: t('document.messages.deleteSuccess'),

@@ -82,4 +82,7 @@ export const DocumentService = {
     });
     return data;
   },
-}; 
+};
+
+export default DocumentService;
+export { DocumentService as documentService }; 

@@ -122,4 +122,6 @@ export const EsocialEventService = {
   async deleteEvent(id: string): Promise<void> {
     return esocialEventManager.deleteEvent(id);
   }
-}; 
+};
+
+export { EsocialEventService as esocialEventService }; 

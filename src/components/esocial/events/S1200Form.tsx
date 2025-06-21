@@ -2,15 +2,18 @@
  * Arquivo: S1200Form.tsx
  * Caminho: src/components/esocial/events/S1200Form.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-06-20
+ * Descrição: Formulário para evento S1200 do eSocial
  */
 
 import { useTranslation } from 'react-i18next';
 import { Control } from 'react-hook-form';
 import { Grid } from '@mui/material';
-import { FormInput, FormDatePicker, FormMoneyInput, FormTextArea } from '@/components/form';
-import { tooltips } from '@/utils/tooltips';
+import { FormInput } from '@/components/forms/inputs/FormInput';
+import { FormDatePicker } from '@/components/forms/inputs/FormDatePicker';
+import { FormMoneyInput } from '@/components/forms/inputs/FormMoneyInput';
+import { FormTextArea } from '@/components/forms/inputs/FormTextArea';
+import { tooltips } from '@/i18n/tooltips';
 
 interface S1200FormProps {
   control: Control;
