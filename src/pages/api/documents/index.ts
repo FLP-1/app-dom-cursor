@@ -1,96 +1,141 @@
 /**
  * Arquivo: index.ts
  * Caminho: src/pages/api/documents/index.ts
- * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: API para gerenciar documentos
+ * Criado em: 2025-01-27
+ * Última atualização: 2025-01-27
+ * Descrição: Endpoint da API para fornecer dados de documentos.
  */
 
-import { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '@/lib/prisma';
-import { getSession } from 'next-auth/react';
-import { TipoDocumentoEsocial } from '@prisma/client';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { DocumentsData } from '@/hooks/useDocumentsData';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  // Permitir acesso público para GET com isPublic=true
-  const isPublic = req.method === 'GET' && req.query.isPublic === 'true';
-  let session = null;
-  if (!isPublic) {
-    session = await getSession({ req });
-    if (!session) {
-      return res.status(401).json({ error: 'Não autorizado' });
+export default function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<DocumentsData>
+) {
+  const mockData: DocumentsData = {
+    documents: [
+      {
+        id: '1',
+        name: 'Contrato de Trabalho.pdf',
+        type: 'pdf',
+        size: '2.5 MB',
+        uploadDate: '2025-01-25',
+        category: 'work',
+        status: 'active',
+        description: 'Contrato de trabalho assinado com a família Silva',
+        tags: ['contrato', 'trabalho', 'importante'],
+        url: '/documents/contrato-trabalho.pdf',
+        thumbnail: '/thumbnails/pdf-thumb.png'
+      },
+      {
+        id: '2',
+        name: 'Exame de Sangue.jpg',
+        type: 'jpg',
+        size: '1.8 MB',
+        uploadDate: '2025-01-24',
+        category: 'medical',
+        status: 'active',
+        description: 'Resultado do exame de sangue de rotina',
+        tags: ['saúde', 'exame', 'laboratório'],
+        url: '/documents/exame-sangue.jpg',
+        thumbnail: '/thumbnails/image-thumb.png'
+      },
+      {
+        id: '3',
+        name: 'Recibo de Aluguel.pdf',
+        type: 'pdf',
+        size: '850 KB',
+        uploadDate: '2025-01-23',
+        category: 'financial',
+        status: 'active',
+        description: 'Recibo do pagamento do aluguel de janeiro',
+        tags: ['aluguel', 'pagamento', 'recibo'],
+        url: '/documents/recibo-aluguel.pdf',
+        thumbnail: '/thumbnails/pdf-thumb.png'
+      },
+      {
+        id: '4',
+        name: 'CNH Digital.pdf',
+        type: 'pdf',
+        size: '1.2 MB',
+        uploadDate: '2025-01-20',
+        category: 'personal',
+        status: 'active',
+        description: 'Carteira Nacional de Habilitação digital',
+        tags: ['documento', 'identidade', 'veículo'],
+        url: '/documents/cnh-digital.pdf',
+        thumbnail: '/thumbnails/pdf-thumb.png'
+      },
+      {
+        id: '5',
+        name: 'Receita Médica.pdf',
+        type: 'pdf',
+        size: '650 KB',
+        uploadDate: '2025-01-19',
+        category: 'medical',
+        status: 'active',
+        description: 'Receita médica para medicamentos',
+        tags: ['medicamento', 'receita', 'farmácia'],
+        url: '/documents/receita-medica.pdf',
+        thumbnail: '/thumbnails/pdf-thumb.png'
+      },
+      {
+        id: '6',
+        name: 'Comprovante de Residência.pdf',
+        type: 'pdf',
+        size: '1.1 MB',
+        uploadDate: '2025-01-18',
+        category: 'personal',
+        status: 'active',
+        description: 'Comprovante de residência atual',
+        tags: ['residência', 'comprovante', 'endereço'],
+        url: '/documents/comprovante-residencia.pdf',
+        thumbnail: '/thumbnails/pdf-thumb.png'
+      }
+    ],
+    recentUploads: [
+      {
+        id: '1',
+        name: 'Contrato de Trabalho.pdf',
+        type: 'pdf',
+        size: '2.5 MB',
+        uploadDate: '2025-01-25',
+        category: 'work',
+        status: 'active',
+        description: 'Contrato de trabalho assinado com a família Silva',
+        tags: ['contrato', 'trabalho', 'importante'],
+        url: '/documents/contrato-trabalho.pdf',
+        thumbnail: '/thumbnails/pdf-thumb.png'
+      },
+      {
+        id: '2',
+        name: 'Exame de Sangue.jpg',
+        type: 'jpg',
+        size: '1.8 MB',
+        uploadDate: '2025-01-24',
+        category: 'medical',
+        status: 'active',
+        description: 'Resultado do exame de sangue de rotina',
+        tags: ['saúde', 'exame', 'laboratório'],
+        url: '/documents/exame-sangue.jpg',
+        thumbnail: '/thumbnails/image-thumb.png'
+      }
+    ],
+    categories: [
+      { name: 'Pessoal', count: 2, color: '#2196F3' },
+      { name: 'Trabalho', count: 1, color: '#4CAF50' },
+      { name: 'Médico', count: 2, color: '#F44336' },
+      { name: 'Financeiro', count: 1, color: '#FF9800' },
+      { name: 'Legal', count: 0, color: '#9C27B0' },
+      { name: 'Outros', count: 0, color: '#757575' }
+    ],
+    storageStats: {
+      used: 8.05,
+      total: 10,
+      percentage: 80.5
     }
-  }
+  };
 
-  switch (req.method) {
-    case 'GET':
-      try {
-        const { tipo, empregadoId, esocialEventId, page = 1, limit = 10 } = req.query;
-        const skip = (Number(page) - 1) * Number(limit);
-        const where: any = {
-          ...(tipo && { tipo: tipo as TipoDocumentoEsocial }),
-          ...(empregadoId && { empregadoDomesticoId: String(empregadoId) }),
-          ...(esocialEventId && { esocialEventId: String(esocialEventId) }),
-        };
-        if (isPublic) {
-          where.isPublic = true;
-        } else {
-          where.uploadedBy = session.user.id;
-        }
-        const [documents, total] = await Promise.all([
-          prisma.document.findMany({
-            where,
-            skip,
-            take: Number(limit),
-            orderBy: { dataUpload: 'desc' },
-            include: {
-              empregadoDomestico: {
-                select: {
-                  id: true,
-                  nomeCompleto: true
-                }
-              },
-              esocialEvent: {
-                select: {
-                  id: true,
-                  tipo: true
-                }
-              }
-            }
-          }),
-          prisma.document.count({ where })
-        ]);
-        return res.status(200).json({
-          documents,
-          total,
-          pages: Math.ceil(total / Number(limit))
-        });
-      } catch (error) {
-        console.error('Erro ao buscar documentos:', error);
-        return res.status(500).json({ error: 'Erro ao buscar documentos' });
-      }
-    case 'POST':
-      try {
-        const { nome, tipo, url, dataValidade, empregadoDomesticoId, esocialEventId, isPublic } = req.body;
-        const document = await prisma.document.create({
-          data: {
-            nome,
-            tipo,
-            url,
-            dataValidade: dataValidade ? new Date(dataValidade) : null,
-            uploadedBy: session.user.id,
-            empregadoDomesticoId: empregadoDomesticoId || null,
-            esocialEventId: esocialEventId || null,
-            isPublic: isPublic || false
-          }
-        });
-        return res.status(201).json(document);
-      } catch (error) {
-        console.error('Erro ao criar documento:', error);
-        return res.status(500).json({ error: 'Erro ao criar documento' });
-      }
-    default:
-      res.setHeader('Allow', ['GET', 'POST']);
-      return res.status(405).json({ error: `Método ${req.method} não permitido` });
-  }
+  res.status(200).json(mockData);
 } 

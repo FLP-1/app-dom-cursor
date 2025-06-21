@@ -1,54 +1,63 @@
 /**
  * Arquivo: useLoginForm.ts
  * Caminho: src/hooks/forms/useLoginForm.ts
- * Criado em: 2025-06-13
- * Última atualização: 2025-06-13
- * Descrição: Hook customizado para lógica, validação e submit do formulário de login, com integração ao contexto de autenticação.
+ * Criado em: 2025-01-27
+ * Última atualização: 2025-01-27
+ * Descrição: Hook customizado para gerenciar a lógica e o estado do formulário de login.
  */
 
 import { useForm } from 'react-hook-form';
-import { useAuth } from '@/contexts/AuthContext';
-import { notificationManager } from '@/services/notification.service';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { useSnackbar } from 'notistack';
 
-export interface LoginForm {
-  dom_cpf_login: string;
-  password: string;
-  rememberMe: boolean;
-  acceptTerms: boolean;
-}
+// 1. Schema de Validação com Zod
+const loginSchema = z.object({
+  email: z.string().email({ message: 'Por favor, insira um email válido.' }),
+  password: z.string().min(6, { message: 'A senha deve ter pelo menos 6 caracteres.' }),
+  profile: z.enum(['empregador', 'empregado', 'familiar']),
+});
 
-export function useLoginForm(onSuccess?: () => void) {
-  const { signIn, loading } = useAuth();
-  const methods = useForm<LoginForm>({
+// Tipagem inferida do schema
+export type LoginFormInputs = z.infer<typeof loginSchema>;
+
+export const useLoginForm = () => {
+  const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
+
+  const form = useForm<LoginFormInputs>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
-      dom_cpf_login: '',
+      email: '',
       password: '',
-      rememberMe: false,
-      acceptTerms: false,
+      profile: 'empregador', // Perfil padrão
     },
-    mode: 'onChange',
   });
 
-  const onSubmit = async (data: LoginForm) => {
-    console.log('[Login] onSubmit chamado com:', data);
-    if (!data.acceptTerms) {
-      notificationManager.error('Você precisa aceitar os termos de uso para continuar');
-      return;
-    }
+  const { handleSubmit, formState } = form;
+
+  // 2. Função de Submit
+  const onSubmit = async (data: LoginFormInputs) => {
     try {
-      await signIn(data.dom_cpf_login, data.password, data.rememberMe);
-      notificationManager.success('Login realizado com sucesso!');
-      console.log('[Login] Login realizado com sucesso!');
-      onSuccess?.();
-    } catch (err: unknown) {
-      console.error('[Login] Erro ao fazer login:', err);
-      if (err instanceof Error) {
-        notificationManager.error(err.message || 'Erro ao fazer login');
-      } else {
-        notificationManager.error('Erro ao fazer login');
-      }
+      // O endpoint pode variar, mas este é um padrão comum.
+      const response = await axios.post('/api/auth/login', data);
+      
+      enqueueSnackbar('Login realizado com sucesso!', { variant: 'success' });
+      
+      // 3. Redirecionamento após o sucesso
+      router.push('/dashboard'); 
+
+    } catch (error) {
+      console.error('Erro no login:', error);
+      enqueueSnackbar(error.response?.data?.message || 'Falha no login. Verifique suas credenciais.', { variant: 'error' });
     }
   };
 
-  return { ...methods, onSubmit, loading };
-} 
+  return {
+    form,
+    onSubmit: handleSubmit(onSubmit),
+    isLoading: formState.isSubmitting,
+  };
+}; 

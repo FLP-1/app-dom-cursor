@@ -1,155 +1,153 @@
 /**
  * Arquivo: index.tsx
  * Caminho: src/pages/dashboard/index.tsx
- * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: Página de dashboard
+ * Criado em: 2025-01-27
+ * Última atualização: 2025-01-27
+ * Descrição: Página de dashboard principal do sistema, conectada à API via useDashboardData.
  */
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import {
-  Grid,
-  Paper,
-  Typography,
-  Box,
-  Button,
-  CircularProgress,
-  Alert,
-  CardActionArea
-} from '@mui/material';
-import { Add as AddIcon } from '@mui/icons-material';
-import EstatCard from '@/components/EstatCard';
-import { Layout } from '@/components/layout/Layout';
-import Link from 'next/link';
-import { useAuth } from '@/contexts/AuthContext';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import { usePonto } from '@/hooks/usePonto';
-import { useTranslation } from 'react-i18next';
+import { Grid, Card, CardContent, Typography, Box, IconButton, Avatar, Chip, LinearProgress, Skeleton } from '@mui/material';
+import { AccessTime, Description, Assignment, ShoppingCart, Chat, People, Notifications, TrendingUp, CheckCircle, Warning } from '@mui/icons-material';
+import { useDashboardData } from '@/hooks/useDashboardData';
 
-interface DashboardStats {
-  totalAlerts: number;
-  activeAlerts: number;
-  urgentAlerts: number;
-  recentAlerts: number;
-}
+// Mapeamento de string para componente de ícone
+const iconMap = {
+  AccessTime, Description, Assignment, ShoppingCart,
+  Chat, People, Notifications, TrendingUp,
+  CheckCircle, Warning
+};
 
-export default function Dashboard() {
-  const router = useRouter();
-  const { user, loading: authLoading } = useAuth();
-  const [stats, setStats] = useState<DashboardStats | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const { horasSemana, horasMes, loading: loadingPonto } = usePonto();
-  const { t } = useTranslation();
+const Dashboard = () => {
+  const { data, isLoading, isError } = useDashboardData();
 
-  useEffect(() => {
-    if (!authLoading && !user) {
-      router.push('/auth/login');
-      return;
-    }
-    const fetchStats = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          router.push('/auth/login');
-          return;
-        }
-
-        const response = await fetch('/api/dashboard/stats', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error('Erro ao carregar estatísticas');
-        }
-
-        const data = await response.json();
-        setStats(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erro ao carregar dashboard');
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (user) fetchStats();
-  }, [router, user, authLoading]);
-
-  if (authLoading || loading) {
+  if (isLoading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
-        <CircularProgress />
+      <Box sx={{ p: 3, background: '#f8fafc', minHeight: '100vh' }}>
+        <Skeleton variant="text" width={250} height={60} />
+        <Skeleton variant="text" width={200} height={30} />
+        <Grid container spacing={3} mt={2}>
+          {[...Array(4)].map((_, i) => (<Grid item xs={12} sm={6} md={3} key={i}><Skeleton variant="rectangular" height={150} sx={{ borderRadius: 3 }} /></Grid>))}
+          <Grid item xs={12} md={8}><Skeleton variant="rectangular" height={400} sx={{ borderRadius: 3 }} /></Grid>
+          <Grid item xs={12} md={4}><Skeleton variant="rectangular" height={400} sx={{ borderRadius: 3 }} /></Grid>
+        </Grid>
       </Box>
     );
   }
 
-  if (error) {
+  if (isError) {
     return (
-      <Layout>
-        <Alert severity="error" sx={{ mt: 2 }}>
-          {error}
-        </Alert>
-      </Layout>
+      <Box sx={{ p: 3, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <Typography color="error">Falha ao carregar os dados do dashboard.</Typography>
+      </Box>
     );
   }
+  
+  const { statsCards, recentActivities, monthlyProgress, quickMessages } = data;
 
   return (
-    <Layout>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4 }}>
-        <Typography variant="h4" component="h1">
-          {user?.name ? `Olá, ${user.name}` : 'Dashboard'}
-        </Typography>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={() => router.push('/alerts')}
-        >
-          Gerenciar Alertas
-        </Button>
+    <Box sx={{ p: 3, background: '#f8fafc', minHeight: '100vh' }}>
+      {/* Header */}
+      <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
+        <Box>
+          <Typography variant="h4" fontWeight="bold" color="primary">Bem-vindo de volta! 👋</Typography>
+          <Typography variant="body1" color="text.secondary">Aqui está o resumo do seu dia</Typography>
+        </Box>
+        <Box display="flex" gap={1}>
+          <IconButton sx={{ background: 'rgba(103, 126, 234, 0.1)', '&:hover': { background: 'rgba(103, 126, 234, 0.2)' } }}><Notifications color="primary" /></IconButton>
+          <Avatar sx={{ width: 48, height: 48 }}>JD</Avatar>
+        </Box>
       </Box>
 
-      <Grid container spacing={3} sx={{ mt: 2 }}>
-        {/* Total de Alertas */}
-        <Grid columns={{ xs: 12, sm: 6, md: 3 }}>
-          <CardActionArea component={Link} href="/alerts" passHref>
-            <EstatCard title="Total de Alertas" value={stats?.totalAlerts || 0} />
-          </CardActionArea>
+      {/* Cards Estatísticas */}
+      <Grid container spacing={3} mb={4}>
+        {statsCards.map((card, index) => {
+          const IconComponent = iconMap[card.icon];
+          return (
+            <Grid item xs={12} sm={6} md={3} key={index}>
+              <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', border: '1px solid rgba(255,255,255,0.1)', transition: 'transform 0.2s', '&:hover': { transform: 'translateY(-4px)' } }}>
+                <CardContent>
+                  <Box display="flex" justifyContent="space-between" alignItems="flex-start">
+                    <Box>
+                      <Typography variant="body2" color="text.secondary" gutterBottom>{card.title}</Typography>
+                      <Typography variant="h4" fontWeight="bold" color={card.color}>{card.value}</Typography>
+                      <Chip label={card.change} size="small" sx={{ mt: 1, background: card.change.includes('+') ? '#E8F5E8' : '#FFF3E0', color: card.change.includes('+') ? '#2E7D32' : '#E65100' }} />
+                    </Box>
+                    <Avatar sx={{ background: card.gradient, width: 56, height: 56 }}>
+                      {IconComponent && <IconComponent sx={{ fontSize: 28, color: 'white' }} />}
+                    </Avatar>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
+          );
+        })}
+      </Grid>
+
+      {/* Seção Principal */}
+      <Grid container spacing={3}>
+        {/* Atividades Recentes */}
+        <Grid item xs={12} md={8}>
+          <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
+            <CardContent>
+              <Typography variant="h6" fontWeight="bold" mb={3}>Atividades Recentes</Typography>
+              <Box>
+                {recentActivities.map((activity, index) => {
+                  const IconComponent = iconMap[activity.icon];
+                  return (
+                    <Box key={index} display="flex" alignItems="center" py={2} borderBottom={index < recentActivities.length - 1 ? '1px solid #f0f0f0' : 'none'}>
+                      <Avatar sx={{ background: `${activity.color}20`, mr: 2, width: 40, height: 40 }}>
+                        {IconComponent && <IconComponent sx={{ color: activity.color, fontSize: 20 }} />}
+                      </Avatar>
+                      <Box flex={1}>
+                        <Typography variant="body2" fontWeight="medium">{activity.text}</Typography>
+                        <Typography variant="caption" color="text.secondary">{activity.time}</Typography>
+                      </Box>
+                    </Box>
+                  );
+                })}
+              </Box>
+            </CardContent>
+          </Card>
         </Grid>
 
-        {/* Alertas Ativos */}
-        <Grid columns={{ xs: 12, sm: 6, md: 3 }}>
-          <CardActionArea component={Link} href="/alerts" passHref>
-            <EstatCard title="Alertas Ativos" value={stats?.activeAlerts || 0} />
-          </CardActionArea>
-        </Grid>
+        {/* Painel Lateral */}
+        <Grid item xs={12} md={4}>
+          {/* Progresso Mensal */}
+          <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', mb: 3 }}>
+            <CardContent>
+              <Typography variant="h6" fontWeight="bold" mb={2}>Progresso Mensal</Typography>
+              {monthlyProgress.map((progress, index) => (
+                <Box key={index} mb={2}>
+                  <Box display="flex" justifyContent="space-between" mb={1}>
+                    <Typography variant="body2">{progress.label}</Typography>
+                    <Typography variant="body2" fontWeight="bold">{progress.value}%</Typography>
+                  </Box>
+                  <LinearProgress variant="determinate" value={progress.value} sx={{ height: 8, borderRadius: 4, backgroundColor: '#E3F2FD', '& .MuiLinearProgress-bar': { borderRadius: 4, background: 'linear-gradient(90deg, #2196F3, #21CBF3)' } }} />
+                </Box>
+              ))}
+            </CardContent>
+          </Card>
 
-        {/* Alertas Urgentes */}
-        <Grid columns={{ xs: 12, sm: 6, md: 3 }}>
-          <CardActionArea component={Link} href="/alerts" passHref>
-            <EstatCard title="Alertas Urgentes" value={stats?.urgentAlerts || 0} color="error" />
-          </CardActionArea>
-        </Grid>
-
-        {/* Alertas Recentes */}
-        <Grid columns={{ xs: 12, sm: 6, md: 3 }}>
-          <CardActionArea component={Link} href="/alerts" passHref>
-            <EstatCard title="Alertas Recentes" value={stats?.recentAlerts || 0} />
-          </CardActionArea>
-        </Grid>
-
-        {/* Horas Semanais */}
-        <Grid columns={{ xs: 12, sm: 6, md: 3 }}>
-          <EstatCard title={t('Horas Semanais')} value={horasSemana ? Number(horasSemana.replace(':', '.')) : 0} icon={<AccessTimeIcon />} color="info" />
-        </Grid>
-
-        {/* Horas Mensais */}
-        <Grid columns={{ xs: 12, sm: 6, md: 3 }}>
-          <EstatCard title={t('Horas Mensais')} value={horasMes ? Number(horasMes.replace(':', '.')) : 0} icon={<CalendarMonthIcon />} color="success" />
+          {/* Mensagens Rápidas */}
+          <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
+            <CardContent>
+              <Typography variant="h6" fontWeight="bold" mb={2}>Mensagens</Typography>
+              {quickMessages.map((msg, index) => (
+                <Box key={index} display="flex" alignItems="center" py={1}>
+                  <Avatar sx={{ width: 32, height: 32, mr: 2, fontSize: 12 }}>{msg.avatar}</Avatar>
+                  <Box flex={1}>
+                    <Typography variant="body2" fontWeight="medium">{msg.name}</Typography>
+                    <Typography variant="caption" color="text.secondary">{msg.message}</Typography>
+                  </Box>
+                  <Typography variant="caption" color="text.secondary">{msg.time}</Typography>
+                </Box>
+              ))}
+            </CardContent>
+          </Card>
         </Grid>
       </Grid>
-    </Layout>
+    </Box>
   );
-} 
+};
+
+export default Dashboard;
