@@ -1,13 +1,13 @@
 /**
  * Arquivo: test-email.ts
  * Caminho: src/pages/api/test-email.ts
- * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: API para testar envio de email
+ * Criado em: 2024-01-01
+ * Última atualização: 2025-01-27
+ * Descrição: API endpoint para testar envio de emails.
  */
 
 import { NextApiRequest, NextApiResponse } from 'next';
-import { sendPasswordResetEmail } from '../../utils/email';
+import { sendPasswordResetEmail } from '@/utils/email';
 
 export default async function handler(
   req: NextApiRequest,

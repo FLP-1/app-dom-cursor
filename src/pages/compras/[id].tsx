@@ -2,7 +2,7 @@
  * Arquivo: [id].tsx
  * Caminho: src/pages/compras/[id].tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
+ * Última atualização: 2025-01-27
  * Descrição: Página de detalhes de compra
  */
 
@@ -34,7 +34,7 @@ const CompraDetalhePage: React.FC = () => {
       <Box sx={{ maxWidth: 600, mx: 'auto', p: 3, bgcolor: 'background.paper', borderRadius: 2.5, boxShadow: 2 }}>
         <Typography variant="h5" sx={{ mt: 0, mb: 2 }}>Detalhes da Compra</Typography>
         <Box sx={{ display: 'flex', gap: 3, alignItems: 'center', mb: 3 }}>
-          <Image src={mockCompra.foto} alt={mockCompra.produto} width={80} height={80} style={undefined} sx={{ objectFit: 'cover', borderRadius: 2 }} />
+          <Image src={mockCompra.foto} alt={mockCompra.produto} width={80} height={80} sx={{ objectFit: 'cover', borderRadius: 2 }} />
           <Box>
             <Typography><strong>Produto:</strong> {mockCompra.produto}</Typography>
             <Typography><strong>Unidade:</strong> {mockCompra.unidade}</Typography>

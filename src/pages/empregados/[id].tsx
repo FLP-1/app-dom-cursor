@@ -2,7 +2,7 @@
  * Arquivo: [id].tsx
  * Caminho: src/pages/empregados/[id].tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
+ * Última atualização: 2025-01-27
  * Descrição: Página de edição de empregado
  */
 
@@ -56,18 +56,18 @@ export default function EditarEmpregadoPage() {
 
   return (
     <Box sx={{ p: 3 }}>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
+      <Grid container columns={12} spacing={3}>
+        <Grid gridColumn={{ xs: 'span 12' }}>
           <Typography variant="h4" component="h1" gutterBottom>
             {t('empregados.editar.titulo')}
           </Typography>
         </Grid>
-        <Grid item xs={12}>
+        <Grid gridColumn={{ xs: 'span 12' }}>
           <Card>
             <CardContent>
               <form onSubmit={handleSubmit(onSubmit)}>
-                <Grid container spacing={3}>
-                  <Grid item xs={12} md={6}>
+                <Grid container columns={12} spacing={3}>
+                  <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
                     <TextField
                       fullWidth
                       label={t('empregados.nome')}
@@ -76,7 +76,7 @@ export default function EditarEmpregadoPage() {
                       helperText={errors.nomeCompleto?.message}
                     />
                   </Grid>
-                  <Grid item xs={12} md={6}>
+                  <Grid gridColumn={{ xs: 'span 12', md: 'span 6' }}>
                     <TextField
                       fullWidth
                       label={t('empregados.cpf')}
@@ -86,7 +86,7 @@ export default function EditarEmpregadoPage() {
                     />
                   </Grid>
                   {/* Adicione outros campos conforme necessário */}
-                  <Grid item xs={12}>
+                  <Grid gridColumn={{ xs: 'span 12' }}>
                     <Button type="submit" variant="contained" color="primary">
                       {t('empregados.editar.salvar')}
                     </Button>

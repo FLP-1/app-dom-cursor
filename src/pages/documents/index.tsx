@@ -346,7 +346,7 @@ const Documents = () => {
                     handleUpload(file);
                   }
                 }}
-                style={{ width: '100%' }}
+                sx={{ width: '100%' }}
                 aria-label="Selecionar arquivo para upload"
               />
             </label>

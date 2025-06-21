@@ -1,13 +1,13 @@
 /**
  * Arquivo: reset-password.ts
  * Caminho: src/pages/api/auth/reset-password.ts
- * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: API para redefinição de senha
+ * Criado em: 2024-01-01
+ * Última atualização: 2025-01-27
+ * Descrição: API endpoint para reset de senha.
  */
 
 import { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '../../../lib/prisma';
+import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
 import { hash } from 'bcryptjs';
 import { verify } from 'jsonwebtoken';

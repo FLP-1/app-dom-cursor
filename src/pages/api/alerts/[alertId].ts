@@ -1,14 +1,14 @@
 /**
  * Arquivo: [alertId].ts
  * Caminho: src/pages/api/alerts/[alertId].ts
- * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: API para gerenciar alertas
+ * Criado em: 2024-01-01
+ * Última atualização: 2025-01-27
+ * Descrição: API endpoint para gerenciar alertas por ID.
  */
 
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Pool } from 'pg';
-import { verifyToken } from '../../../utils/auth'; // Adjust import path as needed
+import { verifyToken } from '@/utils/auth';
 
 // Configure your PostgreSQL connection pool using environment variables
 const pool = new Pool({

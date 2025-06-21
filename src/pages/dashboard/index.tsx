@@ -25,10 +25,18 @@ const Dashboard = () => {
       <Box sx={{ p: 3, background: '#f8fafc', minHeight: '100vh' }}>
         <Skeleton variant="text" width={250} height={60} />
         <Skeleton variant="text" width={200} height={30} />
-        <Grid container spacing={3} mt={2}>
-          {[...Array(4)].map((_, i) => (<Grid item xs={12} sm={6} md={3} key={i}><Skeleton variant="rectangular" height={150} sx={{ borderRadius: 3 }} /></Grid>))}
-          <Grid item xs={12} md={8}><Skeleton variant="rectangular" height={400} sx={{ borderRadius: 3 }} /></Grid>
-          <Grid item xs={12} md={4}><Skeleton variant="rectangular" height={400} sx={{ borderRadius: 3 }} /></Grid>
+        <Grid container columns={12} spacing={3} mt={2}>
+          {[...Array(4)].map((_, i) => (
+            <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }} key={i}>
+              <Skeleton variant="rectangular" height={150} sx={{ borderRadius: 3 }} />
+            </Grid>
+          ))}
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 8' }}>
+            <Skeleton variant="rectangular" height={400} sx={{ borderRadius: 3 }} />
+          </Grid>
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 4' }}>
+            <Skeleton variant="rectangular" height={400} sx={{ borderRadius: 3 }} />
+          </Grid>
         </Grid>
       </Box>
     );
@@ -59,11 +67,11 @@ const Dashboard = () => {
       </Box>
 
       {/* Cards Estatísticas */}
-      <Grid container spacing={3} mb={4}>
+      <Grid container columns={12} spacing={3} mb={4}>
         {statsCards.map((card, index) => {
           const IconComponent = iconMap[card.icon];
           return (
-            <Grid item xs={12} sm={6} md={3} key={index}>
+            <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }} key={index}>
               <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', border: '1px solid rgba(255,255,255,0.1)', transition: 'transform 0.2s', '&:hover': { transform: 'translateY(-4px)' } }}>
                 <CardContent>
                   <Box display="flex" justifyContent="space-between" alignItems="flex-start">
@@ -84,9 +92,9 @@ const Dashboard = () => {
       </Grid>
 
       {/* Seção Principal */}
-      <Grid container spacing={3}>
+      <Grid container columns={12} spacing={3}>
         {/* Atividades Recentes */}
-        <Grid item xs={12} md={8}>
+        <Grid gridColumn={{ xs: 'span 12', md: 'span 8' }}>
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={3}>Atividades Recentes</Typography>
@@ -111,7 +119,7 @@ const Dashboard = () => {
         </Grid>
 
         {/* Painel Lateral */}
-        <Grid item xs={12} md={4}>
+        <Grid gridColumn={{ xs: 'span 12', md: 'span 4' }}>
           {/* Progresso Mensal */}
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', mb: 3 }}>
             <CardContent>

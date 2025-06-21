@@ -1,13 +1,13 @@
 /**
  * Arquivo: empregadores.ts
  * Caminho: src/pages/api/empregadores.ts
- * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: API para buscar empregadores
+ * Criado em: 2024-01-01
+ * Última atualização: 2025-01-27
+ * Descrição: API endpoint para gerenciar empregadores.
  */
 
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '../../lib/prisma';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { prisma } from '@/lib/prisma';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'GET') {

@@ -1,16 +1,16 @@
 /**
  * Arquivo: perfil.ts
  * Caminho: src/pages/api/perfil.ts
- * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: API para gerenciar perfil do usuário
+ * Criado em: 2024-01-01
+ * Última atualização: 2025-01-27
+ * Descrição: API endpoint para gerenciar perfil do usuário.
  */
 
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
-import { prisma } from '../../lib/prisma';
+import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
-import { messages } from '../../utils/messages';
+import { messages } from '@/utils/messages';
 
 const perfilSchema = z.object({
   name: z.string().min(3, messages.perfil.validacao.nome),
