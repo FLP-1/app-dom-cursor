@@ -2,19 +2,20 @@
  * Arquivo: FormRichText.tsx
  * Caminho: src/components/forms/inputs/FormRichText.tsx
  * Criado em: 2024-06-07
- * Última atualização: 2024-06-07
+ * Última atualização: 2025-01-27
  * Descrição: Componente de editor de texto rico com Material UI.
  */
 
-import { TextField, TextFieldProps } from '@mui/material';
+import { TextField, TextFieldProps, Typography } from '@mui/material';
 import { Controller, FieldValues, Path } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
+import { authMessages } from '@/i18n/messages/auth.messages';
 
 // Importação dinâmica do ReactQuill para evitar problemas de SSR
 const ReactQuill = dynamic(() => import('react-quill'), {
   ssr: false,
-  loading: () => <Typography>Carregando editor...</Typography>,
+  loading: () => <Typography>{authMessages.pt.mensagens.carregandoEditor}</Typography>,
 });
 
 interface FormRichTextProps<T extends FieldValues> extends Omit<TextFieldProps, 'name'> {
@@ -55,6 +56,9 @@ export function FormRichText<T extends FieldValues>({
   label,
   ...props
 }: FormRichTextProps<T>) {
+  // Usar mensagens em português por padrão
+  const messages = authMessages.pt;
+
   return (
     <Controller
       name={name}
@@ -68,6 +72,7 @@ export function FormRichText<T extends FieldValues>({
           error={!!error}
           helperText={error?.message}
           multiline
+          aria-label={messages.tooltips.editorTexto}
           InputProps={{
             inputComponent: ReactQuill as any,
           }}

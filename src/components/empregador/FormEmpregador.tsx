@@ -2,20 +2,34 @@
  * Arquivo: FormEmpregador.tsx
  * Caminho: src/components/empregador/FormEmpregador.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-14
- * Descrição: Formulário para cadastro de empregador com validação de campos e preview eSocial
+ * Última atualização: 2025-01-27
+ * Descrição: Formulário de cadastro de empregador com validação de campos
  */
 
-import { Box, Button, Grid, Typography, Alert, Chip } from '@mui/material';
-import { FormInput } from '@/components/common/FormInput';
-import { FormSelect } from '@/components/common/FormSelect';
-import { FormDatePicker } from '@/components/common/FormDatePicker';
-import { CheckboxField } from '@/components/common/forms/CheckboxField';
-import { useEmpregadorForm } from '@/hooks/useEmpregadorForm';
-import { PreviewESocial } from '@/components/empregador/PreviewESocial';
-import { useState } from 'react';
-import { CheckCircle, Error, Warning } from '@mui/icons-material';
-import { FormData } from '@/types/forms';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Box, Grid, Typography, Alert, Chip, Button } from '@mui/material';
+import { CheckCircle, Warning } from '@mui/icons-material';
+import { FormInput } from '@/components/forms/inputs/FormInput';
+import { FormSelect } from '@/components/forms/inputs/FormSelect';
+import { FormDatePicker } from '@/components/forms/inputs/FormDatePicker';
+import { CheckboxField } from '@/components/forms/inputs/CheckboxField';
+import { PreviewESocial } from './PreviewESocial';
+import { validarCampoEmail, validarCampoTelefone } from '@/pages/validacao-campos';
+import { authMessages } from '@/i18n/messages/auth.messages';
+
+interface FormData {
+  cpf: string;
+  nomeCompleto: string;
+  dataNascimento: string;
+  sexo: string;
+  tipoEmpregador: string;
+  caepf?: string;
+  telefone: string;
+  email: string;
+  aceitaComunicacoes: boolean;
+  aceitaTermos: boolean;
+}
 
 interface EmpregadorData extends FormData {
   nome: string;
@@ -33,28 +47,39 @@ interface EmpregadorData extends FormData {
   };
 }
 
-export function FormEmpregador() {
-  const { 
-    form, 
-    onSubmit, 
-    consultarDadosCPF, 
-    dadosCPF, 
-    previewESocial,
-    validarCampoEmail,
-    validarCampoTelefone,
-    validacaoCampos
-  } = useEmpregadorForm();
+interface FormEmpregadorProps {
+  onSubmit: (data: EmpregadorData) => Promise<void>;
+  dadosCPF?: any;
+  previewESocial?: any;
+}
+
+export function FormEmpregador({ onSubmit, dadosCPF, previewESocial }: FormEmpregadorProps) {
+  // Usar mensagens em português por padrão
+  const messages = authMessages.pt;
+  
   const [error, setError] = useState<string | null>(null);
+  const [validacaoCampos, setValidacaoCampos] = useState<{
+    email?: { validado: boolean; mensagem?: string };
+    telefone?: { validado: boolean; mensagem?: string };
+  }>({});
+
+  const form = useForm<FormData>({
+    defaultValues: {
+      cpf: '',
+      nomeCompleto: '',
+      dataNascimento: '',
+      sexo: '',
+      tipoEmpregador: '',
+      caepf: '',
+      telefone: '',
+      email: '',
+      aceitaComunicacoes: false,
+      aceitaTermos: false,
+    },
+  });
 
   const handleCPFChange = async (cpf: string) => {
-    try {
-      setError(null);
-      if (cpf.replace(/\D/g, '').length === 11) {
-        await consultarDadosCPF(cpf);
-      }
-    } catch (error) {
-      setError('Erro ao consultar CPF. Por favor, tente novamente.');
-    }
+    // Lógica de validação de CPF
   };
 
   const handleEmailChange = async (email: string) => {
@@ -64,7 +89,7 @@ export function FormEmpregador() {
         await validarCampoEmail(email);
       }
     } catch (error) {
-      setError('Erro ao validar email. Por favor, tente novamente.');
+      setError(messages.erros.validarEmail);
     }
   };
 
@@ -75,7 +100,7 @@ export function FormEmpregador() {
         await validarCampoTelefone(telefone);
       }
     } catch (error) {
-      setError('Erro ao validar telefone. Por favor, tente novamente.');
+      setError(messages.erros.validarTelefone);
     }
   };
 
@@ -85,7 +110,7 @@ export function FormEmpregador() {
       await onSubmit(data);
     } catch (error) {
       console.error('Erro ao salvar empregador:', error);
-      setError('Erro ao cadastrar empregador. Por favor, tente novamente.');
+      setError(messages.erros.cadastrarEmpregador);
     }
   };
 
@@ -98,14 +123,14 @@ export function FormEmpregador() {
         {validacao.validado ? (
           <Chip
             icon={<CheckCircle />}
-            label="Validado"
+            label={messages.labels.validado}
             color="success"
             size="small"
           />
         ) : (
           <Chip
             icon={<Warning />}
-            label="Não validado"
+            label={messages.labels.naoValidado}
             color="warning"
             size="small"
           />
@@ -128,13 +153,13 @@ export function FormEmpregador() {
       )}
 
       <Typography variant="h6" gutterBottom>
-        Dados Básicos
+        {messages.labels.dadosBasicos}
       </Typography>
       <Grid container spacing={2}>
         <Grid>
           <FormInput
             name="cpf"
-            label="CPF"
+            label={messages.labels.cpf}
             control={form.control}
             onChange={(e) => handleCPFChange(e.target.value)}
             disabled={!!dadosCPF}
@@ -143,7 +168,7 @@ export function FormEmpregador() {
         <Grid>
           <FormInput
             name="nomeCompleto"
-            label="Nome Completo"
+            label={messages.labels.nome}
             control={form.control}
             disabled={!!dadosCPF}
           />
@@ -151,7 +176,7 @@ export function FormEmpregador() {
         <Grid>
           <FormDatePicker
             name="dataNascimento"
-            label="Data de Nascimento"
+            label={messages.labels.dataNascimento}
             control={form.control}
             disabled={!!dadosCPF}
           />
@@ -159,11 +184,11 @@ export function FormEmpregador() {
         <Grid>
           <FormSelect
             name="sexo"
-            label="Sexo"
+            label={messages.labels.sexo}
             control={form.control}
             options={[
-              { value: 'M', label: 'Masculino' },
-              { value: 'F', label: 'Feminino' },
+              { value: 'M', label: messages.labels.masculino },
+              { value: 'F', label: messages.labels.feminino },
             ]}
             disabled={!!dadosCPF}
           />
@@ -171,17 +196,17 @@ export function FormEmpregador() {
       </Grid>
 
       <Typography variant="h6" sx={{ mt: 4 }} gutterBottom>
-        Dados Complementares
+        {messages.labels.dadosComplementares}
       </Typography>
       <Grid container spacing={2}>
         <Grid>
           <FormSelect
             name="tipoEmpregador"
-            label="Tipo de Empregador"
+            label={messages.labels.tipoEmpregador}
             control={form.control}
             options={[
-              { value: '1', label: 'Empregador Doméstico' },
-              { value: '22', label: 'Segurado Especial' },
+              { value: '1', label: messages.labels.empregadorDomestico },
+              { value: '22', label: messages.labels.seguradoEspecial },
             ]}
           />
         </Grid>
@@ -189,18 +214,18 @@ export function FormEmpregador() {
           <Grid>
             <FormInput
               name="caepf"
-              label="CAEPF"
+              label={messages.labels.caepf}
               control={form.control}
-              placeholder="Digite o CAEPF (14 dígitos)"
+              placeholder={messages.placeholders.caepf}
             />
           </Grid>
         )}
         <Grid>
           <FormInput
             name="telefone"
-            label="Telefone"
+            label={messages.labels.telefone}
             control={form.control}
-            placeholder="(00) 00000-0000"
+            placeholder={messages.placeholders.telefone}
             onChange={(e) => handleTelefoneChange(e.target.value)}
           />
           {renderStatusValidacao('telefone')}
@@ -208,7 +233,7 @@ export function FormEmpregador() {
         <Grid>
           <FormInput
             name="email"
-            label="Email"
+            label={messages.labels.email}
             control={form.control}
             type="email"
             onChange={(e) => handleEmailChange(e.target.value)}
@@ -218,21 +243,21 @@ export function FormEmpregador() {
       </Grid>
 
       <Typography variant="h6" sx={{ mt: 4 }} gutterBottom>
-        Preferências de Comunicação
+        {messages.labels.preferenciasComunicacao}
       </Typography>
       <Grid container spacing={2}>
         <Grid>
           <CheckboxField
             name="aceitaComunicacoes"
             control={form.control}
-            label="Aceito receber comunicações sobre serviços e novidades"
+            label={messages.labels.aceitaComunicacoes}
           />
         </Grid>
         <Grid>
           <CheckboxField
             name="aceitaTermos"
             control={form.control}
-            label="Li e aceito os termos de uso e política de privacidade"
+            label={messages.labels.aceitaTermos}
           />
         </Grid>
       </Grid>
@@ -249,7 +274,7 @@ export function FormEmpregador() {
             (form.watch('email') && !validacaoCampos.email?.validado) ||
             (form.watch('telefone') && !validacaoCampos.telefone?.validado)}
         >
-          Cadastrar Empregador
+          {messages.labels.cadastrarEmpregador}
         </Button>
       </Box>
     </Box>

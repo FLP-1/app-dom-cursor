@@ -2,8 +2,8 @@
  * Arquivo: tooltips.ts
  * Caminho: src/i18n/tooltips.ts
  * Criado em: 2025-06-03
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-01-27
+ * Descrição: Dicionário central de tooltips e mensagens do sistema
  */
 
 export const tooltips = {
@@ -1359,5 +1359,198 @@ export const tooltips = {
         },
       },
     },
+  },
+  // Alertas e Notificações
+  alertasNotificacoes: {
+    pt: 'Central de alertas e notificações do sistema',
+    en: 'System alerts and notifications center'
+  },
+  configuracoesAlertas: {
+    pt: 'Configurar preferências de notificações e alertas',
+    en: 'Configure notification and alert preferences'
+  },
+  atualizarAlertas: {
+    pt: 'Atualizar lista de alertas',
+    en: 'Refresh alerts list'
+  },
+  alertasUrgentes: {
+    pt: 'Alertas que requerem atenção imediata',
+    en: 'Alerts that require immediate attention'
+  },
+  alertasImportantes: {
+    pt: 'Alertas de alta prioridade',
+    en: 'High priority alerts'
+  },
+  alertasDocumentos: {
+    pt: 'Documentos próximos do vencimento',
+    en: 'Documents near expiration'
+  },
+  alertasPonto: {
+    pt: 'Alertas relacionados ao registro de ponto',
+    en: 'Alerts related to time records'
+  },
+  documentosVencimento: {
+    pt: 'Documentos com vencimento próximo ou vencido',
+    en: 'Documents with upcoming or expired due dates'
+  },
+  alertasPontoTitulo: {
+    pt: 'Alertas de registro de ponto e jornada de trabalho',
+    en: 'Time record and work schedule alerts'
+  },
+  outrosAlertas: {
+    pt: 'Outros tipos de alertas do sistema',
+    en: 'Other system alerts'
+  },
+  nenhumAlerta: {
+    pt: 'Não há alertas ativos no momento',
+    en: 'No active alerts at the moment'
+  },
+  tudoEmOrdem: {
+    pt: 'Tudo está em ordem! Não há notificações pendentes',
+    en: 'Everything is in order! No pending notifications'
+  },
+  verDocumento: {
+    pt: 'Visualizar detalhes do documento',
+    en: 'View document details'
+  },
+  verRegistro: {
+    pt: 'Visualizar detalhes do registro de ponto',
+    en: 'View time record details'
+  },
+  resolverAlerta: {
+    pt: 'Marcar alerta como resolvido',
+    en: 'Mark alert as resolved'
+  },
+  dispensarAlerta: {
+    pt: 'Dispensar este alerta',
+    en: 'Dismiss this alert'
+  },
+  venceEm: {
+    pt: 'Vence em {dias} dias',
+    en: 'Expires in {dias} days'
+  },
+  vencimento: {
+    pt: 'Data de vencimento',
+    en: 'Expiration date'
+  },
+  dataRegistro: {
+    pt: 'Data do registro',
+    en: 'Record date'
+  },
+  criadoEm: {
+    pt: 'Data de criação',
+    en: 'Created on'
+  },
+  tipoDocumento: {
+    pt: 'Tipo do documento',
+    en: 'Document type'
+  },
+  nomeEmpregado: {
+    pt: 'Nome do empregado',
+    en: 'Employee name'
+  },
+  tipoAlerta: {
+    pt: 'Tipo do alerta',
+    en: 'Alert type'
+  },
+  severidade: {
+    pt: 'Nível de severidade',
+    en: 'Severity level'
+  },
+  mensagemAlerta: {
+    pt: 'Mensagem do alerta',
+    en: 'Alert message'
+  },
+  canaisNotificacao: {
+    pt: 'Canais de notificação',
+    en: 'Notification channels'
+  },
+  criteriosAlerta: {
+    pt: 'Critérios para disparo do alerta',
+    en: 'Alert trigger criteria'
+  },
+  preferenciasAlerta: {
+    pt: 'Preferências de notificação',
+    en: 'Notification preferences'
+  },
+  alertaDataInicial: {
+    pt: 'Data inicial para filtrar alertas',
+    en: 'Start date to filter alerts'
+  },
+  alertaDataFinal: {
+    pt: 'Data final para filtrar alertas',
+    en: 'End date to filter alerts'
+  },
+  descricaoAlerta: {
+    pt: 'Descrição ou mensagem do alerta',
+    en: 'Alert description or message'
+  },
+  statusAlerta: {
+    pt: 'Status atual do alerta',
+    en: 'Current alert status'
+  },
+  alertaAtivo: {
+    pt: 'Alerta ativo e visível',
+    en: 'Active and visible alert'
+  },
+  alertaResolvido: {
+    pt: 'Alerta marcado como resolvido',
+    en: 'Alert marked as resolved'
+  },
+  alertaDispensado: {
+    pt: 'Alerta dispensado pelo usuário',
+    en: 'Alert dismissed by user'
+  },
+  notificacoesEmail: {
+    pt: 'Receber notificações por e-mail',
+    en: 'Receive email notifications'
+  },
+  notificacoesSMS: {
+    pt: 'Receber notificações por SMS',
+    en: 'Receive SMS notifications'
+  },
+  notificacoesPush: {
+    pt: 'Receber notificações push no navegador',
+    en: 'Receive push notifications in browser'
+  },
+  notificacoesWhatsApp: {
+    pt: 'Receber notificações via WhatsApp',
+    en: 'Receive WhatsApp notifications'
+  },
+  diasVencimentoDocumento: {
+    pt: 'Dias antes do vencimento para alertar sobre documentos',
+    en: 'Days before expiration to alert about documents'
+  },
+  horasLembretePonto: {
+    pt: 'Horas antes do registro para lembrar sobre ponto',
+    en: 'Hours before record to remind about time tracking'
+  },
+  notificacaoTrabalhoFeriado: {
+    pt: 'Notificar sobre trabalho em feriados',
+    en: 'Notify about holiday work'
+  },
+  notificacaoHorasExtras: {
+    pt: 'Notificar sobre horas extras',
+    en: 'Notify about overtime'
+  },
+  notificacaoRegistroFaltante: {
+    pt: 'Notificar sobre registros de ponto faltantes',
+    en: 'Notify about missing time records'
+  },
+  horarioSilencioso: {
+    pt: 'Configurar horário para não enviar notificações',
+    en: 'Configure time to not send notifications'
+  },
+  horarioSilenciosoAtivo: {
+    pt: 'Ativar horário silencioso',
+    en: 'Enable quiet hours'
+  },
+  horarioSilenciosoInicio: {
+    pt: 'Horário de início do período silencioso',
+    en: 'Start time of quiet period'
+  },
+  horarioSilenciosoFim: {
+    pt: 'Horário de fim do período silencioso',
+    en: 'End time of quiet period'
   },
 }; 

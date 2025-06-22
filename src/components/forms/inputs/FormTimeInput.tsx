@@ -2,7 +2,7 @@
  * Arquivo: FormTimeInput.tsx
  * Caminho: src/components/form/FormTimeInput.tsx
  * Criado em: 2025-06-07
- * Última atualização: 2025-06-07
+ * Última atualização: 2025-01-27
  * Descrição: Componente de input de horário integrado com react-hook-form e Material UI, com suporte a validação e acessibilidade
  */
 
@@ -10,6 +10,7 @@ import React from 'react';
 import { TextField, SxProps, Theme } from '@mui/material';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import HelperText from '@/components/common/HelperText';
+import { authMessages } from '@/i18n/messages/auth.messages';
 
 export interface FormTimeInputProps<T extends FieldValues> {
   name: Path<T>;
@@ -30,6 +31,9 @@ const FormTimeInput = <T extends FieldValues>({
   error,
   sx,
 }: FormTimeInputProps<T>) => {
+  // Usar mensagens em português por padrão
+  const messages = authMessages.pt;
+
   return (
     <Controller
       name={name}
@@ -40,9 +44,10 @@ const FormTimeInput = <T extends FieldValues>({
             {...field}
             type="time"
             label={label}
-            placeholder={placeholder}
+            placeholder={placeholder || messages.placeholders.horario}
             error={!!fieldError || error}
             fullWidth
+            aria-label={messages.tooltips.campoHorario}
             InputLabelProps={{
               shrink: true,
             }}

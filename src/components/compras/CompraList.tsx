@@ -2,7 +2,7 @@
  * Arquivo: CompraList.tsx
  * Caminho: src/components/compras/CompraList.tsx
  * Criado em: 2025-06-07
- * Última atualização: 2025-06-07
+ * Última atualização: 2025-01-27
  * Descrição: Componente de listagem de compras com suporte a filtros, edição, remoção e alteração de status
  */
 
@@ -33,6 +33,8 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { tooltips } from '@/i18n/tooltips';
+import { useMessages } from '@/hooks/useMessages';
+import { comprasMessages } from '@/i18n/messages/compras.messages';
 
 interface Compra {
   id: string;
@@ -54,6 +56,7 @@ interface CompraListProps {
 }
 
 const CompraList: React.FC<CompraListProps> = ({ produto, data, grupo, status }) => {
+  const { messages } = useMessages(comprasMessages);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [compras, setCompras] = useState<Compra[]>([]);
   const [loading, setLoading] = useState(false);
@@ -73,17 +76,17 @@ const CompraList: React.FC<CompraListProps> = ({ produto, data, grupo, status })
         if (grupo) params.append('grupo', grupo);
         if (status) params.append('status', status);
         const res = await fetch(`/api/compras?${params.toString()}`);
-        if (!res.ok) throw new Error('Erro ao buscar compras');
+        if (!res.ok) throw new Error(messages.errors.fetchError);
         const comprasData = await res.json();
         setCompras(comprasData);
       } catch (err) {
-        setError('Erro ao buscar compras');
+        setError(messages.errors.fetchError);
       } finally {
         setLoading(false);
       }
     };
     fetchCompras();
-  }, [produto, data, grupo, status]);
+  }, [produto, data, grupo, status, messages.errors.fetchError]);
 
   const handleSelect = (id: string) => {
     setSelectedId(id);
@@ -97,26 +100,26 @@ const CompraList: React.FC<CompraListProps> = ({ produto, data, grupo, status })
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, status: novoStatus }),
       });
-      if (!res.ok) throw new Error('Erro ao atualizar status');
+      if (!res.ok) throw new Error(messages.errors.updateError);
       const updated = await res.json();
       setCompras((prev) => prev.map((c) => (c.id === id ? { ...c, status: updated.status } : c)));
     } catch {
-      alert('Erro ao atualizar status da compra');
+      alert(messages.errors.updateError);
     }
   };
 
   const handleRemove = async (id: string) => {
-    if (!window.confirm('Deseja realmente remover esta compra?')) return;
+    if (!window.confirm(messages.confirmations.delete)) return;
     try {
       const res = await fetch('/api/compras', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id }),
       });
-      if (!res.ok) throw new Error('Erro ao remover compra');
+      if (!res.ok) throw new Error(messages.errors.deleteError);
       setCompras((prev) => prev.filter((c) => c.id !== id));
     } catch {
-      alert('Erro ao remover compra');
+      alert(messages.errors.deleteError);
     }
   };
 
@@ -127,7 +130,7 @@ const CompraList: React.FC<CompraListProps> = ({ produto, data, grupo, status })
 
   const handleEditSave = async () => {
     if (!form.id || !form.produto || !form.unidade || !form.quantidade || !form.valor || !form.dataCompra || !form.status) {
-      alert('Preencha todos os campos obrigatórios.');
+      alert(messages.errors.fillRequiredFields);
       return;
     }
     try {
@@ -136,12 +139,12 @@ const CompraList: React.FC<CompraListProps> = ({ produto, data, grupo, status })
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
-      if (!res.ok) throw new Error('Erro ao editar compra');
+      if (!res.ok) throw new Error(messages.errors.editError);
       const updated = await res.json();
       setCompras((prev) => prev.map((c) => (c.id === updated.id ? updated : c)));
       setEditCompra(null);
     } catch {
-      alert('Erro ao editar compra');
+      alert(messages.errors.editError);
     }
   };
 
@@ -162,15 +165,15 @@ const CompraList: React.FC<CompraListProps> = ({ produto, data, grupo, status })
       <Table>
         <TableHead>
           <TableRow sx={{ bgcolor: 'grey.50' }}>
-            <TableCell>Foto</TableCell>
-            <TableCell>Produto</TableCell>
-            <TableCell>Unidade</TableCell>
-            <TableCell>Quantidade</TableCell>
-            <TableCell>Valor</TableCell>
-            <TableCell>Data da Compra</TableCell>
-            <TableCell>Grupo</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Ações</TableCell>
+            <TableCell>{messages.table.photo}</TableCell>
+            <TableCell>{messages.table.product}</TableCell>
+            <TableCell>{messages.table.unit}</TableCell>
+            <TableCell>{messages.table.quantity}</TableCell>
+            <TableCell>{messages.table.value}</TableCell>
+            <TableCell>{messages.table.purchaseDate}</TableCell>
+            <TableCell>{messages.table.group}</TableCell>
+            <TableCell>{messages.table.status}</TableCell>
+            <TableCell>{messages.table.actions}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -246,37 +249,37 @@ const CompraList: React.FC<CompraListProps> = ({ produto, data, grupo, status })
       </Table>
 
       <Dialog open={!!editCompra} onClose={() => setEditCompra(null)}>
-        <DialogTitle>Editar Compra</DialogTitle>
+        <DialogTitle>{messages.editDialog.title}</DialogTitle>
         <DialogContent>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: 2 }}>
             <TextField
-              label="Produto"
+              label={messages.editDialog.fields.product}
               value={form.produto || ''}
               onChange={(e) => setForm({ ...form, produto: e.target.value })}
               fullWidth
             />
             <TextField
-              label="Unidade"
+              label={messages.editDialog.fields.unit}
               value={form.unidade || ''}
               onChange={(e) => setForm({ ...form, unidade: e.target.value })}
               fullWidth
             />
             <TextField
-              label="Quantidade"
+              label={messages.editDialog.fields.quantity}
               type="number"
               value={form.quantidade || ''}
               onChange={(e) => setForm({ ...form, quantidade: Number(e.target.value) })}
               fullWidth
             />
             <TextField
-              label="Valor"
+              label={messages.editDialog.fields.value}
               type="number"
               value={form.valor || ''}
               onChange={(e) => setForm({ ...form, valor: Number(e.target.value) })}
               fullWidth
             />
             <TextField
-              label="Data da Compra"
+              label={messages.editDialog.fields.purchaseDate}
               type="date"
               value={form.dataCompra || ''}
               onChange={(e) => setForm({ ...form, dataCompra: e.target.value })}
@@ -284,21 +287,21 @@ const CompraList: React.FC<CompraListProps> = ({ produto, data, grupo, status })
               InputLabelProps={{ shrink: true }}
             />
             <TextField
-              label="Status"
+              label={messages.editDialog.fields.status}
               select
               value={form.status || ''}
               onChange={(e) => setForm({ ...form, status: e.target.value as Compra['status'] })}
               fullWidth
             >
-              <MenuItem value="Pendente">Pendente</MenuItem>
-              <MenuItem value="Realizada">Realizada</MenuItem>
+              <MenuItem value="Pendente">{messages.status.pending}</MenuItem>
+              <MenuItem value="Realizada">{messages.status.completed}</MenuItem>
             </TextField>
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setEditCompra(null)}>Cancelar</Button>
+          <Button onClick={() => setEditCompra(null)}>{messages.common.cancel}</Button>
           <Button onClick={handleEditSave} variant="contained">
-            Salvar
+            {messages.common.save}
           </Button>
         </DialogActions>
       </Dialog>

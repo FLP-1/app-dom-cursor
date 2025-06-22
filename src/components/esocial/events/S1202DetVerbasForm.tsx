@@ -2,8 +2,8 @@
  * Arquivo: S1202DetVerbasForm.tsx
  * Caminho: src/components/esocial/events/S1202DetVerbasForm.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-01-27
+ * Descrição: Componente de formulário S1202 Det Verbas com mensagens centralizadas
  */
 
 import { useTranslation } from 'react-i18next';
@@ -18,6 +18,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { tooltips } from '@/i18n/tooltips';
+import { interfaceMessages } from '@/i18n/messages/interface.messages';
+import { useLanguage } from '@/hooks/useLanguage';
 
 interface S1202DetVerbasFormProps {
   control: Control<S1202Schema>;
@@ -27,6 +29,9 @@ interface S1202DetVerbasFormProps {
 
 export const S1202DetVerbasForm = ({ control, dmDevIndex, estabLotIndex }: S1202DetVerbasFormProps) => {
   const { t } = useTranslation();
+  const { language } = useLanguage();
+  const messages = interfaceMessages[language].common;
+  
   const { fields, append, remove } = useFieldArray({
     control,
     name: `dmDev.${dmDevIndex}.infoPerApur.ideEstabLot.${estabLotIndex}.detVerbas`
@@ -39,7 +44,7 @@ export const S1202DetVerbasForm = ({ control, dmDevIndex, estabLotIndex }: S1202
           <Typography variant="subtitle2">
             {t('esocial.S1202.dmDev.infoPerApur.ideEstabLot.detVerbas.title')}
           </Typography>
-          <Tooltip title={tooltips.esocialS1202DetVerbasHelp.pt}>
+          <Tooltip title={tooltips.esocialS1202DetVerbasHelp[language]}>
             <HelpOutlineIcon fontSize="small" color="action" />
           </Tooltip>
         </Box>
@@ -66,7 +71,7 @@ export const S1202DetVerbasForm = ({ control, dmDevIndex, estabLotIndex }: S1202
             </Typography>
             <IconButton
               onClick={() => remove(index)}
-              aria-label="Remover verba"
+              aria-label={messages.removeVerb}
               color="error"
               size="small"
             >

@@ -2,7 +2,7 @@
  * Arquivo: PontoList.tsx
  * Caminho: src/components/PontoList.tsx
  * Criado em: 2025-06-07
- * Última atualização: 2025-06-07
+ * Última atualização: 2025-01-27
  * Descrição: Componente de tabela para exibição dos registros de ponto, com ações de editar, validar e excluir
  */
 
@@ -27,6 +27,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { tooltips } from '@/i18n/tooltips';
 import { formatDateBR } from '@/utils/date';
+import { pontoMessages } from '@/i18n/messages/ponto.messages';
 
 interface RegistroPonto {
   id: string;
@@ -57,10 +58,13 @@ const PontoList: React.FC<PontoListProps> = ({
   onValidate, 
   onDelete 
 }) => {
+  // Usar mensagens em português por padrão
+  const messages = pontoMessages.pt;
+
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
-        <CircularProgress aria-label="Carregando registros de ponto" />
+        <CircularProgress aria-label={messages.tooltips.carregando} />
       </Box>
     );
   }
@@ -69,7 +73,7 @@ const PontoList: React.FC<PontoListProps> = ({
     return (
       <Box sx={{ p: 3, textAlign: 'center' }}>
         <Typography variant="body1" color="text.secondary">
-          Nenhum registro de ponto encontrado.
+          {messages.mensagens.nenhum}
         </Typography>
       </Box>
     );
@@ -77,20 +81,20 @@ const PontoList: React.FC<PontoListProps> = ({
 
   return (
     <TableContainer component={Paper} sx={{ mt: 2, borderRadius: 2 }}>
-      <Table aria-label="Lista de registros de ponto">
+      <Table aria-label={messages.tooltips.listaPonto}>
         <TableHead>
           <TableRow sx={{ bgcolor: 'grey.50' }}>
-            <TableCell>Usuário</TableCell>
-            <TableCell>Data</TableCell>
-            <TableCell>Entrada</TableCell>
-            <TableCell>Início Intervalo</TableCell>
-            <TableCell>Fim Intervalo</TableCell>
-            <TableCell>Saída</TableCell>
-            <TableCell>Validado</TableCell>
-            <TableCell>Horas Trabalhadas</TableCell>
-            <TableCell>Horas Extras</TableCell>
-            <TableCell>Alerta</TableCell>
-            <TableCell>Ações</TableCell>
+            <TableCell>{messages.labels.funcionario}</TableCell>
+            <TableCell>{messages.labels.data}</TableCell>
+            <TableCell>{messages.labels.entrada}</TableCell>
+            <TableCell>{messages.labels.entradaIntervalo}</TableCell>
+            <TableCell>{messages.labels.saidaIntervalo}</TableCell>
+            <TableCell>{messages.labels.saida}</TableCell>
+            <TableCell>{messages.labels.aprovado}</TableCell>
+            <TableCell>{messages.labels.horasTrabalhadas}</TableCell>
+            <TableCell>{messages.labels.horasExtras}</TableCell>
+            <TableCell>{messages.labels.alerta}</TableCell>
+            <TableCell>{messages.labels.acoes}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -109,7 +113,7 @@ const PontoList: React.FC<PontoListProps> = ({
               <TableCell>{ponto.saida ? new Date(ponto.saida).toLocaleTimeString() : '-'}</TableCell>
               <TableCell>
                 <Chip 
-                  label={ponto.validado ? 'Sim' : 'Não'} 
+                  label={ponto.validado ? messages.labels.sim : messages.labels.nao} 
                   color={ponto.validado ? 'success' : 'warning'} 
                   size="small" 
                 />
@@ -132,6 +136,7 @@ const PontoList: React.FC<PontoListProps> = ({
                       <IconButton 
                         onClick={() => onEdit(ponto)} 
                         size="small"
+                        aria-label={messages.tooltips.editar}
                       >
                         <EditIcon />
                       </IconButton>
@@ -142,6 +147,7 @@ const PontoList: React.FC<PontoListProps> = ({
                       <IconButton 
                         onClick={() => onValidate(ponto)} 
                         size="small"
+                        aria-label={messages.tooltips.aprovar}
                       >
                         <CheckCircleIcon />
                       </IconButton>
@@ -152,6 +158,7 @@ const PontoList: React.FC<PontoListProps> = ({
                       <IconButton 
                         onClick={() => onDelete(ponto)} 
                         size="small"
+                        aria-label={messages.tooltips.excluir}
                       >
                         <DeleteIcon />
                       </IconButton>

@@ -2,11 +2,12 @@
  * Arquivo: DocumentFormUtils.ts
  * Caminho: src/components/forms/documentos/DocumentFormUtils.ts
  * Criado em: 2025-06-13
- * Última atualização: 2025-06-13
+ * Última atualização: 2025-01-27
  * Descrição: Funções utilitárias para o formulário de documentos.
  */
 
 import { DocumentFormData } from './DocumentFormTypes';
+import { documentosMessages } from '@/i18n/messages/documentos.messages';
 
 export const formatDocumentData = (data: DocumentFormData): DocumentFormData => {
   return {
@@ -20,21 +21,21 @@ export const validateDocumentData = (data: DocumentFormData): string[] => {
   const errors: string[] = [];
 
   if (!data.nome) {
-    errors.push('O nome do documento é obrigatório');
+    errors.push(documentosMessages.validation.nome.required);
   } else if (data.nome.length < 3) {
-    errors.push('O nome deve ter no mínimo 3 caracteres');
+    errors.push(documentosMessages.validation.nome.minLength);
   } else if (data.nome.length > 100) {
-    errors.push('O nome deve ter no máximo 100 caracteres');
+    errors.push(documentosMessages.validation.nome.maxLength);
   }
 
   if (!data.tipo) {
-    errors.push('O tipo do documento é obrigatório');
+    errors.push(documentosMessages.validation.tipo.required);
   }
 
   if (!data.url) {
-    errors.push('A URL do documento é obrigatória');
+    errors.push(documentosMessages.validation.url.required);
   } else if (!isValidUrl(data.url)) {
-    errors.push('URL inválida');
+    errors.push(documentosMessages.validation.url.invalid);
   }
 
   return errors;

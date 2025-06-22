@@ -2,19 +2,22 @@
  * Arquivo: EmailVerification.tsx
  * Caminho: src/components/EmailVerification.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-01-27
+ * Descrição: Componente para verificação de email
  */
 
 import { useState } from 'react';
 import { useEmailVerification } from '@/hooks/useEmailVerification';
 import { TextField, Button, Box, Typography, Alert } from '@mui/material';
+import { useMessages } from '@/hooks/useMessages';
+import { authMessages } from '@/i18n/messages/auth.messages';
 
 interface EmailVerificationProps {
   onVerified?: () => void;
 }
 
 export function EmailVerification({ onVerified }: EmailVerificationProps) {
+  const { messages } = useMessages(authMessages);
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
   const [showCodeInput, setShowCodeInput] = useState(false);
@@ -48,7 +51,7 @@ export function EmailVerification({ onVerified }: EmailVerificationProps) {
   return (
     <Box sx={{ maxWidth: 400, mx: 'auto', p: 2 }}>
       <Typography variant="h6" gutterBottom>
-        Verificação de Email
+        {messages.emailVerification.title}
       </Typography>
 
       {error && (
@@ -59,7 +62,7 @@ export function EmailVerification({ onVerified }: EmailVerificationProps) {
 
       <TextField
         fullWidth
-        label="Email"
+        label={messages.emailVerification.email.label}
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -74,13 +77,13 @@ export function EmailVerification({ onVerified }: EmailVerificationProps) {
           onClick={handleSendCode}
           disabled={isLoading}
         >
-          {isLoading ? 'Enviando...' : 'Enviar Código'}
+          {isLoading ? messages.emailVerification.buttons.sending : messages.emailVerification.buttons.sendCode}
         </Button>
       ) : (
         <>
           <TextField
             fullWidth
-            label="Código de Verificação"
+            label={messages.emailVerification.code.label}
             value={code}
             onChange={(e) => setCode(e.target.value)}
             disabled={isLoading}
@@ -92,7 +95,7 @@ export function EmailVerification({ onVerified }: EmailVerificationProps) {
             onClick={handleVerifyCode}
             disabled={isLoading}
           >
-            {isLoading ? 'Verificando...' : 'Verificar Código'}
+            {isLoading ? messages.emailVerification.buttons.verifying : messages.emailVerification.buttons.verifyCode}
           </Button>
         </>
       )}

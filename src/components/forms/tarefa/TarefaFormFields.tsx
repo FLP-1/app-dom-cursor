@@ -2,17 +2,17 @@
  * Arquivo: TarefaFormFields.tsx
  * Caminho: src/components/forms/tarefa/TarefaFormFields.tsx
  * Criado em: 2025-06-13
- * Última atualização: 2025-06-13
+ * Última atualização: 2025-01-27
  * Descrição: Campos reutilizáveis para o formulário de tarefa.
  */
 
 import { Grid } from '@mui/material';
 import { Control, FieldErrors } from 'react-hook-form';
-import { useTranslation } from 'next-i18next';
 import FormInput from '@/components/forms/inputs/FormInput';
 import { FormSelect } from '@/components/forms/inputs/FormSelect';
 import FormDatePicker from '@/components/forms/inputs/FormDatePicker';
 import { TarefaFormData, StatusTarefa, PrioridadeTarefa } from './TarefaFormTypes';
+import { tarefaMessages } from '@/i18n/messages/tarefa.messages';
 
 interface TarefaFormFieldsProps {
   control: Control<TarefaFormData>;
@@ -20,14 +20,14 @@ interface TarefaFormFieldsProps {
 }
 
 export function TarefaFormFields({ control, errors }: TarefaFormFieldsProps) {
-  const { t } = useTranslation();
+  const messages = tarefaMessages.pt;
 
   return (
     <Grid container spacing={2}>
       <Grid gridColumn={{ xs: 'span 12' }}>
         <FormInput
           name="titulo"
-          label={t('tarefa.fields.titulo')}
+          label={messages.labels.titulo}
           control={control}
           required
           error={errors?.titulo?.message}
@@ -37,7 +37,7 @@ export function TarefaFormFields({ control, errors }: TarefaFormFieldsProps) {
       <Grid gridColumn={{ xs: 'span 12' }}>
         <FormInput
           name="descricao"
-          label={t('tarefa.fields.descricao')}
+          label={messages.labels.descricao}
           control={control}
           required
           multiline
@@ -49,14 +49,14 @@ export function TarefaFormFields({ control, errors }: TarefaFormFieldsProps) {
       <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
         <FormSelect
           name="status"
-          label={t('tarefa.fields.status')}
+          label={messages.labels.status}
           control={control}
           error={!!errors?.status}
           options={[
-            { value: StatusTarefa.PENDENTE, label: t('tarefa.status.pendente') },
-            { value: StatusTarefa.EM_ANDAMENTO, label: t('tarefa.status.emAndamento') },
-            { value: StatusTarefa.CONCLUIDA, label: t('tarefa.status.concluida') },
-            { value: StatusTarefa.CANCELADA, label: t('tarefa.status.cancelada') }
+            { value: StatusTarefa.PENDENTE, label: messages.status.pendente },
+            { value: StatusTarefa.EM_ANDAMENTO, label: messages.status.emAndamento },
+            { value: StatusTarefa.CONCLUIDA, label: messages.status.concluida },
+            { value: StatusTarefa.CANCELADA, label: messages.status.cancelada }
           ]}
         />
       </Grid>
@@ -64,13 +64,13 @@ export function TarefaFormFields({ control, errors }: TarefaFormFieldsProps) {
       <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
         <FormSelect
           name="prioridade"
-          label={t('tarefa.fields.prioridade')}
+          label={messages.labels.prioridade}
           control={control}
           error={!!errors?.prioridade}
           options={[
-            { value: PrioridadeTarefa.BAIXA, label: t('tarefa.prioridade.baixa') },
-            { value: PrioridadeTarefa.MEDIA, label: t('tarefa.prioridade.media') },
-            { value: PrioridadeTarefa.ALTA, label: t('tarefa.prioridade.alta') }
+            { value: PrioridadeTarefa.BAIXA, label: messages.prioridade.baixa },
+            { value: PrioridadeTarefa.MEDIA, label: messages.prioridade.media },
+            { value: PrioridadeTarefa.ALTA, label: messages.prioridade.alta }
           ]}
         />
       </Grid>
@@ -78,7 +78,7 @@ export function TarefaFormFields({ control, errors }: TarefaFormFieldsProps) {
       <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
         <FormDatePicker
           name="dataInicio"
-          label={t('tarefa.fields.dataInicio')}
+          label={messages.labels.dataInicio}
           control={control}
           error={errors?.dataInicio?.message}
         />
@@ -87,7 +87,7 @@ export function TarefaFormFields({ control, errors }: TarefaFormFieldsProps) {
       <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
         <FormDatePicker
           name="dataFim"
-          label={t('tarefa.fields.dataFim')}
+          label={messages.labels.dataFim}
           control={control}
           error={errors?.dataFim?.message}
         />
@@ -96,7 +96,7 @@ export function TarefaFormFields({ control, errors }: TarefaFormFieldsProps) {
       <Grid gridColumn={{ xs: 'span 12' }}>
         <FormInput
           name="responsavel"
-          label={t('tarefa.fields.responsavel')}
+          label={messages.labels.responsavel}
           control={control}
           required
           error={errors?.responsavel?.message}
@@ -106,7 +106,7 @@ export function TarefaFormFields({ control, errors }: TarefaFormFieldsProps) {
       <Grid gridColumn={{ xs: 'span 12' }}>
         <FormInput
           name="observacoes"
-          label={t('tarefa.fields.observacoes')}
+          label={messages.labels.observacoes}
           control={control}
           multiline
           rows={4}

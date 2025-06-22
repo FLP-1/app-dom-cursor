@@ -15,8 +15,11 @@ import {
   Settings, Person, Notifications, Palette, Security, Language, Edit, Save
 } from '@mui/icons-material';
 import { useSettingsData } from '@/hooks/useSettingsData';
+import { useMessages } from '@/hooks/useMessages';
+import { configMessages } from '@/i18n/messages/config.messages';
 
 const SettingsScreen = () => {
+  const { messages } = useMessages(configMessages);
   const { data, isLoading, isError, updatePreferences, updateIntegrations, updateSecurity } = useSettingsData();
   const [saving, setSaving] = useState(false);
 
@@ -31,7 +34,7 @@ const SettingsScreen = () => {
   if (isError || !data) {
     return (
       <Box sx={{ p: 3, background: '#f8fafc', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Typography color="error">Falha ao carregar as configurações.</Typography>
+        <Typography color="error">{messages.error.loadData}</Typography>
       </Box>
     );
   }
@@ -76,10 +79,10 @@ const SettingsScreen = () => {
   };
 
   const settingsCategories = [
-    { name: 'Perfil', icon: Person, color: '#2196F3' },
-    { name: 'Notificações', icon: Notifications, color: '#FF9800' },
-    { name: 'Segurança', icon: Security, color: '#F44336' },
-    { name: 'Aparência', icon: Palette, color: '#9C27B0' }
+    { name: messages.categories.profile, icon: Person, color: '#2196F3' },
+    { name: messages.categories.notifications, icon: Notifications, color: '#FF9800' },
+    { name: messages.categories.security, icon: Security, color: '#F44336' },
+    { name: messages.categories.appearance, icon: Palette, color: '#9C27B0' }
   ];
 
   return (
@@ -87,16 +90,16 @@ const SettingsScreen = () => {
       {/* Header */}
       <Box mb={4}>
         <Typography variant="h4" fontWeight="bold" color="primary" gutterBottom>
-          Configurações
+          {messages.header.title}
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          Personalize sua experiência no sistema
+          {messages.header.subtitle}
         </Typography>
       </Box>
 
-      <Grid container spacing={3}>
+      <Grid container columns={12} spacing={3}>
         {/* Menu Lateral */}
-        <Grid item xs={12} md={3}>
+        <Grid gridColumn={{ xs: 'span 12', md: 'span 3' }}>
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent sx={{ p: 0 }}>
               <List>
@@ -131,45 +134,45 @@ const SettingsScreen = () => {
         </Grid>
 
         {/* Conteúdo Principal */}
-        <Grid item xs={12} md={9}>
+        <Grid gridColumn={{ xs: 'span 12', md: 'span 9' }}>
           {/* Preferências */}
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', mb: 3 }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={3}>
-                Preferências
+                {messages.sections.preferences.title}
               </Typography>
-              <Grid container spacing={3}>
-                <Grid item xs={12} sm={6}>
+              <Grid container columns={12} spacing={3}>
+                <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
                   <TextField
                     select
                     fullWidth
-                    label="Tema"
+                    label={messages.sections.preferences.fields.theme}
                     value={theme}
                     onChange={e => setTheme(e.target.value as typeof theme)}
                     sx={{ mb: 2 }}
                   >
-                    <MenuItem value="light">Claro</MenuItem>
-                    <MenuItem value="dark">Escuro</MenuItem>
-                    <MenuItem value="system">Automático</MenuItem>
+                    <MenuItem value="light">{messages.sections.preferences.options.light}</MenuItem>
+                    <MenuItem value="dark">{messages.sections.preferences.options.dark}</MenuItem>
+                    <MenuItem value="system">{messages.sections.preferences.options.system}</MenuItem>
                   </TextField>
                   <TextField
                     select
                     fullWidth
-                    label="Idioma"
+                    label={messages.sections.preferences.fields.language}
                     value={language}
                     onChange={e => setLanguage(e.target.value)}
                   >
-                    <MenuItem value="pt-BR">Português (Brasil)</MenuItem>
-                    <MenuItem value="en-US">Inglês (EUA)</MenuItem>
+                    <MenuItem value="pt-BR">{messages.sections.preferences.options.portuguese}</MenuItem>
+                    <MenuItem value="en-US">{messages.sections.preferences.options.english}</MenuItem>
                   </TextField>
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
                   <Box display="flex" alignItems="center" gap={2} mb={2}>
-                    <Typography variant="body2">Notificações</Typography>
+                    <Typography variant="body2">{messages.sections.preferences.fields.notifications}</Typography>
                     <Switch checked={notifications} onChange={e => setNotifications(e.target.checked)} />
                   </Box>
                   <Box display="flex" alignItems="center" gap={2}>
-                    <Typography variant="body2">Atualização automática</Typography>
+                    <Typography variant="body2">{messages.sections.preferences.fields.autoUpdate}</Typography>
                     <Switch checked={autoUpdate} onChange={e => setAutoUpdate(e.target.checked)} />
                   </Box>
                 </Grid>
@@ -182,7 +185,7 @@ const SettingsScreen = () => {
                   disabled={saving}
                   sx={{ borderRadius: 2 }}
                 >
-                  Salvar Preferências
+                  {messages.sections.preferences.save}
                 </Button>
               </Box>
             </CardContent>
@@ -192,18 +195,18 @@ const SettingsScreen = () => {
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', mb: 3 }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={3}>
-                Integrações
+                {messages.sections.integrations.title}
               </Typography>
               <Box display="flex" alignItems="center" gap={2} mb={2}>
-                <Typography variant="body2">Google Drive</Typography>
+                <Typography variant="body2">{messages.sections.integrations.fields.googleDrive}</Typography>
                 <Switch checked={googleDrive} onChange={e => setGoogleDrive(e.target.checked)} />
               </Box>
               <Box display="flex" alignItems="center" gap={2} mb={2}>
-                <Typography variant="body2">Dropbox</Typography>
+                <Typography variant="body2">{messages.sections.integrations.fields.dropbox}</Typography>
                 <Switch checked={dropbox} onChange={e => setDropbox(e.target.checked)} />
               </Box>
               <Box display="flex" alignItems="center" gap={2}>
-                <Typography variant="body2">Slack</Typography>
+                <Typography variant="body2">{messages.sections.integrations.fields.slack}</Typography>
                 <Switch checked={slack} onChange={e => setSlack(e.target.checked)} />
               </Box>
               <Box mt={3}>
@@ -214,7 +217,7 @@ const SettingsScreen = () => {
                   disabled={saving}
                   sx={{ borderRadius: 2 }}
                 >
-                  Salvar Integrações
+                  {messages.sections.integrations.save}
                 </Button>
               </Box>
             </CardContent>
@@ -224,18 +227,18 @@ const SettingsScreen = () => {
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={3}>
-                Segurança
+                {messages.sections.security.title}
               </Typography>
               <Box display="flex" alignItems="center" gap={2} mb={2}>
-                <Typography variant="body2">Autenticação em 2 fatores</Typography>
+                <Typography variant="body2">{messages.sections.security.fields.twoFactorAuth}</Typography>
                 <Switch checked={twoFactorAuth} onChange={e => setTwoFactorAuth(e.target.checked)} />
               </Box>
               <Box display="flex" alignItems="center" gap={2} mb={2}>
-                <Typography variant="body2">Alertas de login</Typography>
+                <Typography variant="body2">{messages.sections.security.fields.loginAlerts}</Typography>
                 <Switch checked={loginAlerts} onChange={e => setLoginAlerts(e.target.checked)} />
               </Box>
               <Typography variant="caption" color="text.secondary">
-                Última troca de senha: {new Date(security.lastPasswordChange).toLocaleDateString('pt-BR')}
+                {messages.sections.security.lastPasswordChange}: {new Date(security.lastPasswordChange).toLocaleDateString('pt-BR')}
               </Typography>
               <Box mt={3}>
                 <Button
@@ -245,7 +248,7 @@ const SettingsScreen = () => {
                   disabled={saving}
                   sx={{ borderRadius: 2 }}
                 >
-                  Salvar Segurança
+                  {messages.sections.security.save}
                 </Button>
               </Box>
             </CardContent>

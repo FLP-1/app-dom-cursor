@@ -19,23 +19,27 @@ import {
   Event, Task, Payment, Notifications
 } from '@mui/icons-material';
 import { useCalendarData } from '@/hooks/useCalendarData';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { messages } from '@/i18n/messages';
 
 const Calendario = () => {
   const { data, isLoading, isError, addEvent, updateEvent, deleteEvent } = useCalendarData();
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
   const [currentDate] = useState(new Date());
+  const { language } = useLanguage();
+  const msg = messages[language];
 
   if (isLoading) {
     return (
       <Box sx={{ p: 3, background: '#f8fafc', minHeight: '100vh' }}>
         <Skeleton variant="text" width={250} height={60} />
         <Skeleton variant="text" width={200} height={30} />
-        <Grid container spacing={3} mt={2}>
-          <Grid item xs={12} md={8}>
+        <Grid container columns={12} spacing={3} mt={2}>
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 8' }}>
             <Skeleton variant="rectangular" height={400} sx={{ borderRadius: 3 }} />
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 4' }}>
             <Skeleton variant="rectangular" height={200} sx={{ borderRadius: 3, mb: 2 }} />
             <Skeleton variant="rectangular" height={200} sx={{ borderRadius: 3 }} />
           </Grid>
@@ -47,7 +51,7 @@ const Calendario = () => {
   if (isError) {
     return (
       <Box sx={{ p: 3, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <Typography color="error">Falha ao carregar os dados do calendário.</Typography>
+        <Typography color="error">{msg.calendar.loadError}</Typography>
       </Box>
     );
   }
@@ -92,7 +96,7 @@ const Calendario = () => {
       }
       setOpenDialog(false);
     } catch (error) {
-      console.error('Erro ao salvar evento:', error);
+      console.error(msg.calendar.saveError, error);
     }
   };
 
@@ -102,10 +106,10 @@ const Calendario = () => {
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
         <Box>
           <Typography variant="h4" fontWeight="bold" color="primary">
-            Calendário 📅
+            {msg.calendar.title}
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            {currentDate.toLocaleDateString('pt-BR', { 
+            {currentDate.toLocaleDateString(language === 'pt' ? 'pt-BR' : 'en-US', { 
               weekday: 'long', 
               year: 'numeric', 
               month: 'long', 
@@ -119,17 +123,17 @@ const Calendario = () => {
           onClick={handleAddEvent}
           sx={{ borderRadius: 2 }}
         >
-          Novo Evento
+          {msg.calendar.newEvent}
         </Button>
       </Box>
 
-      <Grid container spacing={3}>
+      <Grid container columns={12} spacing={3}>
         {/* Calendário Principal */}
-        <Grid item xs={12} md={8}>
+        <Grid gridColumn={{ xs: 'span 12', md: 'span 8' }}>
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={3}>
-                Eventos do Mês
+                {msg.calendar.monthlyEvents}
               </Typography>
               
               {events.map((event) => (
@@ -197,12 +201,12 @@ const Calendario = () => {
         </Grid>
 
         {/* Sidebar */}
-        <Grid item xs={12} md={4}>
+        <Grid gridColumn={{ xs: 'span 12', md: 'span 4' }}>
           {/* Tarefas de Hoje */}
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', mb: 3 }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={2}>
-                Tarefas de Hoje
+                {msg.calendar.todayTasks}
               </Typography>
               {todayTasks.map((task) => (
                 <Box key={task.id} display="flex" alignItems="center" py={1}>
@@ -241,7 +245,7 @@ const Calendario = () => {
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', mb: 3 }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={2}>
-                Próximos Eventos
+                {msg.calendar.upcomingEvents}
               </Typography>
               {upcomingEvents.map((event) => (
                 <Box key={event.id} display="flex" alignItems="center" py={1}>
@@ -270,23 +274,23 @@ const Calendario = () => {
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={2}>
-                Estatísticas do Mês
+                {msg.calendar.monthlyStats}
               </Typography>
               <Box>
                 <Box display="flex" justifyContent="space-between" mb={1}>
-                  <Typography variant="body2">Total de Eventos</Typography>
+                  <Typography variant="body2">{msg.calendar.totalEvents}</Typography>
                   <Typography variant="body2" fontWeight="bold">{monthlyStats.totalEvents}</Typography>
                 </Box>
                 <Box display="flex" justifyContent="space-between" mb={1}>
-                  <Typography variant="body2">Tarefas Concluídas</Typography>
+                  <Typography variant="body2">{msg.calendar.completedTasks}</Typography>
                   <Typography variant="body2" fontWeight="bold" color="#4CAF50">{monthlyStats.completedTasks}</Typography>
                 </Box>
                 <Box display="flex" justifyContent="space-between" mb={1}>
-                  <Typography variant="body2">Tarefas Pendentes</Typography>
+                  <Typography variant="body2">{msg.calendar.pendingTasks}</Typography>
                   <Typography variant="body2" fontWeight="bold" color="#FF9800">{monthlyStats.pendingTasks}</Typography>
                 </Box>
                 <Box display="flex" justifyContent="space-between" mb={1}>
-                  <Typography variant="body2">Tarefas Atrasadas</Typography>
+                  <Typography variant="body2">{msg.calendar.overdueTasks}</Typography>
                   <Typography variant="body2" fontWeight="bold" color="#F44336">{monthlyStats.overdueTasks}</Typography>
                 </Box>
               </Box>
@@ -298,19 +302,19 @@ const Calendario = () => {
       {/* Dialog para adicionar/editar evento */}
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="sm" fullWidth>
         <DialogTitle>
-          {selectedEvent ? 'Editar Evento' : 'Novo Evento'}
+          {selectedEvent ? msg.calendar.editEvent : msg.calendar.newEvent}
         </DialogTitle>
         <DialogContent>
           <Box sx={{ pt: 2 }}>
             <TextField
               fullWidth
-              label="Título"
+              label={msg.calendar.title}
               defaultValue={selectedEvent?.title || ''}
               sx={{ mb: 2 }}
             />
             <TextField
               fullWidth
-              label="Descrição"
+              label={msg.calendar.description}
               multiline
               rows={3}
               defaultValue={selectedEvent?.description || ''}
@@ -320,7 +324,7 @@ const Calendario = () => {
               <Grid item xs={6}>
                 <TextField
                   fullWidth
-                  label="Data"
+                  label={msg.calendar.date}
                   type="date"
                   defaultValue={selectedEvent?.date || ''}
                   InputLabelProps={{ shrink: true }}
@@ -329,7 +333,7 @@ const Calendario = () => {
               <Grid item xs={6}>
                 <TextField
                   fullWidth
-                  label="Hora"
+                  label={msg.calendar.time}
                   type="time"
                   defaultValue={selectedEvent?.time || ''}
                   InputLabelProps={{ shrink: true }}
@@ -337,37 +341,37 @@ const Calendario = () => {
               </Grid>
             </Grid>
             <FormControl fullWidth sx={{ mt: 2 }}>
-              <InputLabel>Tipo</InputLabel>
+              <InputLabel>{msg.calendar.type}</InputLabel>
               <Select
                 defaultValue={selectedEvent?.type || 'task'}
-                label="Tipo"
+                label={msg.calendar.type}
               >
-                <MenuItem value="task">Tarefa</MenuItem>
-                <MenuItem value="appointment">Consulta</MenuItem>
-                <MenuItem value="payment">Pagamento</MenuItem>
-                <MenuItem value="reminder">Lembrete</MenuItem>
+                <MenuItem value="task">{msg.calendar.taskType}</MenuItem>
+                <MenuItem value="appointment">{msg.calendar.appointmentType}</MenuItem>
+                <MenuItem value="payment">{msg.calendar.paymentType}</MenuItem>
+                <MenuItem value="reminder">{msg.calendar.reminderType}</MenuItem>
               </Select>
             </FormControl>
             <FormControl fullWidth sx={{ mt: 2 }}>
-              <InputLabel>Prioridade</InputLabel>
+              <InputLabel>{msg.calendar.priority}</InputLabel>
               <Select
                 defaultValue={selectedEvent?.priority || 'medium'}
-                label="Prioridade"
+                label={msg.calendar.priority}
               >
-                <MenuItem value="low">Baixa</MenuItem>
-                <MenuItem value="medium">Média</MenuItem>
-                <MenuItem value="high">Alta</MenuItem>
+                <MenuItem value="low">{msg.calendar.lowPriority}</MenuItem>
+                <MenuItem value="medium">{msg.calendar.mediumPriority}</MenuItem>
+                <MenuItem value="high">{msg.calendar.highPriority}</MenuItem>
               </Select>
             </FormControl>
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenDialog(false)}>Cancelar</Button>
+          <Button onClick={() => setOpenDialog(false)}>{msg.common.cancel}</Button>
           <Button 
             variant="contained" 
             onClick={() => handleSaveEvent({})}
           >
-            Salvar
+            {msg.common.save}
           </Button>
         </DialogActions>
       </Dialog>

@@ -2,7 +2,7 @@
  * Arquivo: FormUpload.tsx
  * Caminho: src/components/form/FormUpload.tsx
  * Criado em: 2025-06-07
- * Última atualização: 2025-06-07
+ * Última atualização: 2025-01-27
  * Descrição: Componente de upload de arquivos integrado com react-hook-form e Material UI, com suporte a validação e acessibilidade
  */
 
@@ -11,6 +11,7 @@ import { Box, Button, Typography, SxProps, Theme } from '@mui/material';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import HelperText from '@/components/common/HelperText';
 import UploadIcon from '@mui/icons-material/Upload';
+import { documentMessages } from '@/i18n/messages/document.messages';
 
 export interface FormUploadProps<T extends FieldValues> {
   name: Path<T>;
@@ -26,13 +27,18 @@ export interface FormUploadProps<T extends FieldValues> {
 const FormUpload = <T extends FieldValues>({
   name,
   control,
-  label = 'Upload',
+  label,
   accept,
   multiple = false,
   helperText,
   error,
   sx,
 }: FormUploadProps<T>) => {
+  // Usar mensagens em português por padrão
+  const messages = documentMessages.pt;
+  
+  const defaultLabel = label || messages.labels.upload;
+
   return (
     <Controller
       name={name}
@@ -61,6 +67,7 @@ const FormUpload = <T extends FieldValues>({
               }}
               hidden
               id={`${name}-input`}
+              aria-label={messages.tooltips.selecionarArquivo}
             />
             <label htmlFor={`${name}-input`}>
               <Button
@@ -76,13 +83,13 @@ const FormUpload = <T extends FieldValues>({
                   },
                 }}
               >
-                {label}
+                {defaultLabel}
               </Button>
             </label>
             {value && (
               <Typography variant="body2" color="text.secondary">
                 {multiple
-                  ? `${(value as File[]).length} arquivo(s) selecionado(s)`
+                  ? messages.mensagens.arquivosSelecionados.replace('{count}', (value as File[]).length.toString())
                   : (value as File).name}
               </Typography>
             )}

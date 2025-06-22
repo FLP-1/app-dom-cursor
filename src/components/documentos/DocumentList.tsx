@@ -2,8 +2,8 @@
  * Arquivo: DocumentList.tsx
  * Caminho: src/components/DocumentList.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-01-27
+ * Descrição: Lista de documentos com funcionalidades de CRUD
  */
 
 import {
@@ -131,14 +131,14 @@ export function DocumentList({ initialFilters }: DocumentListProps) {
                           <IconButton
                             onClick={() => router.push(`/documents/${document.id}/editar`)}
                             size="small"
-                            aria-label="Editar documento"
+                            aria-label={t('document.actions.edit')}
                           >
                             <EditIcon />
                           </IconButton>
                           <IconButton
                             onClick={() => handleDownload(document)}
                             size="small"
-                            aria-label="Baixar documento"
+                            aria-label={t('document.actions.download')}
                           >
                             <DownloadIcon />
                           </IconButton>
@@ -146,7 +146,7 @@ export function DocumentList({ initialFilters }: DocumentListProps) {
                             onClick={() => showConfirmDialog(() => handleDelete(document.id))}
                             size="small"
                             color="error"
-                            aria-label="Excluir documento"
+                            aria-label={t('document.actions.delete')}
                           >
                             <DeleteIcon />
                           </IconButton>

@@ -2,14 +2,15 @@
  * Arquivo: PasswordInput.tsx
  * Caminho: src/components/common/forms/PasswordInput.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-01-27
+ * Descrição: Componente de input de senha com toggle de visibilidade
  */
 
 import React, { useState } from 'react';
 import { TextField, TextFieldProps, InputAdornment, IconButton, Tooltip } from '@mui/material';
 import { Controller, Control, FieldValues, Path } from 'react-hook-form';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { authMessages } from '@/i18n/messages/auth.messages';
 
 interface PasswordInputProps<T extends FieldValues = FieldValues> extends Omit<TextFieldProps, 'name'> {
   name: Path<T>;
@@ -33,6 +34,9 @@ export const PasswordInput = <T extends FieldValues = FieldValues>({
   tooltip,
   ...props
 }: PasswordInputProps<T>) => {
+  // Usar mensagens em português por padrão
+  const messages = authMessages.pt;
+  
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -55,7 +59,7 @@ export const PasswordInput = <T extends FieldValues = FieldValues>({
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton
-                    aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                    aria-label={showPassword ? messages.tooltips.ocultarSenha : messages.tooltips.mostrarSenha}
                     onClick={() => setShowPassword((show) => !show)}
                     edge="end"
                     tabIndex={-1}

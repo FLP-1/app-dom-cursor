@@ -1,15 +1,15 @@
 /**
  * Arquivo: database-management.tsx
  * Caminho: src/pages/admin/database-management.tsx
- * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
+ * Criado em: 2025-01-27
+ * Última atualização: 2025-01-27
  * Descrição: Página de gerenciamento do banco de dados
  */
 
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
-import Button from '@/components/common/Button';
+import { Button } from '@/components/common/Button';
 import {
   Dialog,
   DialogTitle,
@@ -18,6 +18,7 @@ import {
   Snackbar,
   Alert
 } from '@mui/material';
+import { useMessages } from '@/hooks/useMessages';
 
 interface Script {
   id: string;
@@ -103,6 +104,7 @@ const StyledPre = styled.pre(({ theme }) => ({
 }));
 
 const DatabaseManagement: React.FC = () => {
+  const { messages } = useMessages();
   const [scripts, setScripts] = useState<Script[]>([]);
   const [selectedScript, setSelectedScript] = useState<Script | null>(null);
   const [openDialog, setOpenDialog] = useState(false);
@@ -118,11 +120,11 @@ const DatabaseManagement: React.FC = () => {
         body: JSON.stringify({ scriptId: script.id }),
       });
 
-      if (!response.ok) throw new Error('Erro ao executar script');
+      if (!response.ok) throw new Error(messages.admin.databaseManagement.executeError);
 
       setSnackbar({
         open: true,
-        message: 'Script executado com sucesso!',
+        message: messages.admin.databaseManagement.scriptExecuted,
         severity: 'success'
       });
 
@@ -134,7 +136,7 @@ const DatabaseManagement: React.FC = () => {
     } catch (error) {
       setSnackbar({
         open: true,
-        message: 'Erro ao executar script: ' + (error instanceof Error ? error.message : 'Unknown error'),
+        message: messages.admin.databaseManagement.scriptError + (error instanceof Error ? error.message : messages.admin.databaseManagement.unknownError),
         severity: 'error'
       });
     }
@@ -143,7 +145,7 @@ const DatabaseManagement: React.FC = () => {
   return (
     <PageContainer>
       <H4>
-        Gerenciamento do Banco de Dados
+        {messages.admin.databaseManagement.title}
       </H4>
 
       <SectionGrid>
@@ -169,7 +171,7 @@ const DatabaseManagement: React.FC = () => {
                             onClick={() => executeScript(script)}
                             disabled={script.executed}
                           >
-                            Executar
+                            {messages.admin.databaseManagement.execute}
                           </Button>
                           <Button
                             variant="secondary"
@@ -178,12 +180,12 @@ const DatabaseManagement: React.FC = () => {
                               setOpenDialog(true);
                             }}
                           >
-                            Ver Script
+                            {messages.admin.databaseManagement.viewScript}
                           </Button>
                         </ButtonContainer>
                         {script.executed && (
                           <Caption>
-                            Executado em: {script.executedAt?.toLocaleString()}
+                            {messages.admin.databaseManagement.executedAt} {script.executedAt?.toLocaleString()}
                           </Caption>
                         )}
                       </StyledCardContent>
@@ -210,7 +212,7 @@ const DatabaseManagement: React.FC = () => {
           </StyledPre>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenDialog(false)}>Fechar</Button>
+          <Button onClick={() => setOpenDialog(false)}>{messages.admin.databaseManagement.close}</Button>
         </DialogActions>
       </Dialog>
 

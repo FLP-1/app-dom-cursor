@@ -2,16 +2,16 @@
  * Arquivo: PontoForm.tsx
  * Caminho: src/components/forms/ponto/PontoForm.tsx
  * Criado em: 2025-06-13
- * Última atualização: 2025-06-13
+ * Última atualização: 2025-01-27
  * Descrição: Componente principal do formulário de ponto.
  */
 
 import { Stack, Button, Alert } from '@mui/material';
-import { useTranslation } from 'next-i18next';
 import { LoadingButton } from '@mui/lab';
 import { PontoFormProps } from './PontoFormTypes';
 import { usePontoForm } from './usePontoForm';
 import { PontoFormFields } from './PontoFormFields';
+import { pontoMessages } from '@/i18n/messages/ponto.messages';
 
 export function PontoForm({
   initialValues,
@@ -19,7 +19,7 @@ export function PontoForm({
   onCancel,
   loading: externalLoading
 }: PontoFormProps) {
-  const { t } = useTranslation();
+  const messages = pontoMessages.pt;
   const {
     control,
     handleSubmit,
@@ -56,7 +56,7 @@ export function PontoForm({
               onClick={onCancel}
               disabled={isLoading}
             >
-              {t('common.actions.cancel')}
+              {messages.botoes.cancelar}
             </Button>
           )}
 
@@ -66,7 +66,7 @@ export function PontoForm({
             loading={isLoading}
             disabled={isLoading}
           >
-            {t('common.actions.save')}
+            {messages.botoes.salvar}
           </LoadingButton>
         </Stack>
       </Stack>

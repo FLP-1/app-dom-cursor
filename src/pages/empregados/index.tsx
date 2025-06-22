@@ -2,7 +2,7 @@
  * Arquivo: index.tsx
  * Caminho: src/pages/empregados/index.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
+ * Última atualização: 2025-01-27
  * Descrição: Página de listagem de empregados
  */
 
@@ -34,11 +34,11 @@ import { Empregado } from '@/types/empregado';
 import { useAuth } from '@/hooks/useAuth';
 import { useNotification } from '@/hooks/useNotification';
 import { useConfirmDialog } from '@/hooks/useConfirmDialog';
-import { useTranslation } from 'next-i18next';
+import { useMessages } from '@/hooks/useMessages';
 
 export default function EmpregadosPage() {
+  const { messages } = useMessages();
   const router = useRouter();
-  const { t } = useTranslation();
   const { user } = useAuth();
   const { showNotification } = useNotification();
   const { confirm } = useConfirmDialog();
@@ -55,10 +55,10 @@ export default function EmpregadosPage() {
 
   const handleExcluir = async (id: string) => {
     const confirmed = await confirm({
-      title: t('empregados.excluir.titulo'),
-      message: t('empregados.excluir.mensagem'),
-      confirmText: t('empregados.excluir.confirmar'),
-      cancelText: t('empregados.excluir.cancelar'),
+      title: 'Confirmar exclusão',
+      message: 'Tem certeza que deseja excluir este empregado?',
+      confirmText: 'Excluir',
+      cancelText: 'Cancelar',
     });
 
     if (confirmed) {
@@ -66,12 +66,12 @@ export default function EmpregadosPage() {
         // Implemente a lógica para excluir o empregado
         showNotification({
           type: 'success',
-          message: t('empregados.excluir.sucesso'),
+          message: 'Empregado excluído com sucesso',
         });
       } catch (error) {
         showNotification({
           type: 'error',
-          message: t('empregados.excluir.erro'),
+          message: 'Erro ao excluir empregado',
         });
       }
     }
@@ -80,7 +80,7 @@ export default function EmpregadosPage() {
   if (isLoading) {
     return (
       <Box sx={{ p: 3 }}>
-        <Typography>Carregando...</Typography>
+        <Typography>{messages.empregados.loading}</Typography>
       </Box>
     );
   }
@@ -88,7 +88,7 @@ export default function EmpregadosPage() {
   if (error) {
     return (
       <Box sx={{ p: 3 }}>
-        <Typography color="error">Erro ao carregar empregados</Typography>
+        <Typography color="error">{messages.empregados.error.loadEmployees}</Typography>
       </Box>
     );
   }
@@ -99,7 +99,7 @@ export default function EmpregadosPage() {
         <Grid item xs={12}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
             <Typography variant="h4" component="h1">
-              {t('empregados.titulo')}
+              Empregados
             </Typography>
             <Button
               variant="contained"
@@ -107,7 +107,7 @@ export default function EmpregadosPage() {
               startIcon={<AddIcon />}
               onClick={handleNovo}
             >
-              {t('empregados.novo')}
+              Novo Empregado
             </Button>
           </Box>
         </Grid>
@@ -119,12 +119,12 @@ export default function EmpregadosPage() {
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell>{t('empregados.nome')}</TableCell>
-                      <TableCell>{t('empregados.cpf')}</TableCell>
-                      <TableCell>{t('empregados.cargo')}</TableCell>
-                      <TableCell>{t('empregados.remuneracao')}</TableCell>
-                      <TableCell>{t('empregados.dataAdmissao')}</TableCell>
-                      <TableCell>{t('empregados.acoes')}</TableCell>
+                      <TableCell>Nome</TableCell>
+                      <TableCell>CPF</TableCell>
+                      <TableCell>{messages.empregados.table.cargo}</TableCell>
+                      <TableCell>Remuneração</TableCell>
+                      <TableCell>{messages.empregados.table.dataAdmissao}</TableCell>
+                      <TableCell>{messages.empregados.table.acoes}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -137,7 +137,7 @@ export default function EmpregadosPage() {
                         <TableCell>{formatDate(empregado.dataAdmissao)}</TableCell>
                         <TableCell>
                           <Box sx={{ display: 'flex', gap: 1 }}>
-                            <Tooltip title={t('empregados.editar')}>
+                            <Tooltip title="Editar">
                               <IconButton
                                 size="small"
                                 onClick={() => handleEditar(empregado.id)}
@@ -145,7 +145,7 @@ export default function EmpregadosPage() {
                                 <EditIcon />
                               </IconButton>
                             </Tooltip>
-                            <Tooltip title={t('empregados.excluir')}>
+                            <Tooltip title="Excluir">
                               <IconButton
                                 size="small"
                                 color="error"

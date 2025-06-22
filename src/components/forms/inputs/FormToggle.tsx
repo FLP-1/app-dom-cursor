@@ -2,7 +2,7 @@
  * Arquivo: FormToggle.tsx
  * Caminho: src/components/form/FormToggle.tsx
  * Criado em: 2025-06-07
- * Última atualização: 2025-06-07
+ * Última atualização: 2025-01-27
  * Descrição: Componente de toggle integrado com react-hook-form e Material UI, com suporte a validação e acessibilidade
  */
 
@@ -10,6 +10,7 @@ import React from 'react';
 import { FormControlLabel, Switch, SxProps, Theme } from '@mui/material';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import HelperText from '@/components/common/HelperText';
+import { authMessages } from '@/i18n/messages/auth.messages';
 
 export interface FormToggleProps<T extends FieldValues> {
   name: Path<T>;
@@ -28,6 +29,9 @@ const FormToggle = <T extends FieldValues>({
   error,
   sx,
 }: FormToggleProps<T>) => {
+  // Usar mensagens em português por padrão
+  const messages = authMessages.pt;
+
   return (
     <Controller
       name={name}
@@ -39,6 +43,7 @@ const FormToggle = <T extends FieldValues>({
               <Switch
                 {...field}
                 checked={field.value}
+                aria-label={messages.tooltips.alternarOpcao}
                 sx={{
                   '& .MuiSwitch-switchBase': {
                     '&.Mui-checked': {

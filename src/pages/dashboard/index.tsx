@@ -9,6 +9,8 @@
 import { Grid, Card, CardContent, Typography, Box, IconButton, Avatar, Chip, LinearProgress, Skeleton } from '@mui/material';
 import { AccessTime, Description, Assignment, ShoppingCart, Chat, People, Notifications, TrendingUp, CheckCircle, Warning } from '@mui/icons-material';
 import { useDashboardData } from '@/hooks/useDashboardData';
+import { useMessages } from '@/hooks/useMessages';
+import { dashboardMessages } from '@/i18n/messages/dashboard.messages';
 
 // Mapeamento de string para componente de ícone
 const iconMap = {
@@ -18,6 +20,7 @@ const iconMap = {
 };
 
 const Dashboard = () => {
+  const { messages } = useMessages(dashboardMessages);
   const { data, isLoading, isError } = useDashboardData();
 
   if (isLoading) {
@@ -45,7 +48,7 @@ const Dashboard = () => {
   if (isError) {
     return (
       <Box sx={{ p: 3, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <Typography color="error">Falha ao carregar os dados do dashboard.</Typography>
+        <Typography color="error">{messages.error.loadData}</Typography>
       </Box>
     );
   }
@@ -57,8 +60,8 @@ const Dashboard = () => {
       {/* Header */}
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
         <Box>
-          <Typography variant="h4" fontWeight="bold" color="primary">Bem-vindo de volta! 👋</Typography>
-          <Typography variant="body1" color="text.secondary">Aqui está o resumo do seu dia</Typography>
+          <Typography variant="h4" fontWeight="bold" color="primary">{messages.header.welcome}</Typography>
+          <Typography variant="body1" color="text.secondary">{messages.header.subtitle}</Typography>
         </Box>
         <Box display="flex" gap={1}>
           <IconButton sx={{ background: 'rgba(103, 126, 234, 0.1)', '&:hover': { background: 'rgba(103, 126, 234, 0.2)' } }}><Notifications color="primary" /></IconButton>
@@ -97,7 +100,7 @@ const Dashboard = () => {
         <Grid gridColumn={{ xs: 'span 12', md: 'span 8' }}>
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
-              <Typography variant="h6" fontWeight="bold" mb={3}>Atividades Recentes</Typography>
+              <Typography variant="h6" fontWeight="bold" mb={3}>{messages.sections.recentActivities.title}</Typography>
               <Box>
                 {recentActivities.map((activity, index) => {
                   const IconComponent = iconMap[activity.icon];
@@ -123,7 +126,7 @@ const Dashboard = () => {
           {/* Progresso Mensal */}
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', mb: 3 }}>
             <CardContent>
-              <Typography variant="h6" fontWeight="bold" mb={2}>Progresso Mensal</Typography>
+              <Typography variant="h6" fontWeight="bold" mb={2}>{messages.sections.monthlyProgress.title}</Typography>
               {monthlyProgress.map((progress, index) => (
                 <Box key={index} mb={2}>
                   <Box display="flex" justifyContent="space-between" mb={1}>
@@ -139,7 +142,7 @@ const Dashboard = () => {
           {/* Mensagens Rápidas */}
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
-              <Typography variant="h6" fontWeight="bold" mb={2}>Mensagens</Typography>
+              <Typography variant="h6" fontWeight="bold" mb={2}>{messages.sections.quickMessages.title}</Typography>
               {quickMessages.map((msg, index) => (
                 <Box key={index} display="flex" alignItems="center" py={1}>
                   <Avatar sx={{ width: 32, height: 32, mr: 2, fontSize: 12 }}>{msg.avatar}</Avatar>

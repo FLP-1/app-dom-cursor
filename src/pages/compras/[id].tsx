@@ -11,6 +11,8 @@ import React from 'react';
 import Image from 'next/image';
 import CompraHeader from '@/components/compras/CompraHeader';
 import { Box, Button, Typography } from '@mui/material';
+import { useMessages } from '@/hooks/useMessages';
+import { comprasMessages } from '@/i18n/messages/compras.messages';
 
 // Mock para exibição
 const mockCompra = {
@@ -26,27 +28,28 @@ const mockCompra = {
 };
 
 const CompraDetalhePage: React.FC = () => {
+  const { messages } = useMessages(comprasMessages);
   // No futuro: buscar compra pelo id da rota
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: 'grey.100' }}>
       <CompraHeader filtros={{ produto: '', data: '', grupo: '', status: '' }} setFiltros={() => {}} />
       <Box sx={{ maxWidth: 600, mx: 'auto', p: 3, bgcolor: 'background.paper', borderRadius: 2.5, boxShadow: 2 }}>
-        <Typography variant="h5" sx={{ mt: 0, mb: 2 }}>Detalhes da Compra</Typography>
+        <Typography variant="h5" sx={{ mt: 0, mb: 2 }}>{messages.details.title}</Typography>
         <Box sx={{ display: 'flex', gap: 3, alignItems: 'center', mb: 3 }}>
           <Image src={mockCompra.foto} alt={mockCompra.produto} width={80} height={80} sx={{ objectFit: 'cover', borderRadius: 2 }} />
           <Box>
-            <Typography><strong>Produto:</strong> {mockCompra.produto}</Typography>
-            <Typography><strong>Unidade:</strong> {mockCompra.unidade}</Typography>
-            <Typography><strong>Quantidade:</strong> {mockCompra.quantidade}</Typography>
-            <Typography><strong>Valor:</strong> R$ {mockCompra.valor.toFixed(2)}</Typography>
-            <Typography><strong>Data da Compra:</strong> {mockCompra.dataCompra}</Typography>
-            <Typography><strong>Grupo:</strong> {mockCompra.grupo}</Typography>
-            <Typography><strong>Status:</strong> {mockCompra.status}</Typography>
+            <Typography><strong>{messages.details.fields.product}:</strong> {mockCompra.produto}</Typography>
+            <Typography><strong>{messages.details.fields.unit}:</strong> {mockCompra.unidade}</Typography>
+            <Typography><strong>{messages.details.fields.quantity}:</strong> {mockCompra.quantidade}</Typography>
+            <Typography><strong>{messages.details.fields.value}:</strong> R$ {mockCompra.valor.toFixed(2)}</Typography>
+            <Typography><strong>{messages.details.fields.purchaseDate}:</strong> {mockCompra.dataCompra}</Typography>
+            <Typography><strong>{messages.details.fields.group}:</strong> {mockCompra.grupo}</Typography>
+            <Typography><strong>{messages.details.fields.status}:</strong> {mockCompra.status}</Typography>
           </Box>
         </Box>
         <Button variant="contained" color="primary" sx={{ borderRadius: 1.5, px: 2.5, py: 1, fontWeight: 600, fontSize: 16 }}>
-          Editar
+          {messages.details.actions.edit}
         </Button>
       </Box>
     </Box>

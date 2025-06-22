@@ -2,7 +2,7 @@
  * Arquivo: FormNumberInput.tsx
  * Caminho: src/components/forms/inputs/FormNumberInput.tsx
  * Criado em: 2025-06-07
- * Última atualização: 2024-06-07
+ * Última atualização: 2025-01-27
  * Descrição: Componente de input numérico integrado com react-hook-form e Material UI, com suporte a validação e acessibilidade.
  */
 
@@ -10,6 +10,7 @@ import React, { useId } from 'react';
 import { TextField, SxProps, Theme } from '@mui/material';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import HelperText from '@/components/common/HelperText';
+import { authMessages } from '@/i18n/messages/auth.messages';
 
 export interface FormNumberInputProps<T extends FieldValues> {
   name: Path<T>;
@@ -38,8 +39,12 @@ const FormNumberInput = <T extends FieldValues>({
   sx,
   id,
 }: FormNumberInputProps<T>) => {
+  // Usar mensagens em português por padrão
+  const messages = authMessages.pt;
+  
   const generatedId = useId();
   const inputId = id || `${name}-numberinput-${generatedId}`;
+  
   return (
     <Controller
       name={name}
@@ -51,8 +56,8 @@ const FormNumberInput = <T extends FieldValues>({
             id={inputId}
             type="number"
             label={label}
-            aria-label={label ? undefined : name}
-            placeholder={placeholder}
+            aria-label={label ? undefined : messages.tooltips.campoNumerico}
+            placeholder={placeholder || messages.placeholders.digiteNumero}
             inputProps={{
               min,
               max,

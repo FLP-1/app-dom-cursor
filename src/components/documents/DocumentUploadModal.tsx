@@ -2,7 +2,7 @@
  * Arquivo: DocumentUploadModal.tsx
  * Caminho: src/components/documents/DocumentUploadModal.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-20
+ * Última atualização: 2025-01-27
  * Descrição: Modal para upload de documentos
  */
 
@@ -15,6 +15,7 @@ import { useDocumentForm } from '@/hooks/useDocumentForm';
 import { styled } from '@mui/material/styles';
 import { FormSwitch } from '@/components/forms/inputs/FormSwitch';
 import { formatDateBR, parseDateBRtoISO } from '@/utils/date';
+import { documentMessages } from '@/i18n/messages/document.messages';
 
 interface DocumentUploadModalProps {
   open: boolean;
@@ -71,27 +72,78 @@ const Actions = styled(Box)(({ theme }) => ({
 const DocumentUploadModal: React.FC<DocumentUploadModalProps> = ({ open, onClose }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { control, handleSubmit, onSubmit, loading, registerWithValidation } = useDocumentForm(onClose);
+  
+  // Usar mensagens em português por padrão
+  const messages = documentMessages.pt;
+  
   if (!open) return null;
+  
   return (
     <ModalOverlay>
       <ModalContent>
         <Box component="h3" sx={{ mt: 0 }}>
-          Novo Documento
+          {messages.labels.adicionar}
         </Box>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <FormInput name="name" label="Nome do Documento" required control={control} sx={{ mb: 2 }} />
-          <FormSelect name="type" label="Tipo" options={tipos} required control={control} />
-          <FormInput name="file" label="Arquivo" type="file" required control={control} inputRef={fileInputRef} sx={{ mb: 2 }} inputProps={{ accept: '*' }} />
-          <FormInput name="expiresAt" label="Data de Vencimento" control={control} sx={{ mb: 2 }} inputProps={{ placeholder: 'dd/mm/aaaa' }} {...registerWithValidation('expiresAt')} />
-          <FormSelect name="group" label="Grupo" options={grupos} required control={control} />
-          <FormSelect name="category" label="Categoria" options={categorias} required control={control} sx={{ mb: 2 }} />
-          <FormSwitch name="isPublic" label="Documento público?" control={control} sx={{ mb: 2 }} />
+          <FormInput 
+            name="name" 
+            label={messages.labels.nome} 
+            required 
+            control={control} 
+            sx={{ mb: 2 }} 
+          />
+          <FormSelect 
+            name="type" 
+            label={messages.labels.tipo} 
+            options={tipos} 
+            required 
+            control={control} 
+          />
+          <FormInput 
+            name="file" 
+            label={messages.labels.arquivo} 
+            type="file" 
+            required 
+            control={control} 
+            inputRef={fileInputRef} 
+            sx={{ mb: 2 }} 
+            inputProps={{ accept: '*' }} 
+          />
+          <FormInput 
+            name="expiresAt" 
+            label={messages.labels.dataValidade} 
+            control={control} 
+            sx={{ mb: 2 }} 
+            inputProps={{ placeholder: 'dd/mm/aaaa' }} 
+            {...registerWithValidation('expiresAt')} 
+          />
+          <FormSelect 
+            name="group" 
+            label={messages.labels.grupo} 
+            options={grupos} 
+            required 
+            control={control} 
+          />
+          <FormSelect 
+            name="category" 
+            label={messages.labels.categoria} 
+            options={categorias} 
+            required 
+            control={control} 
+            sx={{ mb: 2 }} 
+          />
+          <FormSwitch 
+            name="isPublic" 
+            label={messages.labels.isPublic} 
+            control={control} 
+            sx={{ mb: 2 }} 
+          />
           <Actions>
             <Button type="button" variant="secondary" onClick={onClose}>
-              Cancelar
+              {messages.labels.cancelar}
             </Button>
             <Button type="submit" variant="primary" disabled={loading}>
-              {loading ? 'Salvando...' : 'Salvar'}
+              {loading ? messages.mensagens.salvando : messages.labels.salvar}
             </Button>
           </Actions>
         </form>

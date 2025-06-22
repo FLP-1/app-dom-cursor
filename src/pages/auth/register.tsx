@@ -2,7 +2,7 @@
  * Arquivo: register.tsx
  * Caminho: src/pages/auth/register.tsx
  * Criado em: 2025-06-13
- * Última atualização: 2025-06-13
+ * Última atualização: 2025-01-27
  * Descrição: Página de cadastro de usuário, com validação de CPF, e-mail, telefone e senha, e integração com API.
  */
 
@@ -12,6 +12,8 @@ import { Box, Button, Typography, Paper, CircularProgress, Link } from '@mui/mat
 import { FormInput } from '@/components/common';
 import { useNotification } from '@/hooks';
 import { useRouter } from 'next/router';
+import { useMessages } from '@/hooks/useMessages';
+import { authMessages } from '@/i18n/messages/auth.messages';
 
 interface RegisterForm {
   name: string;
@@ -51,6 +53,7 @@ function validatePhone(phone: string): boolean {
 const RegisterPage: React.FC = () => {
   const router = useRouter();
   const { error, success } = useNotification();
+  const { messages } = useMessages(authMessages);
   const [loading, setLoading] = React.useState(false);
 
   const { control, handleSubmit, watch, formState: { errors } } = useForm<RegisterForm>({
@@ -86,18 +89,18 @@ const RegisterPage: React.FC = () => {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.message || 'Erro ao realizar cadastro');
+        throw new Error(result.message || messages.register.errors.general);
       }
 
-      success('Cadastro realizado com sucesso! Redirecionando para login...');
+      success(messages.register.success);
       setTimeout(() => {
         router.push('/auth/login');
       }, 2000);
     } catch (err: unknown) {
       if (err instanceof Error) {
-        error(err.message || 'Erro ao realizar cadastro');
+        error(err.message || messages.register.errors.general);
       } else {
-        error('Erro ao realizar cadastro');
+        error(messages.register.errors.general);
       }
     } finally {
       setLoading(false);
@@ -108,17 +111,17 @@ const RegisterPage: React.FC = () => {
     <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" bgcolor="#f5f6fa">
       <Paper elevation={3} sx={{ p: 4, minWidth: 340, maxWidth: 500 }}>
         <Typography variant="h5" mb={2} fontWeight={700} align="center">
-          Criar Conta
+          {messages.register.title}
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <Controller
             name="name"
             control={control}
-            rules={{ required: 'Nome é obrigatório' }}
+            rules={{ required: messages.register.validation.nameRequired }}
             render={({ field }) => (
               <FormInput
                 {...field}
-                label="Nome Completo"
+                label={messages.register.fields.name}
                 error={!!errors.name}
                 helperText={errors.name?.message}
                 fullWidth
@@ -131,13 +134,13 @@ const RegisterPage: React.FC = () => {
             name="cpf"
             control={control}
             rules={{
-              required: 'CPF é obrigatório',
-              validate: (value) => validateCPF(value) || 'CPF inválido',
+              required: messages.register.validation.cpfRequired,
+              validate: (value) => validateCPF(value) || messages.register.validation.cpfInvalid,
             }}
             render={({ field }) => (
               <FormInput
                 {...field}
-                label="CPF"
+                label={messages.register.fields.cpf}
                 mask="999.999.999-99"
                 error={!!errors.cpf}
                 helperText={errors.cpf?.message}
@@ -151,13 +154,13 @@ const RegisterPage: React.FC = () => {
             name="email"
             control={control}
             rules={{
-              required: 'E-mail é obrigatório',
-              validate: (value) => validateEmail(value) || 'E-mail inválido',
+              required: messages.register.validation.emailRequired,
+              validate: (value) => validateEmail(value) || messages.register.validation.emailInvalid,
             }}
             render={({ field }) => (
               <FormInput
                 {...field}
-                label="E-mail"
+                label={messages.register.fields.email}
                 type="email"
                 error={!!errors.email}
                 helperText={errors.email?.message}
@@ -171,13 +174,13 @@ const RegisterPage: React.FC = () => {
             name="phone"
             control={control}
             rules={{
-              required: 'Telefone é obrigatório',
-              validate: (value) => validatePhone(value) || 'Telefone inválido',
+              required: messages.register.validation.phoneRequired,
+              validate: (value) => validatePhone(value) || messages.register.validation.phoneInvalid,
             }}
             render={({ field }) => (
               <FormInput
                 {...field}
-                label="Telefone"
+                label={messages.register.fields.phone}
                 mask="(99) 99999-9999"
                 error={!!errors.phone}
                 helperText={errors.phone?.message}
@@ -191,17 +194,17 @@ const RegisterPage: React.FC = () => {
             name="password"
             control={control}
             rules={{
-              required: 'Senha é obrigatória',
-              minLength: { value: 6, message: 'Mínimo 6 caracteres' },
+              required: messages.register.validation.passwordRequired,
+              minLength: { value: 6, message: messages.register.validation.passwordMinLength },
               pattern: {
                 value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-                message: 'Senha deve conter letras maiúsculas, minúsculas e números',
+                message: messages.register.validation.passwordPattern,
               },
             }}
             render={({ field }) => (
               <FormInput
                 {...field}
-                label="Senha"
+                label={messages.register.fields.password}
                 type="password"
                 error={!!errors.password}
                 helperText={errors.password?.message}
@@ -215,13 +218,13 @@ const RegisterPage: React.FC = () => {
             name="confirmPassword"
             control={control}
             rules={{
-              required: 'Confirmação de senha é obrigatória',
-              validate: (value) => value === password || 'As senhas não conferem',
+              required: messages.register.validation.confirmPasswordRequired,
+              validate: (value) => value === password || messages.register.validation.passwordMismatch,
             }}
             render={({ field }) => (
               <FormInput
                 {...field}
-                label="Confirmar Senha"
+                label={messages.register.fields.confirmPassword}
                 type="password"
                 error={!!errors.confirmPassword}
                 helperText={errors.confirmPassword?.message}
@@ -240,16 +243,16 @@ const RegisterPage: React.FC = () => {
               disabled={loading}
               size="large"
               sx={{ fontWeight: 600 }}
-              aria-label="Cadastrar"
+              aria-label={messages.register.submit}
             >
-              {loading ? <CircularProgress size={24} color="inherit" /> : 'Cadastrar'}
+              {loading ? <CircularProgress size={24} color="inherit" /> : messages.register.submit}
             </Button>
           </Box>
           <Box mt={2} textAlign="center">
             <Typography variant="body2">
-              Já tem uma conta?{' '}
+              {messages.register.loginLink.text}{' '}
               <Link href="/auth/login" sx={{ textDecoration: 'none' }}>
-                Faça login
+                {messages.register.loginLink.action}
               </Link>
             </Typography>
           </Box>

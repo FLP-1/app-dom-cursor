@@ -2,7 +2,7 @@
  * Arquivo: reset-password.tsx
  * Caminho: src/pages/auth/reset-password.tsx
  * Criado em: 2025-06-13
- * Última atualização: 2025-06-13
+ * Última atualização: 2025-01-27
  * Descrição: Página de redefinição de senha, com validação de senha forte e integração com API.
  */
 
@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import { Box, Button, Typography, Paper, CircularProgress, Link } from '@mui/material';
 import { FormInput } from '@/components/common';
 import { useNotification } from '@/hooks';
+import { useMessages } from '@/hooks/useMessages';
 
 interface ResetPasswordForm {
   password: string;
@@ -19,6 +20,7 @@ interface ResetPasswordForm {
 }
 
 const ResetPasswordPage: React.FC = () => {
+  const { messages } = useMessages();
   const router = useRouter();
   const { token } = router.query;
   const { error, success } = useNotification();
@@ -55,18 +57,18 @@ const ResetPasswordPage: React.FC = () => {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.message || 'Erro ao redefinir senha');
+        throw new Error(result.message || messages.auth.resetPassword.errors.resetError);
       }
 
-      success('Senha redefinida com sucesso! Redirecionando para login...');
+      success(messages.auth.resetPassword.success.passwordReset);
       setTimeout(() => {
         router.push('/auth/login');
       }, 2000);
     } catch (err: unknown) {
       if (err instanceof Error) {
-        error(err.message || 'Erro ao redefinir senha');
+        error(err.message || messages.auth.resetPassword.errors.resetError);
       } else {
-        error('Erro ao redefinir senha');
+        error(messages.auth.resetPassword.errors.resetError);
       }
     } finally {
       setLoading(false);
@@ -97,17 +99,17 @@ const ResetPasswordPage: React.FC = () => {
     <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" bgcolor="#f5f6fa">
       <Paper elevation={3} sx={{ p: 4, minWidth: 340, maxWidth: 400 }}>
         <Typography variant="h5" mb={2} fontWeight={700} align="center">
-          Redefinir Senha
+          {messages.auth.resetPassword.title}
         </Typography>
         <Typography variant="body2" color="text.secondary" mb={3} align="center">
-          Digite sua nova senha abaixo.
+          {messages.auth.resetPassword.subtitle}
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <Controller
             name="password"
             control={control}
             rules={{
-              required: 'Senha é obrigatória',
+              required: messages.auth.resetPassword.errors.required,
               minLength: { value: 6, message: 'Mínimo 6 caracteres' },
               pattern: {
                 value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
@@ -117,7 +119,7 @@ const ResetPasswordPage: React.FC = () => {
             render={({ field }) => (
               <FormInput
                 {...field}
-                label="Nova Senha"
+                label={messages.auth.resetPassword.fields.newPassword}
                 type="password"
                 error={!!errors.password}
                 helperText={errors.password?.message}
@@ -131,13 +133,13 @@ const ResetPasswordPage: React.FC = () => {
             name="confirmPassword"
             control={control}
             rules={{
-              required: 'Confirmação de senha é obrigatória',
-              validate: (value) => value === password || 'As senhas não conferem',
+              required: messages.auth.resetPassword.errors.required,
+              validate: (value) => value === password || messages.auth.resetPassword.errors.passwordMismatch,
             }}
             render={({ field }) => (
               <FormInput
                 {...field}
-                label="Confirmar Nova Senha"
+                label={messages.auth.resetPassword.fields.confirmPassword}
                 type="password"
                 error={!!errors.confirmPassword}
                 helperText={errors.confirmPassword?.message}
@@ -156,16 +158,16 @@ const ResetPasswordPage: React.FC = () => {
               disabled={loading}
               size="large"
               sx={{ fontWeight: 600 }}
-              aria-label="Redefinir Senha"
+              aria-label={messages.auth.resetPassword.buttons.reset}
             >
-              {loading ? <CircularProgress size={24} color="inherit" /> : 'Redefinir Senha'}
+              {loading ? <CircularProgress size={24} color="inherit" /> : messages.auth.resetPassword.buttons.reset}
             </Button>
           </Box>
           <Box mt={2} textAlign="center">
             <Typography variant="body2">
-              Lembrou sua senha?{' '}
+              {messages.auth.forgotPassword.links.rememberPassword}{' '}
               <Link href="/auth/login" sx={{ textDecoration: 'none' }}>
-                Voltar para o login
+                {messages.auth.forgotPassword.links.backToLogin}
               </Link>
             </Typography>
           </Box>

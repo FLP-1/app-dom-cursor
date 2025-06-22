@@ -2,13 +2,15 @@
  * Arquivo: PreviewESocial.tsx
  * Caminho: src/components/empregador/PreviewESocial.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-01-27
+ * Descrição: Componente de preview do eSocial com mensagens centralizadas
  */
 
 import { Box, Paper, Typography, Divider } from '@mui/material';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { interfaceMessages } from '@/i18n/messages/interface.messages';
+import { useLanguage } from '@/hooks/useLanguage';
 
 interface PreviewESocialProps {
   preview: {
@@ -32,6 +34,9 @@ interface PreviewESocialProps {
 }
 
 export function PreviewESocial({ preview }: PreviewESocialProps) {
+  const { language } = useLanguage();
+  const messages = interfaceMessages[language].preview;
+
   return (
     <Paper sx={{ p: 3, mt: 3 }}>
       <Typography variant="h6" gutterBottom>
@@ -44,10 +49,10 @@ export function PreviewESocial({ preview }: PreviewESocialProps) {
         </Typography>
         <Box sx={{ pl: 2 }}>
           <Typography>
-            <strong>Tipo de Inscrição:</strong> CPF
+            <strong>{messages.inscriptionType}</strong> CPF
           </Typography>
           <Typography>
-            <strong>Número de Inscrição:</strong> {preview.ideEmpregador.nrInsc}
+            <strong>{messages.inscriptionNumber}</strong> {preview.ideEmpregador.nrInsc}
           </Typography>
         </Box>
       </Box>
@@ -60,39 +65,39 @@ export function PreviewESocial({ preview }: PreviewESocialProps) {
         </Typography>
         <Box sx={{ pl: 2 }}>
           <Typography>
-            <strong>CPF:</strong> {preview.dadosEmpregador.cpf}
+            <strong>{messages.cpf}:</strong> {preview.dadosEmpregador.cpf}
           </Typography>
           <Typography>
-            <strong>Nome:</strong> {preview.dadosEmpregador.nome}
+            <strong>{messages.name}:</strong> {preview.dadosEmpregador.nome}
           </Typography>
           <Typography>
-            <strong>Data de Nascimento:</strong>{' '}
+            <strong>{messages.birthDate}:</strong>{' '}
             {format(new Date(preview.dadosEmpregador.dataNascimento), 'dd/MM/yyyy', {
               locale: ptBR,
             })}
           </Typography>
           <Typography>
-            <strong>Sexo:</strong> {preview.dadosEmpregador.sexo === 'M' ? 'Masculino' : 'Feminino'}
+            <strong>{messages.sex}:</strong> {preview.dadosEmpregador.sexo === 'M' ? interfaceMessages[language].common.masculine : interfaceMessages[language].common.feminine}
           </Typography>
           <Typography>
-            <strong>Tipo de Empregador:</strong>{' '}
+            <strong>{messages.employerType}:</strong>{' '}
             {preview.dadosEmpregador.tipoEmpregador === '1'
               ? 'Empregador Doméstico'
               : 'Segurado Especial'}
           </Typography>
           {preview.dadosEmpregador.caepf && (
             <Typography>
-              <strong>CAEPF:</strong> {preview.dadosEmpregador.caepf}
+              <strong>{messages.caepf}:</strong> {preview.dadosEmpregador.caepf}
             </Typography>
           )}
           {preview.dadosEmpregador.telefone && (
             <Typography>
-              <strong>Telefone:</strong> {preview.dadosEmpregador.telefone}
+              <strong>{messages.phone}:</strong> {preview.dadosEmpregador.telefone}
             </Typography>
           )}
           {preview.dadosEmpregador.email && (
             <Typography>
-              <strong>Email:</strong> {preview.dadosEmpregador.email}
+              <strong>{messages.email}:</strong> {preview.dadosEmpregador.email}
             </Typography>
           )}
         </Box>

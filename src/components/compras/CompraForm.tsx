@@ -2,8 +2,8 @@
  * Arquivo: CompraForm.tsx
  * Caminho: src/components/compras/CompraForm.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-01-27
+ * Descrição: Formulário para cadastro de novas compras
  */
 
 import React, { useRef } from 'react';
@@ -13,6 +13,8 @@ import { FormSelect } from '@/components/forms/inputs/FormSelect';
 import Button from '@/components/common/Button';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import { useMessages } from '@/hooks/useMessages';
+import { comprasMessages } from '@/i18n/messages/compras.messages';
 
 const unidades = [
   { value: 'Pacote', label: 'Pacote' },
@@ -21,6 +23,7 @@ const unidades = [
   { value: 'Kg', label: 'Kg' },
   { value: 'Caixa', label: 'Caixa' },
 ];
+
 const grupos = [
   { value: 'Família A', label: 'Família A' },
   { value: 'Família B', label: 'Família B' },
@@ -44,50 +47,51 @@ const Actions = styled(Box)(({ theme }) => ({
 }));
 
 const CompraForm: React.FC = () => {
+  const { messages } = useMessages(comprasMessages);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { control, handleSubmit, onSubmit, loading, registerWithValidation } = useCompraForm();
 
   return (
-    <FormContainer onSubmit={handleSubmit(onSubmit)} noValidate aria-label="Formulário de Nova Compra">
+    <FormContainer onSubmit={handleSubmit(onSubmit)} noValidate aria-label={messages.form.ariaLabel}>
       <Box component="h3" sx={{ mt: 0 }}>
-        Nova Compra
+        {messages.form.title}
       </Box>
       <FormInput
         name="produto"
-        label="Produto"
+        label={messages.form.fields.produto.label}
         required
         control={control}
-        placeholder="Nome do produto"
+        placeholder={messages.form.fields.produto.placeholder}
         autoComplete="off"
       />
       <FormSelect
         name="unidade"
-        label="Unidade"
+        label={messages.form.fields.unidade.label}
         options={unidades}
         required
         control={control}
       />
       <FormInput
         name="quantidade"
-        label="Quantidade"
+        label={messages.form.fields.quantidade.label}
         type="number"
         required
         control={control}
         inputProps={{ min: 1 }}
-        placeholder="Quantidade"
+        placeholder={messages.form.fields.quantidade.placeholder}
       />
       <FormInput
         name="valor"
-        label="Valor (R$)"
+        label={messages.form.fields.valor.label}
         type="number"
         required
         control={control}
         inputProps={{ min: 0, step: 0.01 }}
-        placeholder="Valor"
+        placeholder={messages.form.fields.valor.placeholder}
       />
       <FormInput
         name="dataCompra"
-        label="Data da Compra"
+        label={messages.form.fields.dataCompra.label}
         type="date"
         required
         control={control}
@@ -96,14 +100,14 @@ const CompraForm: React.FC = () => {
       />
       <FormSelect
         name="grupo"
-        label="Grupo de Compra"
+        label={messages.form.fields.grupo.label}
         options={grupos}
         required
         control={control}
       />
       <FormInput
         name="foto"
-        label="Foto do Produto"
+        label={messages.form.fields.foto.label}
         type="file"
         control={control}
         inputRef={fileInputRef}
@@ -111,10 +115,10 @@ const CompraForm: React.FC = () => {
       />
       <Actions>
         <Button type="button" variant="secondary" onClick={() => window.history.back()}>
-          Cancelar
+          {messages.form.buttons.cancel}
         </Button>
         <Button type="submit" variant="primary" disabled={loading}>
-          {loading ? 'Salvando...' : 'Salvar'}
+          {loading ? messages.form.buttons.saving : messages.form.buttons.save}
         </Button>
       </Actions>
     </FormContainer>

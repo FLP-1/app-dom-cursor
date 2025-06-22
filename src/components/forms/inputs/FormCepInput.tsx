@@ -2,7 +2,7 @@
  * Arquivo: FormCepInput.tsx
  * Caminho: src/components/FormCepInput.tsx
  * Criado em: 2025-06-07
- * Última atualização: 2025-06-07
+ * Última atualização: 2025-01-27
  * Descrição: Componente de input de CEP com máscara, validação e busca automática de endereço
  */
 
@@ -11,9 +11,9 @@ import { Box, Typography, TextField, IconButton } from '@mui/material';
 import { IMaskInput } from 'react-imask';
 import { forwardRef } from 'react';
 import { Search as SearchIcon } from '@mui/icons-material';
-import { useTranslation } from 'next-i18next';
 import { useNotification } from '@/hooks/useNotification';
 import { FormControl } from '@/types/forms';
+import { authMessages } from '@/i18n/messages/auth.messages';
 
 interface FormCepInputProps<T extends FieldValues> extends FormControl {
   name: string;
@@ -68,7 +68,9 @@ export function FormCepInput<T extends FieldValues>({
   error,
   placeholder,
 }: FormCepInputProps<T>) {
-  const { t } = useTranslation();
+  // Usar mensagens em português por padrão
+  const messages = authMessages.pt;
+  
   const { showNotification } = useNotification();
 
   const handleSearch = async () => {
@@ -80,7 +82,7 @@ export function FormCepInput<T extends FieldValues>({
       console.error('Erro ao buscar CEP:', error);
       showNotification({
         type: 'error',
-        message: t('cepInput.errors.searchError')
+        message: messages.erros.buscarCep
       });
     }
   };
@@ -110,7 +112,7 @@ export function FormCepInput<T extends FieldValues>({
           onChange={(e) => onChange(e.target.value)}
           disabled={disabled}
           required={required}
-          placeholder={placeholder}
+          placeholder={placeholder || messages.placeholders.cep}
           error={!!error}
           fullWidth
           InputProps={{
@@ -120,7 +122,7 @@ export function FormCepInput<T extends FieldValues>({
                 onClick={handleSearch}
                 disabled={disabled || !value || value.length < 8}
                 edge="end"
-                aria-label="Buscar CEP"
+                aria-label={messages.tooltips.buscarCep}
                 sx={{
                   '&:hover': {
                     bgcolor: 'action.hover'

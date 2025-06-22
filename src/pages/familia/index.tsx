@@ -21,22 +21,26 @@ import {
   Person, Child, Elderly, ContactPhone
 } from '@mui/icons-material';
 import { useFamilyData } from '@/hooks/useFamilyData';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { messages } from '@/i18n/messages';
 
 const Familia = () => {
   const { data, isLoading, isError, addMember, updateMember, deleteMember } = useFamilyData();
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedMember, setSelectedMember] = useState<any>(null);
+  const { language } = useLanguage();
+  const msg = messages[language];
 
   if (isLoading) {
     return (
       <Box sx={{ p: 3, background: '#f8fafc', minHeight: '100vh' }}>
         <Skeleton variant="text" width={250} height={60} />
         <Skeleton variant="text" width={200} height={30} />
-        <Grid container spacing={3} mt={2}>
-          <Grid item xs={12} md={8}>
+        <Grid container columns={12} spacing={3} mt={2}>
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 8' }}>
             <Skeleton variant="rectangular" height={400} sx={{ borderRadius: 3 }} />
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 4' }}>
             <Skeleton variant="rectangular" height={200} sx={{ borderRadius: 3, mb: 2 }} />
             <Skeleton variant="rectangular" height={200} sx={{ borderRadius: 3 }} />
           </Grid>
@@ -48,7 +52,7 @@ const Familia = () => {
   if (isError) {
     return (
       <Box sx={{ p: 3, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <Typography color="error">Falha ao carregar os dados da família.</Typography>
+        <Typography color="error">{msg.familia.loadError}</Typography>
       </Box>
     );
   }
@@ -103,7 +107,7 @@ const Familia = () => {
       }
       setOpenDialog(false);
     } catch (error) {
-      console.error('Erro ao salvar membro:', error);
+      console.error(msg.familia.saveError, error);
     }
   };
 
@@ -113,10 +117,10 @@ const Familia = () => {
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
         <Box>
           <Typography variant="h4" fontWeight="bold" color="primary">
-            Família 👨‍👩‍👧‍👦
+            {msg.familia.title}
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            Gerencie informações dos membros da família
+            {msg.familia.subtitle}
           </Typography>
         </Box>
         <Button
@@ -125,17 +129,17 @@ const Familia = () => {
           onClick={handleAddMember}
           sx={{ borderRadius: 2 }}
         >
-          Adicionar Membro
+          {msg.familia.addMember}
         </Button>
       </Box>
 
-      <Grid container spacing={3}>
+      <Grid container columns={12} spacing={3}>
         {/* Lista de Membros */}
-        <Grid item xs={12} md={8}>
+        <Grid gridColumn={{ xs: 'span 12', md: 'span 8' }}>
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={3}>
-                Membros da Família
+                {msg.familia.familyMembers}
               </Typography>
               
               <List>
@@ -189,7 +193,7 @@ const Familia = () => {
                             }}
                           />
                           <Typography variant="body2" color="text.secondary">
-                            ({member.age} anos)
+                            ({member.age} {msg.familia.years})
                           </Typography>
                         </Box>
                       }
@@ -229,7 +233,7 @@ const Familia = () => {
                             <Box display="flex" gap={0.5} mt={1}>
                               {member.medicalInfo.bloodType && (
                                 <Chip
-                                  label={`Sangue: ${member.medicalInfo.bloodType}`}
+                                  label={`${msg.familia.bloodType}: ${member.medicalInfo.bloodType}`}
                                   size="small"
                                   variant="outlined"
                                   sx={{ fontSize: '0.7rem' }}
@@ -237,7 +241,7 @@ const Familia = () => {
                               )}
                               {member.medicalInfo.allergies && member.medicalInfo.allergies.length > 0 && (
                                 <Chip
-                                  label={`${member.medicalInfo.allergies.length} alergia(s)`}
+                                  label={`${member.medicalInfo.allergies.length} ${msg.familia.allergies}`}
                                   size="small"
                                   variant="outlined"
                                   color="warning"
@@ -267,12 +271,12 @@ const Familia = () => {
         </Grid>
 
         {/* Sidebar */}
-        <Grid item xs={12} md={4}>
+        <Grid gridColumn={{ xs: 'span 12', md: 'span 4' }}>
           {/* Contatos de Emergência */}
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', mb: 3 }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={2}>
-                Contatos de Emergência
+                {msg.familia.emergencyContacts}
               </Typography>
               {emergencyContacts.map((contact) => (
                 <Box key={contact.id} display="flex" alignItems="center" py={1}>
@@ -304,7 +308,7 @@ const Familia = () => {
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', mb: 3 }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={2}>
-                Próximos Aniversários
+                {msg.familia.upcomingBirthdays}
               </Typography>
               {upcomingBirthdays.map((member) => (
                 <Box key={member.id} display="flex" alignItems="center" py={1}>
@@ -333,7 +337,7 @@ const Familia = () => {
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', mb: 3 }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={2}>
-                Alertas Médicos
+                {msg.familia.medicalAlerts}
               </Typography>
               {medicalAlerts.map((alert, index) => (
                 <Box key={index} display="flex" alignItems="center" py={1}>
@@ -359,23 +363,23 @@ const Familia = () => {
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={2}>
-                Estatísticas
+                {msg.familia.statistics}
               </Typography>
               <Box>
                 <Box display="flex" justifyContent="space-between" mb={1}>
-                  <Typography variant="body2">Total de Membros</Typography>
+                  <Typography variant="body2">{msg.familia.totalMembers}</Typography>
                   <Typography variant="body2" fontWeight="bold">{stats.totalMembers}</Typography>
                 </Box>
                 <Box display="flex" justifyContent="space-between" mb={1}>
-                  <Typography variant="body2">Crianças</Typography>
+                  <Typography variant="body2">{msg.familia.children}</Typography>
                   <Typography variant="body2" fontWeight="bold" color="#4CAF50">{stats.children}</Typography>
                 </Box>
                 <Box display="flex" justifyContent="space-between" mb={1}>
-                  <Typography variant="body2">Adultos</Typography>
+                  <Typography variant="body2">{msg.familia.adults}</Typography>
                   <Typography variant="body2" fontWeight="bold" color="#2196F3">{stats.adults}</Typography>
                 </Box>
                 <Box display="flex" justifyContent="space-between" mb={1}>
-                  <Typography variant="body2">Idosos</Typography>
+                  <Typography variant="body2">{msg.familia.seniors}</Typography>
                   <Typography variant="body2" fontWeight="bold" color="#FF9800">{stats.seniors}</Typography>
                 </Box>
               </Box>
@@ -387,7 +391,7 @@ const Familia = () => {
       {/* Dialog para adicionar/editar membro */}
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="md" fullWidth>
         <DialogTitle>
-          {selectedMember ? 'Editar Membro' : 'Adicionar Membro'}
+          {selectedMember ? msg.familia.editMember : msg.familia.addMember}
         </DialogTitle>
         <DialogContent>
           <Box sx={{ pt: 2 }}>
@@ -395,29 +399,29 @@ const Familia = () => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
-                  label="Nome"
+                  label={msg.familia.name}
                   defaultValue={selectedMember?.name || ''}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
-                  <InputLabel>Relacionamento</InputLabel>
+                  <InputLabel>{msg.familia.relationship}</InputLabel>
                   <Select
                     defaultValue={selectedMember?.relationship || 'other'}
-                    label="Relacionamento"
+                    label={msg.familia.relationship}
                   >
-                    <MenuItem value="spouse">Cônjuge</MenuItem>
-                    <MenuItem value="child">Filho(a)</MenuItem>
-                    <MenuItem value="parent">Pai/Mãe</MenuItem>
-                    <MenuItem value="sibling">Irmão(ã)</MenuItem>
-                    <MenuItem value="other">Outro</MenuItem>
+                    <MenuItem value="spouse">{msg.familia.spouse}</MenuItem>
+                    <MenuItem value="child">{msg.familia.child}</MenuItem>
+                    <MenuItem value="parent">{msg.familia.parent}</MenuItem>
+                    <MenuItem value="sibling">{msg.familia.sibling}</MenuItem>
+                    <MenuItem value="other">{msg.familia.other}</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
-                  label="Data de Nascimento"
+                  label={msg.familia.birthDate}
                   type="date"
                   defaultValue={selectedMember?.birthDate || ''}
                   InputLabelProps={{ shrink: true }}
@@ -426,28 +430,28 @@ const Familia = () => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
-                  label="Telefone"
+                  label={msg.familia.phone}
                   defaultValue={selectedMember?.phone || ''}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  label="Email"
+                  label={msg.familia.email}
                   defaultValue={selectedMember?.email || ''}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  label="Endereço"
+                  label={msg.familia.address}
                   defaultValue={selectedMember?.address || ''}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  label="Profissão"
+                  label={msg.familia.occupation}
                   defaultValue={selectedMember?.occupation || ''}
                 />
               </Grid>
@@ -455,12 +459,12 @@ const Familia = () => {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenDialog(false)}>Cancelar</Button>
+          <Button onClick={() => setOpenDialog(false)}>{msg.common.cancel}</Button>
           <Button 
             variant="contained" 
             onClick={() => handleSaveMember({})}
           >
-            Salvar
+            {msg.common.save}
           </Button>
         </DialogActions>
       </Dialog>

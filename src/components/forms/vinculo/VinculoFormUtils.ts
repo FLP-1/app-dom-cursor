@@ -2,11 +2,12 @@
  * Arquivo: VinculoFormUtils.ts
  * Caminho: src/components/forms/vinculo/VinculoFormUtils.ts
  * Criado em: 2025-06-13
- * Última atualização: 2025-06-13
+ * Última atualização: 2025-01-27
  * Descrição: Funções utilitárias para o formulário de vínculo.
  */
 
 import { VinculoFormData } from './VinculoFormTypes';
+import { vinculoMessages } from '@/i18n/messages/vinculo.messages';
 
 export function formatVinculoData(data: VinculoFormData): VinculoFormData {
   return {
@@ -21,31 +22,31 @@ export function validateVinculoData(data: VinculoFormData): string[] {
   const errors: string[] = [];
 
   if (!data.tipo) {
-    errors.push('Tipo é obrigatório');
+    errors.push(vinculoMessages.validation.tipo.required);
   }
 
   if (!data.dataInicio) {
-    errors.push('Data de início é obrigatória');
+    errors.push(vinculoMessages.validation.dataInicio.required);
   }
 
   if (!data.cargo) {
-    errors.push('Cargo é obrigatório');
+    errors.push(vinculoMessages.validation.cargo.required);
   }
 
   if (!data.departamento) {
-    errors.push('Departamento é obrigatório');
+    errors.push(vinculoMessages.validation.departamento.required);
   }
 
   if (data.salario < 0) {
-    errors.push('Salário deve ser maior ou igual a zero');
+    errors.push(vinculoMessages.validation.salario.min);
   }
 
   if (data.cargaHoraria < 0) {
-    errors.push('Carga horária deve ser maior ou igual a zero');
+    errors.push(vinculoMessages.validation.cargaHoraria.min);
   }
 
   if (data.dataFim && data.dataFim < data.dataInicio) {
-    errors.push('Data de fim deve ser posterior à data de início');
+    errors.push(vinculoMessages.validation.dataFim.invalid);
   }
 
   return errors;

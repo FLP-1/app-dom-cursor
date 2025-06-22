@@ -2,7 +2,7 @@
  * Arquivo: EmpregadorForm.tsx
  * Caminho: src/components/forms/empregador/EmpregadorForm.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
+ * Última atualização: 2025-01-27
  * Descrição: Componente principal do formulário de cadastro de empregador, acessível, responsivo, integrado ao hook customizado e mensagens centralizadas.
  */
 
@@ -12,7 +12,7 @@ import { useEmpregadorForm } from '@/components/forms/empregador/useEmpregadorFo
 import { useCallback } from 'react';
 import { LoadingButton } from '@mui/lab';
 import { EmpregadorFormData } from '@/components/forms/empregador/EmpregadorFormTypes';
-import { tooltips } from '@/i18n/tooltips';
+import { empregadorMessages } from '@/i18n/messages/empregador.messages';
 
 interface EmpregadorFormProps {
   onSuccess?: () => void;
@@ -20,11 +20,12 @@ interface EmpregadorFormProps {
 
 export function EmpregadorForm({ onSuccess }: EmpregadorFormProps) {
   const { control, handleSubmit, onSubmit, apiError, apiSuccess, loading } = useEmpregadorForm(onSuccess);
+  const messages = empregadorMessages.pt;
 
   const handleFormSubmit = useCallback(handleSubmit(onSubmit), [handleSubmit, onSubmit]);
 
   return (
-    <form onSubmit={handleFormSubmit} aria-label={tooltips.forms.empregador.title.pt}>
+    <form onSubmit={handleFormSubmit} aria-label={messages.tooltips.formularioEmpregador}>
       <Stack spacing={2}>
         <EmpregadorFormFields<EmpregadorFormData> control={control} />
         {apiError && <Alert severity="error">{apiError}</Alert>}
@@ -34,9 +35,9 @@ export function EmpregadorForm({ onSuccess }: EmpregadorFormProps) {
           variant="contained" 
           color="primary" 
           loading={loading}
-          aria-label={tooltips.forms.empregador.submit.pt}
+          aria-label={messages.tooltips.enviarFormulario}
         >
-          {tooltips.forms.empregador.submit.pt}
+          {messages.botoes.salvar}
         </LoadingButton>
       </Stack>
     </form>

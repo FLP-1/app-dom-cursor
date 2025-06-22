@@ -2,7 +2,7 @@
  * Arquivo: FormTextArea.tsx
  * Caminho: src/components/form/FormTextArea.tsx
  * Criado em: 2025-06-07
- * Última atualização: 2025-06-07
+ * Última atualização: 2025-01-27
  * Descrição: Componente de área de texto integrado com react-hook-form e Material UI, com suporte a validação e acessibilidade
  */
 
@@ -10,6 +10,7 @@ import React from 'react';
 import { TextField, SxProps, Theme } from '@mui/material';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import HelperText from '@/components/common/HelperText';
+import { authMessages } from '@/i18n/messages/auth.messages';
 
 export interface FormTextAreaProps<T extends FieldValues> {
   name: Path<T>;
@@ -36,6 +37,9 @@ const FormTextArea = <T extends FieldValues>({
   error,
   sx,
 }: FormTextAreaProps<T>) => {
+  // Usar mensagens em português por padrão
+  const messages = authMessages.pt;
+
   return (
     <Controller
       name={name}
@@ -49,9 +53,10 @@ const FormTextArea = <T extends FieldValues>({
             maxRows={maxRows}
             minRows={minRows}
             label={label}
-            placeholder={placeholder}
+            placeholder={placeholder || messages.placeholders.digiteTexto}
             error={!!fieldError || error}
             fullWidth
+            aria-label={messages.tooltips.areaTexto}
             sx={{
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {

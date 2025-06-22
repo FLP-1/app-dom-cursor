@@ -3,28 +3,26 @@
  * Caminho: src/pages/admissao/index.tsx
  * Criado em: 2025-01-27
  * Última atualização: 2025-01-27
- * Descrição: Página de admissão de funcionários do sistema DOM, conectada à API via useAdmissaoData.
+ * Descrição: Página de admissão com mensagens centralizadas
  */
-import React, { useState } from 'react';
-import { 
-  Grid, Card, CardContent, Typography, Box, 
-  Button, Chip, Avatar, List, ListItem, ListItemIcon,
-  ListItemText, Divider, CircularProgress, Badge
-} from '@mui/material';
-import {
-  Person, Work, CheckCircle, Warning, Schedule,
-  Email, Phone, Assignment, Description
-} from '@mui/icons-material';
+
+import React from 'react';
+import { Box, Typography, Button, Grid, Card, CardContent, Avatar, List, ListItem, ListItemIcon, ListItemText, Chip, IconButton, Menu, MenuItem } from '@mui/material';
+import { Person, CheckCircle, Schedule, Warning, Work, MoreVert } from '@mui/icons-material';
 import { useAdmissaoData } from '@/hooks/useAdmissaoData';
+import { aprovarCandidato, reprovarCandidato, contratarCandidato } from '@/services/admissao.service';
+import { interfaceMessages } from '@/i18n/messages/interface.messages';
+import { useLanguage } from '@/hooks/useLanguage';
 
 const AdmissaoScreen = () => {
-  const { data, isLoading, isError, aprovarCandidato, reprovarCandidato, contratarCandidato } = useAdmissaoData();
-  const [selectedCandidato, setSelectedCandidato] = useState<string | null>(null);
+  const { data, isLoading, isError } = useAdmissaoData();
+  const { language } = useLanguage();
+  const messages = interfaceMessages[language].common;
 
   if (isLoading) {
     return (
       <Box sx={{ p: 3, background: '#f8fafc', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <CircularProgress />
+        <Typography>{messages.loading}</Typography>
       </Box>
     );
   }
@@ -32,7 +30,7 @@ const AdmissaoScreen = () => {
   if (isError || !data) {
     return (
       <Box sx={{ p: 3, background: '#f8fafc', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Typography color="error">Falha ao carregar os dados de admissão.</Typography>
+        <Typography color="error">{messages.errorLoadingAdmission}</Typography>
       </Box>
     );
   }
@@ -105,8 +103,8 @@ const AdmissaoScreen = () => {
       </Box>
 
       {/* Estatísticas */}
-      <Grid container spacing={3} mb={4}>
-        <Grid item xs={12} sm={6} md={3}>
+      <Grid container columns={12} spacing={3} mb={4}>
+        <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}>
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Box display="flex" alignItems="center" gap={2}>
@@ -125,7 +123,7 @@ const AdmissaoScreen = () => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}>
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Box display="flex" alignItems="center" gap={2}>
@@ -144,7 +142,7 @@ const AdmissaoScreen = () => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}>
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Box display="flex" alignItems="center" gap={2}>
@@ -163,7 +161,7 @@ const AdmissaoScreen = () => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}>
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Box display="flex" alignItems="center" gap={2}>
@@ -184,9 +182,9 @@ const AdmissaoScreen = () => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={3}>
+      <Grid container columns={12} spacing={3}>
         {/* Lista de Candidatos */}
-        <Grid item xs={12} md={8}>
+        <Grid gridColumn={{ xs: 'span 12', md: 'span 8' }}>
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={3}>
@@ -228,38 +226,6 @@ const AdmissaoScreen = () => {
                         </Box>
                       }
                     />
-                    <Box display="flex" gap={1}>
-                      {candidato.status === 'pendente' && (
-                        <>
-                          <Button 
-                            size="small" 
-                            variant="outlined" 
-                            color="success"
-                            onClick={() => handleAprovar(candidato.id)}
-                          >
-                            Aprovar
-                          </Button>
-                          <Button 
-                            size="small" 
-                            variant="outlined" 
-                            color="error"
-                            onClick={() => handleReprovar(candidato.id)}
-                          >
-                            Reprovar
-                          </Button>
-                        </>
-                      )}
-                      {candidato.status === 'aprovado' && (
-                        <Button 
-                          size="small" 
-                          variant="contained" 
-                          color="primary"
-                          onClick={() => handleContratar(candidato.id)}
-                        >
-                          Contratar
-                        </Button>
-                      )}
-                    </Box>
                   </ListItem>
                 ))}
               </List>
@@ -267,26 +233,31 @@ const AdmissaoScreen = () => {
           </Card>
         </Grid>
 
-        {/* Processos de Admissão */}
-        <Grid item xs={12} md={4}>
+        {/* Estatísticas Detalhadas */}
+        <Grid gridColumn={{ xs: 'span 12', md: 'span 4' }}>
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={3}>
-                Processos de Admissão
+                Estatísticas
               </Typography>
-              {processos.map((processo) => (
-                <Box key={processo.id} mb={2}>
-                  <Typography variant="body2" fontWeight="medium">
-                    {processo.candidatoNome}
-                  </Typography>
-                  <Typography variant="caption" color="text.secondary">
-                    {processo.etapa} • {processo.status}
-                  </Typography>
-                  <Typography variant="caption" color="text.secondary" display="block">
-                    {formatDate(processo.dataInicio)}
-                  </Typography>
-                </Box>
-              ))}
+              <Box>
+                <Typography variant="body2">{messages.approvalRate}</Typography>
+                <Typography variant="h6" color="primary">
+                  {((stats.candidatosAprovados / stats.totalCandidatos) * 100).toFixed(1)}%
+                </Typography>
+              </Box>
+              <Box mt={2}>
+                <Typography variant="body2">{messages.hiringRate}</Typography>
+                <Typography variant="h6" color="primary">
+                  {((stats.candidatosContratados / stats.totalCandidatos) * 100).toFixed(1)}%
+                </Typography>
+              </Box>
+              <Box mt={2}>
+                <Typography variant="body2">{messages.averageTime}</Typography>
+                <Typography variant="h6" color="primary">
+                  15 dias
+                </Typography>
+              </Box>
             </CardContent>
           </Card>
         </Grid>

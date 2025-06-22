@@ -2,7 +2,7 @@
  * Arquivo: EsocialConfigForm.tsx
  * Caminho: src/components/esocial/EsocialConfigForm.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
+ * Última atualização: 2025-01-27
  * Descrição: Componente de formulário para configuração do eSocial.
  */
 
@@ -21,6 +21,8 @@ import {
 import { FormSelect } from '@/components/forms/inputs/FormSelect';
 import { FormInput } from '@/components/forms/inputs/FormInput';
 import { useNotification } from '@/hooks/useNotification';
+import { useMessages } from '@/hooks/useMessages';
+import { esocialMessages } from '@/i18n/messages/esocial.messages';
 
 // Schema base para endereço
 const enderecoSchema = z.object({
@@ -69,6 +71,7 @@ interface EsocialConfigFormProps {
 }
 
 export function EsocialConfigForm({ onSubmit, initialData }: EsocialConfigFormProps) {
+  const { messages } = useMessages(esocialMessages);
   const { showNotification } = useNotification();
   
   const {
@@ -83,9 +86,9 @@ export function EsocialConfigForm({ onSubmit, initialData }: EsocialConfigFormPr
   const handleFormSubmit = async (data: EsocialConfigFormData) => {
     try {
       await onSubmit(data);
-      showNotification('Configuração salva com sucesso', 'success');
+      showNotification(messages.success.configSaved, 'success');
     } catch (error) {
-      showNotification('Erro ao salvar configuração', 'error');
+      showNotification(messages.errors.saveError, 'error');
     }
   };
 
@@ -93,7 +96,7 @@ export function EsocialConfigForm({ onSubmit, initialData }: EsocialConfigFormPr
     <Card>
       <CardContent>
         <Typography variant="h6" gutterBottom>
-          Configuração do eSocial
+          {messages.config.title}
         </Typography>
 
         <Box component="form" onSubmit={handleSubmit(handleFormSubmit)}>
@@ -101,11 +104,11 @@ export function EsocialConfigForm({ onSubmit, initialData }: EsocialConfigFormPr
             <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
               <FormSelect
                 name="ambiente"
-                label="Ambiente"
+                label={messages.config.fields.environment}
                 control={control}
                 options={[
-                  { value: 'PRODUCAO', label: 'Produção' },
-                  { value: 'HOMOLOGACAO', label: 'Homologação' },
+                  { value: 'PRODUCAO', label: messages.config.environments.production },
+                  { value: 'HOMOLOGACAO', label: messages.config.environments.homologation },
                 ]}
                 error={errors.ambiente?.message}
               />
@@ -114,7 +117,7 @@ export function EsocialConfigForm({ onSubmit, initialData }: EsocialConfigFormPr
             <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
               <FormInput
                 name="versao"
-                label="Versão"
+                label={messages.config.fields.version}
                 control={control}
                 error={errors.versao?.message}
               />
@@ -123,7 +126,7 @@ export function EsocialConfigForm({ onSubmit, initialData }: EsocialConfigFormPr
             <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
               <FormInput
                 name="certificadoDigital"
-                label="Certificado Digital"
+                label={messages.config.fields.digitalCertificate}
                 control={control}
                 error={errors.certificadoDigital?.message}
               />
@@ -132,7 +135,7 @@ export function EsocialConfigForm({ onSubmit, initialData }: EsocialConfigFormPr
             <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
               <FormInput
                 name="senhaCertificado"
-                label="Senha do Certificado"
+                label={messages.config.fields.certificatePassword}
                 type="password"
                 control={control}
                 error={errors.senhaCertificado?.message}
@@ -142,14 +145,14 @@ export function EsocialConfigForm({ onSubmit, initialData }: EsocialConfigFormPr
             {/* Campos do Empregador */}
             <Grid gridColumn={{ xs: 'span 12' }}>
               <Typography variant="subtitle1" gutterBottom>
-                Dados do Empregador
+                {messages.config.sections.employer}
               </Typography>
             </Grid>
 
             <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
               <FormSelect
                 name="empregador.tipo"
-                label="Tipo"
+                label={messages.config.fields.type}
                 control={control}
                 options={[
                   { value: 'CPF', label: 'CPF' },
@@ -162,7 +165,7 @@ export function EsocialConfigForm({ onSubmit, initialData }: EsocialConfigFormPr
             <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
               <FormInput
                 name="empregador.numero"
-                label="Número"
+                label={messages.config.fields.number}
                 control={control}
                 error={errors.empregador?.numero?.message}
               />
@@ -171,7 +174,7 @@ export function EsocialConfigForm({ onSubmit, initialData }: EsocialConfigFormPr
             <Grid gridColumn={{ xs: 'span 12' }}>
               <FormInput
                 name="empregador.nome"
-                label="Nome"
+                label={messages.config.fields.name}
                 control={control}
                 error={errors.empregador?.nome?.message}
               />
@@ -180,14 +183,14 @@ export function EsocialConfigForm({ onSubmit, initialData }: EsocialConfigFormPr
             {/* Endereço */}
             <Grid gridColumn={{ xs: 'span 12' }}>
               <Typography variant="subtitle1" gutterBottom>
-                Endereço
+                {messages.config.sections.address}
               </Typography>
             </Grid>
 
             <Grid gridColumn={{ xs: 'span 12', sm: 'span 8' }}>
               <FormInput
                 name="empregador.logradouro"
-                label="Logradouro"
+                label={messages.config.fields.street}
                 control={control}
                 error={errors.empregador?.logradouro?.message}
               />
@@ -196,7 +199,7 @@ export function EsocialConfigForm({ onSubmit, initialData }: EsocialConfigFormPr
             <Grid gridColumn={{ xs: 'span 12', sm: 'span 4' }}>
               <FormInput
                 name="empregador.numero"
-                label="Número"
+                label={messages.config.fields.number}
                 control={control}
                 error={errors.empregador?.numero?.message}
               />
@@ -205,7 +208,7 @@ export function EsocialConfigForm({ onSubmit, initialData }: EsocialConfigFormPr
             <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
               <FormInput
                 name="empregador.complemento"
-                label="Complemento"
+                label={messages.config.fields.complement}
                 control={control}
                 error={errors.empregador?.complemento?.message}
               />
@@ -214,7 +217,7 @@ export function EsocialConfigForm({ onSubmit, initialData }: EsocialConfigFormPr
             <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
               <FormInput
                 name="empregador.bairro"
-                label="Bairro"
+                label={messages.config.fields.neighborhood}
                 control={control}
                 error={errors.empregador?.bairro?.message}
               />
@@ -223,7 +226,7 @@ export function EsocialConfigForm({ onSubmit, initialData }: EsocialConfigFormPr
             <Grid gridColumn={{ xs: 'span 12', sm: 'span 4' }}>
               <FormInput
                 name="empregador.cidade"
-                label="Cidade"
+                label={messages.config.fields.city}
                 control={control}
                 error={errors.empregador?.cidade?.message}
               />
@@ -232,7 +235,7 @@ export function EsocialConfigForm({ onSubmit, initialData }: EsocialConfigFormPr
             <Grid gridColumn={{ xs: 'span 12', sm: 'span 4' }}>
               <FormInput
                 name="empregador.estado"
-                label="Estado"
+                label={messages.config.fields.state}
                 control={control}
                 error={errors.empregador?.estado?.message}
               />
@@ -250,14 +253,14 @@ export function EsocialConfigForm({ onSubmit, initialData }: EsocialConfigFormPr
             {/* Contato */}
             <Grid gridColumn={{ xs: 'span 12' }}>
               <Typography variant="subtitle1" gutterBottom>
-                Contato
+                {messages.config.sections.contact}
               </Typography>
             </Grid>
 
             <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
               <FormInput
                 name="empregador.email"
-                label="Email"
+                label={messages.config.fields.email}
                 type="email"
                 control={control}
                 error={errors.empregador?.email?.message}
@@ -267,7 +270,7 @@ export function EsocialConfigForm({ onSubmit, initialData }: EsocialConfigFormPr
             <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
               <FormInput
                 name="empregador.telefone"
-                label="Telefone"
+                label={messages.config.fields.phone}
                 control={control}
                 error={errors.empregador?.telefone?.message}
               />
@@ -280,7 +283,7 @@ export function EsocialConfigForm({ onSubmit, initialData }: EsocialConfigFormPr
                 color="primary"
                 fullWidth
               >
-                Salvar Configuração
+                {messages.config.actions.save}
               </Button>
             </Grid>
           </Grid>

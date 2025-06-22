@@ -2,7 +2,7 @@
  * Arquivo: FormCheckbox.tsx
  * Caminho: src/components/form/FormCheckbox.tsx
  * Criado em: 2025-06-07
- * Última atualização: 2025-06-07
+ * Última atualização: 2025-01-27
  * Descrição: Componente de checkbox integrado com react-hook-form e Material UI, com suporte a validação e acessibilidade
  */
 
@@ -10,6 +10,7 @@ import React from 'react';
 import { FormControlLabel, Checkbox, SxProps, Theme } from '@mui/material';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import HelperText from '@/components/common/HelperText';
+import { authMessages } from '@/i18n/messages/auth.messages';
 
 export interface FormCheckboxProps<T extends FieldValues> {
   name: Path<T>;
@@ -28,6 +29,9 @@ const FormCheckbox = <T extends FieldValues>({
   error,
   sx,
 }: FormCheckboxProps<T>) => {
+  // Usar mensagens em português por padrão
+  const messages = authMessages.pt;
+
   return (
     <Controller
       name={name}
@@ -39,6 +43,7 @@ const FormCheckbox = <T extends FieldValues>({
               <Checkbox
                 {...field}
                 checked={field.value}
+                aria-label={messages.tooltips.marcarDesmarcar}
                 sx={{
                   '&.Mui-checked': {
                     color: fieldError || error ? 'error.main' : 'primary.main'

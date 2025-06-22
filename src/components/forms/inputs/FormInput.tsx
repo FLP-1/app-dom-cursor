@@ -2,7 +2,7 @@
  * Arquivo: FormInput.tsx
  * Caminho: src/components/forms/inputs/FormInput.tsx
  * Criado em: 2025-06-07
- * Última atualização: 2024-06-07
+ * Última atualização: 2025-01-27
  * Descrição: Componente de input de formulário integrado com react-hook-form e Material UI, com suporte a validação e acessibilidade
  */
 
@@ -10,6 +10,7 @@ import React, { useId } from 'react';
 import { TextField, TextFieldProps, SxProps, Theme } from '@mui/material';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import HelperText from '@/components/common/HelperText';
+import { authMessages } from '@/i18n/messages/auth.messages';
 
 export interface FormInputProps<T extends FieldValues> extends Omit<TextFieldProps, 'name'> {
   name: Path<T>;
@@ -35,8 +36,12 @@ const FormInput = <T extends FieldValues>({
   id,
   ...props
 }: FormInputProps<T>) => {
+  // Usar mensagens em português por padrão
+  const messages = authMessages.pt;
+  
   const generatedId = useId();
   const inputId = id || `${name}-input-${generatedId}`;
+  
   return (
     <Controller
       name={name}
@@ -48,7 +53,7 @@ const FormInput = <T extends FieldValues>({
             {...props}
             id={inputId}
             label={label}
-            aria-label={label ? undefined : name}
+            aria-label={label ? undefined : messages.tooltips.campoObrigatorio}
             placeholder={placeholder}
             error={!!fieldError || error}
             required={required}

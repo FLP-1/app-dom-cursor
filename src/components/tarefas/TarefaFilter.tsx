@@ -2,7 +2,7 @@
  * Arquivo: TarefaFilter.tsx
  * Caminho: src/components/TarefaFilter.tsx
  * Criado em: 2025-06-13
- * Última atualização: 2025-06-13
+ * Última atualização: 2025-01-27
  * Descrição: Componente de filtro para tarefas, permitindo filtrar por status, prioridade, responsável e busca textual.
  */
 
@@ -11,6 +11,7 @@ import { Box, TextField, MenuItem, Grid, Tooltip } from '@mui/material';
 import { FiltrosTarefa } from '@/hooks/useTarefas';
 import { TaskStatus, TaskPriority } from '@/types/task';
 import { tooltips } from '@/i18n/tooltips';
+import { tarefasMessages } from '@/i18n/messages/tarefas.messages';
 
 interface TarefaFilterProps {
   filtros: FiltrosTarefa;
@@ -18,24 +19,29 @@ interface TarefaFilterProps {
 }
 
 const TarefaFilter: React.FC<TarefaFilterProps> = ({ filtros, setFiltros }) => {
+  // Usar mensagens em português por padrão
+  const messages = tarefasMessages.pt;
+
   return (
-    <Box component="form" sx={{ mb: 2 }} aria-label="Filtros de tarefas">
+    <Box component="form" sx={{ mb: 2 }} aria-label={messages.tooltips.filtros}>
       <Grid container spacing={2} columns={12}>
         <Grid gridColumn={{ xs: 'span 12', sm: 'span 3' }}>
           <Tooltip title={tooltips.tarefaStatus.pt}>
             <span>
               <TextField
                 select
-                label="Status"
+                label={messages.labels.status}
                 value={filtros.status || ''}
                 onChange={e => setFiltros({ ...filtros, status: e.target.value as TaskStatus })}
                 fullWidth
                 size="small"
-                aria-label="Filtro de status da tarefa"
+                aria-label={messages.tooltips.filtroStatus}
               >
-                <MenuItem value="">Todos</MenuItem>
+                <MenuItem value="">{messages.status.todas}</MenuItem>
                 {Object.values(TaskStatus).map(status => (
-                  <MenuItem key={status} value={status}>{status}</MenuItem>
+                  <MenuItem key={status} value={status}>
+                    {messages.status[status] || status}
+                  </MenuItem>
                 ))}
               </TextField>
             </span>
@@ -46,16 +52,18 @@ const TarefaFilter: React.FC<TarefaFilterProps> = ({ filtros, setFiltros }) => {
             <span>
               <TextField
                 select
-                label="Prioridade"
+                label={messages.labels.prioridade}
                 value={filtros.prioridade || ''}
                 onChange={e => setFiltros({ ...filtros, prioridade: e.target.value as TaskPriority })}
                 fullWidth
                 size="small"
-                aria-label="Filtro de prioridade da tarefa"
+                aria-label={messages.tooltips.filtroPrioridade}
               >
-                <MenuItem value="">Todas</MenuItem>
+                <MenuItem value="">{messages.prioridades.todas}</MenuItem>
                 {Object.values(TaskPriority).map(prio => (
-                  <MenuItem key={prio} value={prio}>{prio}</MenuItem>
+                  <MenuItem key={prio} value={prio}>
+                    {messages.prioridades[prio] || prio}
+                  </MenuItem>
                 ))}
               </TextField>
             </span>
@@ -65,12 +73,12 @@ const TarefaFilter: React.FC<TarefaFilterProps> = ({ filtros, setFiltros }) => {
           <Tooltip title={tooltips.tarefaResponsavel.pt}>
             <span>
               <TextField
-                label="Responsável (nome)"
+                label={messages.labels.responsavel}
                 value={filtros.responsavelId || ''}
                 onChange={e => setFiltros({ ...filtros, responsavelId: e.target.value })}
                 fullWidth
                 size="small"
-                aria-label="Filtro de responsável da tarefa"
+                aria-label={messages.tooltips.filtroResponsavel}
               />
             </span>
           </Tooltip>
@@ -79,12 +87,12 @@ const TarefaFilter: React.FC<TarefaFilterProps> = ({ filtros, setFiltros }) => {
           <Tooltip title={tooltips.tarefaBusca.pt}>
             <span>
               <TextField
-                label="Buscar por título ou descrição"
+                label={messages.labels.buscar}
                 value={filtros.busca || ''}
                 onChange={e => setFiltros({ ...filtros, busca: e.target.value })}
                 fullWidth
                 size="small"
-                aria-label="Filtro de busca de tarefa"
+                aria-label={messages.tooltips.filtroBusca}
               />
             </span>
           </Tooltip>

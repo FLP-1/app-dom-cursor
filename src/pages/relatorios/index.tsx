@@ -19,36 +19,33 @@ import {
   CheckCircle, Schedule, Error, Person, Department
 } from '@mui/icons-material';
 import { useRelatoriosData } from '@/hooks/useRelatoriosData';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { messages } from '@/i18n/messages';
 
 const Relatorios = () => {
   const { data, isLoading, isError, generateReport, exportReport } = useRelatoriosData();
   const [selectedPeriod, setSelectedPeriod] = useState('month');
   const [selectedReport, setSelectedReport] = useState('all');
+  const { language } = useLanguage();
+  const msg = messages[language];
 
   if (isLoading) {
     return (
       <Box sx={{ p: 3, background: '#f8fafc', minHeight: '100vh' }}>
         <Skeleton variant="text" width={250} height={60} />
         <Skeleton variant="text" width={200} height={30} />
-        <Grid container spacing={3} mt={2}>
-          <Grid item xs={12} sm={6} md={3}>
-            <Skeleton variant="rectangular" height={150} sx={{ borderRadius: 3 }} />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Skeleton variant="rectangular" height={150} sx={{ borderRadius: 3 }} />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Skeleton variant="rectangular" height={150} sx={{ borderRadius: 3 }} />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Skeleton variant="rectangular" height={150} sx={{ borderRadius: 3 }} />
-          </Grid>
+        <Grid container columns={12} spacing={3} mt={2}>
+          {[...Array(4)].map((_, i) => (
+            <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }} key={i}>
+              <Skeleton variant="rectangular" height={150} sx={{ borderRadius: 3 }} />
+            </Grid>
+          ))}
         </Grid>
-        <Grid container spacing={3} mt={2}>
-          <Grid item xs={12} md={8}>
+        <Grid container columns={12} spacing={3} mt={2}>
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 8' }}>
             <Skeleton variant="rectangular" height={400} sx={{ borderRadius: 3 }} />
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 4' }}>
             <Skeleton variant="rectangular" height={400} sx={{ borderRadius: 3 }} />
           </Grid>
         </Grid>
@@ -59,7 +56,7 @@ const Relatorios = () => {
   if (isError) {
     return (
       <Box sx={{ p: 3, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <Typography color="error">Falha ao carregar os dados dos relatórios.</Typography>
+        <Typography color="error">{msg.relatorios.loadError}</Typography>
       </Box>
     );
   }
@@ -92,21 +89,21 @@ const Relatorios = () => {
   };
 
   const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('pt-BR', {
+    return new Intl.NumberFormat(language === 'pt' ? 'pt-BR' : 'en-US', {
       style: 'currency',
-      currency: 'BRL'
+      currency: language === 'pt' ? 'BRL' : 'USD'
     }).format(value);
   };
 
   const formatDate = (timestamp: string) => {
-    return new Date(timestamp).toLocaleDateString('pt-BR');
+    return new Date(timestamp).toLocaleDateString(language === 'pt' ? 'pt-BR' : 'en-US');
   };
 
   const handleExportReport = async (format: 'pdf' | 'excel' | 'csv') => {
     try {
       await exportReport(selectedReport, format);
     } catch (error) {
-      console.error('Erro ao exportar relatório:', error);
+      console.error(msg.relatorios.exportError, error);
     }
   };
 
@@ -116,37 +113,37 @@ const Relatorios = () => {
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
         <Box>
           <Typography variant="h4" fontWeight="bold" color="primary">
-            Relatórios 📊
+            {msg.relatorios.title}
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            Análise e insights do sistema DOM
+            {msg.relatorios.subtitle}
           </Typography>
         </Box>
         <Box display="flex" gap={2}>
           <FormControl size="small" sx={{ minWidth: 120 }}>
-            <InputLabel>Período</InputLabel>
+            <InputLabel>{msg.relatorios.period}</InputLabel>
             <Select
               value={selectedPeriod}
               onChange={(e) => setSelectedPeriod(e.target.value)}
-              label="Período"
+              label={msg.relatorios.period}
             >
-              <MenuItem value="week">Semana</MenuItem>
-              <MenuItem value="month">Mês</MenuItem>
-              <MenuItem value="quarter">Trimestre</MenuItem>
-              <MenuItem value="year">Ano</MenuItem>
+              <MenuItem value="week">{msg.relatorios.week}</MenuItem>
+              <MenuItem value="month">{msg.relatorios.month}</MenuItem>
+              <MenuItem value="quarter">{msg.relatorios.quarter}</MenuItem>
+              <MenuItem value="year">{msg.relatorios.year}</MenuItem>
             </Select>
           </FormControl>
           <FormControl size="small" sx={{ minWidth: 120 }}>
-            <InputLabel>Relatório</InputLabel>
+            <InputLabel>{msg.relatorios.report}</InputLabel>
             <Select
               value={selectedReport}
               onChange={(e) => setSelectedReport(e.target.value)}
-              label="Relatório"
+              label={msg.relatorios.report}
             >
-              <MenuItem value="all">Todos</MenuItem>
-              <MenuItem value="financial">Financeiro</MenuItem>
-              <MenuItem value="hr">RH</MenuItem>
-              <MenuItem value="operations">Operações</MenuItem>
+              <MenuItem value="all">{msg.relatorios.all}</MenuItem>
+              <MenuItem value="financial">{msg.relatorios.financial}</MenuItem>
+              <MenuItem value="hr">{msg.relatorios.hr}</MenuItem>
+              <MenuItem value="operations">{msg.relatorios.operations}</MenuItem>
             </Select>
           </FormControl>
           <Button
@@ -154,15 +151,15 @@ const Relatorios = () => {
             startIcon={<Download />}
             onClick={() => handleExportReport('pdf')}
           >
-            Exportar
+            {msg.relatorios.export}
           </Button>
         </Box>
       </Box>
 
       {/* Métricas Principais */}
-      <Grid container spacing={3} mb={4}>
+      <Grid container columns={12} spacing={3} mb={4}>
         {metrics.map((metric) => (
-          <Grid item xs={12} sm={6} md={3} key={metric.id}>
+          <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }} key={metric.id}>
             <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
               <CardContent>
                 <Box display="flex" alignItems="center" justifyContent="space-between" mb={2}>
@@ -172,7 +169,7 @@ const Relatorios = () => {
                   {getChangeIcon(metric.changeType)}
                 </Box>
                 <Typography variant="h4" fontWeight="bold" mb={1}>
-                  {metric.unit}{metric.value.toLocaleString('pt-BR')}
+                  {metric.unit}{metric.value.toLocaleString(language === 'pt' ? 'pt-BR' : 'en-US')}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" mb={1}>
                   {metric.name}
@@ -185,7 +182,7 @@ const Relatorios = () => {
                     {metric.change > 0 ? '+' : ''}{metric.change}%
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
-                    vs período anterior
+                    {msg.relatorios.vsPreviousPeriod}
                   </Typography>
                 </Box>
               </CardContent>
@@ -194,13 +191,13 @@ const Relatorios = () => {
         ))}
       </Grid>
 
-      <Grid container spacing={3}>
+      <Grid container columns={12} spacing={3}>
         {/* Resumo Geral */}
-        <Grid item xs={12} md={8}>
+        <Grid gridColumn={{ xs: 'span 12', md: 'span 8' }}>
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', mb: 3 }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={3}>
-                Resumo Geral
+                {msg.relatorios.generalSummary}
               </Typography>
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={3}>
@@ -209,7 +206,7 @@ const Relatorios = () => {
                       {formatCurrency(summary.totalRevenue)}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      Receita Total
+                      {msg.relatorios.totalRevenue}
                     </Typography>
                   </Box>
                 </Grid>
@@ -219,7 +216,7 @@ const Relatorios = () => {
                       {summary.totalEmployees}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      Funcionários
+                      {msg.relatorios.employees}
                     </Typography>
                   </Box>
                 </Grid>
@@ -229,7 +226,7 @@ const Relatorios = () => {
                       {summary.totalTasks}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      Tarefas
+                      {msg.relatorios.tasks}
                     </Typography>
                   </Box>
                 </Grid>
@@ -239,7 +236,7 @@ const Relatorios = () => {
                       {summary.avgPerformance}%
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      Performance Média
+                      {msg.relatorios.avgPerformance}
                     </Typography>
                   </Box>
                 </Grid>
@@ -251,7 +248,7 @@ const Relatorios = () => {
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={3}>
-                Atividade Recente
+                {msg.relatorios.recentActivity}
               </Typography>
               <List>
                 {recentActivity.map((activity) => (
@@ -291,12 +288,12 @@ const Relatorios = () => {
         </Grid>
 
         {/* Sidebar */}
-        <Grid item xs={12} md={4}>
+        <Grid gridColumn={{ xs: 'span 12', md: 'span 4' }}>
           {/* Top Performers */}
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', mb: 3 }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={3}>
-                Top Performers
+                {msg.relatorios.topPerformers}
               </Typography>
               {topPerformers.map((performer, index) => (
                 <Box key={performer.id} display="flex" alignItems="center" mb={2}>
@@ -316,7 +313,7 @@ const Relatorios = () => {
                       {performer.performance}%
                     </Typography>
                     <Typography variant="caption" color="text.secondary">
-                      {performer.tasksCompleted} tarefas
+                      {performer.tasksCompleted} {msg.relatorios.tasks}
                     </Typography>
                   </Box>
                 </Box>
@@ -328,7 +325,7 @@ const Relatorios = () => {
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={3}>
-                Por Departamento
+                {msg.relatorios.byDepartment}
               </Typography>
               {departmentStats.map((dept) => (
                 <Box key={dept.id} mb={3}>
@@ -337,7 +334,7 @@ const Relatorios = () => {
                       {dept.name}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      {dept.employeeCount} funcionários
+                      {dept.employeeCount} {msg.relatorios.employees}
                     </Typography>
                   </Box>
                   <LinearProgress
@@ -356,10 +353,10 @@ const Relatorios = () => {
                   />
                   <Box display="flex" justifyContent="space-between" mt={1}>
                     <Typography variant="caption" color="text.secondary">
-                      Performance: {dept.avgPerformance}%
+                      {msg.relatorios.performance}: {dept.avgPerformance}%
                     </Typography>
                     <Typography variant="caption" color="text.secondary">
-                      {dept.completedTasks}/{dept.totalTasks} tarefas
+                      {dept.completedTasks}/{dept.totalTasks} {msg.relatorios.tasks}
                     </Typography>
                   </Box>
                 </Box>

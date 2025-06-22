@@ -20,8 +20,11 @@ import {
   Download, Visibility, Folder, Storage, TrendingUp
 } from '@mui/icons-material';
 import { useDocumentsData } from '@/hooks/useDocumentsData';
+import { useMessages } from '@/hooks/useMessages';
+import { documentMessages } from '@/i18n/messages/document.messages';
 
 const Documents = () => {
+  const { messages } = useMessages(documentMessages);
   const { data, isLoading, isError, uploadDocument, updateDocument, deleteDocument } = useDocumentsData();
   const [openUploadDialog, setOpenUploadDialog] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -32,11 +35,11 @@ const Documents = () => {
       <Box sx={{ p: 3, background: '#f8fafc', minHeight: '100vh' }}>
         <Skeleton variant="text" width={250} height={60} />
         <Skeleton variant="text" width={200} height={30} />
-        <Grid container spacing={3} mt={2}>
-          <Grid item xs={12} md={8}>
+        <Grid container columns={12} spacing={3} mt={2}>
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 8' }}>
             <Skeleton variant="rectangular" height={400} sx={{ borderRadius: 3 }} />
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 4' }}>
             <Skeleton variant="rectangular" height={200} sx={{ borderRadius: 3, mb: 2 }} />
             <Skeleton variant="rectangular" height={200} sx={{ borderRadius: 3 }} />
           </Grid>
@@ -48,7 +51,7 @@ const Documents = () => {
   if (isError) {
     return (
       <Box sx={{ p: 3, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <Typography color="error">Falha ao carregar os documentos.</Typography>
+        <Typography color="error">{messages.error.loadData}</Typography>
       </Box>
     );
   }
@@ -102,10 +105,10 @@ const Documents = () => {
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
         <Box>
           <Typography variant="h4" fontWeight="bold" color="primary">
-            Documentos 📄
+            {messages.header.title}
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            Gerencie seus documentos importantes
+            {messages.header.subtitle}
           </Typography>
         </Box>
         <Button
@@ -114,19 +117,19 @@ const Documents = () => {
           onClick={() => setOpenUploadDialog(true)}
           sx={{ borderRadius: 2 }}
         >
-          Upload Documento
+          {messages.header.uploadButton}
         </Button>
       </Box>
 
-      <Grid container spacing={3}>
+      <Grid container columns={12} spacing={3}>
         {/* Lista de Documentos */}
-        <Grid item xs={12} md={8}>
+        <Grid gridColumn={{ xs: 'span 12', md: 'span 8' }}>
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               {/* Filtros */}
               <Box display="flex" gap={2} mb={3}>
                 <TextField
-                  placeholder="Buscar documentos..."
+                  placeholder={messages.filters.searchPlaceholder}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   InputProps={{
@@ -135,19 +138,19 @@ const Documents = () => {
                   sx={{ flex: 1 }}
                 />
                 <FormControl sx={{ minWidth: 150 }}>
-                  <InputLabel>Categoria</InputLabel>
+                  <InputLabel>{messages.filters.categoryLabel}</InputLabel>
                   <Select
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
-                    label="Categoria"
+                    label={messages.filters.categoryLabel}
                   >
-                    <MenuItem value="all">Todas</MenuItem>
-                    <MenuItem value="personal">Pessoal</MenuItem>
-                    <MenuItem value="work">Trabalho</MenuItem>
-                    <MenuItem value="medical">Médico</MenuItem>
-                    <MenuItem value="financial">Financeiro</MenuItem>
-                    <MenuItem value="legal">Legal</MenuItem>
-                    <MenuItem value="other">Outros</MenuItem>
+                    <MenuItem value="all">{messages.filters.categories.all}</MenuItem>
+                    <MenuItem value="personal">{messages.filters.categories.personal}</MenuItem>
+                    <MenuItem value="work">{messages.filters.categories.work}</MenuItem>
+                    <MenuItem value="medical">{messages.filters.categories.medical}</MenuItem>
+                    <MenuItem value="financial">{messages.filters.categories.financial}</MenuItem>
+                    <MenuItem value="legal">{messages.filters.categories.legal}</MenuItem>
+                    <MenuItem value="other">{messages.filters.categories.other}</MenuItem>
                   </Select>
                 </FormControl>
               </Box>
@@ -239,12 +242,12 @@ const Documents = () => {
         </Grid>
 
         {/* Sidebar */}
-        <Grid item xs={12} md={4}>
+        <Grid gridColumn={{ xs: 'span 12', md: 'span 4' }}>
           {/* Uploads Recentes */}
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', mb: 3 }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={2}>
-                Uploads Recentes
+                {messages.sidebar.recentUploads.title}
               </Typography>
               {recentUploads.map((doc) => (
                 <Box key={doc.id} display="flex" alignItems="center" py={1}>
@@ -273,7 +276,7 @@ const Documents = () => {
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', mb: 3 }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={2}>
-                Categorias
+                {messages.sidebar.categories.title}
               </Typography>
               {categories.map((category) => (
                 <Box key={category.name} display="flex" justifyContent="space-between" py={1}>
@@ -301,7 +304,7 @@ const Documents = () => {
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={2}>
-                Armazenamento
+                {messages.sidebar.storage.title}
               </Typography>
               <Box display="flex" alignItems="center" mb={2}>
                 <Storage sx={{ mr: 1, color: 'primary.main' }} />
@@ -323,7 +326,7 @@ const Documents = () => {
                 }}
               />
               <Typography variant="caption" color="text.secondary" mt={1} display="block">
-                {storageStats.percentage}% utilizado
+                {storageStats.percentage}% {messages.sidebar.storage.used}
               </Typography>
             </CardContent>
           </Card>
@@ -332,7 +335,7 @@ const Documents = () => {
 
       {/* Dialog de Upload */}
       <Dialog open={openUploadDialog} onClose={() => setOpenUploadDialog(false)} maxWidth="sm" fullWidth>
-        <DialogTitle>Upload de Documento</DialogTitle>
+        <DialogTitle>{messages.uploadDialog.title}</DialogTitle>
         <DialogContent>
           <Box sx={{ pt: 2 }}>
             <label htmlFor="file-upload">
@@ -347,13 +350,13 @@ const Documents = () => {
                   }
                 }}
                 sx={{ width: '100%' }}
-                aria-label="Selecionar arquivo para upload"
+                aria-label={messages.uploadDialog.fileInputLabel}
               />
             </label>
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenUploadDialog(false)}>Cancelar</Button>
+          <Button onClick={() => setOpenUploadDialog(false)}>{messages.uploadDialog.cancel}</Button>
         </DialogActions>
       </Dialog>
     </Box>

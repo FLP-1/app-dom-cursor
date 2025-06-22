@@ -2,13 +2,15 @@
  * Arquivo: AlertTable.tsx
  * Caminho: src/components/alerts/AlertTable.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-01-27
+ * Descrição: Tabela de alertas com ações de visualizar, editar e excluir.
  */
 
 import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, CircularProgress } from '@mui/material';
 import { Edit as EditIcon, Delete as DeleteIcon, Visibility as ViewIcon } from '@mui/icons-material';
+import { useMessages } from '@/hooks/useMessages';
+import { alertasMessages } from '@/i18n/messages/alertas.messages';
 
 interface Alert {
   alert_id?: number;
@@ -28,24 +30,26 @@ interface AlertTableProps {
 }
 
 export const AlertTable: React.FC<AlertTableProps> = ({ alerts, onVisualizar, onEditar, onExcluir, loading }) => {
+  const { messages } = useMessages(alertasMessages);
+
   if (loading) {
     return <CircularProgress />;
   }
   if (!alerts || alerts.length === 0) {
-    return <div>Nenhum alerta encontrado.</div>;
+    return <div>{messages.table.noAlertsFound}</div>;
   }
   return (
     <TableContainer component={Paper}>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Tipo</TableCell>
-            <TableCell>Mensagem</TableCell>
-            <TableCell>Severidade</TableCell>
-            <TableCell>Canais</TableCell>
-            <TableCell>Criado em</TableCell>
-            <TableCell align="right">Ações</TableCell>
+            <TableCell>{messages.table.id}</TableCell>
+            <TableCell>{messages.table.type}</TableCell>
+            <TableCell>{messages.table.message}</TableCell>
+            <TableCell>{messages.table.severity}</TableCell>
+            <TableCell>{messages.table.channels}</TableCell>
+            <TableCell>{messages.table.createdAt}</TableCell>
+            <TableCell align="right">{messages.table.actions}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

@@ -2,7 +2,7 @@
  * Arquivo: EmpregadoForm.tsx
  * Caminho: src/components/forms/empregado/EmpregadoForm.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
+ * Última atualização: 2025-01-27
  * Descrição: Formulário de cadastro de empregado.
  */
 import React from 'react';
@@ -13,9 +13,11 @@ import { useNotification } from '@/hooks/useNotification';
 import { EmpregadoFormData, EmpregadoFormProps, empregadoFormSchema } from './EmpregadoFormTypes';
 import { EmpregadoFormFields } from './EmpregadoFormFields';
 import { formatEmpregadoData, getEmpregadoDefaultValues } from './EmpregadoFormUtils';
+import { empregadoMessages } from '@/i18n/messages/empregado.messages';
 
 export const EmpregadoForm: React.FC<EmpregadoFormProps> = ({ initialData, onSubmit }) => {
   const { showNotification } = useNotification();
+  const messages = empregadoMessages.pt;
 
   const {
     control,
@@ -33,16 +35,16 @@ export const EmpregadoForm: React.FC<EmpregadoFormProps> = ({ initialData, onSub
     try {
       const formattedData = formatEmpregadoData(data);
       await onSubmit(formattedData);
-      showNotification('Empregado cadastrado com sucesso!', 'success');
+      showNotification(messages.mensagens.cadastroSucesso, 'success');
     } catch (error) {
-      showNotification('Erro ao cadastrar empregado. Tente novamente.', 'error');
+      showNotification(messages.erros.cadastroErro, 'error');
     }
   };
 
   return (
     <Paper sx={{ p: 3 }}>
       <Typography variant="h6" gutterBottom>
-        Cadastro de Empregado
+        {messages.titulos.cadastroEmpregado}
       </Typography>
 
       <form onSubmit={handleSubmit(handleFormSubmit)}>
@@ -54,7 +56,7 @@ export const EmpregadoForm: React.FC<EmpregadoFormProps> = ({ initialData, onSub
           color="primary"
           sx={{ mt: 3 }}
         >
-          Salvar
+          {messages.botoes.salvar}
         </Button>
       </form>
     </Paper>

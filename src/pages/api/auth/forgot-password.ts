@@ -3,7 +3,7 @@
  * Caminho: src/pages/api/auth/forgot-password.ts
  * Criado em: 2024-01-01
  * Última atualização: 2025-01-27
- * Descrição: API endpoint para recuperação de senha.
+ * Descrição: API endpoint para recuperação de senha com mensagens centralizadas.
  */
 
 import { NextApiRequest, NextApiResponse } from 'next';
@@ -11,6 +11,7 @@ import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
 import { sign } from 'jsonwebtoken';
 import { sendEmail } from '@/lib/email';
+import { emailMessages } from '@/i18n/messages/email.messages';
 
 // Schema de validação
 const forgotPasswordSchema = z.object({
@@ -57,16 +58,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Enviar e-mail com link de redefinição
     const resetLink = `${process.env.NEXT_PUBLIC_APP_URL}/auth/reset-password?token=${token}`;
+    const messages = emailMessages.pt.passwordReset;
+    
     await sendEmail({
       to: user.email,
       subject: 'Redefinição de Senha',
       html: `
-        <h1>Redefinição de Senha</h1>
-        <p>Olá ${user.name},</p>
-        <p>Você solicitou a redefinição de sua senha. Clique no link abaixo para criar uma nova senha:</p>
+        <h1>${messages.title}</h1>
+        <p>${messages.greeting} ${user.name},</p>
+        <p>${messages.requestMessage}</p>
         <p><a href="${resetLink}">${resetLink}</a></p>
-        <p>Este link expira em 1 hora.</p>
-        <p>Se você não solicitou esta redefinição, ignore este e-mail.</p>
+        <p>${messages.linkExpiration}</p>
+        <p>${messages.ignoreMessage}</p>
       `,
     });
 

@@ -2,7 +2,7 @@
  * Arquivo: EmpregadoFormFields.tsx
  * Caminho: src/components/forms/empregado/EmpregadoFormFields.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
+ * Última atualização: 2025-01-27
  * Descrição: Campos do formulário de cadastro de empregado.
  */
 import React from 'react';
@@ -14,21 +14,22 @@ import { FormMaskedInput } from '@/components/forms/inputs/FormMaskedInput';
 import { FormDatePicker } from '@/components/forms/inputs/FormDatePicker';
 import { FormMoneyInput } from '@/components/forms/inputs/FormMoneyInput';
 import { FormCepInput } from '@/components/forms/inputs/FormCepInput';
-import { tooltips } from '@/i18n/tooltips';
+import { empregadoMessages } from '@/i18n/messages/empregado.messages';
 
 interface EmpregadoFormFieldsProps {
   control: Control<EmpregadoFormData>;
 }
 
 export const EmpregadoFormFields: React.FC<EmpregadoFormFieldsProps> = ({ control }) => {
+  const messages = empregadoMessages.pt;
+
   return (
     <Grid container columns={12} spacing={2}>
       <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
         <FormInput
           name="nome"
           control={control}
-          label="Nome"
-          tooltip={tooltips.empregado_nome.pt}
+          label={messages.labels.nome}
           required
         />
       </Grid>
@@ -37,8 +38,7 @@ export const EmpregadoFormFields: React.FC<EmpregadoFormFieldsProps> = ({ contro
         <FormMaskedInput
           name="cpf"
           control={control}
-          label="CPF"
-          tooltip={tooltips.empregado_cpf.pt}
+          label={messages.labels.cpf}
           mask="999.999.999-99"
           required
         />
@@ -48,8 +48,7 @@ export const EmpregadoFormFields: React.FC<EmpregadoFormFieldsProps> = ({ contro
         <FormDatePicker
           name="dataNascimento"
           control={control}
-          label="Data de Nascimento"
-          tooltip={tooltips.empregado_dataNascimento.pt}
+          label={messages.labels.dataNascimento}
           required
         />
       </Grid>
@@ -58,8 +57,7 @@ export const EmpregadoFormFields: React.FC<EmpregadoFormFieldsProps> = ({ contro
         <FormInput
           name="cargo"
           control={control}
-          label="Cargo"
-          tooltip={tooltips.empregado_cargo.pt}
+          label={messages.labels.cargo}
           required
         />
       </Grid>
@@ -68,8 +66,7 @@ export const EmpregadoFormFields: React.FC<EmpregadoFormFieldsProps> = ({ contro
         <FormMoneyInput
           name="salario"
           control={control}
-          label="Salário"
-          tooltip={tooltips.empregado_salario.pt}
+          label={messages.labels.salario}
           required
         />
       </Grid>
@@ -78,8 +75,7 @@ export const EmpregadoFormFields: React.FC<EmpregadoFormFieldsProps> = ({ contro
         <FormInput
           name="email"
           control={control}
-          label="E-mail"
-          tooltip={tooltips.empregado_email.pt}
+          label={messages.labels.email}
           type="email"
         />
       </Grid>
@@ -88,8 +84,7 @@ export const EmpregadoFormFields: React.FC<EmpregadoFormFieldsProps> = ({ contro
         <FormMaskedInput
           name="telefone"
           control={control}
-          label="Telefone"
-          tooltip={tooltips.empregado_telefone.pt}
+          label={messages.labels.telefone}
           mask="(99) 99999-9999"
         />
       </Grid>
@@ -98,8 +93,7 @@ export const EmpregadoFormFields: React.FC<EmpregadoFormFieldsProps> = ({ contro
         <FormCepInput
           name="endereco.cep"
           control={control}
-          label="CEP"
-          tooltip={tooltips.empregado_cep.pt}
+          label={messages.labels.cep}
           required
         />
       </Grid>
@@ -108,8 +102,7 @@ export const EmpregadoFormFields: React.FC<EmpregadoFormFieldsProps> = ({ contro
         <FormInput
           name="endereco.logradouro"
           control={control}
-          label="Logradouro"
-          tooltip={tooltips.empregado_endereco.pt}
+          label={messages.labels.logradouro}
           required
         />
       </Grid>
@@ -118,8 +111,7 @@ export const EmpregadoFormFields: React.FC<EmpregadoFormFieldsProps> = ({ contro
         <FormInput
           name="endereco.numero"
           control={control}
-          label="Número"
-          tooltip={tooltips.empregado_numero.pt}
+          label={messages.labels.numero}
           required
         />
       </Grid>
@@ -128,8 +120,7 @@ export const EmpregadoFormFields: React.FC<EmpregadoFormFieldsProps> = ({ contro
         <FormInput
           name="endereco.complemento"
           control={control}
-          label="Complemento"
-          tooltip={tooltips.empregado_complemento.pt}
+          label={messages.labels.complemento}
         />
       </Grid>
 
@@ -137,8 +128,7 @@ export const EmpregadoFormFields: React.FC<EmpregadoFormFieldsProps> = ({ contro
         <FormInput
           name="endereco.bairro"
           control={control}
-          label="Bairro"
-          tooltip={tooltips.empregado_bairro.pt}
+          label={messages.labels.bairro}
           required
         />
       </Grid>
@@ -147,8 +137,7 @@ export const EmpregadoFormFields: React.FC<EmpregadoFormFieldsProps> = ({ contro
         <FormInput
           name="endereco.cidade"
           control={control}
-          label="Cidade"
-          tooltip={tooltips.empregado_cidade.pt}
+          label={messages.labels.cidade}
           required
         />
       </Grid>
@@ -157,8 +146,7 @@ export const EmpregadoFormFields: React.FC<EmpregadoFormFieldsProps> = ({ contro
         <FormInput
           name="endereco.uf"
           control={control}
-          label="UF"
-          tooltip={tooltips.empregado_estado.pt}
+          label={messages.labels.uf}
           required
           inputProps={{ maxLength: 2 }}
         />

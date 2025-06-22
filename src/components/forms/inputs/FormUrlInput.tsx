@@ -2,7 +2,7 @@
  * Arquivo: FormUrlInput.tsx
  * Caminho: src/components/form/FormUrlInput.tsx
  * Criado em: 2025-06-07
- * Última atualização: 2025-06-07
+ * Última atualização: 2025-01-27
  * Descrição: Componente de input de URL integrado com react-hook-form e Material UI, com suporte a validação e acessibilidade
  */
 
@@ -10,6 +10,7 @@ import React from 'react';
 import { TextField, SxProps, Theme } from '@mui/material';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import HelperText from '@/components/common/HelperText';
+import { authMessages } from '@/i18n/messages/auth.messages';
 
 export interface FormUrlInputProps<T extends FieldValues> {
   name: Path<T>;
@@ -30,6 +31,9 @@ const FormUrlInput = <T extends FieldValues>({
   error,
   sx,
 }: FormUrlInputProps<T>) => {
+  // Usar mensagens em português por padrão
+  const messages = authMessages.pt;
+
   return (
     <Controller
       name={name}
@@ -40,9 +44,10 @@ const FormUrlInput = <T extends FieldValues>({
             {...field}
             type="url"
             label={label}
-            placeholder={placeholder}
+            placeholder={placeholder || messages.placeholders.url}
             error={!!fieldError || error}
             fullWidth
+            aria-label={messages.tooltips.campoUrl}
             sx={{
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {

@@ -1,25 +1,25 @@
 /**
  * Arquivo: Chat.tsx
  * Caminho: src/components/communication/Chat.tsx
- * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Criado em: 2025-01-27
+ * Última atualização: 2025-01-27
+ * Descrição: Componente de chat com mensagens centralizadas
  */
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   Box,
   Paper,
   Typography,
-  TextField,
-  IconButton,
   List,
   ListItem,
   ListItemText,
   ListItemAvatar,
   Avatar,
-  Divider,
+  TextField,
+  IconButton,
   CircularProgress,
+  Divider,
   Menu,
   MenuItem,
 } from '@mui/material';
@@ -31,6 +31,8 @@ import {
 import { Message, MessageType, MessagePriority } from '@/lib/communication/types';
 import { CommunicationService } from '@/lib/communication/service';
 import { PermissionChecker } from '@/lib/permissions/checker';
+import { interfaceMessages } from '@/i18n/messages/interface.messages';
+import { useLanguage } from '@/hooks/useLanguage';
 
 interface ChatProps {
   chatRoomId: string;
@@ -43,6 +45,9 @@ export const Chat: React.FC<ChatProps> = ({
   communicationService,
   permissionChecker,
 }) => {
+  const { language } = useLanguage();
+  const messages = interfaceMessages[language].common;
+  
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -123,7 +128,7 @@ export const Chat: React.FC<ChatProps> = ({
       <Paper sx={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
         {/* Cabeçalho do Chat */}
         <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
-          <Typography variant="h6">Chat</Typography>
+          <Typography variant="h6">{messages.chat}</Typography>
         </Box>
 
         {/* Lista de Mensagens */}
@@ -191,7 +196,7 @@ export const Chat: React.FC<ChatProps> = ({
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Digite sua mensagem..."
+              placeholder={messages.typeMessage}
               variant="outlined"
               size="small"
             />

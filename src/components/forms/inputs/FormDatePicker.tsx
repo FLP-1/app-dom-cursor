@@ -2,7 +2,7 @@
  * Arquivo: FormDatePicker.tsx
  * Caminho: src/components/forms/inputs/FormDatePicker.tsx
  * Criado em: 2025-06-07
- * Última atualização: 2024-06-07
+ * Última atualização: 2025-01-27
  * Descrição: Componente de seleção de data integrado com react-hook-form e Material UI, com suporte a validação e acessibilidade.
  */
 
@@ -11,6 +11,7 @@ import { SxProps, Theme } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import HelperText from '@/components/common/HelperText';
+import { authMessages } from '@/i18n/messages/auth.messages';
 
 export interface FormDatePickerProps<T extends FieldValues> {
   name: Path<T>;
@@ -35,8 +36,12 @@ const FormDatePicker = <T extends FieldValues>({
   required,
   id,
 }: FormDatePickerProps<T>) => {
+  // Usar mensagens em português por padrão
+  const messages = authMessages.pt;
+  
   const generatedId = useId();
   const inputId = id || `${name}-datepicker-${generatedId}`;
+  
   return (
     <Controller
       name={name}
@@ -50,9 +55,9 @@ const FormDatePicker = <T extends FieldValues>({
               textField: {
                 id: inputId,
                 label: label,
-                'aria-label': label ? undefined : name,
+                'aria-label': label ? undefined : messages.tooltips.selecionarData,
                 fullWidth: true,
-                placeholder,
+                placeholder: placeholder || messages.placeholders.data,
                 error: !!fieldError || error,
                 required,
                 sx: {

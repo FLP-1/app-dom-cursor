@@ -1,7 +1,17 @@
+/**
+ * Arquivo: SendProvisionalPasswordButton.tsx
+ * Caminho: src/components/common/SendProvisionalPasswordButton.tsx
+ * Criado em: 2025-01-27
+ * Última atualização: 2025-01-27
+ * Descrição: Componente para enviar senha provisória com mensagens centralizadas
+ */
+
 import React, { useState } from 'react';
 import { IconButton, Tooltip, Dialog, DialogTitle, DialogContent, DialogActions, Button, FormControlLabel, Checkbox, CircularProgress } from '@mui/material';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import { tooltips } from '@/i18n/tooltips';
+import { interfaceMessages } from '@/i18n/messages/interface.messages';
+import { useLanguage } from '@/hooks/useLanguage';
 
 interface SendProvisionalPasswordButtonProps {
   userId: string;
@@ -15,6 +25,9 @@ interface SendProvisionalPasswordButtonProps {
 export const SendProvisionalPasswordButton: React.FC<SendProvisionalPasswordButtonProps> = ({
   userId, userType, contact, onSuccess, onError, disabled
 }) => {
+  const { language } = useLanguage();
+  const messages = interfaceMessages[language].common;
+  
   const [open, setOpen] = useState(false);
   const [sending, setSending] = useState(false);
   const [sendEmail, setSendEmail] = useState(!!contact.email);
@@ -51,10 +64,10 @@ export const SendProvisionalPasswordButton: React.FC<SendProvisionalPasswordButt
 
   return (
     <>
-      <Tooltip title={tooltips.enviarSenhaProvisoria?.pt || 'Enviar senha provisória'}>
+      <Tooltip title={tooltips.enviarSenhaProvisoria?.[language] || messages.sendProvisionalPassword}>
         <span>
           <IconButton
-            aria-label={tooltips.enviarSenhaProvisoria?.pt || 'Enviar senha provisória'}
+            aria-label={tooltips.enviarSenhaProvisoria?.[language] || messages.sendProvisionalPassword}
             onClick={() => setOpen(true)}
             disabled={disabled || sending}
           >
@@ -63,7 +76,7 @@ export const SendProvisionalPasswordButton: React.FC<SendProvisionalPasswordButt
         </span>
       </Tooltip>
       <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>Enviar senha provisória</DialogTitle>
+        <DialogTitle>{messages.sendProvisionalPassword}</DialogTitle>
         <DialogContent>
           <FormControlLabel
             control={<Checkbox checked={sendEmail} onChange={e => setSendEmail(e.target.checked)} disabled={!contact.email} />}
@@ -75,7 +88,7 @@ export const SendProvisionalPasswordButton: React.FC<SendProvisionalPasswordButt
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpen(false)} disabled={sending}>Cancelar</Button>
+          <Button onClick={() => setOpen(false)} disabled={sending}>{messages.cancel}</Button>
           <Button onClick={handleSend} disabled={sending || (!sendEmail && !sendWhats)} variant="contained" color="primary" startIcon={sending ? <CircularProgress size={20} /> : undefined}>
             Enviar
           </Button>

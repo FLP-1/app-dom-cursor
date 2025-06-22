@@ -2,18 +2,18 @@
  * Arquivo: scripts.tsx
  * Caminho: src/pages/admin/scripts.tsx
  * Criado em: 2025-06-13
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-01-27
+ * Descrição: Página de scripts e automações administrativas
  */
 
 import React, { useState } from 'react';
 import { Box, Typography, Paper, Button, Grid, Snackbar, Alert, CircularProgress, List, ListItem, ListItemText } from '@mui/material';
 import { useRouter } from 'next/router';
 import { Layout } from '@/components/layout/Layout';
-import { useTranslation } from 'react-i18next';
+import { useMessages } from '@/hooks/useMessages';
 
 export default function AdminScriptsPage() {
-  const { t } = useTranslation();
+  const { messages } = useMessages();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: 'success' | 'error' }>({ open: false, message: '', severity: 'success' });
@@ -42,10 +42,10 @@ export default function AdminScriptsPage() {
     <Layout>
       <Box sx={{ p: 3 }}>
         <Typography variant="h4" gutterBottom>
-          {t('Painel de Scripts e Automações')}
+          Painel de Scripts e Automações
         </Typography>
         <Typography variant="body1" gutterBottom>
-          {t('Execute tarefas administrativas e automações do projeto de forma centralizada. Acesso restrito a administradores.')}
+          Execute tarefas administrativas e automações do projeto de forma centralizada. Acesso restrito a administradores.
         </Typography>
         <Paper sx={{ p: 2, mt: 3 }}>
           <Grid container columns={12} spacing={2}>
@@ -54,7 +54,7 @@ export default function AdminScriptsPage() {
                 variant="contained"
                 color="primary"
                 fullWidth
-                aria-label="Padronizar cabeçalhos dos arquivos do projeto"
+                aria-label={messages.admin.scripts.padronizarCabecalhos}
                 onClick={handlePadronizarCabecalhos}
                 disabled={loading}
                 startIcon={loading ? <CircularProgress size={20} /> : undefined}
@@ -76,7 +76,7 @@ export default function AdminScriptsPage() {
             </Typography>
             {resultado.alterados.length > 0 && (
               <>
-                <Typography variant="subtitle2">Arquivos alterados:</Typography>
+                <Typography variant="subtitle2">{messages.admin.scripts.arquivosAlterados}</Typography>
                 <List dense>
                   {resultado.alterados.map((arq) => (
                     <ListItem key={arq}>
@@ -88,7 +88,7 @@ export default function AdminScriptsPage() {
             )}
             {resultado.erros.length > 0 && (
               <>
-                <Typography variant="subtitle2" color="error">Erros:</Typography>
+                <Typography variant="subtitle2" color="error">{messages.admin.scripts.erros}</Typography>
                 <List dense>
                   {resultado.erros.map((err, i) => (
                     <ListItem key={i}>

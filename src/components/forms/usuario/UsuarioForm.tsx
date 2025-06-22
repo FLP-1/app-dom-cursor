@@ -2,16 +2,16 @@
  * Arquivo: UsuarioForm.tsx
  * Caminho: src/components/forms/usuario/UsuarioForm.tsx
  * Criado em: 2025-06-13
- * Última atualização: 2025-06-13
+ * Última atualização: 2025-01-27
  * Descrição: Componente principal do formulário de usuário.
  */
 
 import { Stack, Button, Alert } from '@mui/material';
-import { useTranslation } from 'next-i18next';
 import { LoadingButton } from '@mui/lab';
 import { UsuarioFormProps } from './UsuarioFormTypes';
 import { useUsuarioForm } from './useUsuarioForm';
 import { UsuarioFormFields } from './UsuarioFormFields';
+import { usuarioMessages } from '@/i18n/messages/usuario.messages';
 
 export function UsuarioForm({
   initialValues,
@@ -19,7 +19,7 @@ export function UsuarioForm({
   onCancel,
   loading: externalLoading
 }: UsuarioFormProps) {
-  const { t } = useTranslation();
+  const messages = usuarioMessages.pt;
   const {
     control,
     handleSubmit,
@@ -56,7 +56,7 @@ export function UsuarioForm({
               onClick={onCancel}
               disabled={isLoading}
             >
-              {t('common.actions.cancel')}
+              {messages.botoes.cancelar}
             </Button>
           )}
 
@@ -66,7 +66,7 @@ export function UsuarioForm({
             loading={isLoading}
             disabled={isLoading}
           >
-            {t('common.actions.save')}
+            {messages.botoes.salvar}
           </LoadingButton>
         </Stack>
       </Stack>

@@ -2,13 +2,14 @@
  * Arquivo: FormImageUpload.tsx
  * Caminho: src/components/forms/inputs/FormImageUpload.tsx
  * Criado em: 2024-06-07
- * Última atualização: 2024-06-07
+ * Última atualização: 2025-01-27
  * Descrição: Componente de upload de imagens com Material UI.
  */
 
 import { Button, TextField, TextFieldProps } from '@mui/material';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { ChangeEvent } from 'react';
+import { documentMessages } from '@/i18n/messages/document.messages';
 
 interface FormImageUploadProps<T extends FieldValues> extends Omit<TextFieldProps, 'name'> {
   name: Path<T>;
@@ -26,6 +27,9 @@ export function FormImageUpload<T extends FieldValues>({
   multiple,
   ...props
 }: FormImageUploadProps<T>) {
+  // Usar mensagens em português por padrão
+  const messages = documentMessages.pt;
+
   return (
     <Controller
       name={name}
@@ -47,6 +51,7 @@ export function FormImageUpload<T extends FieldValues>({
           inputProps={{
             accept,
             multiple,
+            'aria-label': messages.tooltips.selecionarImagem,
           }}
         />
       )}

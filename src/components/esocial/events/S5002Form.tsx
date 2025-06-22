@@ -2,8 +2,8 @@
  * Arquivo: S5002Form.tsx
  * Caminho: src/components/esocial/events/S5002Form.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-01-27
+ * Descrição: Componente de formulário S5002 com mensagens centralizadas
  */
 
 import React from 'react';
@@ -16,9 +16,13 @@ import { FormTextArea } from '@/components/forms/inputs/FormTextArea';
 import { useS5002Form } from '@/hooks/esocial/useS5002Form';
 import { S5002Schema } from '@/schemas/esocial/S5002Schema';
 import { tooltips } from '@/i18n/tooltips';
+import { interfaceMessages } from '@/i18n/messages/interface.messages';
+import { useLanguage } from '@/hooks/useLanguage';
 
 export const S5002Form: React.FC<{ initialData?: Partial<typeof S5002Schema._type> }> = ({ initialData }) => {
   const { methods, onSubmit } = useS5002Form(initialData);
+  const { language } = useLanguage();
+  const messages = interfaceMessages[language].common;
 
   return (
     <form onSubmit={onSubmit}>
@@ -27,10 +31,10 @@ export const S5002Form: React.FC<{ initialData?: Partial<typeof S5002Schema._typ
           <Grid gridColumn={{ xs: 'span 12' }}>
             <FormInput
               name="campoExemplo"
-              label="Campo Exemplo"
+              label={messages.exampleField}
               control={methods.control}
               required
-              tooltip={tooltips.s5002_campoExemplo.pt}
+              tooltip={tooltips.s5002_campoExemplo[language]}
             />
           </Grid>
           {/* TODO: Adicionar os demais campos do evento S-5002 conforme layout oficial */}

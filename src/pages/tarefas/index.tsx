@@ -21,6 +21,7 @@ import {
   Delete, Edit, MoreVert, TrendingUp, CalendarToday
 } from '@mui/icons-material';
 import { useTasksData } from '@/hooks/useTasksData';
+import { tarefasMessages } from '@/i18n/messages/tarefas.messages';
 
 const Tarefas = () => {
   const { data, isLoading, isError, createTask, updateTask, deleteTask, toggleTaskStatus } = useTasksData();
@@ -28,16 +29,19 @@ const Tarefas = () => {
   const [selectedTask, setSelectedTask] = useState<any>(null);
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
 
+  // Usar mensagens em português por padrão
+  const messages = tarefasMessages.pt;
+
   if (isLoading) {
     return (
       <Box sx={{ p: 3, background: '#f8fafc', minHeight: '100vh' }}>
         <Skeleton variant="text" width={250} height={60} />
         <Skeleton variant="text" width={200} height={30} />
-        <Grid container spacing={3} mt={2}>
-          <Grid item xs={12} md={8}>
+        <Grid container columns={12} spacing={3} mt={2}>
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 8' }}>
             <Skeleton variant="rectangular" height={400} sx={{ borderRadius: 3 }} />
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 4' }}>
             <Skeleton variant="rectangular" height={200} sx={{ borderRadius: 3, mb: 2 }} />
             <Skeleton variant="rectangular" height={200} sx={{ borderRadius: 3 }} />
           </Grid>
@@ -49,7 +53,7 @@ const Tarefas = () => {
   if (isError) {
     return (
       <Box sx={{ p: 3, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <Typography color="error">Falha ao carregar as tarefas.</Typography>
+        <Typography color="error">{messages.erros.carregar}</Typography>
       </Box>
     );
   }
@@ -133,10 +137,10 @@ const Tarefas = () => {
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
         <Box>
           <Typography variant="h4" fontWeight="bold" color="primary">
-            Tarefas 📋
+            {messages.titulo} 📋
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            Organize suas atividades diárias
+            {messages.mensagens.subtitulo}
           </Typography>
         </Box>
         <Button
@@ -145,29 +149,29 @@ const Tarefas = () => {
           onClick={handleAddTask}
           sx={{ borderRadius: 2 }}
         >
-          Nova Tarefa
+          {messages.labels.novaTarefa}
         </Button>
       </Box>
 
-      <Grid container spacing={3}>
+      <Grid container columns={12} spacing={3}>
         {/* Lista de Tarefas */}
-        <Grid item xs={12} md={8}>
+        <Grid gridColumn={{ xs: 'span 12', md: 'span 8' }}>
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               {/* Filtros */}
               <Box display="flex" gap={2} mb={3}>
                 <FormControl sx={{ minWidth: 150 }}>
-                  <InputLabel>Status</InputLabel>
+                  <InputLabel>{messages.labels.status}</InputLabel>
                   <Select
                     value={selectedStatus}
                     onChange={(e) => setSelectedStatus(e.target.value)}
-                    label="Status"
+                    label={messages.labels.status}
                   >
-                    <MenuItem value="all">Todas</MenuItem>
-                    <MenuItem value="pending">Pendentes</MenuItem>
-                    <MenuItem value="in_progress">Em Progresso</MenuItem>
-                    <MenuItem value="completed">Concluídas</MenuItem>
-                    <MenuItem value="cancelled">Canceladas</MenuItem>
+                    <MenuItem value="all">{messages.status.todas}</MenuItem>
+                    <MenuItem value="pending">{messages.status.pendente}</MenuItem>
+                    <MenuItem value="in_progress">{messages.status.emProgresso}</MenuItem>
+                    <MenuItem value="completed">{messages.status.concluida}</MenuItem>
+                    <MenuItem value="cancelled">{messages.status.cancelada}</MenuItem>
                   </Select>
                 </FormControl>
               </Box>
@@ -204,9 +208,8 @@ const Tarefas = () => {
                     <ListItemText
                       primary={
                         <Box display="flex" alignItems="center" gap={1}>
-                          <Typography 
-                            variant="body1" 
-                            fontWeight="medium"
+                          <Typography
+                            variant="h6"
                             sx={{
                               textDecoration: task.status === 'completed' ? 'line-through' : 'none',
                               color: task.status === 'completed' ? 'text.secondary' : 'text.primary'
@@ -215,70 +218,34 @@ const Tarefas = () => {
                             {task.title}
                           </Typography>
                           <Chip
-                            label={task.priority}
+                            label={messages.prioridades[task.priority] || task.priority}
                             size="small"
                             sx={{
-                              background: getPriorityColor(task.priority),
+                              backgroundColor: getPriorityColor(task.priority),
                               color: 'white',
-                              textTransform: 'capitalize'
-                            }}
-                          />
-                          <Chip
-                            label={task.status}
-                            size="small"
-                            variant="outlined"
-                            sx={{
-                              borderColor: getStatusColor(task.status),
-                              color: getStatusColor(task.status),
-                              textTransform: 'capitalize'
+                              fontSize: '0.7rem'
                             }}
                           />
                         </Box>
                       }
                       secondary={
                         <Box>
-                          <Typography variant="body2" color="text.secondary">
+                          <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
                             {task.description}
                           </Typography>
-                          <Box display="flex" alignItems="center" gap={2} mt={1}>
-                            <Box display="flex" alignItems="center" gap={0.5}>
-                              <CalendarToday sx={{ fontSize: 16, color: 'text.secondary' }} />
-                              <Typography variant="caption" color="text.secondary">
-                                {task.dueDate}
-                              </Typography>
-                            </Box>
-                            {task.estimatedTime && (
-                              <Box display="flex" alignItems="center" gap={0.5}>
-                                <Schedule sx={{ fontSize: 16, color: 'text.secondary' }} />
-                                <Typography variant="caption" color="text.secondary">
-                                  {task.estimatedTime}
-                                </Typography>
-                              </Box>
-                            )}
-                            <Box display="flex" gap={0.5}>
-                              {task.tags.map((tag, index) => (
-                                <Chip
-                                  key={index}
-                                  label={tag}
-                                  size="small"
-                                  variant="outlined"
-                                  sx={{ fontSize: '0.7rem' }}
-                                />
-                              ))}
-                            </Box>
+                          <Box display="flex" gap={1} alignItems="center">
+                            <Schedule sx={{ fontSize: 16, color: 'text.secondary' }} />
+                            <Typography variant="caption" color="text.secondary">
+                              {messages.labels.vencimento}: {new Date(task.dueDate).toLocaleDateString('pt-BR')}
+                            </Typography>
                           </Box>
                         </Box>
                       }
                     />
                     <ListItemSecondaryAction>
-                      <Box display="flex" gap={1}>
-                        <IconButton size="small">
-                          <Edit />
-                        </IconButton>
-                        <IconButton size="small" color="error">
-                          <Delete />
-                        </IconButton>
-                      </Box>
+                      <IconButton onClick={() => handleEditTask(task)} size="small">
+                        <Edit />
+                      </IconButton>
                     </ListItemSecondaryAction>
                   </ListItem>
                 ))}
@@ -288,97 +255,53 @@ const Tarefas = () => {
         </Grid>
 
         {/* Sidebar */}
-        <Grid item xs={12} md={4}>
-          {/* Tarefas de Hoje */}
-          <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', mb: 3 }}>
-            <CardContent>
-              <Typography variant="h6" fontWeight="bold" mb={2}>
-                Tarefas de Hoje
-              </Typography>
-              {todayTasks.map((task) => (
-                <Box key={task.id} display="flex" alignItems="center" py={1}>
-                  <Avatar sx={{ 
-                    background: getCategoryColor(task.category), 
-                    mr: 2, 
-                    width: 32, 
-                    height: 32 
-                  }}>
-                    {getCategoryIcon(task.category)}
-                  </Avatar>
-                  <Box flex={1}>
-                    <Typography variant="body2" fontWeight="medium">
-                      {task.title}
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      {task.estimatedTime}
-                    </Typography>
-                  </Box>
-                  <Checkbox
-                    checked={task.status === 'completed'}
-                    onChange={() => handleToggleStatus(task)}
-                    size="small"
-                  />
-                </Box>
-              ))}
-            </CardContent>
-          </Card>
-
-          {/* Próximas Tarefas */}
-          <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', mb: 3 }}>
-            <CardContent>
-              <Typography variant="h6" fontWeight="bold" mb={2}>
-                Próximas Tarefas
-              </Typography>
-              {upcomingTasks.map((task) => (
-                <Box key={task.id} display="flex" alignItems="center" py={1}>
-                  <Avatar sx={{ 
-                    background: getCategoryColor(task.category), 
-                    mr: 2, 
-                    width: 32, 
-                    height: 32 
-                  }}>
-                    {getCategoryIcon(task.category)}
-                  </Avatar>
-                  <Box flex={1}>
-                    <Typography variant="body2" fontWeight="medium">
-                      {task.title}
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      {task.dueDate}
-                    </Typography>
-                  </Box>
-                </Box>
-              ))}
-            </CardContent>
-          </Card>
-
+        <Grid gridColumn={{ xs: 'span 12', md: 'span 4' }}>
           {/* Estatísticas */}
+          <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', mb: 3 }}>
+            <CardContent>
+              <Typography variant="h6" fontWeight="bold" mb={2}>
+                {messages.labels.estatisticas}
+              </Typography>
+              <Box display="flex" justifyContent="space-between" mb={2}>
+                <Typography variant="body2">{messages.labels.hoje}:</Typography>
+                <Typography variant="body2" fontWeight="bold">{todayTasks.length}</Typography>
+              </Box>
+              <Box display="flex" justifyContent="space-between" mb={2}>
+                <Typography variant="body2">{messages.labels.proximas}:</Typography>
+                <Typography variant="body2" fontWeight="bold">{upcomingTasks.length}</Typography>
+              </Box>
+              <Box display="flex" justifyContent="space-between">
+                <Typography variant="body2">{messages.labels.concluidas}:</Typography>
+                <Typography variant="body2" fontWeight="bold">{completedTasks.length}</Typography>
+              </Box>
+            </CardContent>
+          </Card>
+
+          {/* Categorias */}
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={2}>
-                Estatísticas
+                {messages.labels.categorias}
               </Typography>
-              <Box>
-                <Box display="flex" justifyContent="space-between" mb={1}>
-                  <Typography variant="body2">Total</Typography>
-                  <Typography variant="body2" fontWeight="bold">{stats.total}</Typography>
-                </Box>
-                <Box display="flex" justifyContent="space-between" mb={1}>
-                  <Typography variant="body2">Pendentes</Typography>
-                  <Typography variant="body2" fontWeight="bold" color="#FF9800">{stats.pending}</Typography>
-                </Box>
-                <Box display="flex" justifyContent="space-between" mb={1}>
-                  <Typography variant="body2">Em Progresso</Typography>
-                  <Typography variant="body2" fontWeight="bold" color="#2196F3">{stats.inProgress}</Typography>
-                </Box>
-                <Box display="flex" justifyContent="space-between" mb={1}>
-                  <Typography variant="body2">Concluídas</Typography>
-                  <Typography variant="body2" fontWeight="bold" color="#4CAF50">{stats.completed}</Typography>
-                </Box>
-                <Box display="flex" justifyContent="space-between" mb={1}>
-                  <Typography variant="body2">Atrasadas</Typography>
-                  <Typography variant="body2" fontWeight="bold" color="#F44336">{stats.overdue}</Typography>
-                </Box>
+              <Box display="flex" flexDirection="column" gap={1}>
+                {categories.map((category) => (
+                  <Box key={category.name} display="flex" justifyContent="space-between" alignItems="center">
+                    <Box display="flex" alignItems="center" gap={1}>
+                      <Box
+                        sx={{
+                          width: 12,
+                          height: 12,
+                          borderRadius: '50%',
+                          backgroundColor: category.color
+                        }}
+                      />
+                      <Typography variant="body2">{category.name}</Typography>
+                    </Box>
+                    <Typography variant="body2" fontWeight="bold">
+                      {category.count}
+                    </Typography>
+                  </Box>
+                ))}
               </Box>
             </CardContent>
           </Card>
@@ -388,77 +311,71 @@ const Tarefas = () => {
       {/* Dialog para adicionar/editar tarefa */}
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="sm" fullWidth>
         <DialogTitle>
-          {selectedTask ? 'Editar Tarefa' : 'Nova Tarefa'}
+          {selectedTask ? messages.labels.editarTarefa : messages.labels.novaTarefa}
         </DialogTitle>
         <DialogContent>
-          <Box sx={{ pt: 2 }}>
+          <Box component="form" sx={{ mt: 2 }}>
             <TextField
               fullWidth
-              label="Título"
+              label={messages.labels.titulo}
               defaultValue={selectedTask?.title || ''}
               sx={{ mb: 2 }}
             />
             <TextField
               fullWidth
-              label="Descrição"
               multiline
               rows={3}
+              label={messages.labels.descricao}
               defaultValue={selectedTask?.description || ''}
               sx={{ mb: 2 }}
             />
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  label="Data de Vencimento"
-                  type="date"
-                  defaultValue={selectedTask?.dueDate || ''}
-                  InputLabelProps={{ shrink: true }}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  label="Tempo Estimado"
-                  defaultValue={selectedTask?.estimatedTime || ''}
-                  placeholder="ex: 1h, 30min"
-                />
-              </Grid>
-            </Grid>
-            <FormControl fullWidth sx={{ mt: 2 }}>
-              <InputLabel>Prioridade</InputLabel>
+            <TextField
+              fullWidth
+              type="date"
+              label={messages.labels.dataVencimento}
+              defaultValue={selectedTask?.dueDate ? new Date(selectedTask.dueDate).toISOString().split('T')[0] : ''}
+              InputLabelProps={{ shrink: true }}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              fullWidth
+              label={messages.labels.tempoEstimado}
+              placeholder={messages.placeholders.tempoEstimado}
+              defaultValue={selectedTask?.estimatedTime || ''}
+              sx={{ mb: 2 }}
+            />
+            <FormControl fullWidth sx={{ mb: 2 }}>
+              <InputLabel>{messages.labels.prioridade}</InputLabel>
               <Select
                 defaultValue={selectedTask?.priority || 'medium'}
-                label="Prioridade"
+                label={messages.labels.prioridade}
               >
-                <MenuItem value="low">Baixa</MenuItem>
-                <MenuItem value="medium">Média</MenuItem>
-                <MenuItem value="high">Alta</MenuItem>
+                <MenuItem value="low">{messages.prioridades.low}</MenuItem>
+                <MenuItem value="medium">{messages.prioridades.medium}</MenuItem>
+                <MenuItem value="high">{messages.prioridades.high}</MenuItem>
               </Select>
             </FormControl>
-            <FormControl fullWidth sx={{ mt: 2 }}>
-              <InputLabel>Categoria</InputLabel>
+            <FormControl fullWidth>
+              <InputLabel>{messages.labels.categoria}</InputLabel>
               <Select
                 defaultValue={selectedTask?.category || 'personal'}
-                label="Categoria"
+                label={messages.labels.categoria}
               >
-                <MenuItem value="housework">Trabalho Doméstico</MenuItem>
-                <MenuItem value="shopping">Compras</MenuItem>
-                <MenuItem value="health">Saúde</MenuItem>
-                <MenuItem value="personal">Pessoal</MenuItem>
-                <MenuItem value="work">Trabalho</MenuItem>
-                <MenuItem value="other">Outros</MenuItem>
+                {categories.map((category) => (
+                  <MenuItem key={category.name} value={category.name.toLowerCase()}>
+                    {category.name}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenDialog(false)}>Cancelar</Button>
-          <Button 
-            variant="contained" 
-            onClick={() => handleSaveTask({})}
-          >
-            Salvar
+          <Button onClick={() => setOpenDialog(false)}>
+            {messages.labels.cancelar}
+          </Button>
+          <Button onClick={() => handleSaveTask({})} variant="contained">
+            {messages.labels.salvar}
           </Button>
         </DialogActions>
       </Dialog>

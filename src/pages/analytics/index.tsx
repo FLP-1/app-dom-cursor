@@ -16,10 +16,14 @@ import {
   ArrowUpward, ArrowDownward, Insights
 } from '@mui/icons-material';
 import { useAnalyticsData } from '@/hooks/useAnalyticsData';
+import { interfaceMessages } from '@/i18n/messages/interface.messages';
+import { useLanguage } from '@/hooks/useLanguage';
 
 const AnalyticsScreen = () => {
   const { data, isLoading, isError, refreshAnalytics } = useAnalyticsData();
   const [tabValue, setTabValue] = useState(0);
+  const { language } = useLanguage();
+  const messages = interfaceMessages[language].common;
 
   if (isLoading) {
     return (
@@ -32,7 +36,7 @@ const AnalyticsScreen = () => {
   if (isError || !data) {
     return (
       <Box sx={{ p: 3, background: '#f8fafc', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Typography color="error">Falha ao carregar os dados de analytics.</Typography>
+        <Typography color="error">{messages.errorLoadingAnalytics}</Typography>
       </Box>
     );
   }
@@ -47,20 +51,22 @@ const AnalyticsScreen = () => {
     }
   };
 
+  const tabLabels = [messages.trends, messages.comparative, messages.distribution];
+
   return (
     <Box sx={{ p: 3, background: '#f8fafc', minHeight: '100vh' }}>
       {/* Header */}
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
         <Box>
           <Typography variant="h4" fontWeight="bold" color="primary">
-            Análises e Insights
+            {messages.analyticsTitle || 'Análises e Insights'}
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            Visualize o desempenho e descubra oportunidades
+            {messages.analyticsSubtitle || 'Visualize o desempenho e descubra oportunidades'}
           </Typography>
         </Box>
         <Button variant="contained" startIcon={<ShowChart />} onClick={refreshAnalytics}>
-          Atualizar
+          {messages.refresh || 'Atualizar'}
         </Button>
       </Box>
 
@@ -110,9 +116,9 @@ const AnalyticsScreen = () => {
                     }}
                   />
                   <Typography variant="caption" color="text.secondary">
-                    {kpi.trendType === 'up' && 'Crescimento'}
-                    {kpi.trendType === 'down' && 'Queda'}
-                    {kpi.trendType === 'neutral' && 'Estável'}
+                    {kpi.trendType === 'up' && messages.growth}
+                    {kpi.trendType === 'down' && messages.fall}
+                    {kpi.trendType === 'neutral' && messages.stable}
                   </Typography>
                 </Box>
               </CardContent>
@@ -132,9 +138,9 @@ const AnalyticsScreen = () => {
                 onChange={(e, newValue) => setTabValue(newValue)}
                 sx={{ mb: 3 }}
               >
-                <Tab label="Tendências" />
-                <Tab label="Comparativo" />
-                <Tab label="Distribuição" />
+                {tabLabels.map((label, idx) => (
+                  <Tab key={label} label={label} />
+                ))}
               </Tabs>
 
               {/* Simulação de Gráfico */}
@@ -149,7 +155,7 @@ const AnalyticsScreen = () => {
                 <Box textAlign="center">
                   <BarChart sx={{ fontSize: 80, color: 'primary.main', opacity: 0.5 }} />
                   <Typography variant="h6" color="text.secondary">
-                    Gráfico de {['Tendências', 'Comparativo', 'Distribuição'][tabValue]}
+                    {messages.chartOf} {tabLabels[tabValue]}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
                     (Visualização de dados simulada)
@@ -163,7 +169,7 @@ const AnalyticsScreen = () => {
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={3}>
-                Tendências
+                {messages.trends}
               </Typography>
               {trends.map((trend, index) => (
                 <Paper key={trend.id} sx={{
@@ -195,7 +201,7 @@ const AnalyticsScreen = () => {
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', mb: 3 }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={3}>
-                Resumo
+                {messages.summary || 'Resumo'}
               </Typography>
               <Box mb={2}>
                 <Typography variant="body2" color="text.secondary">

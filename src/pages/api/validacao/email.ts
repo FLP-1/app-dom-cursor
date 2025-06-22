@@ -2,13 +2,14 @@
  * Arquivo: email.ts
  * Caminho: src/pages/api/validacao/email.ts
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: API para validar email
+ * Última atualização: 2025-01-27
+ * Descrição: API para validar email com mensagens centralizadas
  */
 
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/prisma';
 import { emailService } from '@/services/email.service';
+import { emailMessages } from '@/i18n/messages/email.messages';
 
 export default async function handler(
   req: NextApiRequest,
@@ -55,14 +56,16 @@ export default async function handler(
     });
 
     // Enviar email com código
+    const messages = emailMessages.pt.validation;
+    
     await emailService.sendEmail({
       to: email,
       subject: 'Validação de Email - DOM',
-      text: `Seu código de validação é: ${codigoValidacao}`,
+      text: `${messages.codeMessage} ${codigoValidacao}`,
       html: `
-        <h1>Validação de Email</h1>
-        <p>Seu código de validação é: <strong>${codigoValidacao}</strong></p>
-        <p>Este código expira em 30 minutos.</p>
+        <h1>${messages.title}</h1>
+        <p>${messages.codeMessage} <strong>${codigoValidacao}</strong></p>
+        <p>${messages.codeExpiration}</p>
       `,
     });
 

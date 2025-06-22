@@ -2,7 +2,7 @@
  * Arquivo: FormAutocomplete.tsx
  * Caminho: src/components/form/FormAutocomplete.tsx
  * Criado em: 2025-06-07
- * Última atualização: 2025-06-07
+ * Última atualização: 2025-01-27
  * Descrição: Componente de autocomplete integrado com react-hook-form e Material UI, com suporte a validação e acessibilidade
  */
 
@@ -10,6 +10,7 @@ import React from 'react';
 import { Autocomplete, TextField, SxProps, Theme } from '@mui/material';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import HelperText from '@/components/common/HelperText';
+import { authMessages } from '@/i18n/messages/auth.messages';
 
 export interface AutocompleteOption {
   value: string;
@@ -37,6 +38,9 @@ const FormAutocomplete = <T extends FieldValues>({
   error,
   sx,
 }: FormAutocompleteProps<T>) => {
+  // Usar mensagens em português por padrão
+  const messages = authMessages.pt;
+
   return (
     <Controller
       name={name}
@@ -48,13 +52,16 @@ const FormAutocomplete = <T extends FieldValues>({
             options={options}
             getOptionLabel={(option) => option.label}
             isOptionEqualToValue={(option, value) => option.value === value.value}
+            noOptionsText={messages.mensagens.nenhumaOpcao}
+            loadingText={messages.mensagens.carregando}
             renderInput={(params) => (
               <TextField
                 {...params}
                 label={label}
-                placeholder={placeholder}
+                placeholder={placeholder || messages.placeholders.digiteParaBuscar}
                 error={!!fieldError || error}
                 fullWidth
+                aria-label={messages.tooltips.campoBusca}
                 sx={{
                   '& .MuiOutlinedInput-root': {
                     '& fieldset': {

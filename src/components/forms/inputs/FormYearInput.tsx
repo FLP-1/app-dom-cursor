@@ -2,7 +2,7 @@
  * Arquivo: FormYearInput.tsx
  * Caminho: src/components/form/FormYearInput.tsx
  * Criado em: 2025-06-07
- * Última atualização: 2025-06-07
+ * Última atualização: 2025-01-27
  * Descrição: Componente de input de ano integrado com react-hook-form e Material UI, com suporte a validação e acessibilidade
  */
 
@@ -10,6 +10,7 @@ import React from 'react';
 import { TextField, SxProps, Theme } from '@mui/material';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import HelperText from '@/components/common/HelperText';
+import { authMessages } from '@/i18n/messages/auth.messages';
 
 export interface FormYearInputProps<T extends FieldValues> {
   name: Path<T>;
@@ -34,6 +35,9 @@ const FormYearInput = <T extends FieldValues>({
   error,
   sx,
 }: FormYearInputProps<T>) => {
+  // Usar mensagens em português por padrão
+  const messages = authMessages.pt;
+
   return (
     <Controller
       name={name}
@@ -44,7 +48,7 @@ const FormYearInput = <T extends FieldValues>({
             {...field}
             type="number"
             label={label}
-            placeholder={placeholder}
+            placeholder={placeholder || messages.placeholders.ano}
             inputProps={{
               min,
               max,
@@ -52,6 +56,7 @@ const FormYearInput = <T extends FieldValues>({
             }}
             error={!!fieldError || error}
             fullWidth
+            aria-label={messages.tooltips.campoAno}
             sx={{
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {

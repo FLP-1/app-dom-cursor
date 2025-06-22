@@ -2,13 +2,14 @@
  * Arquivo: PontoFilter.tsx
  * Caminho: src/components/PontoFilter.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-01-27
+ * Descrição: Componente de filtro para registros de ponto eletrônico
  */
 
 import React from 'react';
 import { Box, TextField, MenuItem, Grid } from '@mui/material';
 import { FiltrosPonto } from '@/hooks/usePonto';
+import { pontoMessages } from '@/i18n/messages/ponto.messages';
 
 interface PontoFilterProps {
   filtros: FiltrosPonto;
@@ -16,13 +17,17 @@ interface PontoFilterProps {
 }
 
 const PontoFilter: React.FC<PontoFilterProps> = ({ filtros, setFiltros }) => {
+  // Usar mensagens em português por padrão
+  const messages = pontoMessages.pt;
+  
   const safeFiltros = filtros || {};
+  
   return (
-    <Box component="form" sx={{ mb: 2 }} aria-label="Filtros de ponto">
+    <Box component="form" sx={{ mb: 2 }} aria-label={messages.tooltips.filtros}>
       <Grid container spacing={2} columns={12}>
         <Grid gridColumn={{ xs: 'span 12', sm: 'span 3' }}>
           <TextField
-            label="Usuário (nome)"
+            label={messages.labels.funcionario}
             value={safeFiltros.usuarioId || ''}
             onChange={e => setFiltros({ ...safeFiltros, usuarioId: e.target.value })}
             fullWidth
@@ -31,7 +36,7 @@ const PontoFilter: React.FC<PontoFilterProps> = ({ filtros, setFiltros }) => {
         </Grid>
         <Grid gridColumn={{ xs: 'span 12', sm: 'span 3' }}>
           <TextField
-            label="Data"
+            label={messages.labels.data}
             type="date"
             value={safeFiltros.data || ''}
             onChange={e => setFiltros({ ...safeFiltros, data: e.target.value })}
@@ -43,7 +48,7 @@ const PontoFilter: React.FC<PontoFilterProps> = ({ filtros, setFiltros }) => {
         <Grid gridColumn={{ xs: 'span 12', sm: 'span 3' }}>
           <TextField
             select
-            label="Validado"
+            label={messages.labels.aprovado}
             value={safeFiltros.validado === undefined ? '' : safeFiltros.validado ? 'sim' : 'nao'}
             onChange={e => {
               const val = e.target.value;
@@ -52,15 +57,15 @@ const PontoFilter: React.FC<PontoFilterProps> = ({ filtros, setFiltros }) => {
             fullWidth
             size="small"
           >
-            <MenuItem value="">Todos</MenuItem>
-            <MenuItem value="sim">Sim</MenuItem>
-            <MenuItem value="nao">Não</MenuItem>
+            <MenuItem value="">{messages.labels.todos}</MenuItem>
+            <MenuItem value="sim">{messages.labels.sim}</MenuItem>
+            <MenuItem value="nao">{messages.labels.nao}</MenuItem>
           </TextField>
         </Grid>
         <Grid gridColumn={{ xs: 'span 12', sm: 'span 3' }}>
           <TextField
             select
-            label="Alerta"
+            label={messages.labels.alerta}
             value={safeFiltros.alerta === undefined ? '' : safeFiltros.alerta ? 'sim' : 'nao'}
             onChange={e => {
               const val = e.target.value;
@@ -69,9 +74,9 @@ const PontoFilter: React.FC<PontoFilterProps> = ({ filtros, setFiltros }) => {
             fullWidth
             size="small"
           >
-            <MenuItem value="">Todos</MenuItem>
-            <MenuItem value="sim">Sim</MenuItem>
-            <MenuItem value="nao">Não</MenuItem>
+            <MenuItem value="">{messages.labels.todos}</MenuItem>
+            <MenuItem value="sim">{messages.labels.sim}</MenuItem>
+            <MenuItem value="nao">{messages.labels.nao}</MenuItem>
           </TextField>
         </Grid>
       </Grid>

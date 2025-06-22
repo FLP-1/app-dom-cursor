@@ -2,7 +2,7 @@
  * Arquivo: FormRadio.tsx
  * Caminho: src/components/form/FormRadio.tsx
  * Criado em: 2025-06-07
- * Última atualização: 2025-06-07
+ * Última atualização: 2025-01-27
  * Descrição: Componente de radio button integrado com react-hook-form e Material UI, com suporte a validação e acessibilidade
  */
 
@@ -10,6 +10,7 @@ import React from 'react';
 import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, SxProps, Theme } from '@mui/material';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import HelperText from '@/components/common/HelperText';
+import { authMessages } from '@/i18n/messages/auth.messages';
 
 export interface RadioOption {
   value: string;
@@ -35,6 +36,9 @@ const FormRadio = <T extends FieldValues>({
   error,
   sx,
 }: FormRadioProps<T>) => {
+  // Usar mensagens em português por padrão
+  const messages = authMessages.pt;
+
   return (
     <Controller
       name={name}
@@ -62,6 +66,7 @@ const FormRadio = <T extends FieldValues>({
                 value={option.value}
                 control={
                   <Radio
+                    aria-label={messages.tooltips.selecionarOpcao}
                     sx={{
                       '&.Mui-checked': {
                         color: fieldError || error ? 'error.main' : 'primary.main'

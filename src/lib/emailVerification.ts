@@ -2,11 +2,12 @@
  * Arquivo: emailVerification.ts
  * Caminho: src/lib/emailVerification.ts
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-01-27
+ * Descrição: Funções para verificação de email com mensagens centralizadas.
  */
 
 import { sendEmail } from './email';
+import { emailMessages } from '@/i18n/messages/email.messages';
 import crypto from 'crypto';
 
 interface VerificationCode {
@@ -29,9 +30,10 @@ function generateVerificationCode(): string {
 /**
  * Envia um código de verificação para o email
  * @param email - Email para enviar o código
+ * @param language - Idioma para as mensagens (pt ou en)
  * @returns O código de verificação gerado
  */
-export async function sendVerificationCode(email: string): Promise<string> {
+export async function sendVerificationCode(email: string, language: 'pt' | 'en' = 'pt'): Promise<string> {
   // Gera um código de 6 dígitos
   const code = generateVerificationCode();
   
@@ -46,26 +48,28 @@ export async function sendVerificationCode(email: string): Promise<string> {
     expiresAt
   });
 
+  const messages = emailMessages[language].verification;
+
   // Envia o email com o código
   await sendEmail({
     to: email,
-    subject: 'Código de Verificação - DOM',
+    subject: language === 'pt' ? 'Código de Verificação - DOM' : 'Verification Code - DOM',
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #1976d2;">Verificação de Email</h2>
-        <p>Olá,</p>
-        <p>Seu código de verificação é:</p>
+        <h2 style="color: #1976d2;">${messages.title}</h2>
+        <p>${messages.greeting}</p>
+        <p>${messages.codeMessage}</p>
         <div style="text-align: center; margin: 30px 0;">
           <div style="background-color: #f5f5f5; padding: 20px; border-radius: 4px; 
                       font-size: 24px; letter-spacing: 4px; font-weight: bold;">
             ${code}
           </div>
         </div>
-        <p>Este código é válido por 15 minutos.</p>
-        <p>Se você não solicitou esta verificação, por favor ignore este email.</p>
+        <p>${messages.codeExpiration}</p>
+        <p>${messages.ignoreMessage}</p>
         <hr style="border: 1px solid #eee; margin: 20px 0;">
         <p style="color: #666; font-size: 12px;">
-          Este é um email automático, por favor não responda.
+          ${language === 'pt' ? 'Este é um email automático, por favor não responda.' : 'This is an automatic email, please do not reply.'}
         </p>
       </div>
     `

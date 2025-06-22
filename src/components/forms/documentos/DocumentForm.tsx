@@ -2,16 +2,16 @@
  * Arquivo: DocumentForm.tsx
  * Caminho: src/components/forms/documentos/DocumentForm.tsx
  * Criado em: 2025-06-13
- * Última atualização: 2025-06-13
+ * Última atualização: 2025-01-27
  * Descrição: Componente principal do formulário de documentos.
  */
 
 import { Alert, Stack } from '@mui/material';
-import { useTranslation } from 'next-i18next';
 import { LoadingButton } from '@mui/lab';
 import { DocumentFormData } from './DocumentFormTypes';
 import { DocumentFormFields } from './DocumentFormFields';
 import { useDocumentForm } from './useDocumentForm';
+import { documentMessages } from '@/i18n/messages/document.messages';
 
 interface DocumentFormProps {
   initialValues?: Partial<DocumentFormData>;
@@ -26,7 +26,7 @@ export function DocumentForm({
   onCancel,
   loading: externalLoading,
 }: DocumentFormProps) {
-  const { t } = useTranslation();
+  const messages = documentMessages.pt;
   const {
     control,
     handleSubmit,
@@ -62,7 +62,7 @@ export function DocumentForm({
               onClick={onCancel}
               disabled={loading}
             >
-              {t('common.buttons.cancel')}
+              {messages.botoes.cancelar}
             </LoadingButton>
           )}
           <LoadingButton
@@ -71,7 +71,7 @@ export function DocumentForm({
             loading={loading}
             disabled={loading}
           >
-            {t('common.buttons.save')}
+            {messages.botoes.salvar}
           </LoadingButton>
         </Stack>
       </Stack>

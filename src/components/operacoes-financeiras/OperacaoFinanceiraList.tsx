@@ -2,8 +2,8 @@
  * Arquivo: OperacaoFinanceiraList.tsx
  * Caminho: src/components/OperacaoFinanceiraList.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-01-27
+ * Descrição: Componente de lista de operações financeiras
  */
 
 import {
@@ -27,10 +27,10 @@ import {
   Close as CloseIcon,
   AttachMoney as MoneyIcon,
 } from '@mui/icons-material';
-import { useTranslation } from 'next-i18next';
 import { formatCurrency, formatDate } from '@/utils/format';
 import { StatusOperacao, TipoOperacao } from '@prisma/client';
 import React from 'react';
+import { financeiroMessages } from '@/i18n/messages/financeiro.messages';
 
 interface OperacaoFinanceira {
   id: string;
@@ -72,7 +72,8 @@ export const OperacaoFinanceiraList = React.memo(({
   onRegistrarPagamento,
   isLoading,
 }: OperacaoFinanceiraListProps) => {
-  const { t } = useTranslation();
+  // Usar mensagens em português por padrão
+  const messages = financeiroMessages.pt;
 
   const getStatusColor = (status: StatusOperacao) => {
     switch (status) {
@@ -92,14 +93,7 @@ export const OperacaoFinanceiraList = React.memo(({
   };
 
   const getTipoLabel = (tipo: TipoOperacao) => {
-    switch (tipo) {
-      case 'EMPRESTIMO':
-        return t('operacaoFinanceira.tipos.emprestimo');
-      case 'ADIANTAMENTO':
-        return t('operacaoFinanceira.tipos.adiantamento');
-      default:
-        return tipo;
-    }
+    return messages.tipos[tipo] || tipo;
   };
 
   return (
@@ -107,13 +101,13 @@ export const OperacaoFinanceiraList = React.memo(({
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>{t('operacaoFinanceira.tipo')}</TableCell>
-            <TableCell>{t('operacaoFinanceira.valor')}</TableCell>
-            <TableCell>{t('operacaoFinanceira.dataOperacao')}</TableCell>
-            <TableCell>{t('operacaoFinanceira.dataVencimento')}</TableCell>
-            <TableCell>{t('operacaoFinanceira.status')}</TableCell>
-            <TableCell>{t('operacaoFinanceira.parcelas')}</TableCell>
-            <TableCell>{t('common.actions')}</TableCell>
+            <TableCell>{messages.labels.tipo}</TableCell>
+            <TableCell>{messages.labels.valor}</TableCell>
+            <TableCell>{messages.labels.data}</TableCell>
+            <TableCell>{messages.labels.vencimento}</TableCell>
+            <TableCell>{messages.labels.status}</TableCell>
+            <TableCell>{messages.labels.parcelas}</TableCell>
+            <TableCell>{messages.labels.acoes}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -125,7 +119,7 @@ export const OperacaoFinanceiraList = React.memo(({
               <TableCell>{formatDate(operacao.dataVencimento)}</TableCell>
               <TableCell>
                 <Chip
-                  label={t(`operacaoFinanceira.status.${operacao.status.toLowerCase()}`)}
+                  label={messages.status[operacao.status] || operacao.status}
                   color={getStatusColor(operacao.status)}
                   size="small"
                 />
@@ -148,7 +142,7 @@ export const OperacaoFinanceiraList = React.memo(({
                         color="success"
                         onClick={() => onAprovar?.(operacao.id)}
                         disabled={isLoading}
-                        aria-label="Aprovar operação"
+                        aria-label={messages.tooltips.aprovar}
                       >
                         <CheckIcon />
                       </IconButton>
@@ -157,7 +151,7 @@ export const OperacaoFinanceiraList = React.memo(({
                         color="error"
                         onClick={() => onRejeitar?.(operacao.id)}
                         disabled={isLoading}
-                        aria-label="Rejeitar operação"
+                        aria-label={messages.tooltips.rejeitar}
                       >
                         <CloseIcon />
                       </IconButton>
@@ -175,7 +169,7 @@ export const OperacaoFinanceiraList = React.memo(({
                         }
                       }}
                       disabled={isLoading}
-                      aria-label="Registrar pagamento"
+                      aria-label={messages.tooltips.registrar}
                     >
                       <MoneyIcon />
                     </IconButton>
@@ -188,7 +182,7 @@ export const OperacaoFinanceiraList = React.memo(({
                         color="primary"
                         onClick={() => onEdit?.(operacao.id)}
                         disabled={isLoading}
-                        aria-label="Editar operação"
+                        aria-label={messages.tooltips.editar}
                       >
                         <EditIcon />
                       </IconButton>
@@ -197,7 +191,7 @@ export const OperacaoFinanceiraList = React.memo(({
                         color="error"
                         onClick={() => onDelete?.(operacao.id)}
                         disabled={isLoading}
-                        aria-label="Excluir operação"
+                        aria-label={messages.tooltips.excluir}
                       >
                         <DeleteIcon />
                       </IconButton>
@@ -211,4 +205,6 @@ export const OperacaoFinanceiraList = React.memo(({
       </Table>
     </TableContainer>
   );
-}); 
+});
+
+export default OperacaoFinanceiraList; 

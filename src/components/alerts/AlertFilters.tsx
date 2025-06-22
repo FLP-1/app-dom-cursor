@@ -2,8 +2,8 @@
  * Arquivo: AlertFilters.tsx
  * Caminho: src/components/alerts/AlertFilters.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-01-27
+ * Descrição: Componente de filtros de alertas com mensagens centralizadas
  */
 
 import React from 'react';
@@ -11,6 +11,8 @@ import { Grid, TextField, MenuItem, Tooltip, InputAdornment } from '@mui/materia
 import { Controller } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { tooltips } from '@/i18n/tooltips';
+import { interfaceMessages } from '@/i18n/messages/interface.messages';
+import { useLanguage } from '@/hooks/useLanguage';
 
 interface AlertFiltersProps {
   control: any; // Use o tipo correto do react-hook-form se disponível
@@ -26,6 +28,9 @@ const severidades = [
 ];
 
 export const AlertFilters: React.FC<AlertFiltersProps> = ({ control, tipos }) => {
+  const { language } = useLanguage();
+  const messages = interfaceMessages[language].common;
+
   return (
     <Grid container columns={12} spacing={2} alignItems="center">
       <Grid gridColumn={{ xs: 'span 12', sm: 'span 2', md: 'span 2', lg: 'span 2', xl: 'span 2' }}>
@@ -33,10 +38,10 @@ export const AlertFilters: React.FC<AlertFiltersProps> = ({ control, tipos }) =>
           name="type"
           control={control}
           render={({ field }) => (
-            <Tooltip title={tooltips.tipoAlerta.pt} arrow>
+            <Tooltip title={tooltips.tipoAlerta[language]} arrow>
               <span>
-                <TextField select label="Tipo" fullWidth size="small" {...field}>
-                  <MenuItem value="">Todos</MenuItem>
+                <TextField select label={messages.type} fullWidth size="small" {...field}>
+                  <MenuItem value="">{messages.all}</MenuItem>
                   {tipos?.map((tipo) => (
                     <MenuItem key={tipo} value={tipo}>{tipo}</MenuItem>
                   ))}
@@ -51,9 +56,9 @@ export const AlertFilters: React.FC<AlertFiltersProps> = ({ control, tipos }) =>
           name="severity"
           control={control}
           render={({ field }) => (
-            <Tooltip title={tooltips.severidadeAlerta.pt} arrow>
+            <Tooltip title={tooltips.severidadeAlerta[language]} arrow>
               <span>
-                <TextField select label="Severidade" fullWidth size="small" {...field}>
+                <TextField select label={messages.severity} fullWidth size="small" {...field}>
                   {severidades.map((s) => (
                     <MenuItem key={s.value} value={s.value}>{s.label}</MenuItem>
                   ))}
@@ -68,10 +73,10 @@ export const AlertFilters: React.FC<AlertFiltersProps> = ({ control, tipos }) =>
           name="startDate"
           control={control}
           render={({ field }) => (
-            <Tooltip title={tooltips.alertaDataInicial.pt} arrow>
+            <Tooltip title={tooltips.alertaDataInicial[language]} arrow>
               <span>
                 <DatePicker
-                  label="Data inicial"
+                  label={messages.initialDate}
                   inputFormat="dd/MM/yyyy"
                   {...field}
                   slotProps={{ textField: { fullWidth: true, size: 'small' } }}
@@ -86,10 +91,10 @@ export const AlertFilters: React.FC<AlertFiltersProps> = ({ control, tipos }) =>
           name="endDate"
           control={control}
           render={({ field }) => (
-            <Tooltip title={tooltips.alertaDataFinal.pt} arrow>
+            <Tooltip title={tooltips.alertaDataFinal[language]} arrow>
               <span>
                 <DatePicker
-                  label="Data final"
+                  label={messages.finalDate}
                   inputFormat="dd/MM/yyyy"
                   {...field}
                   slotProps={{ textField: { fullWidth: true, size: 'small' } }}
@@ -104,9 +109,9 @@ export const AlertFilters: React.FC<AlertFiltersProps> = ({ control, tipos }) =>
           name="message"
           control={control}
           render={({ field }) => (
-            <Tooltip title={tooltips.descricaoAlerta.pt} arrow>
+            <Tooltip title={tooltips.descricaoAlerta[language]} arrow>
               <span>
-                <TextField label="Mensagem" fullWidth size="medium" {...field} />
+                <TextField label={messages.message} fullWidth size="medium" {...field} />
               </span>
             </Tooltip>
           )}

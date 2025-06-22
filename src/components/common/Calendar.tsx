@@ -2,8 +2,8 @@
  * Arquivo: Calendar.tsx
  * Caminho: src/components/common/Calendar.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-01-27
+ * Descrição: Componente de calendário com suporte a eventos e múltiplas visualizações.
  */
 
 import React, { useState } from 'react';
@@ -24,6 +24,8 @@ import {
 import { format, addMonths, subMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isToday } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { tooltips } from '@/i18n/tooltips';
+import { useMessages } from '@/hooks/useMessages';
+import { commonMessages } from '@/i18n/messages/common.messages';
 
 export interface CalendarEvent {
   id: string;
@@ -49,6 +51,7 @@ export const Calendar: React.FC<CalendarProps> = ({
   onDateClick,
   onMonthChange,
 }) => {
+  const { messages } = useMessages(commonMessages);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [view, setView] = useState<ViewType>('month');
 
@@ -87,7 +90,7 @@ export const Calendar: React.FC<CalendarProps> = ({
     return (
       <Box>
         <Box display="grid" gridTemplateColumns="repeat(7, 1fr)" gap={1}>
-          {['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'].map((day) => (
+          {messages.calendar.weekDays.map((day) => (
             <Typography
               key={day}
               variant="subtitle2"
@@ -180,9 +183,9 @@ export const Calendar: React.FC<CalendarProps> = ({
           onChange={handleViewChange}
           size="small"
         >
-          <ToggleButton value="day">Dia</ToggleButton>
-          <ToggleButton value="week">Semana</ToggleButton>
-          <ToggleButton value="month">Mês</ToggleButton>
+          <ToggleButton value="day">{messages.calendar.views.day}</ToggleButton>
+          <ToggleButton value="week">{messages.calendar.views.week}</ToggleButton>
+          <ToggleButton value="month">{messages.calendar.views.month}</ToggleButton>
         </ToggleButtonGroup>
       </Box>
 

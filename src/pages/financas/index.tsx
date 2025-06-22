@@ -22,22 +22,26 @@ import {
   Delete, Edit, MoreVert, CalendarToday, Payment
 } from '@mui/icons-material';
 import { useFinanceData } from '@/hooks/useFinanceData';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { messages } from '@/i18n/messages';
 
 const Financas = () => {
   const { data, isLoading, isError, addTransaction, updateTransaction, deleteTransaction } = useFinanceData();
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState<any>(null);
+  const { language } = useLanguage();
+  const msg = messages[language];
 
   if (isLoading) {
     return (
       <Box sx={{ p: 3, background: '#f8fafc', minHeight: '100vh' }}>
         <Skeleton variant="text" width={250} height={60} />
         <Skeleton variant="text" width={200} height={30} />
-        <Grid container spacing={3} mt={2}>
-          <Grid item xs={12} md={8}>
+        <Grid container columns={12} spacing={3} mt={2}>
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 8' }}>
             <Skeleton variant="rectangular" height={400} sx={{ borderRadius: 3 }} />
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid gridColumn={{ xs: 'span 12', md: 'span 4' }}>
             <Skeleton variant="rectangular" height={200} sx={{ borderRadius: 3, mb: 2 }} />
             <Skeleton variant="rectangular" height={200} sx={{ borderRadius: 3 }} />
           </Grid>
@@ -49,7 +53,7 @@ const Financas = () => {
   if (isError) {
     return (
       <Box sx={{ p: 3, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <Typography color="error">Falha ao carregar os dados financeiros.</Typography>
+        <Typography color="error">{msg.financeiro.loadError}</Typography>
       </Box>
     );
   }
@@ -102,9 +106,9 @@ const Financas = () => {
   };
 
   const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('pt-BR', {
+    return new Intl.NumberFormat(language === 'pt' ? 'pt-BR' : 'en-US', {
       style: 'currency',
-      currency: 'BRL'
+      currency: language === 'pt' ? 'BRL' : 'USD'
     }).format(value);
   };
 
@@ -127,7 +131,7 @@ const Financas = () => {
       }
       setOpenDialog(false);
     } catch (error) {
-      console.error('Erro ao salvar transação:', error);
+      console.error(msg.financeiro.saveError, error);
     }
   };
 
@@ -137,10 +141,10 @@ const Financas = () => {
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
         <Box>
           <Typography variant="h4" fontWeight="bold" color="primary">
-            Finanças 💰
+            {msg.financeiro.title}
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            Gerencie suas receitas, despesas e orçamentos
+            {msg.financeiro.subtitle}
           </Typography>
         </Box>
         <Button
@@ -149,13 +153,13 @@ const Financas = () => {
           onClick={handleAddTransaction}
           sx={{ borderRadius: 2 }}
         >
-          Nova Transação
+          {msg.financeiro.newTransaction}
         </Button>
       </Box>
 
       {/* Cards de Estatísticas */}
-      <Grid container spacing={3} mb={4}>
-        <Grid item xs={12} sm={6} md={3}>
+      <Grid container columns={12} spacing={3} mb={4}>
+        <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}>
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Box display="flex" alignItems="center" gap={2}>
@@ -167,14 +171,14 @@ const Financas = () => {
                     {formatCurrency(monthlyStats.income)}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Receitas
+                    {msg.financeiro.income}
                   </Typography>
                 </Box>
               </Box>
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}>
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Box display="flex" alignItems="center" gap={2}>
@@ -186,14 +190,14 @@ const Financas = () => {
                     {formatCurrency(monthlyStats.expenses)}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Despesas
+                    {msg.financeiro.expenses}
                   </Typography>
                 </Box>
               </Box>
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}>
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Box display="flex" alignItems="center" gap={2}>
@@ -205,14 +209,14 @@ const Financas = () => {
                     {formatCurrency(monthlyStats.balance)}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Saldo
+                    {msg.financeiro.balance}
                   </Typography>
                 </Box>
               </Box>
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }}>
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Box display="flex" alignItems="center" gap={2}>
@@ -224,7 +228,7 @@ const Financas = () => {
                     {formatCurrency(monthlyStats.savings)}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Poupança
+                    {msg.financeiro.savings}
                   </Typography>
                 </Box>
               </Box>
@@ -233,13 +237,13 @@ const Financas = () => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={3}>
+      <Grid container columns={12} spacing={3}>
         {/* Transações Recentes */}
-        <Grid item xs={12} md={8}>
+        <Grid gridColumn={{ xs: 'span 12', md: 'span 8' }}>
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={3}>
-                Transações Recentes
+                {msg.financeiro.recentTransactions}
               </Typography>
               
               <List>
@@ -274,7 +278,7 @@ const Financas = () => {
                             {transaction.description}
                           </Typography>
                           <Chip
-                            label={transaction.type === 'income' ? 'Receita' : 'Despesa'}
+                            label={transaction.type === 'income' ? msg.financeiro.income : msg.financeiro.expenses}
                             size="small"
                             sx={{
                               background: transaction.type === 'income' ? '#4CAF50' : '#F44336',
@@ -337,12 +341,12 @@ const Financas = () => {
         </Grid>
 
         {/* Sidebar */}
-        <Grid item xs={12} md={4}>
+        <Grid gridColumn={{ xs: 'span 12', md: 'span 4' }}>
           {/* Orçamentos */}
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', mb: 3 }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={2}>
-                Orçamentos
+                {msg.financeiro.budgets}
               </Typography>
               {budgets.map((budget) => {
                 const percentage = (budget.spent / budget.limit) * 100;
@@ -370,7 +374,7 @@ const Financas = () => {
                       }}
                     />
                     <Typography variant="caption" color="text.secondary" mt={0.5}>
-                      {percentage.toFixed(1)}% utilizado
+                      {percentage.toFixed(1)}% {msg.financeiro.used}
                     </Typography>
                   </Box>
                 );
@@ -382,7 +386,7 @@ const Financas = () => {
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', mb: 3 }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={2}>
-                Pagamentos Pendentes
+                {msg.financeiro.pendingPayments}
               </Typography>
               {upcomingPayments.map((payment) => (
                 <Box key={payment.id} display="flex" alignItems="center" py={1}>
@@ -414,7 +418,7 @@ const Financas = () => {
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={2}>
-                Gastos por Categoria
+                {msg.financeiro.expensesByCategory}
               </Typography>
               {categoryStats.map((stat) => (
                 <Box key={stat.category} display="flex" alignItems="center" py={1}>
@@ -448,7 +452,7 @@ const Financas = () => {
       {/* Dialog para adicionar/editar transação */}
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="sm" fullWidth>
         <DialogTitle>
-          {selectedTransaction ? 'Editar Transação' : 'Nova Transação'}
+          {selectedTransaction ? msg.financeiro.editTransaction : msg.financeiro.newTransaction}
         </DialogTitle>
         <DialogContent>
           <Box sx={{ pt: 2 }}>
@@ -456,26 +460,26 @@ const Financas = () => {
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  label="Descrição"
+                  label={msg.financeiro.description}
                   defaultValue={selectedTransaction?.description || ''}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
-                  <InputLabel>Tipo</InputLabel>
+                  <InputLabel>{msg.financeiro.type}</InputLabel>
                   <Select
                     defaultValue={selectedTransaction?.type || 'expense'}
-                    label="Tipo"
+                    label={msg.financeiro.type}
                   >
-                    <MenuItem value="income">Receita</MenuItem>
-                    <MenuItem value="expense">Despesa</MenuItem>
+                    <MenuItem value="income">{msg.financeiro.income}</MenuItem>
+                    <MenuItem value="expense">{msg.financeiro.expenses}</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
-                  label="Valor"
+                  label={msg.financeiro.value}
                   type="number"
                   defaultValue={selectedTransaction?.amount || ''}
                 />
@@ -483,14 +487,14 @@ const Financas = () => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
-                  label="Categoria"
+                  label={msg.financeiro.category}
                   defaultValue={selectedTransaction?.category || ''}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
-                  label="Data"
+                  label={msg.financeiro.date}
                   type="date"
                   defaultValue={selectedTransaction?.date || ''}
                   InputLabelProps={{ shrink: true }}
@@ -498,15 +502,15 @@ const Financas = () => {
               </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel>Método de Pagamento</InputLabel>
+                  <InputLabel>{msg.financeiro.paymentMethod}</InputLabel>
                   <Select
                     defaultValue={selectedTransaction?.paymentMethod || 'pix'}
-                    label="Método de Pagamento"
+                    label={msg.financeiro.paymentMethod}
                   >
-                    <MenuItem value="cash">Dinheiro</MenuItem>
-                    <MenuItem value="card">Cartão</MenuItem>
-                    <MenuItem value="transfer">Transferência</MenuItem>
-                    <MenuItem value="pix">PIX</MenuItem>
+                    <MenuItem value="cash">{msg.financeiro.cash}</MenuItem>
+                    <MenuItem value="card">{msg.financeiro.card}</MenuItem>
+                    <MenuItem value="transfer">{msg.financeiro.transfer}</MenuItem>
+                    <MenuItem value="pix">{msg.financeiro.pix}</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -514,12 +518,12 @@ const Financas = () => {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenDialog(false)}>Cancelar</Button>
+          <Button onClick={() => setOpenDialog(false)}>{msg.common.cancel}</Button>
           <Button 
             variant="contained" 
             onClick={() => handleSaveTransaction({})}
           >
-            Salvar
+            {msg.common.save}
           </Button>
         </DialogActions>
       </Dialog>

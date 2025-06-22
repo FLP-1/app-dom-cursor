@@ -2,13 +2,14 @@
  * Arquivo: FormFileUpload.tsx
  * Caminho: src/components/forms/inputs/FormFileUpload.tsx
  * Criado em: 2024-06-07
- * Última atualização: 2024-06-07
+ * Última atualização: 2025-01-27
  * Descrição: Componente de upload de arquivos com Material UI.
  */
 
 import { Button, TextField, TextFieldProps } from '@mui/material';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { ChangeEvent } from 'react';
+import { documentMessages } from '@/i18n/messages/document.messages';
 
 interface FormFileUploadProps<T extends FieldValues> extends Omit<TextFieldProps, 'name'> {
   name: Path<T>;
@@ -26,6 +27,9 @@ export function FormFileUpload<T extends FieldValues>({
   multiple,
   ...props
 }: FormFileUploadProps<T>) {
+  // Usar mensagens em português por padrão
+  const messages = documentMessages.pt;
+
   return (
     <Controller
       name={name}
@@ -47,6 +51,7 @@ export function FormFileUpload<T extends FieldValues>({
           inputProps={{
             accept,
             multiple,
+            'aria-label': messages.tooltips.selecionarArquivo,
           }}
         />
       )}

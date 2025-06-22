@@ -2,8 +2,8 @@
  * Arquivo: S1202InfoPerApurForm.tsx
  * Caminho: src/components/esocial/events/S1202InfoPerApurForm.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-01-27
+ * Descrição: Componente de formulário S1202 Info Per Apur com mensagens centralizadas
  */
 
 import { useTranslation } from 'react-i18next';
@@ -19,6 +19,8 @@ import AddIcon from '@mui/icons-material/Add';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { S1202DetVerbasForm } from '@/components/esocial/events/S1202DetVerbasForm';
 import { tooltips } from '@/i18n/tooltips';
+import { interfaceMessages } from '@/i18n/messages/interface.messages';
+import { useLanguage } from '@/hooks/useLanguage';
 
 interface S1202InfoPerApurFormProps {
   control: Control<S1202Schema>;
@@ -27,6 +29,9 @@ interface S1202InfoPerApurFormProps {
 
 export const S1202InfoPerApurForm = ({ control, dmDevIndex }: S1202InfoPerApurFormProps) => {
   const { t } = useTranslation();
+  const { language } = useLanguage();
+  const messages = interfaceMessages[language].common;
+  
   const { fields, append, remove } = useFieldArray({
     control,
     name: `dmDev.${dmDevIndex}.infoPerApur.ideEstabLot`
@@ -39,7 +44,7 @@ export const S1202InfoPerApurForm = ({ control, dmDevIndex }: S1202InfoPerApurFo
           <Typography variant="subtitle1">
             {t('esocial.S1202.dmDev.infoPerApur.title')}
           </Typography>
-          <Tooltip title={tooltips.esocialS1202InfoPerApurHelp.pt}>
+          <Tooltip title={tooltips.esocialS1202InfoPerApurHelp[language]}>
             <HelpOutlineIcon fontSize="small" color="action" />
           </Tooltip>
         </Box>
@@ -71,7 +76,7 @@ export const S1202InfoPerApurForm = ({ control, dmDevIndex }: S1202InfoPerApurFo
             </Typography>
             <IconButton
               onClick={() => remove(index)}
-              aria-label="Remover estabelecimento"
+              aria-label={messages.removeEstablishment}
               color="error"
             >
               <DeleteIcon />

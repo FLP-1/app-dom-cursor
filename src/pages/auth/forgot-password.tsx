@@ -2,7 +2,7 @@
  * Arquivo: forgot-password.tsx
  * Caminho: src/pages/auth/forgot-password.tsx
  * Criado em: 2025-06-13
- * Última atualização: 2025-06-13
+ * Última atualização: 2025-01-27
  * Descrição: Página de recuperação de senha, com validação de CPF e e-mail, e integração com API.
  */
 
@@ -12,6 +12,7 @@ import { Box, Button, Typography, Paper, CircularProgress, Link } from '@mui/mat
 import { FormInput } from '@/components/common';
 import { useNotification } from '@/hooks';
 import { useRouter } from 'next/router';
+import { useMessages } from '@/hooks/useMessages';
 
 interface ForgotPasswordForm {
   cpf: string;
@@ -40,6 +41,7 @@ function validateEmail(email: string): boolean {
 }
 
 const ForgotPasswordPage: React.FC = () => {
+  const { messages } = useMessages();
   const router = useRouter();
   const { error, success } = useNotification();
   const [loading, setLoading] = React.useState(false);
@@ -68,18 +70,18 @@ const ForgotPasswordPage: React.FC = () => {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.message || 'Erro ao solicitar recuperação de senha');
+        throw new Error(result.message || messages.auth.forgotPassword.errors.recoveryError);
       }
 
-      success('Instruções de recuperação de senha enviadas para seu e-mail!');
+      success(messages.auth.forgotPassword.success.instructionsSent);
       setTimeout(() => {
         router.push('/auth/login');
       }, 2000);
     } catch (err: unknown) {
       if (err instanceof Error) {
-        error(err.message || 'Erro ao solicitar recuperação de senha');
+        error(err.message || messages.auth.forgotPassword.errors.recoveryError);
       } else {
-        error('Erro ao solicitar recuperação de senha');
+        error(messages.auth.forgotPassword.errors.recoveryError);
       }
     } finally {
       setLoading(false);
@@ -90,23 +92,23 @@ const ForgotPasswordPage: React.FC = () => {
     <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" bgcolor="#f5f6fa">
       <Paper elevation={3} sx={{ p: 4, minWidth: 340, maxWidth: 400 }}>
         <Typography variant="h5" mb={2} fontWeight={700} align="center">
-          Recuperar Senha
+          {messages.auth.forgotPassword.title}
         </Typography>
         <Typography variant="body2" color="text.secondary" mb={3} align="center">
-          Informe seu CPF e e-mail cadastrados para receber as instruções de recuperação de senha.
+          {messages.auth.forgotPassword.subtitle}
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <Controller
             name="cpf"
             control={control}
             rules={{
-              required: 'CPF é obrigatório',
-              validate: (value) => validateCPF(value) || 'CPF inválido',
+              required: messages.auth.forgotPassword.errors.required,
+              validate: (value) => validateCPF(value) || messages.auth.forgotPassword.errors.invalidCPF,
             }}
             render={({ field }) => (
               <FormInput
                 {...field}
-                label="CPF"
+                label={messages.auth.forgotPassword.fields.cpf}
                 mask="999.999.999-99"
                 error={!!errors.cpf}
                 helperText={errors.cpf?.message}
@@ -120,13 +122,13 @@ const ForgotPasswordPage: React.FC = () => {
             name="email"
             control={control}
             rules={{
-              required: 'E-mail é obrigatório',
-              validate: (value) => validateEmail(value) || 'E-mail inválido',
+              required: messages.auth.forgotPassword.errors.required,
+              validate: (value) => validateEmail(value) || messages.auth.forgotPassword.errors.invalidEmail,
             }}
             render={({ field }) => (
               <FormInput
                 {...field}
-                label="E-mail"
+                label={messages.auth.forgotPassword.fields.email}
                 type="email"
                 error={!!errors.email}
                 helperText={errors.email?.message}
@@ -145,16 +147,16 @@ const ForgotPasswordPage: React.FC = () => {
               disabled={loading}
               size="large"
               sx={{ fontWeight: 600 }}
-              aria-label="Recuperar Senha"
+              aria-label={messages.auth.forgotPassword.buttons.recover}
             >
-              {loading ? <CircularProgress size={24} color="inherit" /> : 'Recuperar Senha'}
+              {loading ? <CircularProgress size={24} color="inherit" /> : messages.auth.forgotPassword.buttons.recover}
             </Button>
           </Box>
           <Box mt={2} textAlign="center">
             <Typography variant="body2">
-              Lembrou sua senha?{' '}
+              {messages.auth.forgotPassword.links.rememberPassword}{' '}
               <Link href="/auth/login" sx={{ textDecoration: 'none' }}>
-                Voltar para o login
+                {messages.auth.forgotPassword.links.backToLogin}
               </Link>
             </Typography>
           </Box>

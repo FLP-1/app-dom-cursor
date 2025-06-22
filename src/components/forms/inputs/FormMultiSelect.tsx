@@ -2,7 +2,7 @@
  * Arquivo: FormMultiSelect.tsx
  * Caminho: src/components/form/FormMultiSelect.tsx
  * Criado em: 2025-06-07
- * Última atualização: 2025-06-07
+ * Última atualização: 2025-01-27
  * Descrição: Componente de seleção múltipla integrado com react-hook-form e Material UI, com suporte a validação e acessibilidade
  */
 
@@ -10,6 +10,7 @@ import React from 'react';
 import { Select, MenuItem, FormControl, InputLabel, Chip, SxProps, Theme, Box } from '@mui/material';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import HelperText from '@/components/common/HelperText';
+import { authMessages } from '@/i18n/messages/auth.messages';
 
 export interface MultiSelectOption {
   value: string;
@@ -37,6 +38,9 @@ const FormMultiSelect = <T extends FieldValues>({
   error,
   sx,
 }: FormMultiSelectProps<T>) => {
+  // Usar mensagens em português por padrão
+  const messages = authMessages.pt;
+
   return (
     <Controller
       name={name}
@@ -50,7 +54,8 @@ const FormMultiSelect = <T extends FieldValues>({
               multiple
               labelId={`${name}-label`}
               label={label}
-              placeholder={placeholder}
+              placeholder={placeholder || messages.placeholders.selecionarMultiplo}
+              aria-label={messages.tooltips.selecaoMultipla}
               renderValue={(selected) => (
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                   {(selected as string[]).map((value) => {

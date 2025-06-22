@@ -2,7 +2,7 @@
  * Arquivo: NotificationContainer.tsx
  * Caminho: src/components/common/NotificationContainer.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-20
+ * Última atualização: 2025-01-27
  * Descrição: Container de notificações para exibir alertas no sistema
  */
 
@@ -10,8 +10,11 @@ import React, { useEffect, useState } from 'react';
 import { Box, Snackbar, Alert, AlertTitle, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { Notification, notificationManager, NotificationType } from '@/services/notification.service';
+import { useMessages } from '@/hooks/useMessages';
+import { commonMessages } from '@/i18n/messages/common.messages';
 
 export const NotificationContainer: React.FC = () => {
+  const { messages } = useMessages(commonMessages);
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
   useEffect(() => {
@@ -64,7 +67,7 @@ export const NotificationContainer: React.FC = () => {
             action={
               <IconButton
                 size="small"
-                aria-label="fechar"
+                aria-label={messages.notifications.close}
                 color="inherit"
                 onClick={() => handleClose(notification.id)}
               >

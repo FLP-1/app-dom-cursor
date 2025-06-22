@@ -2,13 +2,14 @@
  * Arquivo: DocumentHeader.tsx
  * Caminho: src/components/documents/DocumentHeader.tsx
  * Criado em: 2025-06-07
- * Última atualização: 2025-06-07
+ * Última atualização: 2025-01-27
  * Descrição: Componente de cabeçalho para a página de gestão de documentos, contendo título, botão de upload e campo de busca
  */
 
 import React from 'react';
 import { Box, Typography, Button, TextField } from '@mui/material';
 import { tooltips } from '@/i18n/tooltips';
+import { documentMessages } from '@/i18n/messages/document.messages';
 
 interface DocumentHeaderProps {
   onUploadClick: () => void;
@@ -17,6 +18,9 @@ interface DocumentHeaderProps {
 }
 
 const DocumentHeader: React.FC<DocumentHeaderProps> = ({ onUploadClick, onSearch, onFilter }) => {
+  // Usar mensagens em português por padrão
+  const messages = documentMessages.pt;
+
   return (
     <Box 
       component="header"
@@ -29,7 +33,7 @@ const DocumentHeader: React.FC<DocumentHeaderProps> = ({ onUploadClick, onSearch
     >
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
         <Typography variant="h4" sx={{ m: 0, fontWeight: 700, color: 'primary.dark' }}>
-          Gestão de Documentos
+          {messages.titulo}
         </Typography>
       </Box>
 
@@ -45,11 +49,11 @@ const DocumentHeader: React.FC<DocumentHeaderProps> = ({ onUploadClick, onSearch
             }
           }}
         >
-          Upload
+          {messages.labels.upload}
         </Button>
 
         <TextField
-          placeholder="Buscar documentos..."
+          placeholder={messages.placeholders.buscar}
           onChange={(e) => onSearch(e.target.value)}
           size="small"
           sx={{

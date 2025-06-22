@@ -2,12 +2,13 @@
  * Arquivo: FormSelect.tsx
  * Caminho: src/components/form/FormSelect.tsx
  * Criado em: 2025-06-07
- * Última atualização: 2025-06-14
+ * Última atualização: 2025-01-27
  * Descrição: Componente de select reutilizável integrado com react-hook-form e Material UI
  */
 
 import { TextFieldProps, Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/material';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
+import { authMessages } from '@/i18n/messages/auth.messages';
 
 interface FormSelectProps<T extends FieldValues> extends Omit<TextFieldProps, 'name' | 'select'> {
   name: Path<T>;
@@ -26,10 +27,15 @@ export const FormSelect = <T extends FieldValues>({
   control, 
   options,
   label,
-  placeholder = 'Selecione...',
+  placeholder,
   required,
   ...props 
 }: FormSelectProps<T>) => {
+  // Usar mensagens em português por padrão
+  const messages = authMessages.pt;
+  
+  const defaultPlaceholder = placeholder || messages.placeholders.selecionar;
+  
   return (
     <Controller
       name={name}
@@ -69,7 +75,7 @@ export const FormSelect = <T extends FieldValues>({
           >
             {!options.some(option => option.value === '') && (
               <MenuItem value="" disabled>
-                {placeholder}
+                {defaultPlaceholder}
               </MenuItem>
             )}
             {options.map((option) => (

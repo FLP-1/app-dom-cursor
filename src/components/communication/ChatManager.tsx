@@ -2,8 +2,8 @@
  * Arquivo: ChatManager.tsx
  * Caminho: src/components/communication/ChatManager.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-01-27
+ * Descrição: Gerenciador de chat com suporte a conversas privadas, grupos e broadcast.
  */
 
 import React, { useState } from 'react';
@@ -30,6 +30,8 @@ import { ChatList } from '@/components/communication/ChatList';
 import { CommunicationService } from '@/lib/communication/service';
 import { PermissionChecker } from '@/lib/permissions/checker';
 import { UserRole } from '@/lib/permissions/types';
+import { useMessages } from '@/hooks/useMessages';
+import { commonMessages } from '@/i18n/messages/common.messages';
 
 interface ChatManagerProps {
   communicationService: CommunicationService;
@@ -46,6 +48,7 @@ export const ChatManager: React.FC<ChatManagerProps> = ({
   permissionChecker,
   availableUsers,
 }) => {
+  const { messages } = useMessages(commonMessages);
   const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
   const [openNewChat, setOpenNewChat] = useState(false);
   const [newChatName, setNewChatName] = useState('');
@@ -77,7 +80,7 @@ export const ChatManager: React.FC<ChatManagerProps> = ({
         <Grid gridColumn={{ xs: 'span 12', md: 'span 4' }}>
           <Paper sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
             <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
-              <Typography variant="h6">Conversas</Typography>
+              <Typography variant="h6">{messages.chat.conversations}</Typography>
               {permissionChecker.can('create', 'chat') && (
                 <Button
                   variant="contained"
@@ -86,7 +89,7 @@ export const ChatManager: React.FC<ChatManagerProps> = ({
                   sx={{ mt: 2 }}
                   onClick={() => setOpenNewChat(true)}
                 >
-                  Nova Conversa
+                  {messages.chat.newConversation}
                 </Button>
               )}
             </Box>
@@ -117,7 +120,7 @@ export const ChatManager: React.FC<ChatManagerProps> = ({
                 }}
               >
                 <Typography variant="h6" color="text.secondary">
-                  Selecione uma conversa para começar
+                  {messages.chat.selectConversation}
                 </Typography>
               </Box>
             )}
@@ -127,26 +130,26 @@ export const ChatManager: React.FC<ChatManagerProps> = ({
 
       {/* Diálogo de Nova Conversa */}
       <Dialog open={openNewChat} onClose={() => setOpenNewChat(false)} maxWidth="sm" fullWidth>
-        <DialogTitle>Nova Conversa</DialogTitle>
+        <DialogTitle>{messages.chat.newConversation}</DialogTitle>
         <DialogContent>
           <Box sx={{ mt: 2 }}>
             <TextField
               fullWidth
-              label="Nome da Conversa"
+              label={messages.chat.conversationName}
               value={newChatName}
               onChange={(e) => setNewChatName(e.target.value)}
               sx={{ mb: 2 }}
             />
             <FormControl fullWidth sx={{ mb: 2 }}>
-              <InputLabel>Tipo de Conversa</InputLabel>
+              <InputLabel>{messages.chat.conversationType}</InputLabel>
               <Select
                 value={newChatType}
                 onChange={(e) => setNewChatType(e.target.value as 'private' | 'group' | 'broadcast')}
-                label="Tipo de Conversa"
+                label={messages.chat.conversationType}
               >
-                <MenuItem value="private">Privada</MenuItem>
-                <MenuItem value="group">Grupo</MenuItem>
-                <MenuItem value="broadcast">Broadcast</MenuItem>
+                <MenuItem value="private">{messages.chat.types.private}</MenuItem>
+                <MenuItem value="group">{messages.chat.types.group}</MenuItem>
+                <MenuItem value="broadcast">{messages.chat.types.broadcast}</MenuItem>
               </Select>
             </FormControl>
             <Autocomplete
@@ -155,7 +158,7 @@ export const ChatManager: React.FC<ChatManagerProps> = ({
               getOptionLabel={(option) => option.name}
               value={selectedUsers}
               onChange={(_, newValue) => setSelectedUsers(newValue)}
-              slotProps={{ textField: { label: "Participantes", placeholder: "Selecione os participantes" } }}
+              slotProps={{ textField: { label: messages.chat.participants, placeholder: messages.chat.selectParticipants } }}
               renderTags={(value, getTagProps) =>
                 value.map((option, index) => (
                   <Chip
@@ -169,13 +172,13 @@ export const ChatManager: React.FC<ChatManagerProps> = ({
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenNewChat(false)}>Cancelar</Button>
+          <Button onClick={() => setOpenNewChat(false)}>{messages.common.cancel}</Button>
           <Button
             onClick={handleCreateChat}
             variant="contained"
             disabled={!newChatName.trim() || selectedUsers.length === 0}
           >
-            Criar
+            {messages.common.create}
           </Button>
         </DialogActions>
       </Dialog>

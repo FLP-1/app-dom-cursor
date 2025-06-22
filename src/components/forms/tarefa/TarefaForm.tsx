@@ -2,16 +2,16 @@
  * Arquivo: TarefaForm.tsx
  * Caminho: src/components/forms/tarefa/TarefaForm.tsx
  * Criado em: 2025-06-13
- * Última atualização: 2025-06-13
+ * Última atualização: 2025-01-27
  * Descrição: Componente principal do formulário de tarefa.
  */
 
 import { Stack, Button, Alert } from '@mui/material';
-import { useTranslation } from 'next-i18next';
 import { LoadingButton } from '@mui/lab';
 import { TarefaFormProps } from './TarefaFormTypes';
 import { useTarefaForm } from './useTarefaForm';
 import { TarefaFormFields } from './TarefaFormFields';
+import { tarefaMessages } from '@/i18n/messages/tarefa.messages';
 
 export function TarefaForm({
   initialValues,
@@ -19,7 +19,7 @@ export function TarefaForm({
   onCancel,
   loading: externalLoading
 }: TarefaFormProps) {
-  const { t } = useTranslation();
+  const messages = tarefaMessages.pt;
   const {
     control,
     handleSubmit,
@@ -56,7 +56,7 @@ export function TarefaForm({
               onClick={onCancel}
               disabled={isLoading}
             >
-              {t('common.actions.cancel')}
+              {messages.botoes.cancelar}
             </Button>
           )}
 
@@ -66,7 +66,7 @@ export function TarefaForm({
             loading={isLoading}
             disabled={isLoading}
           >
-            {t('common.actions.save')}
+            {messages.botoes.salvar}
           </LoadingButton>
         </Stack>
       </Stack>
