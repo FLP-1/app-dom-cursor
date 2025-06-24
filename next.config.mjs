@@ -3,24 +3,29 @@
  * Caminho: next.config.mjs
  * Criado em: 2024-03-19
  * Última atualização: 2025-01-27
- * Descrição: Configuração do Next.js simplificada para resolver problemas do Watchpack
+ * Descrição: Configuração mínima do Next.js para resolver erro do Watchpack
  */
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  // Desabilitar funcionalidades que podem causar problemas com Watchpack
-  experimental: {
-    // Remover optimizePackageImports que estava causando erro
-  },
-  // Configuração específica para resolver problemas do Watchpack
+  // Desabilitar completamente o Watchpack para resolver o erro
   webpack: (config, { dev }) => {
     if (dev) {
-      // Usar polling em vez de file system events para evitar problemas no Windows
+      // Desabilitar file watching e usar apenas polling
       config.watchOptions = {
         poll: 1000,
         aggregateTimeout: 300,
-        ignored: ['**/node_modules', '**/.git', '**/.next', '**/coverage'],
+        ignored: ['**/node_modules', '**/.git', '**/.next', '**/coverage', '**/dist'],
+        followSymlinks: false,
+      };
+      
+      // Desabilitar algumas otimizações que podem causar problemas
+      config.optimization = {
+        ...config.optimization,
+        removeAvailableModules: false,
+        removeEmptyChunks: false,
+        splitChunks: false,
       };
     }
     return config;
