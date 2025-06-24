@@ -120,28 +120,4 @@ export const menuItems = [
     path: '/configuracoes',
     permission: 'config:view',
   },
-  {
-    label: 'Familiar',
-    icon: PeopleIcon,
-    path: '/familiar',
-    permission: 'familiar:view',
-  },
-  {
-    label: 'Empregador',
-    icon: BusinessIcon,
-    path: '/empregador',
-    permission: 'empregador:view',
-  },
-  {
-    label: 'Empregado',
-    icon: PeopleIcon,
-    path: '/empregado',
-    permission: 'empregado:view',
-  },
-  {
-    label: 'Parceiro',
-    icon: GroupIcon,
-    path: '/parceiro',
-    permission: 'parceiro:view',
-  },
 ]; 

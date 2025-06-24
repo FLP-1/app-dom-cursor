@@ -3,7 +3,7 @@
  * Caminho: src/pages/api/sms/index.ts
  * Criado em: 2025-01-27
  * Última atualização: 2025-01-27
- * Descrição: API para gerenciar SMS
+ * Descrição: API para gerenciamento de SMS
  */
 
 import { NextApiRequest, NextApiResponse } from 'next';
@@ -11,6 +11,7 @@ import { getSession } from 'next-auth/react';
 import { prisma } from '@/lib/prisma';
 import { SMSService } from '@/services/sms.service';
 import { z } from 'zod';
+import { smsMessages } from '@/i18n/messages/sms.messages';
 
 const smsSchema = z.object({
   tipo: z.enum(['sistema', 'usuario', 'empresa', 'ponto', 'ocorrencia', 'documento', 'esocial', 'backup', 'seguranca']),
@@ -26,13 +27,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(401).json({ message: 'Não autorizado' });
   }
 
-  switch (req.method) {
-    case 'GET':
-      return handleGet(req, res, session);
-    case 'POST':
-      return handlePost(req, res, session);
-    default:
-      return res.status(405).json({ message: 'Método não permitido' });
+  try {
+    switch (req.method) {
+      case 'GET':
+        const filtros = req.query;
+        const smsList = await SMSService.listar(filtros);
+        return res.status(200).json(smsList);
+
+      case 'POST':
+        const smsData = req.body;
+        const novoSMS = await SMSService.enviar(smsData);
+        return res.status(201).json(novoSMS);
+
+      default:
+        return res.status(405).json({ message: 'Método não permitido' });
+    }
+  } catch (error) {
+    console.error('Erro na API de SMS:', error);
+    return res.status(500).json({ message: smsMessages.pt.errors.sendError });
   }
 }
 
@@ -53,7 +65,7 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse, session: any
     return res.status(200).json(sms);
   } catch (error) {
     console.error('Erro ao listar SMS:', error);
-    return res.status(500).json({ message: 'Erro interno do servidor' });
+    return res.status(500).json({ message: smsMessages.pt.errors.listError });
   }
 }
 
@@ -65,7 +77,7 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse, session: an
     const sucesso = await SMSService.sendTextMessage(data.numero, data.mensagem);
 
     if (!sucesso) {
-      return res.status(500).json({ message: 'Erro ao enviar SMS' });
+      return res.status(500).json({ message: smsMessages.pt.errors.sendError });
     }
 
     // Salva no banco de dados
@@ -86,12 +98,12 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse, session: an
   } catch (error) {
     if (error instanceof z.ZodError) {
       return res.status(400).json({ 
-        message: 'Dados inválidos', 
+        message: smsMessages.pt.errors.invalidMessage, 
         errors: error.errors 
       });
     }
 
     console.error('Erro ao enviar SMS:', error);
-    return res.status(500).json({ message: 'Erro interno do servidor' });
+    return res.status(500).json({ message: smsMessages.pt.errors.sendError });
   }
 } 

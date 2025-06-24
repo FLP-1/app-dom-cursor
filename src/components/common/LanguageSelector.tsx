@@ -13,12 +13,13 @@ import {
   MenuItem, 
   ListItemIcon, 
   ListItemText,
-  Tooltip 
+  Tooltip,
+  Box
 } from '@mui/material';
 import { Language as LanguageIcon } from '@mui/icons-material';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useMessages } from '@/hooks/useMessages';
-import { commonMessages } from '@/i18n/messages/common.messages';
+import { commonMessages } from '@/i18n/messages';
 
 const LanguageSelector: React.FC = () => {
   const { messages } = useMessages(commonMessages);
@@ -77,7 +78,7 @@ const LanguageSelector: React.FC = () => {
             selected={language === lang.code}
           >
             <ListItemIcon>
-              <span style={{ fontSize: '1.2rem' }}>{lang.flag}</span>
+              <Box component="span" sx={{ fontSize: '1.2rem' }}>{lang.flag}</Box>
             </ListItemIcon>
             <ListItemText>{lang.name}</ListItemText>
           </MenuItem>

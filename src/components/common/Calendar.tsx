@@ -25,7 +25,7 @@ import { format, addMonths, subMonths, startOfMonth, endOfMonth, eachDayOfInterv
 import { ptBR } from 'date-fns/locale';
 import { tooltips } from '@/i18n/tooltips';
 import { useMessages } from '@/hooks/useMessages';
-import { commonMessages } from '@/i18n/messages/common.messages';
+import { commonMessages } from '@/i18n/messages';
 
 export interface CalendarEvent {
   id: string;

@@ -10,7 +10,7 @@ import React from 'react';
 import { Box, Typography, CircularProgress, Link, Paper } from '@mui/material';
 import { Mensagem } from '@/hooks/useChat';
 import { useMessages } from '@/hooks/useMessages';
-import { commonMessages } from '@/i18n/messages/common.messages';
+import { commonMessages } from '@/i18n/messages';
 
 interface ChatWindowProps {
   mensagens: Mensagem[];

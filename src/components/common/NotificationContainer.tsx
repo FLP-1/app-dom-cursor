@@ -11,7 +11,7 @@ import { Box, Snackbar, Alert, AlertTitle, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { Notification, notificationManager, NotificationType } from '@/services/notification.service';
 import { useMessages } from '@/hooks/useMessages';
-import { commonMessages } from '@/i18n/messages/common.messages';
+import { commonMessages } from '@/i18n/messages';
 
 export const NotificationContainer: React.FC = () => {
   const { messages } = useMessages(commonMessages);

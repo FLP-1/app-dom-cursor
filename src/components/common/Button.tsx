@@ -1,18 +1,18 @@
-/**
+﻿/**
  * Arquivo: Button.tsx
  * Caminho: src/components/common/Button.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
- * Descrição: /*
+ * Última atualização: 2025-01-27
+ * Descrição: Componente Button customizado baseado no Material UI
  */
 
-import React from 'react';
-import { Button as MuiButton, SxProps, Theme } from '@mui/material';
+import React from "react";
+import { Button as MuiButton, SxProps, Theme } from "@mui/material";
 
 interface ButtonProps {
   children: React.ReactNode;
-  variant?: 'primary' | 'secondary';
-  type?: 'button' | 'submit' | 'reset';
+  variant?: "primary" | "secondary";
+  type?: "button" | "submit" | "reset";
   disabled?: boolean;
   onClick?: () => void;
   style?: React.CSSProperties;
@@ -21,7 +21,7 @@ interface ButtonProps {
 
 const Button: React.FC<ButtonProps> = ({ 
   children, 
-  variant = 'primary', 
+  variant = "primary", 
   sx,
   ...props 
 }) => {
@@ -29,7 +29,7 @@ const Button: React.FC<ButtonProps> = ({
     <MuiButton
       {...props}
       variant="contained"
-      color={variant === 'primary' ? 'primary' : 'secondary'}
+      color={variant === "primary" ? "primary" : "secondary"}
       fullWidth
       sx={sx}
     >
@@ -38,4 +38,5 @@ const Button: React.FC<ButtonProps> = ({
   );
 };
 
-export default Button; 
+export { Button };
+export default Button;

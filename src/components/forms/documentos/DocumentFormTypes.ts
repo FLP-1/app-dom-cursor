@@ -8,7 +8,7 @@
 
 import { z } from 'zod';
 import { TipoDocumentoEsocial } from '@prisma/client';
-import { documentosMessages } from '@/i18n/messages/documentos.messages';
+import { documentMessages as documentosMessages } from '@/i18n/messages/document.messages';
 
 export const documentFormSchema = z.object({
   nome: z.string()

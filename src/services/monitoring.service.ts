@@ -9,6 +9,8 @@
 import axios from 'axios';
 import { LogService, TipoLog, CategoriaLog } from '@/services/log.service';
 import { prisma } from '@/lib/prisma';
+import { CacheService } from '@/services/cache.service';
+import { monitoringMessages } from '@/i18n/messages/monitoring.messages';
 
 /**
  * Serviço de Monitoramento
@@ -148,14 +150,14 @@ class MonitoringManager {
       await LogService.create({
         tipo: TipoLog.INFO,
         categoria: CategoriaLog.SISTEMA,
-        mensagem: 'Monitoramento iniciado',
+        mensagem: monitoringMessages.pt.messages.monitoringStarted,
         detalhes: { servicesCount: this.services.size }
       });
     } catch (error) {
       await LogService.create({
         tipo: TipoLog.ERROR,
         categoria: CategoriaLog.SISTEMA,
-        mensagem: 'Erro ao iniciar monitoramento',
+        mensagem: monitoringMessages.pt.errors.startError,
         detalhes: { error }
       });
     }
@@ -171,13 +173,13 @@ class MonitoringManager {
       await LogService.create({
         tipo: TipoLog.INFO,
         categoria: CategoriaLog.SISTEMA,
-        mensagem: 'Monitoramento parado'
+        mensagem: monitoringMessages.pt.messages.monitoringStopped
       });
     } catch (error) {
       await LogService.create({
         tipo: TipoLog.ERROR,
         categoria: CategoriaLog.SISTEMA,
-        mensagem: 'Erro ao parar monitoramento',
+        mensagem: monitoringMessages.pt.errors.stopError,
         detalhes: { error }
       });
     }

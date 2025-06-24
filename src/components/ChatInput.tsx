@@ -11,7 +11,7 @@ import { Box, TextField, Button, IconButton, InputAdornment } from '@mui/materia
 import SendIcon from '@mui/icons-material/Send';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import { useMessages } from '@/hooks/useMessages';
-import { commonMessages } from '@/i18n/messages/common.messages';
+import { commonMessages } from '@/i18n/messages';
 
 interface ChatInputProps {
   onEnviar: (texto: string) => void;

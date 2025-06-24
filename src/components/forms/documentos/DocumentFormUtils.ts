@@ -7,7 +7,7 @@
  */
 
 import { DocumentFormData } from './DocumentFormTypes';
-import { documentosMessages } from '@/i18n/messages/documentos.messages';
+import { documentMessages as documentosMessages } from '@/i18n/messages/document.messages';
 
 export const formatDocumentData = (data: DocumentFormData): DocumentFormData => {
   return {

@@ -9,7 +9,7 @@
 import React from 'react';
 import { Dialog, DialogTitle, List, ListItemButton, ListItemText } from '@mui/material';
 import { useMessages } from '@/hooks/useMessages';
-import { commonMessages } from '@/i18n/messages/common.messages';
+import { commonMessages } from '@/i18n/messages';
 
 interface Grupo {
   id: string;

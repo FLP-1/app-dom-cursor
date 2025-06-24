@@ -2,14 +2,13 @@
  * Arquivo: _document.tsx
  * Caminho: src/pages/_document.tsx
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
+ * Última atualização: 2025-01-27
  * Descrição: Arquivo de configuração do Next.js
  */
 
 import React from 'react';
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
 import { ServerStyleSheets } from '@mui/styles';
-import { theme } from '@/styles/theme';
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -37,9 +36,9 @@ export default class MyDocument extends Document {
       <Html lang="pt-BR">
         <Head>
           <meta charSet="utf-8" />
-          <meta name="theme-color" content={theme.palette.primary.main} />
-          <meta name="msapplication-navbutton-color" content={theme.palette.primary.main} />
-          <meta name="apple-mobile-web-app-status-bar-style" content={theme.palette.primary.main} />
+          <meta name="theme-color" content="#0070f3" />
+          <meta name="msapplication-navbutton-color" content="#0070f3" />
+          <meta name="apple-mobile-web-app-status-bar-style" content="#0070f3" />
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"

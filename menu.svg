@@ -1,0 +1,59 @@
+graph TD;
+    subgraph "Camada de UI (Páginas e Componentes)"
+        direction LR
+        
+        subgraph "Páginas"
+            App["_app.tsx"]:::page
+            DashboardPage["/dashboard/index.tsx"]:::page
+            ApiSms["/api/sms/index.ts"]:::page
+        end
+
+        subgraph "Componentes"
+            Layout["Layout.tsx"]:::component
+            SideMenu["SideMenu.tsx"]:::component
+            LangSelector["LanguageSelector.tsx"]:::component
+        end
+    end
+
+    subgraph "Camada de Lógica (Hooks e Serviços)"
+        direction LR
+        useMessages["hooks/useMessages.ts"]:::service
+        SmsService["services/sms.service.ts"]:::service
+        PushService["services/push.service.ts"]:::service
+        MonitoringService["services/monitoring.service.ts"]:::service
+    end
+
+    subgraph "Camada de Dados (Configuração e i18n)"
+        direction LR
+        MenuConfig["config/menu.ts"]:::config
+        I18nIndex["i18n/messages/index.ts"]:::config
+        SmsMessages["i18n/sms.messages.ts"]:::config
+        PushMessages["i18n/push.messages.ts"]:::config
+        MonitoringMessages["i18n/monitoring.messages.ts"]:::config
+        InterfaceMessages["i18n/interface.messages.ts"]:::config
+    end
+
+    %% Definição de Estilos
+    classDef page fill:#e6fffa,stroke:#00a37f,stroke-width:2px;
+    classDef component fill:#e3f2fd,stroke:#1976d2,stroke-width:2px;
+    classDef service fill:#fffde7,stroke:#fbc02d,stroke-width:2px;
+    classDef config fill:#f3e5f5,stroke:#8e24aa,stroke-width:2px;
+
+    %% Conexões
+    App -- "Envolve todas as páginas com" --> Layout;
+    DashboardPage -- "É renderizada dentro do" --> Layout;
+    Layout -- "Renderiza o" --> SideMenu;
+    SideMenu -- "Usa a configuração de" --> MenuConfig;
+    SideMenu -- "Importa o hook" --> useMessages;
+    SideMenu -- "Contém o" --> LangSelector;
+    ApiSms -- "Utiliza o" --> SmsService;
+    SmsService -- "Importa as mensagens de" --> SmsMessages;
+    PushService -- "Importa as mensagens de" --> PushMessages;
+    MonitoringService -- "Importa as mensagens de" --> MonitoringMessages;
+    
+    useMessages -- "Importa o" --> I18nIndex;
+    I18nIndex -- "Agrega" --> SmsMessages;
+    I18nIndex -- "Agrega" --> PushMessages;
+    I18nIndex -- "Agrega" --> MonitoringMessages;
+    I18nIndex -- "Agrega" --> InterfaceMessages;
+    SideMenu -- "Usa mensagens para acessibilidade do" --> InterfaceMessages

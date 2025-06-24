@@ -31,7 +31,7 @@ import { CommunicationService } from '@/lib/communication/service';
 import { PermissionChecker } from '@/lib/permissions/checker';
 import { UserRole } from '@/lib/permissions/types';
 import { useMessages } from '@/hooks/useMessages';
-import { commonMessages } from '@/i18n/messages/common.messages';
+import { commonMessages } from '@/i18n/messages';
 
 interface ChatManagerProps {
   communicationService: CommunicationService;
