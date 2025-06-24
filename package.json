@@ -111,11 +111,7 @@
     "seed": "tsx prisma/seed.ts"
   },
   "overrides": {
-    "glob": "^10.3.10",
     "@humanwhocodes/object-schema": "npm:@eslint/object-schema@^2.1.0",
-    "eslint-config-next": {
-      "glob": "^10.3.10"
-    },
     "lodash": "^4.17.21",
     "next": "14.2.29"
   },
