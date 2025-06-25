@@ -2,7 +2,7 @@
  * Arquivo: login.tsx
  * Caminho: src/pages/auth/login.tsx
  * Criado em: 2025-01-27
- * Última atualização: 2025-01-27
+ * Última atualização: 2025-06-24
  * Descrição: Página de login do sistema DOM, conectada ao hook useLoginForm.
  */
 
@@ -10,13 +10,16 @@ import { Card, CardContent, Button, Typography, Box, IconButton, InputAdornment,
 import { Visibility, VisibilityOff, Email, Lock, Home, Business, Person, FamilyRestroom } from '@mui/icons-material';
 import { useLoginForm } from '@/hooks/forms/useLoginForm';
 import { Controller } from 'react-hook-form';
-import { useMessages } from '@/hooks/useMessages';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { authMessages } from '@/i18n/messages/auth.messages';
 
 const LoginScreen = () => {
-  const { messages } = useMessages(authMessages);
+  const { t } = useLanguage();
   const { form, onSubmit, isLoading } = useLoginForm();
   const { control, formState: { errors } } = form;
+
+  // Função para obter mensagens traduzidas
+  const getMessage = (key: string) => t(key, authMessages);
 
   return (
     <Box sx={{ minHeight: '100vh', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', p: 2 }}>
@@ -27,22 +30,22 @@ const LoginScreen = () => {
             <Avatar sx={{ width: 80, height: 80, mx: 'auto', mb: 2, background: 'linear-gradient(45deg, #667eea, #764ba2)' }}>
               <Home sx={{ fontSize: 40, color: 'white' }} />
             </Avatar>
-            <Typography variant="h4" fontWeight="bold" color="primary">{messages.login.title}</Typography>
-            <Typography variant="body2" color="text.secondary">{messages.login.subtitle}</Typography>
+            <Typography variant="h4" fontWeight="bold" color="primary">{getMessage('login.title')}</Typography>
+            <Typography variant="body2" color="text.secondary">{getMessage('login.subtitle')}</Typography>
           </Box>
 
           <form onSubmit={onSubmit}>
             {/* Seletor de Perfil */}
             <Box mb={3}>
-              <Typography variant="subtitle2" mb={1}>{messages.login.profileSelector.label}</Typography>
+              <Typography variant="subtitle2" mb={1}>Selecione seu perfil</Typography>
               <Controller
                 name="profile"
                 control={control}
                 render={({ field }) => (
                   <Box display="flex" gap={1} flexWrap="wrap">
-                    <Chip icon={<Business />} label={messages.login.profileSelector.employer} clickable onClick={() => field.onChange('empregador')} variant={field.value === 'empregador' ? 'filled' : 'outlined'} color={field.value === 'empregador' ? 'primary' : 'default'} sx={{ borderRadius: 2 }} />
-                    <Chip icon={<Person />} label={messages.login.profileSelector.employee} clickable onClick={() => field.onChange('empregado')} variant={field.value === 'empregado' ? 'filled' : 'outlined'} color={field.value === 'empregado' ? 'primary' : 'default'} sx={{ borderRadius: 2 }} />
-                    <Chip icon={<FamilyRestroom />} label={messages.login.profileSelector.family} clickable onClick={() => field.onChange('familiar')} variant={field.value === 'familiar' ? 'filled' : 'outlined'} color={field.value === 'familiar' ? 'primary' : 'default'} sx={{ borderRadius: 2 }} />
+                    <Chip icon={<Business />} label="Empregador" clickable onClick={() => field.onChange('empregador')} variant={field.value === 'empregador' ? 'filled' : 'outlined'} color={field.value === 'empregador' ? 'primary' : 'default'} sx={{ borderRadius: 2 }} />
+                    <Chip icon={<Person />} label="Empregado" clickable onClick={() => field.onChange('empregado')} variant={field.value === 'empregado' ? 'filled' : 'outlined'} color={field.value === 'empregado' ? 'primary' : 'default'} sx={{ borderRadius: 2 }} />
+                    <Chip icon={<FamilyRestroom />} label="Familiar" clickable onClick={() => field.onChange('familiar')} variant={field.value === 'familiar' ? 'filled' : 'outlined'} color={field.value === 'familiar' ? 'primary' : 'default'} sx={{ borderRadius: 2 }} />
                   </Box>
                 )}
               />
@@ -54,7 +57,7 @@ const LoginScreen = () => {
                 name="email"
                 control={control}
                 render={({ field }) => (
-                  <TextField {...field} fullWidth label={messages.login.fields.email} variant="outlined" sx={{ mb: 2 }} error={!!errors.email} helperText={errors.email?.message} InputProps={{ startAdornment: (<InputAdornment position="start"><Email color="primary" /></InputAdornment>), sx: { borderRadius: 2 } }} />
+                  <TextField {...field} fullWidth label="E-mail" variant="outlined" sx={{ mb: 2 }} error={!!errors.email} helperText={errors.email?.message} InputProps={{ startAdornment: (<InputAdornment position="start"><Email color="primary" /></InputAdornment>), sx: { borderRadius: 2 } }} />
                 )}
               />
               
@@ -62,12 +65,12 @@ const LoginScreen = () => {
                 name="password"
                 control={control}
                 render={({ field }) => (
-                  <TextField {...field} fullWidth label={messages.login.fields.password} type="password" variant="outlined" sx={{ mb: 3 }} error={!!errors.password} helperText={errors.password?.message} InputProps={{ startAdornment: (<InputAdornment position="start"><Lock color="primary" /></InputAdornment>), endAdornment: (<InputAdornment position="end"><IconButton><Visibility /></IconButton></InputAdornment>), sx: { borderRadius: 2 } }} />
+                  <TextField {...field} fullWidth label="Senha" type="password" variant="outlined" sx={{ mb: 3 }} error={!!errors.password} helperText={errors.password?.message} InputProps={{ startAdornment: (<InputAdornment position="start"><Lock color="primary" /></InputAdornment>), endAdornment: (<InputAdornment position="end"><IconButton><Visibility /></IconButton></InputAdornment>), sx: { borderRadius: 2 } }} />
                 )}
               />
 
               <Button type="submit" fullWidth variant="contained" size="large" disabled={isLoading} sx={{ borderRadius: 2, py: 1.5, background: 'linear-gradient(45deg, #667eea, #764ba2)', '&:hover': { background: 'linear-gradient(45deg, #5a6fd8, #6b42a0)' } }}>
-                {isLoading ? <CircularProgress size={24} color="inherit" /> : messages.login.submit}
+                {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Entrar'}
               </Button>
             </Box>
           </form>

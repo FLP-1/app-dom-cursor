@@ -7,12 +7,10 @@
  */
 
 import { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { validateCPF } from '@/utils/validations';
-
-const prisma = new PrismaClient();
 
 // TODO: Define a secret key for JWT. Use a strong, random key and store it securely (e.g., in .env.local)
 const JWT_SECRET = process.env.JWT_SECRET || 'your_super_secret_jwt_key';

@@ -10,7 +10,7 @@ import React, { useRef } from 'react';
 import { useCompraForm } from '@/hooks/forms/useCompraForm';
 import { FormInput } from '@/components/forms/inputs/FormInput';
 import { FormSelect } from '@/components/forms/inputs/FormSelect';
-import Button from '@/components/common/Button';
+import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import { useMessages } from '@/hooks/useMessages';

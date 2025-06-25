@@ -6,14 +6,14 @@
  * Descrição: Serviço de tabelas do eSocial
  */
 
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/lib/prisma';
 import { EsocialTabela, EsocialTabelaItem } from '@prisma/client';
 
 export class EsocialTabelaService {
-  private prisma: PrismaClient;
+  private prisma: typeof prisma;
 
   constructor() {
-    this.prisma = new PrismaClient();
+    this.prisma = prisma;
   }
 
   async getTabela(codigo: string): Promise<EsocialTabela | null> {

@@ -9,7 +9,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
-import { Button } from '@/components/common/Button';
+import { Button } from '@mui/material';
 import {
   Dialog,
   DialogTitle,

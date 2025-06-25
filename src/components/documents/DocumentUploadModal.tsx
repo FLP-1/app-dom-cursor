@@ -7,10 +7,10 @@
  */
 
 import React, { useRef } from 'react';
-import Box from '@/components/layout/Box';
+import Box from '@mui/material/Box';
 import { FormInput } from '@/components/forms/inputs/FormInput';
 import { FormSelect } from '@/components/forms/inputs/FormSelect';
-import Button from '@/components/common/Button';
+import Button from '@mui/material/Button';
 import { useDocumentForm } from '@/hooks/useDocumentForm';
 import { styled } from '@mui/material/styles';
 import { FormSwitch } from '@/components/forms/inputs/FormSwitch';

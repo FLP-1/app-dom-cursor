@@ -9,10 +9,10 @@
 import React from 'react';
 import { FormInput } from '@/components/forms/inputs/FormInput';
 import { FormSelect } from '@/components/forms/inputs/FormSelect';
-import Box from '@/components/layout/Box';
+import Box from '@mui/material/Box';
 import { useDocumentFiltersForm, DocumentFiltersFormValues } from '@/hooks/forms/useDocumentFiltersForm';
 import { styled } from '@mui/material/styles';
-import Button from '@/components/common/Button';
+import Button from '@mui/material/Button';
 import { documentMessages } from '@/i18n/messages';
 import { formatDateBR, parseDateBRtoISO } from '@/utils/date';
 import { DocumentFilter } from '@/types/documents';
