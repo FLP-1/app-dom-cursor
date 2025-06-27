@@ -10,7 +10,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Box, TextField, MenuItem, Tooltip } from '@mui/material';
 import { tooltips } from '@/i18n/tooltips';
-import { useMessages } from '@/hooks/useMessages';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { comprasMessages } from '@/i18n/messages/compras.messages';
 
 interface CompraHeaderProps {
@@ -19,7 +19,8 @@ interface CompraHeaderProps {
 }
 
 const CompraHeader: React.FC<CompraHeaderProps> = ({ filtros, setFiltros }) => {
-  const { messages } = useMessages(comprasMessages);
+  const { language } = useLanguage();
+  const messages = comprasMessages[language] || comprasMessages['pt'];
 
   const statusOptions = [
     { value: '', label: messages.filters.all },
@@ -36,7 +37,7 @@ const CompraHeader: React.FC<CompraHeaderProps> = ({ filtros, setFiltros }) => {
         </Link>
       </Box>
       <Box display="flex" flexWrap="wrap" gap={2} alignItems="center">
-        <Tooltip title={tooltips.comprasProduto?.pt || ''}>
+        <Tooltip title={messages.tooltips.filter}>
           <TextField
             label={messages.filters.product}
             size="small"
@@ -47,7 +48,7 @@ const CompraHeader: React.FC<CompraHeaderProps> = ({ filtros, setFiltros }) => {
             onChange={e => setFiltros({ ...filtros, produto: e.target.value })}
           />
         </Tooltip>
-        <Tooltip title={tooltips.comprasData?.pt || ''}>
+        <Tooltip title={messages.tooltips.filter}>
           <TextField
             label={messages.filters.date}
             size="small"
@@ -60,7 +61,7 @@ const CompraHeader: React.FC<CompraHeaderProps> = ({ filtros, setFiltros }) => {
             onChange={e => setFiltros({ ...filtros, data: e.target.value })}
           />
         </Tooltip>
-        <Tooltip title={tooltips.comprasGrupo?.pt || ''}>
+        <Tooltip title={messages.tooltips.filter}>
           <TextField
             label={messages.filters.group}
             size="small"
@@ -71,7 +72,7 @@ const CompraHeader: React.FC<CompraHeaderProps> = ({ filtros, setFiltros }) => {
             onChange={e => setFiltros({ ...filtros, grupo: e.target.value })}
           />
         </Tooltip>
-        <Tooltip title={tooltips.comprasStatus?.pt || ''}>
+        <Tooltip title={messages.tooltips.filter}>
           <TextField
             label={messages.filters.status}
             size="small"

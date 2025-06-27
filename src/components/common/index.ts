@@ -2,12 +2,11 @@
  * Arquivo: index.ts
  * Caminho: src/components/common/index.ts
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-20
+ * Última atualização: 2025-06-13
  * Descrição: Exportações dos componentes comuns
  */
 
 // Layout
-export { default as Box } from '../layout/Box';
 export { default as Container } from '../layout/Container';
 export { default as Row } from '../layout/Row';
 export { default as Col } from '../layout/Col';
@@ -24,10 +23,8 @@ export { default as Checkbox } from './Checkbox';
 export { PasswordInput } from '../forms/inputs/PasswordInput';
 
 // UI
-export { default as Button } from './Button';
 export { default as Link } from './Link';
 export { default as Logo } from './Logo';
-export { default as Tooltip } from './Tooltip';
 
 // Data Display
 export { DataTable } from './DataTable';

@@ -1,6 +1,6 @@
 /**
  * Arquivo: PontoList.tsx
- * Caminho: src/components/PontoList.tsx
+ * Caminho: src/components/ponto/PontoList.tsx
  * Criado em: 2025-06-07
  * Última atualização: 2025-01-27
  * Descrição: Componente de tabela para exibição dos registros de ponto, com ações de editar, validar e excluir
@@ -25,9 +25,10 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { pontoMessages } from '@/i18n/messages/ponto.messages';
 import { tooltips } from '@/i18n/tooltips';
 import { formatDateBR } from '@/utils/date';
-import { pontoMessages } from '@/i18n/messages/ponto.messages';
 
 interface RegistroPonto {
   id: string;
@@ -58,8 +59,8 @@ const PontoList: React.FC<PontoListProps> = ({
   onValidate, 
   onDelete 
 }) => {
-  // Usar mensagens em português por padrão
-  const messages = pontoMessages.pt;
+  const { language } = useLanguage();
+  const messages = pontoMessages[language];
 
   if (loading) {
     return (
@@ -132,7 +133,7 @@ const PontoList: React.FC<PontoListProps> = ({
               <TableCell>
                 <Box sx={{ display: 'flex', gap: 1 }}>
                   {onEdit && (
-                    <Tooltip title={tooltips.editar}>
+                    <Tooltip title={tooltips.editar[language]}>
                       <IconButton 
                         onClick={() => onEdit(ponto)} 
                         size="small"
@@ -143,7 +144,7 @@ const PontoList: React.FC<PontoListProps> = ({
                     </Tooltip>
                   )}
                   {onValidate && (
-                    <Tooltip title={tooltips.aprovar}>
+                    <Tooltip title={tooltips.aprovar[language]}>
                       <IconButton 
                         onClick={() => onValidate(ponto)} 
                         size="small"
@@ -154,7 +155,7 @@ const PontoList: React.FC<PontoListProps> = ({
                     </Tooltip>
                   )}
                   {onDelete && (
-                    <Tooltip title={tooltips.excluir}>
+                    <Tooltip title={tooltips.excluir[language]}>
                       <IconButton 
                         onClick={() => onDelete(ponto)} 
                         size="small"

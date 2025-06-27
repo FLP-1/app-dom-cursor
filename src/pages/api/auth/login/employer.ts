@@ -2,7 +2,7 @@
  * Arquivo: employer.ts
  * Caminho: src/pages/api/auth/login/employer.ts
  * Criado em: 2025-06-01
- * Última atualização: 2025-06-13
+ * Última atualização: 2025-01-27
  * Descrição: API para login de empregadores
  */
 

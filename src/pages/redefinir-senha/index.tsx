@@ -14,7 +14,7 @@ import { useSenhaForm } from '@/hooks/useSenhaForm';
 import { useNotification } from '@/hooks/useNotification';
 import { PageHeader } from '@/components/common/PageHeader';
 import { FormData } from '@/types/forms';
-import { Layout } from '@/components/layout/Layout';
+import Layout from '@/components/layout/Layout';
 
 interface RedefinirSenhaData extends FormData {
   senha: string;

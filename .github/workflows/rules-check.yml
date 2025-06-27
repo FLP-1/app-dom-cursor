@@ -1,0 +1,96 @@
+name: Verificação de Regras do Projeto
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+  push:
+    branches: [ main, develop ]
+
+jobs:
+  rules-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Verificar ESLint e TypeScript
+      run: npm run rules:check
+      
+    - name: Verificar arquivos proibidos
+      run: |
+        echo "🔍 Verificando arquivos com sufixos proibidos..."
+        if find src -name "*_old*" -o -name "*-old*" -o -name "*Copia*" -o -name "*-copia*" -o -name "*:-copy*" -o -name "*backup*"; then
+          echo "❌ ERRO: Encontrados arquivos com sufixos proibidos"
+          exit 1
+        fi
+        echo "✅ Nenhum arquivo proibido encontrado"
+        
+    - name: Verificar imports relativos
+      run: |
+        echo "🔍 Verificando imports relativos em src/..."
+        if grep -r "from '\.\./" src/ --include="*.ts" --include="*.tsx"; then
+          echo "❌ ERRO: Encontrados imports relativos"
+          echo "Use alias '@/path' em vez de '../' ou './'"
+          exit 1
+        fi
+        echo "✅ Nenhum import relativo encontrado"
+        
+    - name: Verificar uso de 'any'
+      run: |
+        echo "🔍 Verificando uso de 'any'..."
+        if grep -r ": any" src/ --include="*.ts" --include="*.tsx"; then
+          echo "❌ ERRO: Encontrado uso de 'any'"
+          echo "Use tipos específicos ou 'unknown'"
+          exit 1
+        fi
+        echo "✅ Nenhum uso de 'any' encontrado"
+        
+    - name: Verificar tooltips hardcoded
+      run: |
+        echo "🔍 Verificando tooltips hardcoded..."
+        if grep -r "title=\"" src/ --include="*.tsx" | grep -v "tooltips\."; then
+          echo "❌ ERRO: Encontrados tooltips hardcoded"
+          echo "Use tooltips do dicionário central src/i18n/tooltips.ts"
+          exit 1
+        fi
+        echo "✅ Nenhum tooltip hardcoded encontrado"
+        
+    - name: Verificar cabeçalhos de documentação
+      run: |
+        echo "🔍 Verificando cabeçalhos de documentação..."
+        for file in $(find src -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx"); do
+          if ! head -5 "$file" | grep -q "Arquivo:"; then
+            echo "❌ ERRO: Arquivo $file não possui cabeçalho de documentação"
+            exit 1
+          fi
+        done
+        echo "✅ Todos os arquivos possuem cabeçalho de documentação"
+        
+    - name: Verificar uso de componentes MUI padrão
+      run: |
+        echo "🔍 Verificando uso de componentes MUI padrão..."
+        if grep -r "ListItem.*button" src/ --include="*.tsx"; then
+          echo "❌ ERRO: Encontrado uso de ListItem button (deprecated)"
+          echo "Use ListItemButton em vez de ListItem button"
+          exit 1
+        fi
+        echo "✅ Apenas componentes MUI padrão encontrados"
+        
+    - name: Verificar internacionalização
+      run: |
+        echo "🔍 Verificando internacionalização..."
+        if grep -r "useMessages" src/ --include="*.tsx" | wc -l | grep -q "^0$"; then
+          echo "⚠️  AVISO: Nenhum uso de useMessages encontrado"
+        else
+          echo "✅ Internacionalização sendo usada corretamente"
+        fi 

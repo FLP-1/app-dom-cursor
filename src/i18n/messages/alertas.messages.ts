@@ -60,6 +60,16 @@ export const alertasMessages = {
       update: 'Erro ao atualizar alerta',
       delete: 'Erro ao excluir alerta',
       load: 'Erro ao carregar alertas'
+    },
+    table: {
+      id: 'ID',
+      type: 'Tipo',
+      message: 'Mensagem',
+      severity: 'Severidade',
+      channels: 'Canais',
+      createdAt: 'Criado em',
+      actions: 'Ações',
+      noAlertsFound: 'Nenhum alerta encontrado.'
     }
   },
   en: {
@@ -115,6 +125,16 @@ export const alertasMessages = {
       update: 'Error updating alert',
       delete: 'Error deleting alert',
       load: 'Error loading alerts'
+    },
+    table: {
+      id: 'ID',
+      type: 'Type',
+      message: 'Message',
+      severity: 'Severity',
+      channels: 'Channels',
+      createdAt: 'Created at',
+      actions: 'Actions',
+      noAlertsFound: 'No alerts found.'
     }
   }
 }; 

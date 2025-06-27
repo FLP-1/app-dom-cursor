@@ -43,20 +43,22 @@ export const pontoMessages = {
     late: 'atraso',
     extras: 'extras',
     
-    titulo: 'Ponto Eletrônico',
+    // Labels para tabelas e formulários
     labels: {
+      funcionario: 'Funcionário',
       data: 'Data',
       entrada: 'Entrada',
       saida: 'Saída',
-      entradaAlmoco: 'Entrada Almoço',
-      saidaAlmoco: 'Saída Almoço',
+      entradaIntervalo: 'Início Intervalo',
+      saidaIntervalo: 'Fim Intervalo',
+      entradaAlmoco: 'Início Almoço',
+      saidaAlmoco: 'Fim Almoço',
       totalHoras: 'Total de Horas',
       horasTrabalhadas: 'Horas Trabalhadas',
       horasExtras: 'Horas Extras',
       horasFaltantes: 'Horas Faltantes',
       observacao: 'Observação',
       status: 'Status',
-      funcionario: 'Funcionário',
       justificativa: 'Justificativa',
       aprovado: 'Aprovado',
       pendente: 'Pendente',
@@ -71,8 +73,17 @@ export const pontoMessages = {
       filtros: 'Filtros',
       periodo: 'Período',
       funcionarios: 'Funcionários',
-      buscar: 'Buscar pontos...',
+      buscar: 'Buscar registros de ponto...',
+      sim: 'Sim',
+      nao: 'Não',
+      todos: 'Todos',
+      acoes: 'Ações',
+      alerta: 'Alerta',
+      carregando: 'Carregando...',
+      listaPonto: 'Lista de Ponto',
     },
+    
+    // Status
     status: {
       PENDENTE: 'Pendente',
       APROVADO: 'Aprovado',
@@ -80,14 +91,18 @@ export const pontoMessages = {
       CORRIGIDO: 'Corrigido',
       JUSTIFICADO: 'Justificado',
     },
+    
+    // Tipos de registro
     tipos: {
       ENTRADA: 'Entrada',
       SAIDA: 'Saída',
-      ENTRADA_ALMOCO: 'Entrada Almoço',
-      SAIDA_ALMOCO: 'Saída Almoço',
-      ENTRADA_INTERVALO: 'Entrada Intervalo',
-      SAIDA_INTERVALO: 'Saída Intervalo',
+      ENTRADA_ALMOCO: 'Início Almoço',
+      SAIDA_ALMOCO: 'Fim Almoço',
+      ENTRADA_INTERVALO: 'Início Intervalo',
+      SAIDA_INTERVALO: 'Fim Intervalo',
     },
+    
+    // Mensagens de erro
     erros: {
       carregar: 'Falha ao carregar os registros de ponto.',
       salvar: 'Erro ao salvar registro de ponto.',
@@ -101,6 +116,8 @@ export const pontoMessages = {
       horarioDuplicado: 'Já existe registro para este horário.',
       horarioInconsistente: 'Horário inconsistente com registros anteriores.',
     },
+    
+    // Mensagens de sucesso
     mensagens: {
       nenhum: 'Nenhum registro de ponto encontrado.',
       pontoRegistrado: 'Ponto registrado com sucesso!',
@@ -118,6 +135,8 @@ export const pontoMessages = {
       funcionarioObrigatorio: 'Funcionário é obrigatório.',
       justificativaObrigatoria: 'Justificativa é obrigatória.',
     },
+    
+    // Placeholders
     placeholders: {
       buscar: 'Buscar registros de ponto...',
       observacao: 'Digite uma observação...',
@@ -125,6 +144,8 @@ export const pontoMessages = {
       dataInicio: 'Data de início',
       dataFim: 'Data de fim',
     },
+    
+    // Tooltips
     tooltips: {
       registrar: 'Registrar novo ponto',
       editar: 'Editar registro de ponto',
@@ -134,12 +155,15 @@ export const pontoMessages = {
       justificar: 'Justificar registro de ponto',
       relatorio: 'Gerar relatório de ponto',
       filtros: 'Aplicar filtros',
+      carregando: 'Carregando...',
+      listaPonto: 'Lista de registros de ponto',
     },
   },
+  
   en: {
-    // Mensagens da página principal
+    // Main page messages
     title: 'Time Clock ⏰',
-    subtitle: 'Employee clock in and out control',
+    subtitle: 'Employee entry and exit control',
     loadError: 'Failed to load time clock data.',
     saveError: 'Error saving record:',
     registerPonto: 'Record Time',
@@ -149,20 +173,20 @@ export const pontoMessages = {
     recentRecords: 'Recent Records',
     weeklySummary: 'Weekly Summary',
     
-    // Estatísticas
+    // Statistics
     workedDays: 'Worked Days',
     totalHours: 'Total Hours',
     overtimeHours: 'Overtime Hours',
     lateDays: 'Late Days',
     
-    // Campos do formulário
+    // Form fields
     employee: 'Employee',
     type: 'Type',
     time: 'Time',
     location: 'Location',
     notes: 'Notes',
     
-    // Tipos de registro
+    // Record types
     entrada: 'Clock In',
     saida: 'Clock Out',
     breakStart: 'Break Start',
@@ -170,13 +194,16 @@ export const pontoMessages = {
     
     // Status
     late: 'late',
-    extras: 'extras',
+    extras: 'overtime',
     
-    titulo: 'Time Clock',
+    // Labels for tables and forms
     labels: {
+      funcionario: 'Employee',
       data: 'Date',
       entrada: 'Clock In',
       saida: 'Clock Out',
+      entradaIntervalo: 'Break Start',
+      saidaIntervalo: 'Break End',
       entradaAlmoco: 'Lunch Start',
       saidaAlmoco: 'Lunch End',
       totalHoras: 'Total Hours',
@@ -185,7 +212,6 @@ export const pontoMessages = {
       horasFaltantes: 'Missing Hours',
       observacao: 'Observation',
       status: 'Status',
-      funcionario: 'Employee',
       justificativa: 'Justification',
       aprovado: 'Approved',
       pendente: 'Pending',
@@ -201,7 +227,16 @@ export const pontoMessages = {
       periodo: 'Period',
       funcionarios: 'Employees',
       buscar: 'Search time records...',
+      sim: 'Yes',
+      nao: 'No',
+      todos: 'All',
+      acoes: 'Actions',
+      alerta: 'Alert',
+      carregando: 'Loading...',
+      listaPonto: 'Time Records List',
     },
+    
+    // Status
     status: {
       PENDENTE: 'Pending',
       APROVADO: 'Approved',
@@ -209,6 +244,8 @@ export const pontoMessages = {
       CORRIGIDO: 'Corrected',
       JUSTIFICADO: 'Justified',
     },
+    
+    // Record types
     tipos: {
       ENTRADA: 'Clock In',
       SAIDA: 'Clock Out',
@@ -217,6 +254,8 @@ export const pontoMessages = {
       ENTRADA_INTERVALO: 'Break Start',
       SAIDA_INTERVALO: 'Break End',
     },
+    
+    // Error messages
     erros: {
       carregar: 'Failed to load time records.',
       salvar: 'Error saving time record.',
@@ -230,6 +269,8 @@ export const pontoMessages = {
       horarioDuplicado: 'Record already exists for this time.',
       horarioInconsistente: 'Time inconsistent with previous records.',
     },
+    
+    // Success messages
     mensagens: {
       nenhum: 'No time records found.',
       pontoRegistrado: 'Time recorded successfully!',
@@ -247,6 +288,8 @@ export const pontoMessages = {
       funcionarioObrigatorio: 'Employee is required.',
       justificativaObrigatoria: 'Justification is required.',
     },
+    
+    // Placeholders
     placeholders: {
       buscar: 'Search time records...',
       observacao: 'Enter an observation...',
@@ -254,6 +297,8 @@ export const pontoMessages = {
       dataInicio: 'Start date',
       dataFim: 'End date',
     },
+    
+    // Tooltips
     tooltips: {
       registrar: 'Record new time',
       editar: 'Edit time record',
@@ -263,6 +308,8 @@ export const pontoMessages = {
       justificar: 'Justify time record',
       relatorio: 'Generate time report',
       filtros: 'Apply filters',
+      carregando: 'Loading...',
+      listaPonto: 'Time records list',
     },
   },
 }; 

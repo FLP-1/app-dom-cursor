@@ -42,7 +42,12 @@ export interface DashboardData {
 }
 
 // Função fetcher que o SWR usará
-const fetcher = (url: string) => axios.get<DashboardData>(url).then(res => res.data);
+const fetcher = (url: string) => {
+  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+  return axios.get<DashboardData>(url, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  }).then(res => res.data);
+};
 
 export const useDashboardData = () => {
   const { data, error } = useSWR<DashboardData>('/api/dashboard', fetcher);

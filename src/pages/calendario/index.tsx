@@ -320,8 +320,8 @@ const Calendario = () => {
               defaultValue={selectedEvent?.description || ''}
               sx={{ mb: 2 }}
             />
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
+            <Grid container columns={12} spacing={2}>
+              <Grid gridColumn={{ xs: 'span 6' }}>
                 <TextField
                   fullWidth
                   label={msg.calendar.date}
@@ -330,7 +330,7 @@ const Calendario = () => {
                   InputLabelProps={{ shrink: true }}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid gridColumn={{ xs: 'span 6' }}>
                 <TextField
                   fullWidth
                   label={msg.calendar.time}

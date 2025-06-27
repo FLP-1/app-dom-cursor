@@ -66,9 +66,15 @@ model Alert {
 
 model Document {
   id                   String               @id @default(uuid())
-  nome                 String? // Temporariamente nullable
-  tipo                 String? // Agora é uma string que referencia a tabela 8
-  url                  String
+  name                 String               // Nome do documento
+  type                 String               // Tipo do arquivo (pdf, jpg, etc)
+  category             String               @default("other") // Categoria do documento
+  description          String?              // Descrição opcional
+  tags                 String[]             @default([]) // Tags do documento
+  url                  String               // URL do arquivo
+  size                 Int                  @default(0) // Tamanho em bytes
+  thumbnail            String?              // URL da thumbnail
+  status               String               @default("active") // Status do documento
   dataUpload           DateTime             @default(now())
   dataValidade         DateTime?
   uploadedBy           String

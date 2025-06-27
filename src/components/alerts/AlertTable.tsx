@@ -9,7 +9,7 @@
 import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, CircularProgress } from '@mui/material';
 import { Edit as EditIcon, Delete as DeleteIcon, Visibility as ViewIcon } from '@mui/icons-material';
-import { useMessages } from '@/hooks/useMessages';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { alertasMessages } from '@/i18n/messages/alertas.messages';
 
 interface Alert {
@@ -30,7 +30,8 @@ interface AlertTableProps {
 }
 
 export const AlertTable: React.FC<AlertTableProps> = ({ alerts, onVisualizar, onEditar, onExcluir, loading }) => {
-  const { messages } = useMessages(alertasMessages);
+  const { language } = useLanguage();
+  const messages = alertasMessages[language] || alertasMessages['pt'];
 
   if (loading) {
     return <CircularProgress />;

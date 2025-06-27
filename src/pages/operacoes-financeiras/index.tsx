@@ -34,7 +34,7 @@ import { PageHeader } from '@/components/common/PageHeader';
 import { TableActions } from '@/components/common/TableActions';
 import { api } from '@/lib/api';
 import { formatCurrency, formatDateBR } from '@/utils/formatters';
-import { Layout } from '@/components/layout/Layout';
+import Layout from '@/components/layout/Layout';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import PaymentIcon from '@mui/icons-material/Payment';

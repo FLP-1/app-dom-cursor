@@ -13,6 +13,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { tooltips } from '@/i18n/tooltips';
 import { interfaceMessages } from '@/i18n/messages/interface.messages';
 import { useLanguage } from '@/hooks/useLanguage';
+import { alertMessages } from '@/i18n/messages/alert.messages';
 
 interface AlertFiltersProps {
   control: any; // Use o tipo correto do react-hook-form se disponível
@@ -29,7 +30,7 @@ const severidades = [
 
 export const AlertFilters: React.FC<AlertFiltersProps> = ({ control, tipos }) => {
   const { language } = useLanguage();
-  const messages = interfaceMessages[language].common;
+  const messages = alertMessages[language] || alertMessages['pt'];
 
   return (
     <Grid container columns={12} spacing={2} alignItems="center">
@@ -40,8 +41,8 @@ export const AlertFilters: React.FC<AlertFiltersProps> = ({ control, tipos }) =>
           render={({ field }) => (
             <Tooltip title={tooltips.tipoAlerta[language]} arrow>
               <span>
-                <TextField select label={messages.type} fullWidth size="small" {...field}>
-                  <MenuItem value="">{messages.all}</MenuItem>
+                <TextField select label={messages.alertType?.DOCUMENT_EXPIRATION ?? 'Tipo'} fullWidth size="small" {...field}>
+                  <MenuItem value="">{messages.noAlerts ?? 'Todos'}</MenuItem>
                   {tipos?.map((tipo) => (
                     <MenuItem key={tipo} value={tipo}>{tipo}</MenuItem>
                   ))}
@@ -58,7 +59,7 @@ export const AlertFilters: React.FC<AlertFiltersProps> = ({ control, tipos }) =>
           render={({ field }) => (
             <Tooltip title={tooltips.severidadeAlerta[language]} arrow>
               <span>
-                <TextField select label={messages.severity} fullWidth size="small" {...field}>
+                <TextField select label={messages.severity?.HIGH ?? 'Severidade'} fullWidth size="small" {...field}>
                   {severidades.map((s) => (
                     <MenuItem key={s.value} value={s.value}>{s.label}</MenuItem>
                   ))}
@@ -76,7 +77,7 @@ export const AlertFilters: React.FC<AlertFiltersProps> = ({ control, tipos }) =>
             <Tooltip title={tooltips.alertaDataInicial[language]} arrow>
               <span>
                 <DatePicker
-                  label={messages.initialDate}
+                  label={messages.expirationDate ?? 'Data Inicial'}
                   inputFormat="dd/MM/yyyy"
                   {...field}
                   slotProps={{ textField: { fullWidth: true, size: 'small' } }}
@@ -94,7 +95,7 @@ export const AlertFilters: React.FC<AlertFiltersProps> = ({ control, tipos }) =>
             <Tooltip title={tooltips.alertaDataFinal[language]} arrow>
               <span>
                 <DatePicker
-                  label={messages.finalDate}
+                  label={messages.expirationDate ?? 'Data Final'}
                   inputFormat="dd/MM/yyyy"
                   {...field}
                   slotProps={{ textField: { fullWidth: true, size: 'small' } }}
@@ -111,7 +112,7 @@ export const AlertFilters: React.FC<AlertFiltersProps> = ({ control, tipos }) =>
           render={({ field }) => (
             <Tooltip title={tooltips.descricaoAlerta[language]} arrow>
               <span>
-                <TextField label={messages.message} fullWidth size="medium" {...field} />
+                <TextField label={messages.title ?? 'Mensagem'} fullWidth size="medium" {...field} />
               </span>
             </Tooltip>
           )}

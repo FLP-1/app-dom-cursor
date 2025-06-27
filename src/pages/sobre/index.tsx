@@ -10,7 +10,7 @@ import React from 'react';
 import { Box, Typography, Card, CardContent, Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { PageHeader } from '@/components/common/PageHeader';
-import { Layout } from '@/components/layout/Layout';
+import Layout from '@/components/layout/Layout';
 
 export default function SobrePage() {
   const { t } = useTranslation();

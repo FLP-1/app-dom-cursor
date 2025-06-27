@@ -9,7 +9,7 @@
 import React, { useState } from 'react';
 import CompraHeader from '@/components/compras/CompraHeader';
 import CompraList from '@/components/compras/CompraList';
-import { Layout } from '@/components/layout/Layout';
+import Layout from '@/components/layout/Layout';
 import { Box } from '@mui/material';
 
 const ComprasPage: React.FC = () => {

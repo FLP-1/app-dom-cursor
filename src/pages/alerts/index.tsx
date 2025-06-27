@@ -59,7 +59,7 @@ import { AlertTable } from '@/components/alerts/AlertTable';
 import { AlertService } from '@/services/alert.service';
 import { PageHeader } from '@/components/common/PageHeader';
 import { TableActions } from '@/components/common/TableActions';
-import { Layout } from '@/components/layout/Layout';
+import Layout from '@/components/layout/Layout';
 
 // Define a basic interface for an Alert (should match backend structure)
 interface AlertData {

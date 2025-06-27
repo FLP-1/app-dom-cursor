@@ -1,0 +1,37 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔍 Verificando regras do projeto..."
+
+# Executar verificações obrigatórias
+npm run rules:check
+
+# Verificar se há arquivos com sufixos proibidos
+if find src -name "*_old*" -o -name "*-old*" -o -name "*Copia*" -o -name "*-copia*" -o -name "*_-copy*" -o -name "*backup*"; then
+  echo "❌ ERRO: Encontrados arquivos com sufixos proibidos (_old, -old, Copia, etc)"
+  echo "   Remova esses arquivos antes de fazer commit"
+  exit 1
+fi
+
+# Verificar se há imports relativos em src/
+if grep -r "from '\.\./" src/ --include="*.ts" --include="*.tsx"; then
+  echo "❌ ERRO: Encontrados imports relativos em src/"
+  echo "   Use alias '@/path' em vez de '../' ou './'"
+  exit 1
+fi
+
+# Verificar se há uso de 'any'
+if grep -r ": any" src/ --include="*.ts" --include="*.tsx"; then
+  echo "❌ ERRO: Encontrado uso de 'any'"
+  echo "   Use tipos específicos ou 'unknown'"
+  exit 1
+fi
+
+# Verificar se há tooltips hardcoded
+if grep -r "title=\"" src/ --include="*.tsx" | grep -v "tooltips\."; then
+  echo "❌ ERRO: Encontrados tooltips hardcoded"
+  echo "   Use tooltips do dicionário central src/i18n/tooltips.ts"
+  exit 1
+fi
+
+echo "✅ Todas as regras foram verificadas com sucesso!" 

@@ -2,7 +2,7 @@
  * Arquivo: index.tsx
  * Caminho: src/pages/dashboard/index.tsx
  * Criado em: 2025-01-27
- * Última atualização: 2025-01-27
+ * Última atualização: 2025-06-13
  * Descrição: Página de dashboard principal do sistema, conectada à API via useDashboardData.
  */
 
@@ -11,6 +11,7 @@ import { AccessTime, Description, Assignment, ShoppingCart, Chat, People, Notifi
 import { useDashboardData } from '@/hooks/useDashboardData';
 import { useMessages } from '@/hooks/useMessages';
 import { dashboardMessages } from '@/i18n/messages/dashboard.messages';
+import { useRouter } from 'next/router';
 
 // Mapeamento de string para componente de ícone
 const iconMap = {
@@ -20,12 +21,25 @@ const iconMap = {
 };
 
 const Dashboard = () => {
+  const router = useRouter();
   const { messages } = useMessages(dashboardMessages);
   const { data, isLoading, isError } = useDashboardData();
 
+  // Redireciona para login se não houver token
+  if (typeof window !== 'undefined' && !localStorage.getItem('token')) {
+    router.push('/auth/login');
+    return null;
+  }
+
+  if (isError) {
+    // Redireciona para login se for erro de autenticação
+    router.push('/auth/login');
+    return null;
+  }
+
   if (isLoading) {
     return (
-      <Box sx={{ p: 3, background: '#f8fafc', minHeight: '100vh' }}>
+      <Box sx={{ p: 3, minHeight: '100vh' }}>
         <Skeleton variant="text" width={250} height={60} />
         <Skeleton variant="text" width={200} height={30} />
         <Grid container columns={12} spacing={3} mt={2}>
@@ -45,23 +59,15 @@ const Dashboard = () => {
     );
   }
 
-  if (isError) {
-    return (
-      <Box sx={{ p: 3, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <Typography color="error">{messages.error.loadData}</Typography>
-      </Box>
-    );
-  }
-  
-  const { statsCards, recentActivities, monthlyProgress, quickMessages } = data;
+  const { statsCards, recentActivities, monthlyProgress, quickMessages } = data || {};
 
   return (
-    <Box sx={{ p: 3, background: '#f8fafc', minHeight: '100vh' }}>
+    <Box sx={{ p: 3, minHeight: '100vh' }}>
       {/* Header */}
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
         <Box>
-          <Typography variant="h4" fontWeight="bold" color="primary">{messages.header.welcome}</Typography>
-          <Typography variant="body1" color="text.secondary">{messages.header.subtitle}</Typography>
+          <Typography variant="h4" fontWeight="bold" color="primary">{messages?.header?.welcome ?? 'Bem-vindo'}</Typography>
+          <Typography variant="body1" color="text.secondary">{messages?.header?.subtitle ?? ''}</Typography>
         </Box>
         <Box display="flex" gap={1}>
           <IconButton sx={{ background: 'rgba(103, 126, 234, 0.1)', '&:hover': { background: 'rgba(103, 126, 234, 0.2)' } }}><Notifications color="primary" /></IconButton>
@@ -71,7 +77,7 @@ const Dashboard = () => {
 
       {/* Cards Estatísticas */}
       <Grid container columns={12} spacing={3} mb={4}>
-        {statsCards.map((card, index) => {
+        {(statsCards || []).map((card, index) => {
           const IconComponent = iconMap[card.icon];
           return (
             <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 3' }} key={index}>
@@ -100,9 +106,9 @@ const Dashboard = () => {
         <Grid gridColumn={{ xs: 'span 12', md: 'span 8' }}>
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
-              <Typography variant="h6" fontWeight="bold" mb={3}>{messages.sections.recentActivities.title}</Typography>
+              <Typography variant="h6" fontWeight="bold" mb={3}>{messages?.sections?.recentActivities?.title ?? 'Atividades Recentes'}</Typography>
               <Box>
-                {recentActivities.map((activity, index) => {
+                {(recentActivities || []).map((activity, index) => {
                   const IconComponent = iconMap[activity.icon];
                   return (
                     <Box key={index} display="flex" alignItems="center" py={2} borderBottom={index < recentActivities.length - 1 ? '1px solid #f0f0f0' : 'none'}>
@@ -126,8 +132,8 @@ const Dashboard = () => {
           {/* Progresso Mensal */}
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', mb: 3 }}>
             <CardContent>
-              <Typography variant="h6" fontWeight="bold" mb={2}>{messages.sections.monthlyProgress.title}</Typography>
-              {monthlyProgress.map((progress, index) => (
+              <Typography variant="h6" fontWeight="bold" mb={2}>{messages?.sections?.monthlyProgress?.title ?? 'Progresso Mensal'}</Typography>
+              {(monthlyProgress || []).map((progress, index) => (
                 <Box key={index} mb={2}>
                   <Box display="flex" justifyContent="space-between" mb={1}>
                     <Typography variant="body2">{progress.label}</Typography>
@@ -142,8 +148,8 @@ const Dashboard = () => {
           {/* Mensagens Rápidas */}
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
-              <Typography variant="h6" fontWeight="bold" mb={2}>{messages.sections.quickMessages.title}</Typography>
-              {quickMessages.map((msg, index) => (
+              <Typography variant="h6" fontWeight="bold" mb={2}>{messages?.sections?.quickMessages?.title ?? 'Mensagens Rápidas'}</Typography>
+              {(quickMessages || []).map((msg, index) => (
                 <Box key={index} display="flex" alignItems="center" py={1}>
                   <Avatar sx={{ width: 32, height: 32, mr: 2, fontSize: 12 }}>{msg.avatar}</Avatar>
                   <Box flex={1}>

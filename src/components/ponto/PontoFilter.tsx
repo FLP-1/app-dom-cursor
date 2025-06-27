@@ -1,6 +1,6 @@
 /**
  * Arquivo: PontoFilter.tsx
- * Caminho: src/components/PontoFilter.tsx
+ * Caminho: src/components/ponto/PontoFilter.tsx
  * Criado em: 2025-06-01
  * Última atualização: 2025-01-27
  * Descrição: Componente de filtro para registros de ponto eletrônico
@@ -8,8 +8,15 @@
 
 import React from 'react';
 import { Box, TextField, MenuItem, Grid } from '@mui/material';
-import { FiltrosPonto } from '@/hooks/usePonto';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { pontoMessages } from '@/i18n/messages/ponto.messages';
+
+interface FiltrosPonto {
+  usuarioId?: string;
+  data?: string;
+  validado?: boolean;
+  alerta?: boolean;
+}
 
 interface PontoFilterProps {
   filtros: FiltrosPonto;
@@ -17,8 +24,8 @@ interface PontoFilterProps {
 }
 
 const PontoFilter: React.FC<PontoFilterProps> = ({ filtros, setFiltros }) => {
-  // Usar mensagens em português por padrão
-  const messages = pontoMessages.pt;
+  const { language } = useLanguage();
+  const messages = pontoMessages[language];
   
   const safeFiltros = filtros || {};
   

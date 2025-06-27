@@ -1553,4 +1553,69 @@ export const tooltips = {
     pt: 'Horário de fim do período silencioso',
     en: 'End time of quiet period'
   },
+  // --- Menu Items ---
+  dashboard: {
+    pt: 'Acessar o painel principal do sistema',
+    en: 'Access the main system dashboard'
+  },
+  alerts: {
+    pt: 'Visualizar alertas e notificações do sistema',
+    en: 'View system alerts and notifications'
+  },
+  employees: {
+    pt: 'Gerenciar empregados domésticos',
+    en: 'Manage domestic employees'
+  },
+  esocial: {
+    pt: 'Acessar eventos e configurações do eSocial',
+    en: 'Access eSocial events and settings'
+  },
+  financial: {
+    pt: 'Gerenciar operações financeiras',
+    en: 'Manage financial operations'
+  },
+  purchases: {
+    pt: 'Gerenciar lista de compras',
+    en: 'Manage shopping list'
+  },
+  tasks: {
+    pt: 'Gerenciar tarefas e atividades',
+    en: 'Manage tasks and activities'
+  },
+  timeRecord: {
+    pt: 'Registrar ponto eletrônico',
+    en: 'Record electronic time'
+  },
+  documents: {
+    pt: 'Gerenciar documentos do sistema',
+    en: 'Manage system documents'
+  },
+  reports: {
+    pt: 'Visualizar relatórios e estatísticas',
+    en: 'View reports and statistics'
+  },
+  backup: {
+    pt: 'Realizar backup do sistema',
+    en: 'Perform system backup'
+  },
+  users: {
+    pt: 'Gerenciar usuários do sistema',
+    en: 'Manage system users'
+  },
+  partners: {
+    pt: 'Gerenciar parceiros e colaboradores',
+    en: 'Manage partners and collaborators'
+  },
+  plans: {
+    pt: 'Gerenciar planos e assinaturas',
+    en: 'Manage plans and subscriptions'
+  },
+  profile: {
+    pt: 'Editar perfil do usuário',
+    en: 'Edit user profile'
+  },
+  settings: {
+    pt: 'Configurar sistema e preferências',
+    en: 'Configure system and preferences'
+  },
 }; 

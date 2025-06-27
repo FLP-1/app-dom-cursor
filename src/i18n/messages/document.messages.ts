@@ -8,7 +8,53 @@
 
 export const documentMessages = {
   pt: {
+    // Mensagens da página principal
     titulo: 'Documentos',
+    
+    // Header
+    header: {
+      title: 'Documentos 📄',
+      subtitle: 'Gerencie todos os seus documentos de forma segura e organizada',
+      uploadButton: 'Upload de Documento',
+    },
+    
+    // Filtros
+    filters: {
+      searchPlaceholder: 'Buscar documentos...',
+      categoryLabel: 'Categoria',
+      categories: {
+        all: 'Todas',
+        personal: 'Pessoal',
+        work: 'Trabalho',
+        medical: 'Médico',
+        financial: 'Financeiro',
+        legal: 'Legal',
+        other: 'Outros',
+      },
+    },
+    
+    // Sidebar
+    sidebar: {
+      recentUploads: {
+        title: 'Uploads Recentes',
+      },
+      categories: {
+        title: 'Categorias',
+      },
+      storage: {
+        title: 'Armazenamento',
+        used: 'utilizado',
+      },
+    },
+    
+    // Dialog de Upload
+    uploadDialog: {
+      title: 'Upload de Documento',
+      fileInputLabel: 'Selecionar arquivo para upload',
+      cancel: 'Cancelar',
+    },
+    
+    // Labels para tabelas e formulários
     labels: {
       categoria: 'Categoria',
       nome: 'Nome',
@@ -25,7 +71,13 @@ export const documentMessages = {
       remover: 'Remover Documento',
       visualizar: 'Visualizar Documento',
       download: 'Download',
+      descricao: 'Descrição',
+      tags: 'Tags',
+      status: 'Status',
+      acoes: 'Ações',
     },
+    
+    // Categorias
     categorias: {
       all: 'Todas',
       personal: 'Pessoal',
@@ -35,6 +87,8 @@ export const documentMessages = {
       legal: 'Legal',
       other: 'Outros',
     },
+    
+    // Tipos de documento
     tipos: {
       DOC_ADMISSAO_CTPS: 'CTPS',
       DOC_ADMISSAO_PIS: 'PIS',
@@ -62,14 +116,28 @@ export const documentMessages = {
       DOC_RESCISAO_QUITACAO: 'Quitação',
       DOC_OUTROS: 'Outros',
     },
-    erros: {
-      carregar: 'Falha ao carregar os documentos.',
+    
+    // Status
+    status: {
+      active: 'Ativo',
+      archived: 'Arquivado',
+      expired: 'Expirado',
+      pending: 'Pendente',
+      approved: 'Aprovado',
+      rejected: 'Rejeitado',
+    },
+    
+    // Mensagens de erro
+    error: {
+      loadData: 'Falha ao carregar os documentos.',
       upload: 'Erro ao fazer upload do documento.',
       salvar: 'Erro ao salvar documento.',
       remover: 'Erro ao remover documento.',
       download: 'Erro ao fazer download do documento.',
       visualizar: 'Erro ao visualizar documento.',
     },
+    
+    // Mensagens de sucesso
     mensagens: {
       nenhum: 'Nenhum documento encontrado.',
       uploadSucesso: 'Documento enviado com sucesso!',
@@ -78,15 +146,100 @@ export const documentMessages = {
       documentoRemovido: 'Documento removido com sucesso!',
       documentoSalvo: 'Documento salvo com sucesso!',
       selecionarArquivo: 'Selecionar arquivo para upload',
+      documentoAtualizado: 'Documento atualizado com sucesso!',
+      documentoBaixado: 'Documento baixado com sucesso!',
     },
+    
+    // Placeholders
     placeholders: {
       buscar: 'Buscar documentos...',
-      nome: 'Nome do documento',
-      descricao: 'Descrição do documento',
+      nome: 'Digite o nome do documento...',
+      descricao: 'Digite uma descrição...',
+      tags: 'Digite as tags separadas por vírgula...',
+    },
+    
+    // Tooltips
+    tooltips: {
+      upload: 'Fazer upload de novo documento',
+      editar: 'Editar documento',
+      excluir: 'Excluir documento',
+      visualizar: 'Visualizar documento',
+      download: 'Baixar documento',
+      filtros: 'Aplicar filtros',
+      carregando: 'Carregando...',
+      listaDocumentos: 'Lista de documentos',
+    },
+    
+    // Validação
+    validation: {
+      nome: {
+        minLength: 'Nome deve ter pelo menos 3 caracteres',
+        maxLength: 'Nome deve ter no máximo 100 caracteres',
+        required: 'Nome é obrigatório',
+      },
+      tipo: {
+        required: 'Tipo é obrigatório',
+      },
+      url: {
+        required: 'URL é obrigatória',
+        invalid: 'URL inválida',
+      },
+      arquivo: {
+        required: 'Arquivo é obrigatório',
+        tamanho: 'Arquivo deve ter no máximo 10MB',
+        tipo: 'Tipo de arquivo não suportado',
+      },
     },
   },
+  
   en: {
+    // Main page messages
     titulo: 'Documents',
+    
+    // Header
+    header: {
+      title: 'Documents 📄',
+      subtitle: 'Manage all your documents safely and organized',
+      uploadButton: 'Upload Document',
+    },
+    
+    // Filters
+    filters: {
+      searchPlaceholder: 'Search documents...',
+      categoryLabel: 'Category',
+      categories: {
+        all: 'All',
+        personal: 'Personal',
+        work: 'Work',
+        medical: 'Medical',
+        financial: 'Financial',
+        legal: 'Legal',
+        other: 'Other',
+      },
+    },
+    
+    // Sidebar
+    sidebar: {
+      recentUploads: {
+        title: 'Recent Uploads',
+      },
+      categories: {
+        title: 'Categories',
+      },
+      storage: {
+        title: 'Storage',
+        used: 'used',
+      },
+    },
+    
+    // Upload Dialog
+    uploadDialog: {
+      title: 'Upload Document',
+      fileInputLabel: 'Select file for upload',
+      cancel: 'Cancel',
+    },
+    
+    // Labels for tables and forms
     labels: {
       categoria: 'Category',
       nome: 'Name',
@@ -103,7 +256,13 @@ export const documentMessages = {
       remover: 'Remove Document',
       visualizar: 'View Document',
       download: 'Download',
+      descricao: 'Description',
+      tags: 'Tags',
+      status: 'Status',
+      acoes: 'Actions',
     },
+    
+    // Categories
     categorias: {
       all: 'All',
       personal: 'Personal',
@@ -111,8 +270,10 @@ export const documentMessages = {
       medical: 'Medical',
       financial: 'Financial',
       legal: 'Legal',
-      other: 'Others',
+      other: 'Other',
     },
+    
+    // Document types
     tipos: {
       DOC_ADMISSAO_CTPS: 'Work Card',
       DOC_ADMISSAO_PIS: 'PIS',
@@ -140,14 +301,28 @@ export const documentMessages = {
       DOC_RESCISAO_QUITACAO: 'Termination Receipt',
       DOC_OUTROS: 'Others',
     },
-    erros: {
-      carregar: 'Failed to load documents.',
+    
+    // Status
+    status: {
+      active: 'Active',
+      archived: 'Archived',
+      expired: 'Expired',
+      pending: 'Pending',
+      approved: 'Approved',
+      rejected: 'Rejected',
+    },
+    
+    // Error messages
+    error: {
+      loadData: 'Failed to load documents.',
       upload: 'Error uploading document.',
       salvar: 'Error saving document.',
       remover: 'Error removing document.',
       download: 'Error downloading document.',
       visualizar: 'Error viewing document.',
     },
+    
+    // Success messages
     mensagens: {
       nenhum: 'No documents found.',
       uploadSucesso: 'Document uploaded successfully!',
@@ -156,11 +331,49 @@ export const documentMessages = {
       documentoRemovido: 'Document removed successfully!',
       documentoSalvo: 'Document saved successfully!',
       selecionarArquivo: 'Select file for upload',
+      documentoAtualizado: 'Document updated successfully!',
+      documentoBaixado: 'Document downloaded successfully!',
     },
+    
+    // Placeholders
     placeholders: {
       buscar: 'Search documents...',
-      nome: 'Document name',
-      descricao: 'Document description',
+      nome: 'Enter document name...',
+      descricao: 'Enter a description...',
+      tags: 'Enter tags separated by commas...',
+    },
+    
+    // Tooltips
+    tooltips: {
+      upload: 'Upload new document',
+      editar: 'Edit document',
+      excluir: 'Delete document',
+      visualizar: 'View document',
+      download: 'Download document',
+      filtros: 'Apply filters',
+      carregando: 'Loading...',
+      listaDocumentos: 'Documents list',
+    },
+    
+    // Validation
+    validation: {
+      nome: {
+        minLength: 'Name must have at least 3 characters',
+        maxLength: 'Name must have maximum 100 characters',
+        required: 'Name is required',
+      },
+      tipo: {
+        required: 'Type is required',
+      },
+      url: {
+        required: 'URL is required',
+        invalid: 'Invalid URL',
+      },
+      arquivo: {
+        required: 'File is required',
+        tamanho: 'File must be maximum 10MB',
+        tipo: 'File type not supported',
+      },
     },
   },
 }; 

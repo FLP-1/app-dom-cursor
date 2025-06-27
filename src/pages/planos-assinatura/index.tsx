@@ -11,7 +11,7 @@ import { Box, Typography, Card, CardContent, Button, Grid } from '@mui/material'
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
 import { PageHeader } from '@/components/common/PageHeader';
-import { Layout } from '@/components/layout/Layout';
+import Layout from '@/components/layout/Layout';
 import { useAuth } from '@/hooks/useAuth';
 
 export default function PlanosAssinaturaPage() {

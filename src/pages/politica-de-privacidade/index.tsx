@@ -14,7 +14,8 @@ import path from 'path';
 import { DocumentViewer } from '@/components/institutional/DocumentViewer';
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  const filePath = path.join(process.cwd(), 'docs', 'institutional', 'privacy', `${locale}.md`);
+  const lang = locale || 'pt-BR';
+  const filePath = path.join(process.cwd(), 'docs', 'institutional', 'privacy', `${lang}.md`);
   const content = await fs.readFile(filePath, 'utf-8');
   
   return {
@@ -30,7 +31,7 @@ export default function PrivacyPolicy({ content }: { content: string }) {
   
   return (
     <DocumentViewer
-      title={t('privacy.title', 'Política de Privacidade')}
+      title={t('')} // privacy.title', 'Política de Privacidade
       content={content}
       lastUpdate={t('privacy.lastUpdate', '19/03/2024')}
     />

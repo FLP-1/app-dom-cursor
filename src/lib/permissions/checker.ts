@@ -3,10 +3,11 @@
  * Caminho: src/lib/permissions/checker.ts
  * Criado em: 2025-06-01
  * Última atualização: 2025-06-13
- * Descrição: /*
+ * Descrição: Verificador de permissões do sistema
  */
 
-import { UserPermissions, Permission, rolePermissions } from './types';
+import { UserPermissions, Permission } from './types';
+import { rolePermissions } from './definitions';
 
 export class PermissionChecker {
   private userPermissions: UserPermissions;

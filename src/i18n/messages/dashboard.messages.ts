@@ -2,12 +2,16 @@
  * Arquivo: dashboard.messages.ts
  * Caminho: src/i18n/messages/dashboard.messages.ts
  * Criado em: 2025-01-27
- * Última atualização: 2025-01-27
+ * Última atualização: 2025-06-13
  * Descrição: Mensagens centralizadas para o módulo dashboard
  */
 
 export const dashboardMessages = {
   pt: {
+    header: {
+      welcome: 'Bem-vindo ao Dashboard',
+      subtitle: 'Aqui estão suas informações principais',
+    },
     titulo: 'Dashboard',
     labels: {
       funcionarios: 'Funcionários',
@@ -137,8 +141,17 @@ export const dashboardMessages = {
       produtividadeMedia: 'Produtividade Média',
       eficienciaGeral: 'Eficiência Geral',
     },
+    sections: {
+      recentActivities: { title: 'Atividades Recentes' },
+      monthlyProgress: { title: 'Progresso Mensal' },
+      quickMessages: { title: 'Mensagens Rápidas' },
+    },
   },
   en: {
+    header: {
+      welcome: 'Welcome to the Dashboard',
+      subtitle: 'Here are your main informations',
+    },
     titulo: 'Dashboard',
     labels: {
       funcionarios: 'Employees',
@@ -267,6 +280,11 @@ export const dashboardMessages = {
       horasExtras: 'Overtime Hours',
       produtividadeMedia: 'Average Productivity',
       eficienciaGeral: 'Overall Efficiency',
+    },
+    sections: {
+      recentActivities: { title: 'Recent Activities' },
+      monthlyProgress: { title: 'Monthly Progress' },
+      quickMessages: { title: 'Quick Messages' },
     },
   },
 }; 

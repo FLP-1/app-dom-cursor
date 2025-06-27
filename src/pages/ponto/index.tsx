@@ -22,14 +22,16 @@ import {
 } from '@mui/icons-material';
 import { usePontoData } from '@/hooks/usePontoData';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { messages } from '@/i18n/messages';
+import { pontoMessages } from '@/i18n/messages/ponto.messages';
+import { messages as commonMessages } from '@/i18n/messages';
 
 const Ponto = () => {
   const { data, isLoading, isError, registerPonto, updatePontoRecord, deletePontoRecord } = usePontoData();
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState<any>(null);
   const { language } = useLanguage();
-  const msg = messages[language];
+  const msg = pontoMessages[language];
+  const commonMsg = commonMessages[language];
 
   if (isLoading) {
     return (
@@ -52,7 +54,7 @@ const Ponto = () => {
   if (isError) {
     return (
       <Box sx={{ p: 3, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <Typography color="error">{msg.ponto.loadError}</Typography>
+        <Typography color="error">{msg.loadError}</Typography>
       </Box>
     );
   }
@@ -126,7 +128,7 @@ const Ponto = () => {
       }
       setOpenDialog(false);
     } catch (error) {
-      console.error(msg.ponto.saveError, error);
+      console.error(msg.saveError, error);
     }
   };
 
@@ -136,10 +138,10 @@ const Ponto = () => {
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
         <Box>
           <Typography variant="h4" fontWeight="bold" color="primary">
-            {msg.ponto.title}
+            {msg.title}
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            {msg.ponto.subtitle}
+            {msg.subtitle}
           </Typography>
         </Box>
         <Button
@@ -148,7 +150,7 @@ const Ponto = () => {
           onClick={handleRegisterPonto}
           sx={{ borderRadius: 2 }}
         >
-          {msg.ponto.registerPonto}
+          {msg.registerPonto}
         </Button>
       </Box>
 
@@ -166,7 +168,7 @@ const Ponto = () => {
                     {monthlyStats.totalWorkedDays}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    {msg.ponto.workedDays}
+                    {msg.workedDays}
                   </Typography>
                 </Box>
               </Box>
@@ -185,7 +187,7 @@ const Ponto = () => {
                     {monthlyStats.totalHours}h
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    {msg.ponto.totalHours}
+                    {msg.totalHours}
                   </Typography>
                 </Box>
               </Box>
@@ -204,7 +206,7 @@ const Ponto = () => {
                     {monthlyStats.overtimeHours}h
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    {msg.ponto.overtimeHours}
+                    {msg.overtimeHours}
                   </Typography>
                 </Box>
               </Box>
@@ -223,7 +225,7 @@ const Ponto = () => {
                     {monthlyStats.lateDays}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    {msg.ponto.lateDays}
+                    {msg.lateDays}
                   </Typography>
                 </Box>
               </Box>
@@ -238,7 +240,7 @@ const Ponto = () => {
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={3}>
-                {msg.ponto.todayRecords}
+                {msg.todayRecords}
               </Typography>
               
               <List>
@@ -327,7 +329,7 @@ const Ponto = () => {
                     />
                     <ListItemSecondaryAction>
                       <Box display="flex" gap={1}>
-                        <IconButton size="small">
+                        <IconButton size="small" onClick={() => handleEditRecord(record)}>
                           <Edit />
                         </IconButton>
                         <IconButton size="small" color="error">
@@ -348,7 +350,7 @@ const Ponto = () => {
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', mb: 3 }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={2}>
-                {msg.ponto.upcomingBreaks}
+                {msg.upcomingBreaks}
               </Typography>
               {upcomingBreaks.map((break_) => (
                 <Box key={break_.id} display="flex" alignItems="center" py={1}>
@@ -377,7 +379,7 @@ const Ponto = () => {
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', mb: 3 }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={2}>
-                {msg.ponto.recentRecords}
+                {msg.recentRecords}
               </Typography>
               {recentRecords.map((record) => (
                 <Box key={record.id} display="flex" alignItems="center" py={1}>
@@ -416,7 +418,7 @@ const Ponto = () => {
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={2}>
-                {msg.ponto.weeklySummary}
+                {msg.weeklySummary}
               </Typography>
               {weeklySummary.slice(0, 3).map((summary) => (
                 <Box key={summary.date} mb={2}>
@@ -442,8 +444,8 @@ const Ponto = () => {
                     }}
                   />
                   <Typography variant="caption" color="text.secondary" mt={0.5}>
-                    {summary.lateMinutes > 0 && `${summary.lateMinutes}min ${msg.ponto.late}`}
-                    {summary.overtimeHours > 0 && ` • ${summary.overtimeHours}h ${msg.ponto.extras}`}
+                    {summary.lateMinutes > 0 && `${summary.lateMinutes}min ${msg.late}`}
+                    {summary.overtimeHours > 0 && ` • ${summary.overtimeHours}h ${msg.extras}`}
                   </Typography>
                 </Box>
               ))}
@@ -455,52 +457,52 @@ const Ponto = () => {
       {/* Dialog para registrar/editar ponto */}
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="sm" fullWidth>
         <DialogTitle>
-          {selectedRecord ? msg.ponto.editRecord : msg.ponto.registerPonto}
+          {selectedRecord ? msg.editRecord : msg.registerPonto}
         </DialogTitle>
         <DialogContent>
           <Box sx={{ pt: 2 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
+              <Grid gridColumn={{ xs: 'span 12' }}>
                 <TextField
                   fullWidth
-                  label={msg.ponto.employee}
+                  label={msg.employee}
                   defaultValue={selectedRecord?.employeeName || ''}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
                 <FormControl fullWidth>
-                  <InputLabel>{msg.ponto.type}</InputLabel>
+                  <InputLabel>{msg.type}</InputLabel>
                   <Select
                     defaultValue={selectedRecord?.type || 'entrada'}
-                    label={msg.ponto.type}
+                    label={msg.type}
                   >
-                    <MenuItem value="entrada">{msg.ponto.entrada}</MenuItem>
-                    <MenuItem value="saida">{msg.ponto.saida}</MenuItem>
-                    <MenuItem value="intervalo_inicio">{msg.ponto.breakStart}</MenuItem>
-                    <MenuItem value="intervalo_fim">{msg.ponto.breakEnd}</MenuItem>
+                    <MenuItem value="entrada">{msg.entrada}</MenuItem>
+                    <MenuItem value="saida">{msg.saida}</MenuItem>
+                    <MenuItem value="intervalo_inicio">{msg.breakStart}</MenuItem>
+                    <MenuItem value="intervalo_fim">{msg.breakEnd}</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
                 <TextField
                   fullWidth
-                  label={msg.ponto.time}
+                  label={msg.time}
                   type="time"
                   defaultValue={selectedRecord?.time || ''}
                   InputLabelProps={{ shrink: true }}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid gridColumn={{ xs: 'span 12' }}>
                 <TextField
                   fullWidth
-                  label={msg.ponto.location}
+                  label={msg.location}
                   defaultValue={selectedRecord?.location || ''}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid gridColumn={{ xs: 'span 12' }}>
                 <TextField
                   fullWidth
-                  label={msg.ponto.notes}
+                  label={msg.notes}
                   multiline
                   rows={3}
                   defaultValue={selectedRecord?.notes || ''}
@@ -510,12 +512,12 @@ const Ponto = () => {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenDialog(false)}>{msg.common.cancel}</Button>
+          <Button onClick={() => setOpenDialog(false)}>{commonMsg.common.cancel}</Button>
           <Button 
             variant="contained" 
             onClick={() => handleSaveRecord({})}
           >
-            {msg.common.save}
+            {commonMsg.common.save}
           </Button>
         </DialogActions>
       </Dialog>
@@ -523,4 +525,4 @@ const Ponto = () => {
   );
 };
 
-export default Ponto;
+export default Ponto; 

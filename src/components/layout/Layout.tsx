@@ -1,32 +1,42 @@
 ﻿/**
  * Arquivo: Layout.tsx
  * Caminho: src/components/layout/Layout.tsx
- * Criado em: 2025-01-27
- * Última atualização: 2025-01-27
- * Descrição: Layout principal da aplicação
+ * Criado em: 2025-06-13
+ * Última atualização: 2025-06-13
+ * Descrição: Layout principal da aplicação com menu lateral e área de conteúdo
  */
 
-import React, { ReactNode } from "react";
-import { Box, Container } from "@mui/material";
-import SideMenu from "./SideMenu";
+import React from 'react';
+import { Box, CssBaseline, useTheme, useMediaQuery } from '@mui/material';
+import SideMenu from '@/components/layout/SideMenu';
 
 interface LayoutProps {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
-    <Box sx={{ display: "flex", minHeight: "100vh" }}>
+    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+      <CssBaseline />
       <SideMenu />
-      <Container component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          ml: { xs: 0, md: '240px' }, // Margem para o menu lateral
+          mt: { xs: '64px', md: 0 }, // Margem top para AppBar mobile
+          transition: 'margin 0.3s ease-in-out',
+          minHeight: '100vh',
+          backgroundColor: '#f8fafc'
+        }}
+      >
         {children}
-      </Container>
+      </Box>
     </Box>
   );
 };
 
-// Exportação nomeada para compatibilidade com imports existentes
-export { Layout };
-
-// Exportação default para compatibilidade
 export default Layout;

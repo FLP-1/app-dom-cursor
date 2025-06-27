@@ -33,7 +33,7 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { tooltips } from '@/i18n/tooltips';
-import { useMessages } from '@/hooks/useMessages';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { comprasMessages } from '@/i18n/messages/compras.messages';
 
 interface Compra {
@@ -56,7 +56,8 @@ interface CompraListProps {
 }
 
 const CompraList: React.FC<CompraListProps> = ({ produto, data, grupo, status }) => {
-  const { messages } = useMessages(comprasMessages);
+  const { language } = useLanguage();
+  const messages = comprasMessages[language] || comprasMessages['pt'];
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [compras, setCompras] = useState<Compra[]>([]);
   const [loading, setLoading] = useState(false);
@@ -76,17 +77,17 @@ const CompraList: React.FC<CompraListProps> = ({ produto, data, grupo, status })
         if (grupo) params.append('grupo', grupo);
         if (status) params.append('status', status);
         const res = await fetch(`/api/compras?${params.toString()}`);
-        if (!res.ok) throw new Error(messages.errors.fetchError);
+        if (!res.ok) throw new Error(messages.error.load);
         const comprasData = await res.json();
         setCompras(comprasData);
       } catch (err) {
-        setError(messages.errors.fetchError);
+        setError(messages.error.load);
       } finally {
         setLoading(false);
       }
     };
     fetchCompras();
-  }, [produto, data, grupo, status, messages.errors.fetchError]);
+  }, [produto, data, grupo, status, messages.error.load]);
 
   const handleSelect = (id: string) => {
     setSelectedId(id);
@@ -100,11 +101,11 @@ const CompraList: React.FC<CompraListProps> = ({ produto, data, grupo, status })
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, status: novoStatus }),
       });
-      if (!res.ok) throw new Error(messages.errors.updateError);
+      if (!res.ok) throw new Error(messages.error.update);
       const updated = await res.json();
       setCompras((prev) => prev.map((c) => (c.id === id ? { ...c, status: updated.status } : c)));
     } catch {
-      alert(messages.errors.updateError);
+      alert(messages.error.update);
     }
   };
 
@@ -116,10 +117,10 @@ const CompraList: React.FC<CompraListProps> = ({ produto, data, grupo, status })
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id }),
       });
-      if (!res.ok) throw new Error(messages.errors.deleteError);
+      if (!res.ok) throw new Error(messages.error.delete);
       setCompras((prev) => prev.filter((c) => c.id !== id));
     } catch {
-      alert(messages.errors.deleteError);
+      alert(messages.error.delete);
     }
   };
 
@@ -130,7 +131,7 @@ const CompraList: React.FC<CompraListProps> = ({ produto, data, grupo, status })
 
   const handleEditSave = async () => {
     if (!form.id || !form.produto || !form.unidade || !form.quantidade || !form.valor || !form.dataCompra || !form.status) {
-      alert(messages.errors.fillRequiredFields);
+      alert(messages.error.fillRequiredFields);
       return;
     }
     try {
@@ -139,12 +140,12 @@ const CompraList: React.FC<CompraListProps> = ({ produto, data, grupo, status })
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
-      if (!res.ok) throw new Error(messages.errors.editError);
+      if (!res.ok) throw new Error(messages.error.edit);
       const updated = await res.json();
       setCompras((prev) => prev.map((c) => (c.id === updated.id ? updated : c)));
       setEditCompra(null);
     } catch {
-      alert(messages.errors.editError);
+      alert(messages.error.edit);
     }
   };
 
@@ -158,6 +159,10 @@ const CompraList: React.FC<CompraListProps> = ({ produto, data, grupo, status })
 
   if (error) {
     return <Alert severity="error">{error}</Alert>;
+  }
+
+  if (compras.length === 0 && !loading) {
+    return <Alert severity="info">{messages.empty.list}</Alert>;
   }
 
   return (
@@ -219,7 +224,7 @@ const CompraList: React.FC<CompraListProps> = ({ produto, data, grupo, status })
               </TableCell>
               <TableCell>
                 <Box sx={{ display: 'flex', gap: 1 }}>
-                  <Tooltip title={tooltips.editar}>
+                  <Tooltip title={messages.tooltips.edit}>
                     <IconButton
                       size="small"
                       onClick={(e) => {
@@ -230,7 +235,7 @@ const CompraList: React.FC<CompraListProps> = ({ produto, data, grupo, status })
                       <EditIcon />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip title={tooltips.excluir}>
+                  <Tooltip title={messages.tooltips.delete}>
                     <IconButton
                       size="small"
                       onClick={(e) => {

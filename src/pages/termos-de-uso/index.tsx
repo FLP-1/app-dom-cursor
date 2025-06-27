@@ -14,7 +14,8 @@ import path from 'path';
 import { DocumentViewer } from '@/components/institutional/DocumentViewer';
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  const filePath = path.join(process.cwd(), 'docs', 'institutional', 'terms', `${locale}.md`);
+  const lang = locale || 'pt-BR';
+  const filePath = path.join(process.cwd(), 'docs', 'institutional', 'terms', `${lang}.md`);
   const content = await fs.readFile(filePath, 'utf-8');
   
   return {
@@ -30,9 +31,9 @@ export default function TermsOfUse({ content }: { content: string }) {
 
   return (
     <DocumentViewer
-      title={t('institutional.terms.title')}
-      subtitle={t('institutional.terms.subtitle')}
-      lastUpdate={t('institutional.terms.lastUpdate')}
+      title={t('')} //institutional.terms.title
+      subtitle={t('')} // institutional.terms.subtitle
+      lastUpdate={t('')} //institutional.terms.lastUpdate
       content={content}
     />
   );

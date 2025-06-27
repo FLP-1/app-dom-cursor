@@ -22,15 +22,32 @@ import {
 } from '@mui/icons-material';
 import { useTasksData } from '@/hooks/useTasksData';
 import { tarefasMessages } from '@/i18n/messages/tarefas.messages';
+import { useLanguage } from '@/contexts/LanguageContext';
+
+interface Task {
+  id: string;
+  title: string;
+  description: string;
+  priority: 'low' | 'medium' | 'high';
+  status: 'pending' | 'in_progress' | 'completed' | 'cancelled';
+  category: 'housework' | 'personal' | 'work' | 'health' | 'shopping' | 'other';
+  dueDate: string;
+  createdAt: string;
+  completedAt?: string;
+  assignedTo?: string;
+  tags: string[];
+  estimatedTime?: string;
+  actualTime?: string;
+}
 
 const Tarefas = () => {
+  const { language } = useLanguage();
+  const messages = tarefasMessages[language] || tarefasMessages['pt'];
   const { data, isLoading, isError, createTask, updateTask, deleteTask, toggleTaskStatus } = useTasksData();
   const [openDialog, setOpenDialog] = useState(false);
-  const [selectedTask, setSelectedTask] = useState<any>(null);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
-
-  // Usar mensagens em português por padrão
-  const messages = tarefasMessages.pt;
+  const [formData, setFormData] = useState<Partial<Task>>({});
 
   if (isLoading) {
     return (
@@ -58,7 +75,9 @@ const Tarefas = () => {
     );
   }
 
-  const { tasks, todayTasks, upcomingTasks, completedTasks, categories, stats } = data;
+  const { tasks, todayTasks, upcomingTasks, completedTasks, categories, stats } = data || { 
+    tasks: [], todayTasks: [], upcomingTasks: [], completedTasks: [], categories: [], stats: { total: 0, pending: 0, inProgress: 0, completed: 0, overdue: 0 } 
+  };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
@@ -102,28 +121,39 @@ const Tarefas = () => {
 
   const handleAddTask = () => {
     setSelectedTask(null);
+    setFormData({});
     setOpenDialog(true);
   };
 
-  const handleEditTask = (task: any) => {
+  const handleEditTask = (task: Task) => {
     setSelectedTask(task);
+    setFormData({
+      title: task.title,
+      description: task.description,
+      priority: task.priority,
+      status: task.status,
+      dueDate: task.dueDate,
+      estimatedTime: task.estimatedTime,
+      category: task.category,
+    });
     setOpenDialog(true);
   };
 
-  const handleSaveTask = async (taskData: any) => {
+  const handleSaveTask = async () => {
     try {
       if (selectedTask) {
-        await updateTask(selectedTask.id, taskData);
+        await updateTask(selectedTask.id, formData);
       } else {
-        await createTask(taskData);
+        await createTask(formData as Omit<Task, 'id' | 'createdAt'>);
       }
       setOpenDialog(false);
+      setFormData({});
     } catch (error) {
       console.error('Erro ao salvar tarefa:', error);
     }
   };
 
-  const handleToggleStatus = async (task: any) => {
+  const handleToggleStatus = async (task: Task) => {
     try {
       await toggleTaskStatus(task.id, task.status);
     } catch (error) {
@@ -318,7 +348,8 @@ const Tarefas = () => {
             <TextField
               fullWidth
               label={messages.labels.titulo}
-              defaultValue={selectedTask?.title || ''}
+              value={formData.title || ''}
+              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               sx={{ mb: 2 }}
             />
             <TextField
@@ -326,14 +357,16 @@ const Tarefas = () => {
               multiline
               rows={3}
               label={messages.labels.descricao}
-              defaultValue={selectedTask?.description || ''}
+              value={formData.description || ''}
+              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               sx={{ mb: 2 }}
             />
             <TextField
               fullWidth
               type="date"
               label={messages.labels.dataVencimento}
-              defaultValue={selectedTask?.dueDate ? new Date(selectedTask.dueDate).toISOString().split('T')[0] : ''}
+              value={formData.dueDate || ''}
+              onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
               InputLabelProps={{ shrink: true }}
               sx={{ mb: 2 }}
             />
@@ -341,13 +374,15 @@ const Tarefas = () => {
               fullWidth
               label={messages.labels.tempoEstimado}
               placeholder={messages.placeholders.tempoEstimado}
-              defaultValue={selectedTask?.estimatedTime || ''}
+              value={formData.estimatedTime || ''}
+              onChange={(e) => setFormData({ ...formData, estimatedTime: e.target.value })}
               sx={{ mb: 2 }}
             />
             <FormControl fullWidth sx={{ mb: 2 }}>
               <InputLabel>{messages.labels.prioridade}</InputLabel>
               <Select
-                defaultValue={selectedTask?.priority || 'medium'}
+                value={formData.priority || 'medium'}
+                onChange={(e) => setFormData({ ...formData, priority: e.target.value as 'low' | 'medium' | 'high' })}
                 label={messages.labels.prioridade}
               >
                 <MenuItem value="low">{messages.prioridades.low}</MenuItem>
@@ -358,7 +393,8 @@ const Tarefas = () => {
             <FormControl fullWidth>
               <InputLabel>{messages.labels.categoria}</InputLabel>
               <Select
-                defaultValue={selectedTask?.category || 'personal'}
+                value={formData.category || 'personal'}
+                onChange={(e) => setFormData({ ...formData, category: e.target.value as any })}
                 label={messages.labels.categoria}
               >
                 {categories.map((category) => (
@@ -374,7 +410,7 @@ const Tarefas = () => {
           <Button onClick={() => setOpenDialog(false)}>
             {messages.labels.cancelar}
           </Button>
-          <Button onClick={() => handleSaveTask({})} variant="contained">
+          <Button onClick={handleSaveTask} variant="contained">
             {messages.labels.salvar}
           </Button>
         </DialogActions>

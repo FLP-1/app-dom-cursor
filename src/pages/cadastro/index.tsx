@@ -15,6 +15,7 @@ import { useNotification } from '@/hooks/useNotification';
 import { PageHeader } from '@/components/common/PageHeader';
 import { FormData } from '@/types/forms';
 import { Layout } from '@/components/layout/Layout';
+import { Controller } from 'react-hook-form';
 
 interface CadastroData extends FormData {
   nome: string;
@@ -79,43 +80,67 @@ export default function CadastroPage() {
               </Typography>
 
               <form onSubmit={handleSubmit(onSubmit)}>
-                <TextField
-                  fullWidth
-                  label={t('cadastro.nome.label')}
-                  margin="normal"
-                  error={!!errors.nome}
-                  helperText={errors.nome?.message}
-                  {...control('nome')}
+                <Controller
+                  name="nome"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      fullWidth
+                      label={t('cadastro.nome.label')}
+                      margin="normal"
+                      error={!!errors.nome}
+                      helperText={errors.nome?.message}
+                    />
+                  )}
                 />
 
-                <TextField
-                  fullWidth
-                  label={t('cadastro.email.label')}
-                  type="email"
-                  margin="normal"
-                  error={!!errors.email}
-                  helperText={errors.email?.message}
-                  {...control('email')}
+                <Controller
+                  name="email"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      fullWidth
+                      label={t('cadastro.email.label')}
+                      type="email"
+                      margin="normal"
+                      error={!!errors.email}
+                      helperText={errors.email?.message}
+                    />
+                  )}
                 />
 
-                <TextField
-                  fullWidth
-                  label={t('cadastro.senha.label')}
-                  type="password"
-                  margin="normal"
-                  error={!!errors.senha}
-                  helperText={errors.senha?.message}
-                  {...control('senha')}
+                <Controller
+                  name="senha"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      fullWidth
+                      label={t('cadastro.senha.label')}
+                      type="password"
+                      margin="normal"
+                      error={!!errors.senha}
+                      helperText={errors.senha?.message}
+                    />
+                  )}
                 />
 
-                <TextField
-                  fullWidth
-                  label={t('cadastro.confirmarSenha.label')}
-                  type="password"
-                  margin="normal"
-                  error={!!errors.confirmarSenha}
-                  helperText={errors.confirmarSenha?.message}
-                  {...control('confirmarSenha')}
+                <Controller
+                  name="confirmarSenha"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      fullWidth
+                      label={t('cadastro.confirmarSenha.label')}
+                      type="password"
+                      margin="normal"
+                      error={!!errors.confirmarSenha}
+                      helperText={errors.confirmarSenha?.message}
+                    />
+                  )}
                 />
 
                 <Button

@@ -28,6 +28,18 @@ interface AuthState {
   error: string | null;
 }
 
+function clearAuthHeader() {
+  if (api && api.defaults && api.defaults.headers && api.defaults.headers.common) {
+    delete api.defaults.headers.common['Authorization'];
+  }
+}
+
+function setAuthHeader(token: string) {
+  if (api && api.defaults && api.defaults.headers && api.defaults.headers.common) {
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  }
+}
+
 export function useAuth() {
   const router = useRouter();
   const { refreshToken } = useRefreshToken();
@@ -46,8 +58,7 @@ export function useAuth() {
         return;
       }
 
-      // Configura o token no header padrão do axios
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      setAuthHeader(token);
 
       const response = await api.get('/auth/validate');
       setState({
@@ -56,9 +67,28 @@ export function useAuth() {
         isLoading: false,
         error: null
       });
-    } catch (error: unknown) {
-      const formError = error as FormError;
-      throw new Error(formError.message || 'Erro ao autenticar');
+    } catch (error: any) {
+      // Log para debug
+      console.error('Erro no checkAuth:', error);
+
+      let errorMessage = 'Erro ao autenticar';
+      if (error?.response?.data?.message) {
+        errorMessage = error.response.data.message;
+      } else if (typeof error?.message === 'string') {
+        errorMessage = error.message;
+      }
+
+      setState(prev => ({
+        ...prev,
+        isAuthenticated: false,
+        isLoading: false,
+        error: errorMessage
+      }));
+
+      // Remove token inválido
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      clearAuthHeader();
     }
   }, []);
 
@@ -71,8 +101,7 @@ export function useAuth() {
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
 
-      // Configura o token no header padrão do axios
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      setAuthHeader(token);
 
       setState({
         user,
@@ -100,7 +129,7 @@ export function useAuth() {
     } finally {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      delete api.defaults.headers.common['Authorization'];
+      clearAuthHeader();
       setState({
         user: null,
         isAuthenticated: false,

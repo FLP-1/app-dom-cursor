@@ -32,7 +32,7 @@ import { PageHeader } from '@/components/common/PageHeader';
 import { TableActions } from '@/components/common/TableActions';
 import { api } from '@/lib/api';
 import { formatDateBR } from '@/utils/formatters';
-import { Layout } from '@/components/layout/Layout';
+import Layout from '@/components/layout/Layout';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { tooltips } from '@/i18n/tooltips';

@@ -15,6 +15,8 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import { useMessages } from '@/hooks/useMessages';
 import { comprasMessages } from '@/i18n/messages/compras.messages';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { Alert } from '@mui/material';
 
 const unidades = [
   { value: 'Pacote', label: 'Pacote' },
@@ -47,15 +49,31 @@ const Actions = styled(Box)(({ theme }) => ({
 }));
 
 const CompraForm: React.FC = () => {
-  const { messages } = useMessages(comprasMessages);
+  const { language } = useLanguage();
+  const messages = comprasMessages[language] || comprasMessages['pt'];
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { control, handleSubmit, onSubmit, loading, registerWithValidation } = useCompraForm();
+  const [success, setSuccess] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
+
+  const handleFormSubmit = async (data: any) => {
+    try {
+      await onSubmit(data);
+      setSuccess(true);
+      setError(null);
+    } catch (e: any) {
+      setError(messages.error.create);
+      setSuccess(false);
+    }
+  };
 
   return (
-    <FormContainer onSubmit={handleSubmit(onSubmit)} noValidate aria-label={messages.form.ariaLabel}>
+    <FormContainer onSubmit={handleSubmit(handleFormSubmit)} noValidate aria-label={messages.form.ariaLabel}>
       <Box component="h3" sx={{ mt: 0 }}>
         {messages.form.title}
       </Box>
+      {success && <Alert severity="success">{messages.success.create}</Alert>}
+      {error && <Alert severity="error">{error}</Alert>}
       <FormInput
         name="produto"
         label={messages.form.fields.produto.label}
@@ -63,6 +81,7 @@ const CompraForm: React.FC = () => {
         control={control}
         placeholder={messages.form.fields.produto.placeholder}
         autoComplete="off"
+        tooltip={messages.form.fields.produto.placeholder}
       />
       <FormSelect
         name="unidade"
@@ -70,6 +89,7 @@ const CompraForm: React.FC = () => {
         options={unidades}
         required
         control={control}
+        tooltip={messages.form.fields.unidade.placeholder}
       />
       <FormInput
         name="quantidade"
@@ -79,6 +99,7 @@ const CompraForm: React.FC = () => {
         control={control}
         inputProps={{ min: 1 }}
         placeholder={messages.form.fields.quantidade.placeholder}
+        tooltip={messages.form.fields.quantidade.placeholder}
       />
       <FormInput
         name="valor"
@@ -88,6 +109,7 @@ const CompraForm: React.FC = () => {
         control={control}
         inputProps={{ min: 0, step: 0.01 }}
         placeholder={messages.form.fields.valor.placeholder}
+        tooltip={messages.form.fields.valor.placeholder}
       />
       <FormInput
         name="dataCompra"
@@ -97,6 +119,7 @@ const CompraForm: React.FC = () => {
         control={control}
         InputLabelProps={{ shrink: true }}
         {...registerWithValidation('dataCompra')}
+        tooltip={messages.form.fields.dataCompra.placeholder}
       />
       <FormSelect
         name="grupo"
@@ -104,6 +127,7 @@ const CompraForm: React.FC = () => {
         options={grupos}
         required
         control={control}
+        tooltip={messages.form.fields.grupo.placeholder}
       />
       <FormInput
         name="foto"
@@ -112,6 +136,7 @@ const CompraForm: React.FC = () => {
         control={control}
         inputRef={fileInputRef}
         inputProps={{ accept: 'image/*' }}
+        tooltip={messages.form.fields.foto.placeholder}
       />
       <Actions>
         <Button type="button" variant="secondary" onClick={() => window.history.back()}>

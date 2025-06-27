@@ -200,7 +200,7 @@ const Relatorios = () => {
                 {msg.relatorios.generalSummary}
               </Typography>
               <Grid container spacing={2}>
-                <Grid item xs={6} sm={3}>
+                <Grid gridColumn={{ xs: 'span 6', sm: 'span 3' }}>
                   <Box textAlign="center">
                     <Typography variant="h4" color="primary" fontWeight="bold">
                       {formatCurrency(summary.totalRevenue)}
@@ -210,7 +210,7 @@ const Relatorios = () => {
                     </Typography>
                   </Box>
                 </Grid>
-                <Grid item xs={6} sm={3}>
+                <Grid gridColumn={{ xs: 'span 6', sm: 'span 3' }}>
                   <Box textAlign="center">
                     <Typography variant="h4" color="primary" fontWeight="bold">
                       {summary.totalEmployees}
@@ -220,7 +220,7 @@ const Relatorios = () => {
                     </Typography>
                   </Box>
                 </Grid>
-                <Grid item xs={6} sm={3}>
+                <Grid gridColumn={{ xs: 'span 6', sm: 'span 3' }}>
                   <Box textAlign="center">
                     <Typography variant="h4" color="primary" fontWeight="bold">
                       {summary.totalTasks}
@@ -230,7 +230,7 @@ const Relatorios = () => {
                     </Typography>
                   </Box>
                 </Grid>
-                <Grid item xs={6} sm={3}>
+                <Grid gridColumn={{ xs: 'span 6', sm: 'span 3' }}>
                   <Box textAlign="center">
                     <Typography variant="h4" color="primary" fontWeight="bold">
                       {summary.avgPerformance}%

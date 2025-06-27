@@ -213,3 +213,41 @@ src/app/empregados/
    - Documentar mudanças
    - Manter histórico limpo
    - Usar branches adequadamente 
+
+# Padrão Obrigatório de Grid (Material UI v2)
+
+## Obrigatoriedade do Padrão UI2
+
+- **É OBRIGATÓRIO** utilizar apenas o padrão Grid v2 do Material UI em todo o projeto.
+- O container deve ser sempre:
+  ```jsx
+  <Grid container columns={12} spacing={...}>
+  ```
+- Os itens devem ser:
+  ```jsx
+  <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
+  ```
+- **É proibido** o uso das props antigas:
+  - `item`, `xs=`, `sm=`, `md=`, `lg=`, `xl=`
+- **Nunca misture** o padrão antigo (`xs`, `sm`, etc.) com o novo (`gridColumn`).
+- O padrão antigo será rejeitado em code review e PR.
+
+### Exemplo correto:
+```jsx
+<Grid container columns={12} spacing={2}>
+  <Grid gridColumn={{ xs: 'span 12', sm: 'span 6', md: 'span 4' }}>
+    ...
+  </Grid>
+</Grid>
+```
+
+### Exemplo proibido:
+```jsx
+<Grid item xs={12} sm={6} md={4}>...</Grid>
+```
+
+### Justificativa
+- Garante responsividade, padronização e compatibilidade futura.
+- Facilita manutenção e code review.
+
+**Todo PR que não seguir este padrão deve ser rejeitado.** 

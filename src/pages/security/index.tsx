@@ -76,9 +76,9 @@ const SecurityScreen = () => {
         </Box>
       </Box>
 
-      <Grid container spacing={3}>
+      <Grid container columns={12} spacing={3}>
         {/* Score de Segurança */}
-        <Grid item xs={12} md={4}>
+        <Grid gridColumn={{ xs: 'span 12', md: 'span 4' }}>
           <Card sx={{ 
             borderRadius: 3, 
             boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
@@ -209,7 +209,7 @@ const SecurityScreen = () => {
         </Grid>
 
         {/* Configurações de Segurança */}
-        <Grid item xs={12} md={8}>
+        <Grid gridColumn={{ xs: 'span 12', md: 'span 8' }}>
           <Card sx={{ borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', mb: 3 }}>
             <CardContent>
               <Typography variant="h6" fontWeight="bold" mb={3}>

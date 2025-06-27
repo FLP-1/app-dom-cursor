@@ -1,6 +1,167 @@
 {
   "extends": [
     "next/core-web-vitals",
-    "next/typescript"
-  ]
+    "next/typescript",
+    "@typescript-eslint/recommended"
+  ],
+  "plugins": [
+    "@typescript-eslint",
+    "import"
+  ],
+  "rules": {
+    // === REGRAS OBRIGATÓRIAS DO PROJETO ===
+    
+    // 1. PROIBIR USO DE 'any'
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-unsafe-assignment": "error",
+    "@typescript-eslint/no-unsafe-member-access": "error",
+    "@typescript-eslint/no-unsafe-call": "error",
+    
+    // 2. BLOQUEAR IMPORTS DE UI NÃO-MUI
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": [
+          {
+            "group": ["antd", "ant-design", "@ant-design/*"],
+            "message": "É proibido usar Ant Design. Use apenas Material UI (MUI)."
+          },
+          {
+            "group": ["bootstrap", "@bootstrap/*"],
+            "message": "É proibido usar Bootstrap. Use apenas Material UI (MUI)."
+          },
+          {
+            "group": ["chakra-ui", "@chakra-ui/*"],
+            "message": "É proibido usar Chakra UI. Use apenas Material UI (MUI)."
+          },
+          {
+            "group": ["primereact", "primeicons"],
+            "message": "É proibido usar PrimeReact. Use apenas Material UI (MUI)."
+          },
+          {
+            "group": ["reactstrap", "react-bootstrap"],
+            "message": "É proibido usar Reactstrap/React-Bootstrap. Use apenas Material UI (MUI)."
+          }
+        ]
+      }
+    ],
+    
+    // 3. FORÇAR USO DE COMPONENTES MUI PADRÃO
+    "no-restricted-syntax": [
+      "error",
+      {
+        "selector": "MemberExpression[object.name='ListItem'][property.name='button']",
+        "message": "Use ListItemButton em vez de ListItem button (deprecated no MUI v5)"
+      },
+      {
+        "selector": "JSXElement[openingElement.name.name='ListItem'][openingElement.attributes.some(attr => attr.name.name === 'button')]",
+        "message": "Use ListItemButton em vez de ListItem button (deprecated no MUI v5)"
+      }
+    ],
+    
+    // 4. OBRIGAR IMPORTS COM ALIAS @/
+    "import/no-relative-parent-imports": "error",
+    "import/no-relative-packages": "error",
+    
+    // 5. PROIBIR IMPORTS RELATIVOS DENTRO DE src/
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": [
+          {
+            "group": ["../*", "./*"],
+            "message": "Use alias '@/path' em vez de imports relativos dentro de src/"
+          }
+        ]
+      }
+    ],
+    
+    // 6. OBRIGAR CABEÇALHO DE DOCUMENTAÇÃO
+    "prefer-template": "error",
+    "template-curly-spacing": "error",
+    
+    // 7. PROIBIR ESTILOS INLINE
+    "no-restricted-properties": [
+      "error",
+      {
+        "object": "style",
+        "property": "style",
+        "message": "Use sx prop do MUI em vez de style inline"
+      }
+    ],
+    
+    // 8. FORÇAR TIPAGEM ESTRITA
+    "@typescript-eslint/explicit-function-return-type": "warn",
+    "@typescript-eslint/explicit-module-boundary-types": "warn",
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-non-null-assertion": "warn",
+    
+    // 9. OBRIGAR USO DE HOOKS DE MENSAGENS
+    "no-restricted-globals": [
+      "error",
+      {
+        "name": "messages",
+        "message": "Use useMessages() hook para acessar mensagens centralizadas"
+      }
+    ],
+    
+    // 10. PROIBIR TEXTO HARDCODED EM TOOLTIPS
+    "no-restricted-syntax": [
+      "error",
+      {
+        "selector": "JSXAttribute[name.name='title'][value.type='Literal']",
+        "message": "Tooltips devem vir do dicionário central src/i18n/tooltips.ts"
+      },
+      {
+        "selector": "JSXAttribute[name.name='tooltip'][value.type='Literal']",
+        "message": "Tooltips devem vir do dicionário central src/i18n/tooltips.ts"
+      }
+    ],
+    
+    // === REGRAS GERAIS ===
+    "prefer-const": "error",
+    "no-var": "error",
+    "no-console": "warn",
+    "no-debugger": "error",
+    "no-alert": "error",
+    "no-eval": "error",
+    "no-implied-eval": "error",
+    "no-new-func": "error",
+    "no-script-url": "error"
+  },
+  "overrides": [
+    {
+      "files": ["src/**/*.tsx", "src/**/*.ts"],
+      "rules": {
+        // Regras específicas para arquivos src/
+        "@typescript-eslint/no-explicit-any": "error",
+        "import/no-relative-parent-imports": "error"
+      }
+    },
+    {
+      "files": ["src/components/**/*.tsx"],
+      "rules": {
+        // Regras específicas para componentes
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["../*", "./*"],
+                "message": "Use alias '@/path' em vez de imports relativos"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": "./tsconfig.json"
+      }
+    }
+  }
 }

@@ -18,8 +18,10 @@ import {
 import {
   AccountBalance, Add, TrendingUp, TrendingDown, 
   ShoppingCart, Home, LocalHospital, DirectionsCar,
-  Restaurant, Entertainment, School, Work,
-  Delete, Edit, MoreVert, CalendarToday, Payment
+  Restaurant, SportsEsports, School, Work,
+  Delete, Edit, MoreVert, CalendarToday, Payment,
+  Car, HealthAndSafety, Flight, LocalTaxi, LocalGroceryStore,
+  LocalPharmacy, LocalGasStation, LocalLaundryService
 } from '@mui/icons-material';
 import { useFinanceData } from '@/hooks/useFinanceData';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -76,7 +78,7 @@ const Financas = () => {
         return <Home />;
       case 'lazer':
       case 'entretenimento':
-        return <Entertainment />;
+        return <SportsEsports />;
       case 'educação':
       case 'escola':
         return <School />;
@@ -456,15 +458,15 @@ const Financas = () => {
         </DialogTitle>
         <DialogContent>
           <Box sx={{ pt: 2 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
+            <Grid container columns={12} spacing={2}>
+              <Grid gridColumn={{ xs: 'span 12' }}>
                 <TextField
                   fullWidth
                   label={msg.financeiro.description}
                   defaultValue={selectedTransaction?.description || ''}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
                 <FormControl fullWidth>
                   <InputLabel>{msg.financeiro.type}</InputLabel>
                   <Select
@@ -476,7 +478,7 @@ const Financas = () => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
                 <TextField
                   fullWidth
                   label={msg.financeiro.value}
@@ -484,14 +486,14 @@ const Financas = () => {
                   defaultValue={selectedTransaction?.amount || ''}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
                 <TextField
                   fullWidth
                   label={msg.financeiro.category}
                   defaultValue={selectedTransaction?.category || ''}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
                 <TextField
                   fullWidth
                   label={msg.financeiro.date}
@@ -500,7 +502,7 @@ const Financas = () => {
                   InputLabelProps={{ shrink: true }}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid gridColumn={{ xs: 'span 12' }}>
                 <FormControl fullWidth>
                   <InputLabel>{msg.financeiro.paymentMethod}</InputLabel>
                   <Select

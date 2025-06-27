@@ -31,6 +31,7 @@ export { configMessages } from "./config.messages";
 export { smsMessages } from "./sms.messages";
 export { pushMessages } from "./push.messages";
 export { monitoringMessages } from "./monitoring.messages";
+export { menuMessages } from "./menu.messages";
 
 // Agrupamento por idioma
 export const messages = {
@@ -56,7 +57,8 @@ export const messages = {
     config: configMessages.pt,
     sms: smsMessages.pt,
     push: pushMessages.pt,
-    monitoring: monitoringMessages.pt
+    monitoring: monitoringMessages.pt,
+    menu: menuMessages.pt,
   },
   en: {
     auth: authMessages.en,
@@ -80,7 +82,8 @@ export const messages = {
     config: configMessages.en,
     sms: smsMessages.en,
     push: pushMessages.en,
-    monitoring: monitoringMessages.en
+    monitoring: monitoringMessages.en,
+    menu: menuMessages.en,
   }
 };
 

@@ -2,8 +2,8 @@
  * Arquivo: index.tsx
  * Caminho: src/pages/familia/index.tsx
  * Criado em: 2025-01-27
- * Última atualização: 2025-01-27
- * Descrição: Página de família principal do sistema, conectada à API via useFamilyData.
+ * Última atualização: 2025-06-13
+ * Descrição: Página de gerenciamento de família com membros, contatos de emergência e alertas médicos.
  */
 
 import React, { useState } from 'react';
@@ -16,9 +16,8 @@ import {
   Badge, Divider
 } from '@mui/material';
 import {
-  FamilyRestroom, Add, Phone, Email, LocationOn, Work,
-  MedicalServices, Warning, Birthday, Emergency, Delete, Edit,
-  Person, Child, Elderly, ContactPhone
+  Add, Phone, Email, LocationOn, MedicalServices, Warning, Cake, LocalHospital, Delete, Edit,
+  Person, FamilyRestroom, HealthAndSafety, Notifications, TrendingUp, CheckCircle
 } from '@mui/icons-material';
 import { useFamilyData } from '@/hooks/useFamilyData';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -318,7 +317,7 @@ const Familia = () => {
                     width: 32, 
                     height: 32 
                   }}>
-                    <Birthday />
+                    <Cake />
                   </Avatar>
                   <Box flex={1}>
                     <Typography variant="body2" fontWeight="medium">
@@ -396,14 +395,14 @@ const Familia = () => {
         <DialogContent>
           <Box sx={{ pt: 2 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
                 <TextField
                   fullWidth
                   label={msg.familia.name}
                   defaultValue={selectedMember?.name || ''}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
                 <FormControl fullWidth>
                   <InputLabel>{msg.familia.relationship}</InputLabel>
                   <Select
@@ -418,7 +417,7 @@ const Familia = () => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
                 <TextField
                   fullWidth
                   label={msg.familia.birthDate}
@@ -427,28 +426,28 @@ const Familia = () => {
                   InputLabelProps={{ shrink: true }}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid gridColumn={{ xs: 'span 12', sm: 'span 6' }}>
                 <TextField
                   fullWidth
                   label={msg.familia.phone}
                   defaultValue={selectedMember?.phone || ''}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid gridColumn={{ xs: 'span 12', sm: 'span 12' }}>
                 <TextField
                   fullWidth
                   label={msg.familia.email}
                   defaultValue={selectedMember?.email || ''}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid gridColumn={{ xs: 'span 12', sm: 'span 12' }}>
                 <TextField
                   fullWidth
                   label={msg.familia.address}
                   defaultValue={selectedMember?.address || ''}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid gridColumn={{ xs: 'span 12', sm: 'span 12' }}>
                 <TextField
                   fullWidth
                   label={msg.familia.occupation}
